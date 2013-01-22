@@ -2,7 +2,7 @@
 
 Starter is a boilerplate Rails for quickly starting lasting Rails projects. It's optimized for deployment to Heroku using a PostgreSQL database.
 
-Recommended process:
+Getting started:
   * Download this repo as a ZIP-File, extract it, rename the folder and `cd` to it.
   * `git init`, `git add .` and `git commit -m "First commit"`.
   * Create your own project on Github, add the remote as `origin`. and push for the first time
@@ -13,6 +13,14 @@ Recommended process:
   * Link up the project to a great development domain with pow and powder: `powder link`
   * Point your browser to the domain powder presented you with: `http://myapp.dev` and see if everything is working.
   * Improve your app :-D
+
+Deploying:
+  * Create a staging and production app on heroku
+    heroku create myapp-staging --remote staging
+    heroku create myapp-production --remote production
+  * Add free memchachier in each environment
+  * Some more setup required to push from development branch to staging and from master to production.
+  * See `lib/tasks/deployment.rake` for a list of helpful, deployment-related tasks.
 
 See the Gemfile for standard technology choices. Feel free to help further optimize this starting point.
 
