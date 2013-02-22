@@ -89,6 +89,10 @@ group :staging, :production do
   gem 'newrelic_rpm'
 end
 
+group :production do
+  # Lograge (Shorter log output)
+  gem 'lograge'
+end
 
 # Great gems:
 
