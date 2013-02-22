@@ -21,3 +21,11 @@ development: &default
 test:
   <<: *default
   database: birdview_test
+
+staging:
+  <<: *default
+  database: birdview_staging
+
+production:
+  <<: *default
+  database: birdview_production
