@@ -1,4 +1,4 @@
-Starter::Application.configure do
+Birdview::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -40,7 +40,7 @@ Starter::Application.configure do
 
   # Default actiomailer url host
   # required by devise
-  config.action_mailer.default_url_options = { host: 'starter.dev' }
+  config.action_mailer.default_url_options = { host: 'birdview.dev' }
 
   # Quiet Assets
   config.quiet_assets = true

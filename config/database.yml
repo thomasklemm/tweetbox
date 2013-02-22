@@ -1,6 +1,6 @@
 development: &default
   adapter: postgresql
-  database: starter_development
+  database: birdview_development
   encoding: unicode
   host: localhost
   username: thomasklemm
@@ -20,4 +20,4 @@ development: &default
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: starter_test
+  database: birdview_test

@@ -1,4 +1,4 @@
-Starter::Application.routes.draw do
+Birdview::Application.routes.draw do
   # Static Pages
   get '*id' => 'pages#show', as: :page
 
