@@ -74,12 +74,13 @@ module Starter
     # Source: https://devcenter.heroku.com/articles/rails3x-asset-pipeline-cedar#troubleshooting
 
     # Generator options
-    config.generators do |generate|
-      generate.test_framework :rspec
-      generate.helper false
-      generate.stylesheets false
-      generate.javascript_engine false
-      generate.view_specs false
+    config.generators do |g|
+      g.test_framework :rspec, fixture: true
+      g.fixture_replacement :fabrication
+      g.helper false
+      g.stylesheets false
+      g.javascript_engine false
+      g.view_specs false
     end
 
     # Default timezone
