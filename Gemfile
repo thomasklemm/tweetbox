@@ -87,6 +87,8 @@ group :staging, :production do
   gem 'dalli'
 
   gem 'newrelic_rpm'
+
+  gem 'sentry-raven', github: 'getsentry/raven-ruby'
 end
 
 group :production do
