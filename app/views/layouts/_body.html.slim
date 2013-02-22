@@ -1,6 +1,6 @@
 #root
   / any flash messages
-  = render 'flash_messages'
+  = render 'flashes'
 
   / main content
   #content.container
@@ -14,6 +14,6 @@
 
 / async javascript snippets at the end of the body
 / to improve overall load times
-= render 'inline_javascripts/body'
+= render 'javascript'
 
 

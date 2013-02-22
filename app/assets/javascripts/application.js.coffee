@@ -3,7 +3,7 @@
 //= require jquery_ujs
 //= require jquery.autosize
 
-# Selfstarter
+# Starter
 $ ->
   ##
   # Flash messages

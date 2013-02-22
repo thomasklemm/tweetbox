@@ -15,7 +15,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module Selfstarter
+module Starter
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -72,5 +72,17 @@ module Selfstarter
     # required for Heroku and devise
     config.assets.initialize_on_precompile = false
     # Source: https://devcenter.heroku.com/articles/rails3x-asset-pipeline-cedar#troubleshooting
+
+    # Generator options
+    config.generators do |generate|
+      generate.test_framework :rspec
+      generate.helper false
+      generate.stylesheets false
+      generate.javascript_engine false
+      generate.view_specs false
+    end
+
+    # Default timezone
+    config.active_record.default_timezone = :utc
   end
 end

@@ -40,7 +40,7 @@ Starter::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => 'example.com' }
+  config.action_mailer.delivery_method = :override_recipient_smtp, to: 'staging@example.com'
 
   # Enable threaded mode
   config.threadsafe!
@@ -56,46 +56,5 @@ Starter::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  ##
-  # Caching
-  #
-  # Explicit Requires
-  require 'memcachier'
-  require 'dalli'
-  require 'rack/cache'
-
-  # Global enable/disable all memcached usage
-  config.perform_caching = true
-
-  # Disable/enable fragment and page caching in ActionController
-  config.action_controller.perform_caching = true
-
-  # Full error reports are disabled
-  config.consider_all_requests_local = false
-
-  # The underlying cache store to use.
-  config.cache_store = :dalli_store
-  # The session store is completely different from the normal data cache
-  config.session_store = :dalli_store
-
-  # HTTP Caching
-  config.action_dispatch.rack_cache = {
-    :metastore    => Dalli::Client.new,
-    :entitystore  => 'file:tmp/cache/rack/body',
-    :allow_reload => false
-  }
-
-  # Static Assets
-  public_path = config.paths['public'].first
-  config.middleware.delete ActionDispatch::Static
-  config.middleware.insert_before ::Rack::Cache, ::ActionDispatch::Static, public_path
-
-  # Rack Headers
-  # Set HTTP Headers on static assets
-  config.assets.header_rules = [
-    [:all,   {'Cache-Control' => 'public, max-age=31536000'}],
-    [:fonts, {'Access-Control-Allow-Origin' => '*'}]
-  ]
-  require 'rack/headers'
-  config.middleware.insert_before '::ActionDispatch::Static', '::Rack::Headers'
+  config.action_mailer.default_url_options = { :host => 'staging.example.com' }
 end

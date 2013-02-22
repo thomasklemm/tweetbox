@@ -1,25 +1,96 @@
 source 'https://rubygems.org'
 
-# Ruby Version on Heroku
+# Ruby version on Heroku
 ruby '1.9.3'
 
-# Puma (App Server)
-gem 'puma', '>= 2.0.0.b4'
+# Puma (App server)
+gem 'puma', '>= 2.0.0.b6'
 
 # Rails
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
-# Postgres Database Connector
+# Postgres database connector
 gem 'pg'
 
-# jQuery Rails (jQuery Adapter for Rails)
+# jQuery Rails (jQuery adapter for Rails)
 gem 'jquery-rails'
 
-# High Voltage (Static Pages)
+# High Voltage (Static pages in Rails)
 gem 'high_voltage'
 
-# Slim (Templating)
+# Slim (Great templating engine)
 gem 'slim-rails'
+
+# Figaro (Credential management in config/application.yml)
+gem 'figaro'
+
+# Rack Timeout
+gem 'rack-timeout'
+
+# Gems used only for assets and not required
+#   in production environments by default.
+group :assets do
+  # Stylesheets
+  # Sass and Compass
+  gem 'sass-rails'
+  gem 'compass-rails'
+
+  # Bourbon (SASS Mixins)
+  # Neat (Semantic Grids)
+  gem 'bourbon'
+  gem 'neat'
+
+  # Javascripts
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
+
+group :development do
+  # Annotate Models (Adds schema info for models to matching files)
+  #  Note: master is currently 2.6.0.beta1; gem has not received updates in a while
+  gem 'annotate', github: 'ctran/annotate_models'
+
+  # Pry (A great console, replacement for IRB in development)
+  gem 'pry-rails'
+
+  # Letter Opener (Previews ActionMailer emails in development)
+  gem 'letter_opener'
+
+  # Quiet Assets (Mutes asset pipeline logs in development)
+  gem 'quiet_assets'
+
+  # Bullet (Finds N+1 queries and more in development)
+  gem 'bullet'
+
+  # Better Errors (Debug pages in development)
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :development, :test do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'bourne', require: false
+  gem 'capybara-webkit', '>= 0.14.1'
+  gem 'database_cleaner'
+  gem 'fabrication'
+  gem 'shoulda-matchers'
+  gem 'simplecov', require: false
+  gem 'timecop'
+end
+
+group :staging, :production do
+  # Memcached using Memcachier on Heroku
+  gem 'memcachier'
+  gem 'dalli'
+
+  gem 'newrelic_rpm'
+end
+
+
+# Great gems:
 
 # Friendly Id (Human-Readable IDs for ActiveRecord Models)
 # gem 'friendly_id'
@@ -37,92 +108,15 @@ gem 'slim-rails'
 # gem 'omniauth-twitter'
 # gem 'omniauth-facebook'
 
-# Sidekiq & Sinatra (for Sidekiq Web Interface)
+# Sidekiq and Sinatra (for Sidekiq Web Interface)
 # gem 'sidekiq'
 # gem 'sinatra', :require => false
 
 # Cache Digests (Watch Progress of this gem!)
 # gem 'cache_digests'
 
-# Formtastic (Form Markup)
-# gem 'formtastic'
-
-# Audited (Model Versioning and Auditing)
-# gem 'audited-activerecord', '~> 3.0'
-
-# Swiftype (Search Engine and Autocompletion)
-# TODO: Remove, no full-text searching right now, and breaks with certain records anyway
-# gem 'swiftype'
-
-# Figaro (Managing credentials)
-gem 'figaro'
-
-# New Relic (Server Monitoring)
-gem 'newrelic_rpm'
-
 # Closure Tree (Nesting Structures)
 # gem 'closure_tree'
 
 # Dynamic Form (Display validation error messages)
 # gem 'dynamic_form'
-
-# Production Gems
-group :production do
-  # Memcached on Heroku
-  gem 'memcachier'
-  gem 'dalli'
-end
-
-# Gems used only for assets and not required
-#   in production environments by default.
-group :assets do
-  # Stylesheets
-  # Sass
-  gem 'sass', '>= 3.2.1'
-  gem 'sass-rails'
-
-  # Compass
-  gem 'compass-rails'
-
-  # Bourbon (SASS Mixins)
-  gem 'bourbon'
-
-  # Neat (Semantic Grids)
-  gem 'neat'
-
-  # Javascripts
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
-
-# Development Gems
-group :development do
-  # Heroku (Custom Deployment Rake Tasks)
-  gem 'heroku'
-  # gem 'taps'    # for rake production:pull_db, has outdated dependencies
-  # gem 'sqlite3' # for rake production:pull_db, has outdated dependencies
-
-  # Annotate Models (Schema Info for Models and Routes)
-  # master is currently 2.6.0.beta1; gem has not received updates in a while
-  gem 'annotate', github: 'ctran/annotate_models'
-
-  # Pry (IRB Replacement)
-  gem 'pry-rails'
-  gem 'pry-remote'
-
-  # Letter Opener (Preview ActionMailer Emails in Development)
-  gem 'letter_opener'
-
-  # Quiet Assets (Mute Asset Log Messages in Development)
-  gem 'quiet_assets'
-
-  # Lol DBA (Find missing indexes)
-  gem 'lol_dba'
-
-  # Bullet (Eager Loading Notification)
-  gem 'bullet'
-
-  # Better Errors (REPL Debug)
-  gem 'better_errors'
-  gem 'binding_of_caller'
-end

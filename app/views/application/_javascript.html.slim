@@ -1,15 +1,10 @@
-/ inline javascripts in head
+= javascript_include_tag :application
 
-/ fonts from typekit
-script type="text/javascript" src="//use.typekit.net/msr0udy.js"
-javascript:
-  try{Typekit.load();}catch(e){}
+= yield :javascript
 
-/ initialize timeago as soon as document is ready
-javascript:
-  jQuery(document).ready(function() {
-    $('abbr.timeago').timeago();
-  });
+- if Rails.env.test?
+  javascript:
+    $.ajaxSetup({ async: false })
 
 / google analytics in production
 - if Rails.env.production?

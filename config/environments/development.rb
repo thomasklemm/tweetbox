@@ -1,13 +1,5 @@
-Selfstarter::Application.configure do
+Starter::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-
-  # Default URL Host
-  # required by Swiftype
-  Rails.application.routes.default_url_options[:host] = 'selfstartr.dev'
-
-  # Default actiomailer url host
-  # required by devise
-  config.action_mailer.default_url_options = { host: 'selfstartr.dev' }
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -46,10 +38,15 @@ Selfstarter::Application.configure do
   # Letter opener
   config.action_mailer.delivery_method = :letter_opener
 
+  # Default actiomailer url host
+  # required by devise
+  config.action_mailer.default_url_options = { host: 'starter.dev' }
+
   # Quiet Assets
   config.quiet_assets = true
 
   # Bullet
+  # update to the latest bullet config options when enabling
   # config.after_initialize do
   #   Bullet.enable = true
   #   Bullet.alert = true

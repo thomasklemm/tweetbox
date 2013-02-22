@@ -1,9 +1,5 @@
-Selfstarter::Application.configure do
+Starter::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-
-  # Default URL Host
-  #  required by Swiftype
-  Rails.application.routes.default_url_options[:host] = 'selfstartr.dev'
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
@@ -38,4 +34,6 @@ Selfstarter::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.action_mailer.default_url_options = { :host => 'www.example.com' }
 end
