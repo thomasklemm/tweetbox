@@ -89,8 +89,9 @@ Birdview::Application.configure do
 
   # The underlying cache store to use.
   config.cache_store = :dalli_store
+
   # The session store is completely different from the normal data cache
-  config.session_store = :dalli_store
+  # config.session_store = :dalli_store
 
   # HTTP Caching
   config.action_dispatch.rack_cache = {

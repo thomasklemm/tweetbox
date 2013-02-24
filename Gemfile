@@ -27,6 +27,9 @@ gem 'figaro'
 # Rack Timeout
 gem 'rack-timeout'
 
+# Devise (User authentication)
+gem 'devise'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do
@@ -86,8 +89,10 @@ group :staging, :production do
   gem 'memcachier'
   gem 'dalli'
 
+  # New Relic server monitoring
   gem 'newrelic_rpm'
 
+  # Sentry exception tracking
   gem 'sentry-raven', github: 'getsentry/raven-ruby'
 end
 
@@ -106,9 +111,6 @@ end
 
 # Redcarpet (Markdown Parser)
 # gem 'redcarpet'
-
-# Devise (User Authentication)
-# gem 'devise'
 
 # Omniauth for Facebook and Twitter (oAuth Authentication)
 # gem 'omniauth-twitter'

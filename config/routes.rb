@@ -1,4 +1,6 @@
 Birdview::Application.routes.draw do
+  devise_for :users
+
   # Static Pages
   get '*id' => 'pages#show', as: :page
 
