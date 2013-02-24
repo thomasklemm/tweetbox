@@ -31,5 +31,29 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { Fabricate.build(:user) }
+
+  describe '#name' do
+    it 'is required' do
+      expect(user).to validate_presence_of(:name)
+    end
+  end
+
+  describe '#email' do
+    it 'is required' do
+      expect(user).to validate_presence_of(:email)
+    end
+
+    it 'must be unique' do
+      another_user = Fabricate(:user, email: user.email)
+      expect(user).to have(1).error_on(:email)
+      expect(user).not_to be_valid
+    end
+  end
+
+  describe '#password' do
+    it 'is required' do
+      expect(user).to validate_presence_of(:password)
+    end
+  end
 end

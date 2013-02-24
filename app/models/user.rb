@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
+  # Devise validates email on presence and uniqueness (also when user changes his email)
+  # Devise validates password on presence, confirmation, and length
+  validates :name, presence: true
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 end

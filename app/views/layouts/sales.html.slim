@@ -1,0 +1,121 @@
+/ layouts/sales
+doctype 5
+html lang='en'
+  head
+    meta charset='utf-8'
+    meta name='ROBOTS' content='NOODP'
+
+    title Birdview
+    meta name='description' content=''
+
+    meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
+    meta name='viewport' content='width=device-width'
+
+    / dns prefetch
+    = dns_prefetch('//ajax.googleapis.com')
+    = dns_prefetch('//www.google-analytics.com')
+    = dns_prefetch('//google-analytics.com')
+
+    / fonts
+    = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'
+
+    / stylesheets
+    = stylesheet_link_tag 'sales'
+
+    / javascripts
+    = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js'
+
+    / csrf meta tags
+    = csrf_meta_tags unless publicly_cached?
+
+  body
+    header#background
+
+    section#container
+      #topbar
+        div.navigation
+          span.pricing = link_to 'Pricing', static_path(:pricing)
+          span.signup = link_to 'Signup', new_user_registration_path
+          span.login = link_to 'Login', new_user_session_path
+
+      header
+        header#left
+          img src="images/logo.png"
+            p
+              ' Share your iPhone's beautiful homescreen with
+              span.bold Six Rows
+              '  and inspire other people to design homescreens just as beautiful, if not more so, than your own.
+            a.button href="#"
+              ' Download for
+              span.bold iPhone
+            p#snippet From the App Store
+        header#right
+          img src="images/homescreen.png"
+
+      section#main
+        section.box
+          p.title
+            ' Analytics
+            span.icon Q
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.box
+          p.title
+            ' Global
+            span.icon a
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.boxnomargin
+          p.title
+            ' Beautiful
+            span.icon T
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.box
+          p.title
+            ' Secure
+            span.icon j
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.box
+          p.title
+            ' Download
+            span.icon H
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.boxnomargin
+          p.title
+            ' Purchase
+            span.icon d
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.box
+          p.title
+            ' Customize
+            span.icon P
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.box
+          p.title
+            ' Storage
+            span.icon z
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+        section.boxnomargin
+          p.title
+            ' Pixels
+            span.icon "
+          p.info Share your iPhone's homescreen with the world and inspire. Share your iPhone's homescreen.
+
+      footer
+        p.left
+          span.bold © Six Rows.
+          '  All Rights Reserved.
+        p.right
+          a href="http://twitter.com/ben_bate" Twitter     
+          a href="http://facebook.com" Facebook
+
+/ LiveReload in development
+- if Rails.env.development?
+  javascript:
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')

@@ -6,9 +6,9 @@ protected
   def layout_for_page
     case params[:id]
     when 'home'
-      'application'
+      'sales'
     else
-      'application'
+      'sales'
     end
   end
 end
