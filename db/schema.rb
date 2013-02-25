@@ -11,7 +11,43 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130224102154) do
+ActiveRecord::Schema.define(:version => 20130225111713) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "account_id"
+    t.boolean  "admin",      :default => false, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "memberships", ["user_id", "account_id"], :name => "index_memberships_on_user_id_and_account_id", :unique => true
+
+  create_table "permissions", :force => true do |t|
+    t.integer  "membership_id"
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "permissions", ["membership_id", "project_id"], :name => "index_permissions_on_membership_and_project", :unique => true
+  add_index "permissions", ["user_id", "project_id"], :name => "index_permissions_on_user_id_and_project_id"
+
+  create_table "projects", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "projects", ["account_id"], :name => "index_projects_on_account_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false

@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  account_id :integer
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_projects_on_account_id  (account_id)
+#
+
+class Project < ActiveRecord::Base
+  # Account
+  belongs_to :account
+  validates :account, presence: true
+
+  attr_accessible :name
+end

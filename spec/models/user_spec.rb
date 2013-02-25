@@ -31,29 +31,21 @@
 require 'spec_helper'
 
 describe User do
-  let(:user) { Fabricate.build(:user) }
+  subject { Fabricate(:user) }
+  it { should be_valid }
 
-  describe '#name' do
-    it 'is required' do
-      expect(user).to validate_presence_of(:name)
-    end
-  end
+  it { should have_many(:memberships) }
+  it { should have_many(:accounts).through(:memberships) }
 
-  describe '#email' do
-    it 'is required' do
-      expect(user).to validate_presence_of(:email)
-    end
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:email) }
+  it { should validate_uniqueness_of(:email) }
+  it { should validate_presence_of(:password) }
 
-    it 'must be unique' do
-      another_user = Fabricate(:user, email: user.email)
-      expect(user).to have(1).error_on(:email)
-      expect(user).not_to be_valid
-    end
-  end
+  it { should allow_mass_assignment_of(:name) }
+  it { should allow_mass_assignment_of(:email) }
+  it { should allow_mass_assignment_of(:password) }
+  it { should allow_mass_assignment_of(:password_confirmation) }
+  it { should allow_mass_assignment_of(:remember_me) }
 
-  describe '#password' do
-    it 'is required' do
-      expect(user).to validate_presence_of(:password)
-    end
-  end
 end
