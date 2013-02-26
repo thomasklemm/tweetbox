@@ -33,17 +33,14 @@ describe Membership do
   let(:user)       { Fabricate(:user) }
   let(:membership) { Fabricate(:membership, user: user) }
 
-  describe "given an existing account membership" do
+  context "given an existing account membership" do
     before { Fabricate(:membership) }
     it { should validate_uniqueness_of(:user_id).scoped_to(:account_id) }
   end
 
-  it "delegates the user's name" do
-    expect(membership.name).to eq(user.name)
-  end
-
-  it "delegates the user's email" do
-    expect(membership.email).to eq(user.email)
+  describe "delegates to user" do
+    it { should respond_to(:name) }
+    it { should respond_to(:email) }
   end
 
   it "returns memberships by name" do

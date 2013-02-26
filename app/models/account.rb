@@ -2,15 +2,20 @@
 #
 # Table name: accounts
 #
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  updated_at :datetime         not null
+#  created_at       :datetime         not null
+#  id               :integer          not null, primary key
+#  name             :string(255)
+#  plan_id          :integer
+#  trial_expires_at :datetime
+#  updated_at       :datetime         not null
+#
+# Indexes
+#
+#  index_accounts_on_plan_id           (plan_id)
+#  index_accounts_on_trial_expires_at  (trial_expires_at)
 #
 
 class Account < ActiveRecord::Base
-  validates :name, presence: true
-
   # Memberships and members
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
@@ -24,9 +29,57 @@ class Account < ActiveRecord::Base
   # Projects
   has_many :projects, dependent: :destroy
 
+  # Plan
+  belongs_to :plan
+  validates :plan_id, presence: true
+  delegate :free?, :billed?, :trial?, to: :plan
+
+  # Validations
+  validates :name, presence: true
+
+  before_create :set_trial_expiration
+
+  attr_accessible :name
+
   def has_member?(user)
     memberships.exists?(user_id: user.id)
   end
 
-  attr_accessible :name
+  def admin_emails
+    admins.map(&:email)
+  end
+
+  def users_by_name
+    users.by_name
+  end
+
+  def projects_by_name
+    projects.by_name
+  end
+
+  def memberships_by_name
+    memberships.by_name
+  end
+
+  # TODO: Cache users_count
+  def users_count
+    users.count
+  end
+
+  # TODO: Cache projects_count
+  def projects_count
+    projects.count
+  end
+
+  def expired?
+    trial? && past_trial?
+  end
+
+  def past_trial?
+    trial_expires_at && trial_expires_at < Time.current
+  end
+
+  def set_trial_expiration
+    self.trial_expires_at = 31.days.from_now(created_at || Time.current)
+  end
 end

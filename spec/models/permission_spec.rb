@@ -18,9 +18,7 @@
 require 'spec_helper'
 
 describe Permission do
-  let!(:membership) { Fabricate(:membership) }
-  let!(:project) { Fabricate(:project) }
-  subject { Fabricate(:permission, membership: membership, project: project) }
+  subject { Fabricate(:permission) }
   it { should be_valid }
 
   it { should belong_to(:membership) }

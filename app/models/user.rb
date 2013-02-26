@@ -35,10 +35,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :validatable, :confirmable
 
-  # Devise validates email on presence and uniqueness (also when user changes his email)
-  # Devise validates password on presence, confirmation, and length
-  validates :name, presence: true
-
   # Memberships and accounts
   has_many :memberships
   has_many :accounts, through: :memberships
@@ -47,13 +43,9 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :projects, through: :permissions
 
-  def admin_of?(account)
-    memberships.exists?(account_id: account.id, admin: true)
-  end
-
-  def member_of?(account_or_project)
-    account_or_project.has_member?(self)
-  end
+  # Devise validates email on presence and uniqueness (also when user changes his email)
+  # Devise validates password on presence, confirmation, and length
+  validates :name, presence: true
 
   def self.by_name
     order('users.name')
@@ -63,6 +55,14 @@ class User < ActiveRecord::Base
     return [] if query.nil?
     query &&= "%#{ query }%"
     where('name LIKE ? OR email LIKE ?', query, query)
+  end
+
+  def admin_of?(account)
+    memberships.exists?(account_id: account.id, admin: true)
+  end
+
+  def member_of?(account_or_project)
+    account_or_project.has_member?(self)
   end
 
   # Setup accessible (or protected) attributes for your model
