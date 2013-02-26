@@ -17,10 +17,40 @@
 require 'spec_helper'
 
 describe Membership do
+  subject { Fabricate(:membership) }
+  it { should be_valid }
+
   it { should belong_to(:user) }
   it { should belong_to(:account) }
 
-  it { should validate_presence_of(:user) }
-  it { should validate_presence_of(:account) }
+  it { should validate_presence_of(:user_id) }
+  it { should validate_presence_of(:account_id) }
   it { should validate_uniqueness_of(:user_id).scoped_to(:account_id) }
+
+  it { should have_many(:permissions).dependent(:destroy) }
+  it { should have_many(:projects).through(:permissions) }
+
+  let(:user)       { Fabricate(:user) }
+  let(:membership) { Fabricate(:membership, user: user) }
+
+  describe "given an existing account membership" do
+    before { Fabricate(:membership) }
+    it { should validate_uniqueness_of(:user_id).scoped_to(:account_id) }
+  end
+
+  it "delegates the user's name" do
+    expect(membership.name).to eq(user.name)
+  end
+
+  it "delegates the user's email" do
+    expect(membership.email).to eq(user.email)
+  end
+
+  it "returns memberships by name" do
+    Fabricate(:membership, user: Fabricate(:user, name: 'def'))
+    Fabricate(:membership, user: Fabricate(:user, name: 'abc'))
+    Fabricate(:membership, user: Fabricate(:user, name: 'ghi'))
+
+    expect(Membership.by_name.map(&:name)).to eq(%w(abc def ghi))
+  end
 end

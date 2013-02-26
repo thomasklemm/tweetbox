@@ -18,12 +18,19 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :account
 
-  validates :user, :account, presence: true
+  has_many :permissions, dependent: :destroy
+  has_many :projects, through: :permissions
+
+  validates :user_id, :account_id, presence: true
   validates_uniqueness_of :user_id, scope: :account_id
+
+  delegate :name, :email, to: :user
 
   def self.admin
     where(admin: true)
   end
 
-  # attr_accessible :admin
+  def self.by_name
+    joins(:user).order('users.name')
+  end
 end

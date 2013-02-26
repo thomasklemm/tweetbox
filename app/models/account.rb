@@ -24,5 +24,9 @@ class Account < ActiveRecord::Base
   # Projects
   has_many :projects, dependent: :destroy
 
+  def has_member?(user)
+    memberships.exists?(user_id: user.id)
+  end
+
   attr_accessible :name
 end

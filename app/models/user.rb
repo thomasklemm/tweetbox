@@ -43,6 +43,28 @@ class User < ActiveRecord::Base
   has_many :memberships
   has_many :accounts, through: :memberships
 
+  # Permissions and projects
+  has_many :permissions
+  has_many :projects, through: :permissions
+
+  def admin_of?(account)
+    memberships.exists?(account_id: account.id, admin: true)
+  end
+
+  def member_of?(account_or_project)
+    account_or_project.has_member?(self)
+  end
+
+  def self.by_name
+    order('users.name')
+  end
+
+  def self.search(query)
+    return [] if query.nil?
+    query &&= "%#{ query }%"
+    where('name LIKE ? OR email LIKE ?', query, query)
+  end
+
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me # project_ids
 end
