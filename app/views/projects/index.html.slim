@@ -1,0 +1,6 @@
+h1 Projects#index
+p Find me in app/views/projects/index.html.slim
+
+div: b #{ @projects.size } projects
+- @projects.each do |project|
+  = link_to project.name, project_path(project)

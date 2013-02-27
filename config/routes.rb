@@ -11,10 +11,10 @@ Birdview::Application.routes.draw do
   end
 
   resources :accounts do
-    resources :projects, only: [:new, :create]
+    resources :projects, except: [:index, :show]
   end
 
-  resources :projects, except: [:new, :create] do
+  resources :projects, only: [:index, :show] do
     resources :twitter_accounts
     resources :searches
     resources :tweets

@@ -60,8 +60,6 @@ class Project < ActiveRecord::Base
     users.map(&:id)
   end
 
-  attr_accessible :name
-
   private
 
   def setup_permissions

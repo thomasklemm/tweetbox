@@ -10,6 +10,9 @@ class AccountsController < ApplicationController
   def show
     @account = user_accounts.find(params[:id])
     authorize @account
+
+    @projects = user_account_projects
+    authorize @projects
   end
 
   def new
@@ -26,9 +29,8 @@ class AccountsController < ApplicationController
       redirect_to account_path(@account),
         notice: 'Account was successfully created.'
     else
-      # TODO: See if this works
-      flash.keep
-      redirect_to action: :new
+      render action: :new
+      # TODO: Try keeping the url the same on validation errors
     end
   end
 
@@ -58,10 +60,6 @@ class AccountsController < ApplicationController
   end
 
   private
-
-  def user_accounts
-    @user_accounts ||= current_user.accounts
-  end
 
   def account_params
     params.require(:account).permit(:name)

@@ -3,5 +3,13 @@ p Find me in app/views/accounts/show.html.slim
 
 div Name: #{ @account.name }
 
+div: b #{ @projects.size } Projects
+- @projects.each do |project|
+  = link_to project.name, account_project_path(@account, project)
+
+- if policy(@account.projects.build).new?
+  = link_to 'Create a new project', new_account_project_path(@account)
+
+br
 - if policy(@account).edit?
   = link_to 'Edit account', edit_account_path(@account)
