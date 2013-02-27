@@ -24,6 +24,7 @@ html lang='en'
 
     / javascripts
     = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js'
+    = javascript_include_tag 'application'
 
     / csrf meta tags
     = csrf_meta_tags unless publicly_cached?
@@ -36,7 +37,10 @@ html lang='en'
         div.navigation
           span.pricing = link_to 'Pricing', static_path(:pricing)
           span.signup = link_to 'Signup', new_user_registration_path
-          span.login = link_to 'Login', new_user_session_path
+          - unless signed_in?
+            span.login = link_to 'Login', new_user_session_path
+          - else
+            span.logout = link_to 'Logout', destroy_user_session_path, method: :delete
 
       header
         header#left
