@@ -12,10 +12,10 @@ describe AccountPolicy do
 
     it { should permit(user, account, :index?) }
     it { should permit(user, account, :show?) }
-    it { should permit(user, account, :create?) }
     it { should permit(user, account, :new?) }
-    it { should permit(user, account, :update?) }
+    it { should permit(user, account, :create?) }
     it { should permit(user, account, :edit?) }
+    it { should permit(user, account, :update?) }
     it { should permit(user, account, :destroy?) }
   end
 
@@ -26,10 +26,10 @@ describe AccountPolicy do
 
     it { should permit(user, account, :index?) }
     it { should permit(user, account, :show?) }
-    it { should permit(user, account, :create?) }
     it { should permit(user, account, :new?) }
-    it { should_not permit(user, account, :update?) }
+    it { should permit(user, account, :create?) }
     it { should_not permit(user, account, :edit?) }
+    it { should_not permit(user, account, :update?) }
     it { should_not permit(user, account, :destroy?) }
   end
 end
