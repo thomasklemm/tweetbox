@@ -23,11 +23,6 @@ describe Plan do
   it { should validate_presence_of(:price) }
   it { should validate_presence_of(:user_limit) }
 
-  it { should_not allow_mass_assignment_of(:name) }
-  it { should_not allow_mass_assignment_of(:price) }
-  it { should_not allow_mass_assignment_of(:user_limit) }
-  it { should_not allow_mass_assignment_of(:trial) }
-
   it "finds ordered paid plans" do
     Fabricate(:trial_plan)
     Fabricate(:paid_plan, name: 'One',   price: 0)

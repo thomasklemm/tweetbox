@@ -1,2 +1,7 @@
 h1 Accounts#show
 p Find me in app/views/accounts/show.html.slim
+
+div Name: #{ @account.name }
+
+- if policy(@account).edit?
+  = link_to 'Edit account', edit_account_path(@account)

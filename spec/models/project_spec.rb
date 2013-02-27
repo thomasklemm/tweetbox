@@ -26,11 +26,6 @@ describe Project do
   it { should validate_presence_of(:account) }
   it { should validate_presence_of(:name) }
 
-  it { should allow_mass_assignment_of(:name) }
-  # saucy has an attr_protected call for :account_id and :account
-  it { should_not allow_mass_assignment_of(:account_id) }
-  it { should_not allow_mass_assignment_of(:account) }
-
   it "finds projects visible to a user" do
     account = Fabricate(:account)
     user = Fabricate(:user)

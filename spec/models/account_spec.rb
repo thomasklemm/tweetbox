@@ -26,7 +26,7 @@ describe Account do
   it { should have_many(:admins).through(:memberships) }
   it { should have_many(:non_admins).through(:memberships) }
 
-  it { should have_many(:projects).dependent(:destroy) }
+  it { should have_many(:projects).dependent(:restrict) }
 
   it { should belong_to(:plan) }
   it { should validate_presence_of(:plan_id) }
@@ -37,11 +37,6 @@ describe Account do
   end
 
   it { should validate_presence_of(:name) }
-
-  it { should allow_mass_assignment_of(:name) }
-  it { should_not allow_mass_assignment_of(:id) }
-  it { should_not allow_mass_assignment_of(:updated_at) }
-  it { should_not allow_mass_assignment_of(:created_at) }
 
   describe "with memberships" do
     let!(:account)     { Fabricate(:account) }

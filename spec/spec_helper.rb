@@ -42,6 +42,10 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  # Pundit matchers
+  # require 'pundit/rspec'
+  # config.include Pundit::Rspec::Matchers
 end
 
 Capybara.javascript_driver = :webkit

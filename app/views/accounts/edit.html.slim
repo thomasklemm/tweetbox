@@ -1,2 +1,9 @@
 h1 Accounts#edit
 p Find me in app/views/accounts/edit.html.slim
+
+= render 'form'
+
+br
+' Not happy?
+- if policy(@account).destroy?
+  = link_to 'Destroy account', account_path(@account), method: :delete, confirm: 'Are you sure?'

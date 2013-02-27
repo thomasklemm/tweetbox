@@ -43,7 +43,8 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :projects, through: :permissions
 
-  # Devise validates email on presence and uniqueness (also when user changes his email)
+  # Devise validates email on presence and uniqueness
+  #  (also when user changes his email)
   # Devise validates password on presence, confirmation, and length
   validates :name, presence: true
 
@@ -66,5 +67,6 @@ class User < ActiveRecord::Base
   end
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me # project_ids
+  attr_accessible :name, :email, :password,
+    :password_confirmation, :remember_me # project_ids
 end

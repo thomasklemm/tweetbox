@@ -111,10 +111,4 @@ describe User, "valid" do
   it "return nothing for nil search" do
     expect(User.search(nil)).to eq([])
   end
-
-  it { should allow_mass_assignment_of(:name) }
-  it { should allow_mass_assignment_of(:email) }
-  it { should allow_mass_assignment_of(:password) }
-  it { should allow_mass_assignment_of(:password_confirmation) }
-  it { should allow_mass_assignment_of(:remember_me) }
 end

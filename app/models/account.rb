@@ -27,7 +27,7 @@ class Account < ActiveRecord::Base
                         conditions: { 'memberships.admin' => false }
 
   # Projects
-  has_many :projects, dependent: :destroy
+  has_many :projects, dependent: :restrict
 
   # Plan
   belongs_to :plan
@@ -38,8 +38,6 @@ class Account < ActiveRecord::Base
   validates :name, presence: true
 
   before_create :set_trial_expiration
-
-  attr_accessible :name
 
   def has_member?(user)
     memberships.exists?(user_id: user.id)
