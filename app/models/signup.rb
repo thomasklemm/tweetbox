@@ -9,6 +9,7 @@ class Signup
 
   attr_reader :user
   attr_reader :account
+  attr_reader :membership
   attr_reader :project
 
   attribute :name, String
@@ -24,6 +25,7 @@ class Signup
   end
 
   def save
+    # Validate signup object
     return false unless valid?
 
     delegate_attributes_for_user
@@ -32,6 +34,7 @@ class Signup
     delegate_errors_for_user unless @user.valid?
     delegate_errors_for_account unless @account.valid?
 
+    # Have any errors been added by validating user and account?
     if !errors.any?
       persist!
       true

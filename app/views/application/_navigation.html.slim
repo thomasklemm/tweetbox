@@ -4,3 +4,9 @@
   b style='margin-right: 1rem'
     = link_to 'My projects', projects_path
   = link_to 'My accounts', accounts_path
+
+  .right
+    - if user_signed_in?
+      = link_to 'Logout', destroy_user_session_path, method: :delete
+    - else
+      = link_to 'Login', new_user_session_path

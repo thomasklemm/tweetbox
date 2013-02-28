@@ -2,6 +2,20 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
 
+  # Redirect the user to his main project after sign_in
+  # if there is only one
+  def after_sign_in_path_for(resource)
+    if current_user.projects.count == 1
+      project_path(current_user.projects.first)
+    else
+      projects_path
+    end
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    root_url
+  end
+
   private
 
   helper_method :user_accounts, :user_account
