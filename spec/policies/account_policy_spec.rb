@@ -1,35 +1,49 @@
 require 'spec_helper'
 
 describe AccountPolicy do
-  let(:account)  { Fabricate(:account) }
-  let(:user)     { Fabricate(:user) }
   subject        { AccountPolicy }
+  let(:account)  { Fabricate(:account) }
 
-  context 'user with admin membership' do
-    before do
-      Fabricate(:membership, user: user, account: account, admin: true)
-    end
+  context 'account admin' do
+    let(:admin)       { Fabricate(:user) }
+    let!(:membership) { Fabricate(:membership,
+      user: admin, account: account, admin: true) }
 
-    it { should permit(user, account, :index?) }
-    it { should permit(user, account, :show?) }
-    it { should permit(user, account, :new?) }
-    it { should permit(user, account, :create?) }
-    it { should permit(user, account, :edit?) }
-    it { should permit(user, account, :update?) }
-    it { should permit(user, account, :destroy?) }
+    it { should permit(admin, account, :index?) }
+    it { should permit(admin, account, :show?) }
+    it { should permit(admin, account, :new?) }
+    it { should permit(admin, account, :create?) }
+    it { should permit(admin, account, :edit?) }
+    it { should permit(admin, account, :update?) }
+    it { should permit(admin, account, :destroy?) }
   end
 
-  context 'user with non-admin membership' do
-    before do
-      Fabricate(:membership, user: user, account: account)
-    end
+  context 'account member' do
+    let(:member)      { Fabricate(:user) }
+    let!(:membership) { Fabricate(:membership,
+      user: member, account: account) }
 
-    it { should permit(user, account, :index?) }
-    it { should permit(user, account, :show?) }
-    it { should permit(user, account, :new?) }
-    it { should permit(user, account, :create?) }
-    it { should_not permit(user, account, :edit?) }
-    it { should_not permit(user, account, :update?) }
-    it { should_not permit(user, account, :destroy?) }
+    it { should permit(member, account, :index?) }
+    it { should permit(member, account, :show?) }
+    it { should permit(member, account, :new?) }
+    it { should permit(member, account, :create?) }
+    it { should_not permit(member, account, :edit?) }
+    it { should_not permit(member, account, :update?) }
+    it { should_not permit(member, account, :destroy?) }
+  end
+
+  context 'other user' do
+    let(:non_member)      { Fabricate(:user) }
+    let(:other_account)   { Fabricate(:account) }
+    let!(:non_membership) { Fabricate(:membership,
+      user: non_member, account: other_account, admin: true) }
+
+    it { should_not permit(non_member, account, :index?) }
+    it { should_not permit(non_member, account, :show?) }
+    it { should_not permit(non_member, account, :new?) }
+    it { should_not permit(non_member, account, :create?) }
+    it { should_not permit(non_member, account, :edit?) }
+    it { should_not permit(non_member, account, :update?) }
+    it { should_not permit(non_member, account, :destroy?) }
   end
 end

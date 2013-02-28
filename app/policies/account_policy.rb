@@ -1,33 +1,20 @@
 class AccountPolicy < ApplicationPolicy
-  def account
-    record
-  end
+  alias_method :account, :record
 
-  def index?
-    true
-  end
-
-  def show?
-    true
-  end
-
-  def create?
-    true
-  end
-
-  def new?
-    create?
-  end
-
-  def update?
+  def admin_action
     user.admin_of?(account)
   end
 
-  def edit?
-    update?
+  def member_action
+    user.member_of?(account)
   end
 
-  def destroy?
-    user.admin_of?(account)
-  end
+  alias_method :index?,  :member_action
+  alias_method :show?,   :member_action
+  alias_method :new?,    :member_action
+  alias_method :create?, :member_action
+
+  alias_method :update?,  :admin_action
+  alias_method :edit?,    :admin_action
+  alias_method :destroy?, :admin_action
 end

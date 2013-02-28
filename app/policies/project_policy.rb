@@ -1,33 +1,20 @@
 class ProjectPolicy < ApplicationPolicy
-  def project
-    record
-  end
+  alias_method :project, :record
 
-  def index?
-    true
-  end
-
-  def show?
-    true
-  end
-
-  def create?
+  def admin_action
     user.admin_of?(project.account)
   end
 
-  def new?
-    create?
+  def member_action
+    user.member_of?(project)
   end
 
-  def update?
-    user.admin_of?(project.account)
-  end
+  alias_method :index?,  :member_action
+  alias_method :show?,   :member_action
 
-  def edit?
-    update?
-  end
-
-  def destroy?
-    user.admin_of?(project.account)
-  end
+  alias_method :new?,     :admin_action
+  alias_method :create?,  :admin_action
+  alias_method :update?,  :admin_action
+  alias_method :edit?,    :admin_action
+  alias_method :destroy?, :admin_action
 end
