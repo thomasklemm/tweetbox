@@ -5,7 +5,7 @@ div Name: #{ @account.name }
 
 div: b #{ @projects.size } Projects
 - @projects.each do |project|
-  = link_to project.name, account_project_path(@account, project)
+  = link_to project.name, project_path(project)
 
 - if policy(@account.projects.build).new?
   = link_to 'Create a new project', new_account_project_path(@account)

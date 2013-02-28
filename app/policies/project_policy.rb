@@ -9,7 +9,6 @@ class ProjectPolicy < ApplicationPolicy
     user.member_of?(project)
   end
 
-  alias_method :index?,  :member_action
   alias_method :show?,   :member_action
 
   alias_method :new?,     :admin_action

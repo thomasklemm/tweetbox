@@ -9,7 +9,6 @@ class AccountPolicy < ApplicationPolicy
     user.member_of?(account)
   end
 
-  alias_method :index?,  :member_action
   alias_method :show?,   :member_action
   alias_method :new?,    :member_action
   alias_method :create?, :member_action

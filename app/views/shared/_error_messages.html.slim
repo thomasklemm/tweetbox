@@ -1,0 +1,4 @@
+- if target.errors.any?
+  #form-errors
+    - target.errors.full_messages.each do |msg|
+      .message = msg

@@ -1,10 +1,9 @@
 class AccountsController < ApplicationController
   before_filter :authenticate_user!
-  after_filter :verify_authorized
+  after_filter :verify_authorized, except: :index
 
   def index
     @accounts = user_accounts
-    authorize @accounts
   end
 
   def show
@@ -12,7 +11,6 @@ class AccountsController < ApplicationController
     authorize @account
 
     @projects = user_account_projects
-    authorize @projects
   end
 
   def new

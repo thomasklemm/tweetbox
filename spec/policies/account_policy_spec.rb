@@ -9,7 +9,6 @@ describe AccountPolicy do
     let!(:membership) { Fabricate(:membership,
       user: admin, account: account, admin: true) }
 
-    it { should permit(admin, account, :index?) }
     it { should permit(admin, account, :show?) }
     it { should permit(admin, account, :new?) }
     it { should permit(admin, account, :create?) }
@@ -23,7 +22,6 @@ describe AccountPolicy do
     let!(:membership) { Fabricate(:membership,
       user: member, account: account) }
 
-    it { should permit(member, account, :index?) }
     it { should permit(member, account, :show?) }
     it { should permit(member, account, :new?) }
     it { should permit(member, account, :create?) }
@@ -38,7 +36,6 @@ describe AccountPolicy do
     let!(:non_membership) { Fabricate(:membership,
       user: non_member, account: other_account, admin: true) }
 
-    it { should_not permit(non_member, account, :index?) }
     it { should_not permit(non_member, account, :show?) }
     it { should_not permit(non_member, account, :new?) }
     it { should_not permit(non_member, account, :create?) }

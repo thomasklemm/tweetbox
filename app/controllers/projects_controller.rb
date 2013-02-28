@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
-  after_filter  :verify_authorized
+  after_filter  :verify_authorized, except: :index
 
   # resources :accounts do
   #   resources :projects, except: [:index, :show]
@@ -49,7 +49,6 @@ class ProjectsController < ApplicationController
   # resources :projects, only: [:index, :show]
   def index
     @projects = user_projects
-    authorize @projects
   end
 
   def show

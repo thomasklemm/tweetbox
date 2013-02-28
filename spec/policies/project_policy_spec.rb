@@ -11,7 +11,6 @@ describe ProjectPolicy do
     let!(:permission) { Fabricate(:permission,
       membership: membership, project: project) }
 
-    it { should permit(admin, project, :index?) }
     it { should permit(admin, project, :show?) }
     it { should permit(admin, project, :new?) }
     it { should permit(admin, project, :create?) }
@@ -27,7 +26,6 @@ describe ProjectPolicy do
     let!(:permission) { Fabricate(:permission,
       membership: membership, project: project) }
 
-    it { should permit(project_member, project, :index?) }
     it { should permit(project_member, project, :show?) }
     it { should_not permit(project_member, project, :new?) }
     it { should_not permit(project_member, project, :create?) }
@@ -44,7 +42,6 @@ describe ProjectPolicy do
     let!(:permission) { Fabricate(:permission,
       membership: membership, project: other_project) }
 
-    it { should_not permit(non_project_member, project, :index?) }
     it { should_not permit(non_project_member, project, :show?) }
     it { should_not permit(non_project_member, project, :new?) }
     it { should_not permit(non_project_member, project, :create?) }
@@ -61,7 +58,6 @@ describe ProjectPolicy do
     let!(:permission) { Fabricate(:permission,
       membership: membership, project: other_project) }
 
-    it { should_not permit(other_user, project, :index?) }
     it { should_not permit(other_user, project, :show?) }
     it { should_not permit(other_user, project, :new?) }
     it { should_not permit(other_user, project, :create?) }
