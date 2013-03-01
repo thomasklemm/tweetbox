@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-# TODO: test "authorize @account"
-
 describe AccountsController do
   describe "#account_params" do
     it "permits only :name" do
@@ -64,6 +62,7 @@ describe AccountsController do
     before { get :show, id: account }
     it { should respond_with(:success) }
     it { should assign_to(:account) }
+    it { should authorize_resource }
     it { should render_template(:show) }
     it { should_not set_the_flash }
   end
@@ -72,6 +71,7 @@ describe AccountsController do
     before { get :new }
     it { should respond_with(:success) }
     it { should assign_to(:account) }
+    it { should authorize_resource }
     it { should render_template(:new) }
     it { should_not set_the_flash }
   end
@@ -83,6 +83,7 @@ describe AccountsController do
       end
 
       it { should assign_to(:account) }
+      it { should authorize_resource }
       it { should assign_to(:membership) }
       it { should redirect_to(account_path(assigns(:account))) }
       it { should set_the_flash }
@@ -130,6 +131,7 @@ describe AccountsController do
       end
 
       it { should assign_to(:account) }
+      it { should authorize_resource }
       it { should_not assign_to(:membership) }
       it { should render_template(:new) }
       it { should_not set_the_flash }
@@ -170,6 +172,7 @@ describe AccountsController do
       before { get :edit, id: account }
       it { should respond_with(:success) }
       it { should assign_to(:account) }
+      it { should authorize_resource }
       it { should render_template(:edit) }
       it { should_not set_the_flash }
     end
@@ -181,6 +184,7 @@ describe AccountsController do
         end
 
         it { should assign_to(:account) }
+        it { should authorize_resource }
         it { should redirect_to(account_path(assigns(:account)))}
         it { should set_the_flash }
 
@@ -195,6 +199,7 @@ describe AccountsController do
         end
 
         it { should assign_to(:account) }
+        it { should authorize_resource }
         it { should render_template(:edit) }
         it { should_not set_the_flash }
 
@@ -209,6 +214,7 @@ describe AccountsController do
         before { delete :destroy, id: account }
 
         it { should assign_to(:account) }
+        it { should authorize_resource }
         it { should redirect_to(accounts_path) }
         it { should set_the_flash }
 
@@ -224,6 +230,7 @@ describe AccountsController do
         end
 
         it { should assign_to(:account) }
+        it { should authorize_resource }
         it { should redirect_to(account_path(assigns(:account))) }
         it { should set_the_flash }
 
