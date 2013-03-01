@@ -37,8 +37,8 @@ describe AccountPolicy do
       user: non_member, account: other_account, admin: true) }
 
     it { should_not permit(non_member, account, :show?) }
-    it { should_not permit(non_member, account, :new?) }
-    it { should_not permit(non_member, account, :create?) }
+    it { should permit(non_member, account, :new?) }
+    it { should permit(non_member, account, :create?) }
     it { should_not permit(non_member, account, :edit?) }
     it { should_not permit(non_member, account, :update?) }
     it { should_not permit(non_member, account, :destroy?) }

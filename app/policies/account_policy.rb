@@ -9,9 +9,16 @@ class AccountPolicy < ApplicationPolicy
     user.member_of?(account)
   end
 
+  def new?
+    create?
+  end
+
+  # Any signed in user can create a project
+  def create?
+    user.present?
+  end
+
   alias_method :show?,   :member_action
-  alias_method :new?,    :member_action
-  alias_method :create?, :member_action
 
   alias_method :update?,  :admin_action
   alias_method :edit?,    :admin_action

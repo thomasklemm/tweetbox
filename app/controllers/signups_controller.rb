@@ -7,7 +7,7 @@ class SignupsController < ApplicationController
     @signup = Signup.new(params[:signup])
 
     if @signup.save
-      sign_in(:user, @signup.user)
+      sign_in @signup.user
       redirect_to projects_path, notice: 'You signed up successfully.'
     else
       render action: :new

@@ -23,7 +23,7 @@ class AccountsController < ApplicationController
     authorize @account
     @account.plan = Plan.trial
     if @account.save
-      Membership.create!(user: current_user, account: @account, admin: true)
+      @membership = Membership.create!(user: current_user, account: @account, admin: true)
       redirect_to account_path(@account),
         notice: 'Account was successfully created.'
     else
@@ -51,10 +51,18 @@ class AccountsController < ApplicationController
   def destroy
     @account = user_accounts.find(params[:id])
     authorize @account
-    @account.destroy
-    redirect_to accounts_path, notice: 'Account was successfully destroyed.'
-    # TODO: Handle case where on attempted account destruction \
-    #       there are still projects present, maybe change link in view too.
+
+    begin
+      @account.destroy
+    rescue ActiveRecord::DeleteRestrictionError
+      flash[:alert] = 'Cannot destroy account because there is at least one project associated with it. Please destroy the project(s) first.'
+    end
+
+    if @account.destroyed?
+      redirect_to accounts_path, notice: 'Account successfully destroyed.'
+    else
+      redirect_to account_path(@account)
+    end
   end
 
   private

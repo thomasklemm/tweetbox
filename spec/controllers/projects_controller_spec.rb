@@ -8,7 +8,7 @@ describe ProjectsController do
     end
   end
 
-  context "an unauthenticated guest" do
+  context "unauthenticated guest trying to access" do
 
     describe "GET #index" do
       before { get :index }
