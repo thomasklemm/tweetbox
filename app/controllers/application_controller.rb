@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   # Redirect the user to his main project after sign_in
   # if there is only one
   def after_sign_in_path_for(resource)
@@ -17,6 +19,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def user_not_authorized
+    flash[:error] = "You are not authorized to access or perform this action."
+    redirect_to :back
+  end
 
   helper_method :user_accounts, :user_account
   helper_method :user_account_projects, :user_account_project
