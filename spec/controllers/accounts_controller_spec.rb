@@ -8,43 +8,6 @@ describe AccountsController do
     end
   end
 
-  context "unauthenticated guest trying to access" do
-    describe "GET #index" do
-      before { get :index }
-      it_behaves_like "a request that requires login"
-    end
-
-    describe "GET #show" do
-      before { get :show, id: 1 }
-      it_behaves_like "a request that requires login"
-    end
-
-    describe "GET #new" do
-      before { get :new }
-      it_behaves_like "a request that requires login"
-    end
-
-    describe "GET #edit" do
-      before { get :edit, id: 1 }
-      it_behaves_like "a request that requires login"
-    end
-
-    describe "POST #create" do
-      before { post :create }
-      it_behaves_like "a request that requires login"
-    end
-
-    describe "PUT #update" do
-      before { put :update, id: 1 }
-      it_behaves_like "a request that requires login"
-    end
-
-    describe "DELETE #destroy" do
-      before { delete :destroy, id: 1 }
-      it_behaves_like "a request that requires login"
-    end
-  end
-
   let(:account) { Fabricate(:account) }
   let(:user)    { Fabricate(:user) }
   let(:valid_account_attributes)   { Fabricate.attributes_for(:account) }
@@ -276,6 +239,45 @@ describe AccountsController do
     describe "DELETE #destroy" do
       let(:forbidden_request) { delete :destroy, id: account }
       it_behaves_like "a forbidden request"
+    end
+  end
+end
+
+describe AccountsController do
+  context "unauthenticated guest trying to access" do
+    describe "GET #index" do
+      before { get :index }
+      it_behaves_like "a request that requires login"
+    end
+
+    describe "GET #show" do
+      before { get :show, id: 1 }
+      it_behaves_like "a request that requires login"
+    end
+
+    describe "GET #new" do
+      before { get :new }
+      it_behaves_like "a request that requires login"
+    end
+
+    describe "GET #edit" do
+      before { get :edit, id: 1 }
+      it_behaves_like "a request that requires login"
+    end
+
+    describe "POST #create" do
+      before { post :create }
+      it_behaves_like "a request that requires login"
+    end
+
+    describe "PUT #update" do
+      before { put :update, id: 1 }
+      it_behaves_like "a request that requires login"
+    end
+
+    describe "DELETE #destroy" do
+      before { delete :destroy, id: 1 }
+      it_behaves_like "a request that requires login"
     end
   end
 end

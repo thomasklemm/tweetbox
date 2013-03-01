@@ -7,9 +7,10 @@ describe ProjectsController do
       expect(subject.send(:project_params).keys).to eq(%w(name))
     end
   end
+end
 
+describe ProjectsController do
   context "unauthenticated guest trying to access" do
-
     describe "GET #index" do
       before { get :index }
       it { should redirect_to(login_path) }
@@ -51,6 +52,5 @@ describe ProjectsController do
       it { should redirect_to(login_path) }
       it { should set_the_flash }
     end
-
   end
 end

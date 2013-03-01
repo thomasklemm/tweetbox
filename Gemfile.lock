@@ -61,7 +61,7 @@ GEM
     bourne (1.1.2)
       mocha (= 0.10.5)
     builder (3.0.4)
-    bullet (4.3.0)
+    bullet (4.3.1)
       uniform_notifier
     capybara (2.0.2)
       mime-types (>= 1.16)
@@ -110,6 +110,10 @@ GEM
     figaro (0.6.1)
       rails (>= 3, < 5)
     fssm (0.2.10)
+    fuubar (1.1.0)
+      rspec (~> 2.0)
+      rspec-instafail (~> 0.2.0)
+      ruby-progressbar (~> 1.0.0)
     hashie (2.0.2)
     high_voltage (1.2.2)
     hike (1.2.1)
@@ -184,6 +188,10 @@ GEM
     rake (10.0.3)
     rdoc (3.12.2)
       json (~> 1.4)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
     rspec-core (2.13.0)
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
@@ -196,6 +204,7 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
+    ruby-progressbar (1.0.2)
     rubyzip (0.9.9)
     sass (3.2.6)
     sass-rails (3.2.6)
@@ -272,6 +281,7 @@ DEPENDENCIES
   devise
   fabrication
   figaro
+  fuubar
   high_voltage
   jquery-rails
   letter_opener
@@ -286,7 +296,6 @@ DEPENDENCIES
   quiet_assets
   rack-timeout
   rails (= 3.2.12)
-  rspec-instafail
   rspec-rails
   sass-rails
   sentry-raven!

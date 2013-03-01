@@ -20,6 +20,9 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # Handle user access violations
+  # to actions his access level does not permit
+  # detected by pundit
   def user_not_authorized
     flash[:error] = "You are not authorized to access or perform this action."
     redirect_to :back
