@@ -10,6 +10,8 @@ Birdview::Application.routes.draw do
     delete 'logout', to: 'devise/sessions#destroy',  as: :destroy_user_session
   end
 
+  get 'login', to: 'devise/sessions#new', as: :login
+
   # Signups
   get 'signup' => 'signups#new',     as: :new_signup
   post 'signup' => 'signups#create', as: :signups

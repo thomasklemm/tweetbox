@@ -4,7 +4,7 @@ describe AccountPolicy do
   subject        { AccountPolicy }
   let(:account)  { Fabricate(:account) }
 
-  context 'account admin' do
+  context 'for account admin' do
     let(:admin)       { Fabricate(:user) }
     let!(:membership) { Fabricate(:membership,
       user: admin, account: account, admin: true) }
@@ -17,7 +17,7 @@ describe AccountPolicy do
     it { should permit(admin, account, :destroy?) }
   end
 
-  context 'account member' do
+  context 'for account member' do
     let(:member)      { Fabricate(:user) }
     let!(:membership) { Fabricate(:membership,
       user: member, account: account) }
@@ -30,7 +30,7 @@ describe AccountPolicy do
     it { should_not permit(member, account, :destroy?) }
   end
 
-  context 'other user' do
+  context 'for other user' do
     let(:non_member)      { Fabricate(:user) }
     let(:other_account)   { Fabricate(:account) }
     let!(:non_membership) { Fabricate(:membership,

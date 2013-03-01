@@ -91,6 +91,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'timecop'
+  gem 'rspec-instafail'
 end
 
 group :staging, :production do

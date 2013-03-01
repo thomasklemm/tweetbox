@@ -1,54 +1,56 @@
 require 'spec_helper'
 
 describe ProjectsController do
+  describe "#project_params" do
+    it "permits only :name" do
+      post :create, account_id: 1, project: Fabricate.attributes_for(:project)
+      expect(subject.send(:project_params).keys).to eq(%w(name))
+    end
+  end
 
-  # describe "GET 'index'" do
-  #   it "returns http success" do
-  #     get 'index'
-  #     response.should be_success
-  #   end
-  # end
+  context "an unauthenticated guest" do
 
-  # describe "GET 'show'" do
-  #   it "returns http success" do
-  #     get 'show'
-  #     response.should be_success
-  #   end
-  # end
+    describe "GET #index" do
+      before { get :index }
+      it { should redirect_to(login_path) }
+      it { should set_the_flash }
+    end
 
-  # describe "GET 'new'" do
-  #   it "returns http success" do
-  #     get 'new'
-  #     response.should be_success
-  #   end
-  # end
+    describe "GET #show" do
+      before { get :show, id: 1 }
+      it { should redirect_to(login_path) }
+      it { should set_the_flash }
+    end
 
-  # describe "GET 'create'" do
-  #   it "returns http success" do
-  #     get 'create'
-  #     response.should be_success
-  #   end
-  # end
+    describe "GET #new" do
+      before { get :new, account_id: 1 }
+      it { should redirect_to(login_path) }
+      it { should set_the_flash }
+    end
 
-  # describe "GET 'edit'" do
-  #   it "returns http success" do
-  #     get 'edit'
-  #     response.should be_success
-  #   end
-  # end
+    describe "GET #edit" do
+      before { get :edit, account_id: 1, id: 1 }
+      it { should redirect_to(login_path) }
+      it { should set_the_flash }
+    end
 
-  # describe "GET 'update'" do
-  #   it "returns http success" do
-  #     get 'update'
-  #     response.should be_success
-  #   end
-  # end
+    describe "POST #create" do
+      before { post :create, account_id: 1 }
+      it { should redirect_to(login_path) }
+      it { should set_the_flash }
+    end
 
-  # describe "GET 'destroy'" do
-  #   it "returns http success" do
-  #     get 'destroy'
-  #     response.should be_success
-  #   end
-  # end
+    describe "PUT #update" do
+      before { put :update, account_id: 1, id: 1 }
+      it { should redirect_to(login_path) }
+      it { should set_the_flash }
+    end
 
+    describe "DELETE #destroy" do
+      before { delete :destroy, account_id: 1, id: 1 }
+      it { should redirect_to(login_path) }
+      it { should set_the_flash }
+    end
+
+  end
 end
