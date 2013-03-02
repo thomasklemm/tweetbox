@@ -10,7 +10,7 @@ class AccountsController < ApplicationController
     @account = user_accounts.find(params[:id])
     authorize @account
 
-    @projects = user_account_projects
+    @projects = user_account.projects
   end
 
   def new
