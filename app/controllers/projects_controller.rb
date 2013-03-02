@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
 
     account = @project.account
     @project.destroy
-    redirect_to account_path(account)
+    redirect_to account_path(account), notice: 'Project was successfully destroyed.'
   end
 
   # resources :projects, only: [:index, :show]
