@@ -82,7 +82,7 @@ describe ProjectSubController do
     end
   end
 
-  describe "forbids access for non-project member" do
+  describe "forbids access for non-project account member" do
     let!(:user)    { Fabricate(:user) }
     let!(:project) { Fabricate(:project) }
     let!(:membership) { Fabricate(:membership, user: user, account: project.account) }

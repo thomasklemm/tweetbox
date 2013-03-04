@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130226112207) do
+ActiveRecord::Schema.define(:version => 20130304101214) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,26 @@ ActiveRecord::Schema.define(:version => 20130226112207) do
 
   add_index "accounts", ["plan_id"], :name => "index_accounts_on_plan_id"
   add_index "accounts", ["trial_expires_at"], :name => "index_accounts_on_trial_expires_at"
+
+  create_table "invitations", :force => true do |t|
+    t.string   "code"
+    t.string   "email"
+    t.integer  "account_id"
+    t.integer  "sender_id"
+    t.boolean  "admin",      :default => false, :null => false
+    t.boolean  "used",       :default => false, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "invitations", ["account_id"], :name => "index_invitations_on_account_id"
+
+  create_table "invitations_projects", :force => true do |t|
+    t.integer "invitation_id", :null => false
+    t.integer "project_id",    :null => false
+  end
+
+  add_index "invitations_projects", ["invitation_id", "project_id"], :name => "index_invitations_projects_on_invitation_id_and_project_id", :unique => true
 
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
