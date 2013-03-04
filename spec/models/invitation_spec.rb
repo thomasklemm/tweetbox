@@ -45,4 +45,20 @@ describe Invitation do
   it "delegates sender email" do
     expect(subject.sender_email).to eq(subject.sender.email)
   end
+
+  it "delegates account name" do
+    expect(subject.account_name).to eq(subject.account.name)
+  end
+
+  describe "#send_email" do
+    it "sends an invitation email" do
+      mail = stub('invitation_mail', deliver: true)
+      InvitationMailer.stubs(:invitation).returns(mail)
+
+      subject.send_email
+
+      expect(InvitationMailer).to have_received(:invitation).with(subject).once
+      expect(mail).to have_received(:deliver).once
+    end
+  end
 end

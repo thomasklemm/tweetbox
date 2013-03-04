@@ -29,6 +29,9 @@ class Account < ActiveRecord::Base
   # Projects
   has_many :projects, dependent: :restrict
 
+  # Invitations
+  has_many :invitations, dependent: :destroy
+
   # Plan
   belongs_to :plan
   validates :plan_id, presence: true

@@ -1,0 +1,19 @@
+h1 Invitations#new
+
+= form_for [@account, @invitation] do |f|
+  = f.label :email
+  = f.text_field :email
+
+  br
+  = f.check_box :admin
+  = f.label :admin, 'Give account admin rights? (e.g. access all projects, invite people and more)'
+
+  br
+  h5 Projects
+  - @account.projects.each do |project|
+    .project
+      = check_box_tag "invitation[project_ids][]", project.id, @invitation.projects.include?(project)
+      = label_tag project.name
+
+  br
+  = f.submit

@@ -8,9 +8,9 @@ GIT
 
 GIT
   remote: git://github.com/getsentry/raven-ruby.git
-  revision: e520389a56d099276c167d8b442967c7fa549ecd
+  revision: 15825b04c99aae804e662b6f129bc54b53b5ee46
   specs:
-    sentry-raven (0.4.3)
+    sentry-raven (0.4.4)
       faraday (>= 0.7.6)
       hashie
       multi_json (~> 1.0)
@@ -73,7 +73,7 @@ GEM
     capybara-webkit (0.14.2)
       capybara (~> 2.0, >= 2.0.2)
       json
-    childprocess (0.3.8)
+    childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     chunky_png (1.2.7)
     coderay (1.0.9)
@@ -211,7 +211,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.30.0)
+    selenium-webdriver (2.31.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
       rubyzip
@@ -248,11 +248,11 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.35)
+    tzinfo (0.3.36)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    uniform_notifier (1.1.1)
+    uniform_notifier (1.2.0)
     uuidtools (2.1.3)
     virtus (0.5.4)
       backports (~> 2.6.1)

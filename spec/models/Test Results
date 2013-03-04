@@ -1,0 +1,35 @@
+Run options: include {:focus=>true}
+
+All examples were filtered out; ignoring {:focus=>true}
+
+Invitation
+  should be valid
+  should belong to account
+  should belong to sender class_name => User
+  should have and belong to many projects
+  should require account to be set
+  should require email to be set
+  generates code
+  uses the code in the URL
+  delegates sender name
+  delegates sender email
+  delegates account name
+  #send_email
+    sends an invitation email (FAILED - 1)
+
+Failures:
+
+  1) Invitation#send_email sends an invitation email
+     Failure/Error: expect(mailer).to have_received(:invitation).with(subject).once
+     NameError:
+       undefined local variable or method `mailer' for #<RSpec::Core::ExampleGroup::Nested_1::Nested_1:0x007ff598016fe0>
+     # ./spec/models/invitation_spec.rb:59:in `block (3 levels) in <top (required)>'
+     # -e:1:in `<main>'
+
+Finished in 1.51 seconds
+12 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/models/invitation_spec.rb:54 # Invitation#send_email sends an invitation email
+[Finished in 2.3s with exit code 2]

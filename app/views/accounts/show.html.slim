@@ -2,14 +2,27 @@ h1 Accounts#show
 p Find me in app/views/accounts/show.html.slim
 
 div Name: #{ @account.name }
+- if policy(@account).edit?
+  = link_to 'Edit account', edit_account_path(@account)
 
-div: b #{ @projects.size } Projects
+br
+br
+div: b #{ @projects.size } projects
 - @projects.each do |project|
-  = link_to project.name, project_path(project)
+  b = link_to project.name, project_path(project)
 
+br
 - if policy(@account.projects.build).new?
   = link_to 'Create a new project', new_account_project_path(@account)
 
 br
-- if policy(@account).edit?
-  = link_to 'Edit account', edit_account_path(@account)
+br
+div: b #{ @account.users.size } users
+- @account.users.each do |user|
+  = mail_to user.email, user.name
+  - if user.admin_of?(@account)
+    |, Account admin
+
+br
+- if policy(@account).invite?
+  = link_to 'Manage invitations', account_invitations_path(@account)

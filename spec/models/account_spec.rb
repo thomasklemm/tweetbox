@@ -27,6 +27,7 @@ describe Account do
   it { should have_many(:non_admins).through(:memberships) }
 
   it { should have_many(:projects).dependent(:restrict) }
+  it { should have_many(:invitations).dependent(:destroy) }
 
   it { should belong_to(:plan) }
   it { should validate_presence_of(:plan_id) }

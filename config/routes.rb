@@ -2,7 +2,9 @@ Birdview::Application.routes.draw do
   # User authentication
   devise_for :users,
     path_names: { sign_up: 'signup', sign_in: 'login', sign_out: 'logout' },
-    controllers: { registrations: 'user_registrations' }
+    controllers: {
+      registrations: 'users/registrations'
+    }
 
   # Special naming of signup, login and logout routes
   devise_scope :user do
@@ -16,8 +18,16 @@ Birdview::Application.routes.draw do
   get 'signup' => 'signups#new',     as: :new_signup
   post 'signup' => 'signups#create', as: :signups
 
+  # Invites
+  resources :invites, only: :show do
+    put :accept, on: :member
+  end
+
   resources :accounts do
     resources :projects, except: [:index, :show]
+    resources :invitations, only: [:index, :new, :create, :destroy] do
+      put :send_email, on: :member, as: :send
+    end
   end
 
   resources :projects, only: [:index, :show] do

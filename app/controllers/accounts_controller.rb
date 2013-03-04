@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @account = user_accounts.find(params[:id])
+    @account = user_account
     authorize @account
 
     @projects = user_account.projects
@@ -33,12 +33,12 @@ class AccountsController < ApplicationController
   end
 
   def edit
-    @account = user_accounts.find(params[:id])
+    @account = user_account
     authorize @account
   end
 
   def update
-    @account = user_accounts.find(params[:id])
+    @account = user_account
     authorize @account
     if @account.update_attributes(account_params)
       redirect_to account_path(@account),
@@ -49,7 +49,7 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    @account = user_accounts.find(params[:id])
+    @account = user_account
     authorize @account
 
     begin

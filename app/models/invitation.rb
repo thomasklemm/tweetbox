@@ -22,10 +22,9 @@ class Invitation < ActiveRecord::Base
   belongs_to :sender, class_name: 'User'
   has_and_belongs_to_many :projects
 
-  validates :email, :account, presence: true
+  validates :email, :account, :sender, presence: true
 
-  after_initialize :generate_code
-  after_create :deliver_invitation
+  before_create :generate_code
 
   def to_param
     code
@@ -39,14 +38,18 @@ class Invitation < ActiveRecord::Base
     sender.email
   end
 
+  def account_name
+    account.name
+  end
+
+  def send_email
+    InvitationMailer.invitation(self).deliver
+  end
+
   private
 
   def generate_code
-    self.code = SecureRandom.hex(16)
+    self.code ||= SecureRandom.hex(16)
     self.code = self.code.force_encoding("UTF-8") if self.code.respond_to?(:encoding)
-  end
-
-  def deliver_invitation
-    # InvitationMailer.invitation(self).deliver
   end
 end

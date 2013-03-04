@@ -45,6 +45,9 @@ Birdview::Application.configure do
   # Quiet Assets
   config.quiet_assets = true
 
+  # Strong Parameters
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
   # Bullet
   # update to the latest bullet config options when enabling
   # config.after_initialize do
