@@ -48,6 +48,6 @@ class InvitationsController < ApplicationController
   end
 
   def invitation_params
-    params.require(:invitation).permit(:email, :admin)
+    params.require(:invitation).permit(:email, :admin, project_ids: [])
   end
 end

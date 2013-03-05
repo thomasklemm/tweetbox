@@ -11,7 +11,7 @@ describe InvitationsController do
   describe "#invitation_params" do
     it "permits only name and email" do
       post :create, account_id: account, invitation: valid_invitation_attributes
-      expect(subject.send(:invitation_params).keys).to eq(%w(email admin))
+      expect(subject.send(:invitation_params).keys).to eq(%w(email admin project_ids))
     end
   end
 

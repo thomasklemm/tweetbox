@@ -55,6 +55,9 @@ group :assets do
   # Javascripts
   gem 'coffee-rails'
   gem 'uglifier'
+
+  # Packaged plugins
+  gem 'select2-rails'
 end
 
 group :development do

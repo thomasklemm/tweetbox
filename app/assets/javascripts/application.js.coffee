@@ -2,6 +2,7 @@
 # load jQuery beforhand
 //= require jquery_ujs
 //= require jquery.autosize
+//= require select2
 
 # Birdview
 $ ->

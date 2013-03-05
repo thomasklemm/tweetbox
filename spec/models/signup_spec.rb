@@ -20,7 +20,6 @@ describe Signup do
     should be_kind_of(ActiveModel::Conversion)
     should be_kind_of(ActiveModel::Validations)
   end
-
 end
 
 describe Signup, 'with a valid user and account' do
@@ -28,17 +27,12 @@ describe Signup, 'with a valid user and account' do
   it { should be_valid }
 
   before do
-    @result = subject.save # time instense
+    @result = subject.save # time intense
   end
 
   it 'returns true' do
     expect(@result).to be_true
   end
-
-  its(:user)       { should be_valid }
-  its(:account)    { should be_valid }
-  its(:membership) { should be_valid }
-  its(:project)    { should be_valid }
 
   its(:user)       { should be_persisted }
   its(:account)    { should be_persisted }

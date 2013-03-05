@@ -9,11 +9,12 @@ h1 Invitations#new
   = f.label :admin, 'Give account admin rights? (e.g. access all projects, invite people and more)'
 
   br
-  h5 Projects
-  - @account.projects.each do |project|
-    .project
-      = check_box_tag "invitation[project_ids][]", project.id, @invitation.projects.include?(project)
-      = label_tag project.name
+  b Projects
+  br
+  = f.collection_select(:project_ids, @account.projects, :id, :name, {}, { multiple: true, style: 'width: 100%' })
+  coffee:
+    $ ->
+      $("#invitation_project_ids").select2()
 
   br
   = f.submit

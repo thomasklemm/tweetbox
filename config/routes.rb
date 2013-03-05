@@ -19,9 +19,9 @@ Birdview::Application.routes.draw do
   post 'signup' => 'signups#create', as: :signups
 
   # Invites
-  resources :invites, only: :show do
-    put :accept, on: :member
-  end
+  get  'join' => 'invitation_signups#new', as: :new_invitation_signup
+  post 'join' => 'invitation_signups#create', as: :invitation_signups
+  post 'join/accept' => 'invitation_signups#accept', as: :accept_invitation
 
   resources :accounts do
     resources :projects, except: [:index, :show]

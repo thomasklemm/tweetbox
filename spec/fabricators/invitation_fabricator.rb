@@ -20,7 +20,7 @@
 Fabricator(:invitation) do
   email   { sequence(:email) { |i| "invitation#{ i }@example.com" } }
   account
-  sender  { Fabricate.build(:user) }
+  sender  { Fabricate(:user) }
   admin   false
   used    false
 end
