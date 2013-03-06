@@ -22,6 +22,10 @@ class InvitationSignup
   # Membership
   attr_reader :membership
 
+  def initialize(code)
+    @invitation = Invitation.where(code: code).first
+  end
+
   # Forms are never themselves persisted
   def persisted?
     false

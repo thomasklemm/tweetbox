@@ -66,5 +66,41 @@ describe InvitationSignup, 'with an existing user' do
   its(:user)       { should be_persisted }
   its(:membership) { should be_persisted }
 
+  it "makes user a member of the account" do
+    expect(user).to be_member_of(invitation.account)
+  end
 
+  it "marks the invitation as used" do
+    expect(invitation).to be_used
+  end
+end
+
+describe InvitationSignup, 'with a new user' do
+  let(:invitation) { Fabricate(:invitation) }
+  let(:user)       { Fabricate.attributes_for(:user) }
+
+  subject do
+    Fabricate(:invitation_signup, invitation: invitation, name: user[:name], email: user[:email], password: user[:password])
+  end
+
+  before do
+    @result = subject.save # time intense
+  end
+
+  it { should be_valid }
+
+  it "returns true" do
+    expect(@result).to be_true
+  end
+
+  its(:user)       { should be_persisted }
+  its(:membership) { should be_persisted }
+
+  it "makes user a member of the account" do
+    expect(subject.user).to be_member_of(invitation.account)
+  end
+
+  it "marks the invitation as used" do
+    expect(invitation).to be_used
+  end
 end

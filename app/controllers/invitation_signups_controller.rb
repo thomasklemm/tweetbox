@@ -3,14 +3,13 @@ class InvitationSignupsController < ApplicationController
 
   # Store the invitation code for the next step
   def new
-    @signup = InvitationSignup.new
-    @signup.invitation = @invitation
   end
 
   # Create a new user and accept invitation
   def create
-    @signup = InvitationSignup.new(params[:signup])
-    @signup.invitation = @invitation
+    @signup.name     = params[:signup][:name]
+    @signup.email    = params[:signup][:email]
+    @signup.password = params[:signup][:password]
 
     if @signup.save
       sign_in @signup.user
@@ -22,24 +21,30 @@ class InvitationSignupsController < ApplicationController
 
   # Accept an invitation for an existing user
   def accept
-    @signup = InvitationSignup.new(params[:signup])
-    @signup.invitation = @invitation
+    user_signed_in? or return redirect_to new_invitation_signup_path,
+      notice: 'You need to be signed in to accept an invitation.'
+
     @signup.user = current_user
+
+    if @signup.save
+      redirect_to projects_path, notice: 'You accepted the invitation successfully.'
+    else
+      render action: :new
+    end
   end
 
   private
 
   def ensure_invitation
-    begin
-      # Provide invitation code in these parameters
-      code = params[:code] || params[:signup][:code]
-      @invitation = Invitation.find_by_code!(code)
-    rescue ActiveRecord::RecordNotFound
-      return redirect_to root_path, alert: 'Please provide a valid invitation code.'
-    end
+    # Provide invitation code in these parameters
+    code = params[:code] || params[:signup] && params[:signup][:code]
 
-    if @invitation.used?
+    @signup = InvitationSignup.new(code)
+
+    @signup.invitation.present? or
+      return redirect_to root_path, alert: 'Please provide a valid invitation code.'
+
+    @signup.invitation.used? and
       return redirect_to root_path, alert: 'Your invitation code has already been used.'
-    end
   end
 end
