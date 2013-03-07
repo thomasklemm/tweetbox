@@ -7,6 +7,10 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 # require 'rspec/autorun' # remove for Zeus
 
+# Requires namespaced models and controllers
+Dir[Rails.root.join("app/controllers/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("app/models/**/*.rb")].each {|f| require f}
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
