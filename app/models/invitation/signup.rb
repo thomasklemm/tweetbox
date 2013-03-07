@@ -1,4 +1,4 @@
-class Invitation::Signup < ActiveRecord::Base
+class Invitation::Signup
   include Virtus
 
   extend ActiveModel::Naming

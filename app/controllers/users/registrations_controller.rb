@@ -1,7 +1,11 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  def resource_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  def new
+    flash[:notice] = 'Please use the signup form to register.'
+    redirect_to root_path
   end
 
-  private :resource_params
+  def create
+    flash[:notice] = 'Please use the signup form to register.'
+    redirect_to root_path
+  end
 end

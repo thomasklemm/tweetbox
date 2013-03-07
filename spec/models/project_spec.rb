@@ -80,7 +80,7 @@ describe Project, "for an account with admin and non-admin users" do
   end
 
   context "before saving" do
-    it_behaves_like "default project permissions"
+    it_should_behave_like "default project permissions"
   end
 
   context "after saving" do
@@ -88,7 +88,7 @@ describe Project, "for an account with admin and non-admin users" do
       subject.save!
       subject.reload
     end
-    it_behaves_like "default project permissions"
+    it_should_behave_like "default project permissions"
   end
 end
 

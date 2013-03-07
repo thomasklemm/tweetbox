@@ -4,22 +4,17 @@ describe Signup do
   subject { Fabricate(:signup) }
   it { should be_valid }
 
-  it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:password) }
-  it { should validate_presence_of(:company_name) }
-
   it { should respond_to(:user) }
   it { should respond_to(:account) }
   it { should respond_to(:membership) }
   it { should respond_to(:project) }
 
-  it 'complies with the activemodel api' do
-    expect(subject.class).to be_kind_of(ActiveModel::Naming)
-    should_not be_persisted
-    should be_kind_of(ActiveModel::Conversion)
-    should be_kind_of(ActiveModel::Validations)
-  end
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:password) }
+  it { should validate_presence_of(:company_name) }
+
+  it_should_behave_like "a form object"
 end
 
 describe Signup, 'with a valid user and account' do

@@ -116,19 +116,19 @@ describe AccountsController do
     end
 
     describe "GET #index" do
-      it_behaves_like "accounts#index for admin and member"
+      it_should_behave_like "accounts#index for admin and member"
     end
 
     describe "GET #show" do
-      it_behaves_like "accounts#show for admin and member"
+      it_should_behave_like "accounts#show for admin and member"
     end
 
     describe "GET #new" do
-      it_behaves_like "accounts#new for signed in user"
+      it_should_behave_like "accounts#new for signed in user"
     end
 
     describe "POST #create" do
-      it_behaves_like "accounts#create for signed in user"
+      it_should_behave_like "accounts#create for signed in user"
     end
 
     describe "GET #edit" do
@@ -211,34 +211,34 @@ describe AccountsController do
     end
 
     describe "GET #index" do
-      it_behaves_like "accounts#index for admin and member"
+      it_should_behave_like "accounts#index for admin and member"
     end
 
     describe "GET #show" do
-      it_behaves_like "accounts#show for admin and member"
+      it_should_behave_like "accounts#show for admin and member"
     end
 
     describe "GET #new" do
-      it_behaves_like "accounts#new for signed in user"
+      it_should_behave_like "accounts#new for signed in user"
     end
 
     describe "POST #create" do
-      it_behaves_like "accounts#create for signed in user"
+      it_should_behave_like "accounts#create for signed in user"
     end
 
     describe "GET #edit" do
       let(:forbidden_request) { get :edit, id: account }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
 
     describe "PUT #update" do
       let(:forbidden_request) { put :update, id: account, account: valid_account_attributes }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
 
     describe "DELETE #destroy" do
       let(:forbidden_request) { delete :destroy, id: account }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
   end
 end
@@ -247,37 +247,37 @@ describe AccountsController do
   context "unauthenticated guest trying to access" do
     describe "GET #index" do
       before { get :index }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "GET #show" do
       before { get :show, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "GET #new" do
       before { get :new }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "GET #edit" do
       before { get :edit, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "POST #create" do
       before { post :create }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "PUT #update" do
       before { put :update, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "DELETE #destroy" do
       before { delete :destroy, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
   end
 end

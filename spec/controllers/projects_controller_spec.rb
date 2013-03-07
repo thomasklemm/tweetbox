@@ -44,11 +44,11 @@ describe ProjectsController do
     end
 
     describe "GET #index" do
-      it_behaves_like "projects#index for account admin and project member"
+      it_should_behave_like "projects#index for account admin and project member"
     end
 
     describe "GET #show" do
-      it_behaves_like "projects#show for account admin and project member"
+      it_should_behave_like "projects#show for account admin and project member"
     end
 
     describe "GET #new" do
@@ -153,36 +153,36 @@ describe ProjectsController do
     end
 
     describe "GET #index" do
-      it_behaves_like "projects#index for account admin and project member"
+      it_should_behave_like "projects#index for account admin and project member"
     end
 
     describe "GET #show" do
-      it_behaves_like "projects#show for account admin and project member"
+      it_should_behave_like "projects#show for account admin and project member"
     end
 
     describe "GET #new" do
       let(:forbidden_request) { get :new, account_id: account }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
 
     describe "POST #create" do
       let(:forbidden_request) { post :create, account_id: account, project: valid_project_attributes }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
 
     describe "GET #edit" do
       let(:forbidden_request) { get :edit, account_id: account, id: project }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
 
     describe "PUT #update" do
       let(:forbidden_request) { put :update, account_id: account, id: project, project: valid_project_attributes }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
 
     describe "DELETE #destroy" do
       let(:forbidden_request) { delete :destroy, account_id: account, id: project }
-      it_behaves_like "a forbidden request"
+      it_should_behave_like "a forbidden request"
     end
   end
 end
@@ -191,37 +191,37 @@ describe ProjectsController do
   context "unauthenticated guest trying to access" do
     describe "GET #index" do
       before { get :index }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "GET #show" do
       before { get :show, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "GET #new" do
       before { get :new, account_id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "GET #edit" do
       before { get :edit, account_id: 1, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "POST #create" do
       before { post :create, account_id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "PUT #update" do
       before { put :update, account_id: 1, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
 
     describe "DELETE #destroy" do
       before { delete :destroy, account_id: 1, id: 1 }
-      it_behaves_like "a request that requires login"
+      it_should_behave_like "an authenticated request"
     end
   end
 end
