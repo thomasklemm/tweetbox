@@ -85,5 +85,8 @@ module Birdview
 
     # Default timezone
     config.active_record.default_timezone = :utc
+
+    # Using concerns
+    config.autoload_paths += %W(#{config.root}/app/models/concerns)
   end
 end

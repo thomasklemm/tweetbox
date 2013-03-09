@@ -1,11 +1,7 @@
 # The signup class is a form object class that helps with
 # creating a user, account and project all in one step and form
 class Signup
-  include Virtus
-
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
+  include FormObject
 
   attr_reader :user
   attr_reader :account
@@ -18,11 +14,6 @@ class Signup
   attribute :password, String
 
   validates :name, :company_name, :email, :password, presence: true
-
-  # Forms are never themselves persisted
-  def persisted?
-    false
-  end
 
   def save
     # Validate signup object

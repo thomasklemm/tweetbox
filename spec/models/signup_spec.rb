@@ -4,6 +4,8 @@ describe Signup do
   subject { Fabricate(:signup) }
   it { should be_valid }
 
+  it_should_behave_like FormObject
+
   it { should respond_to(:user) }
   it { should respond_to(:account) }
   it { should respond_to(:membership) }
@@ -13,8 +15,6 @@ describe Signup do
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:password) }
   it { should validate_presence_of(:company_name) }
-
-  it_should_behave_like "a form object"
 end
 
 describe Signup, 'with a valid user and account' do

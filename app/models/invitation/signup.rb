@@ -1,9 +1,8 @@
 class Invitation::Signup
-  include Virtus
+  include FormObject
 
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
+  attribute :invitation, Invitation
+  validates :invitation, presence: true
 
   attribute :name, String
   attribute :email, String
@@ -12,14 +11,6 @@ class Invitation::Signup
 
   attr_reader :user
   attr_reader :membership
-
-  attribute :invitation, Invitation
-  validates :invitation, presence: true
-
-  # Forms are never themselves persisted
-  def persisted?
-    false
-  end
 
   def save
     # Validate signup object
