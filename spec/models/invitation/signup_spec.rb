@@ -16,5 +16,4 @@ describe Invitation::Signup do
 
   it { should respond_to(:user) }
   it { should respond_to(:membership) }
-
 end

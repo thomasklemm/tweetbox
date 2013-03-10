@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe ProjectsController do
+  it_should_behave_like "an authenticated controller", {
+    index: [:get],
+    show: [:get, id: 1],
+    new: [:get, account_id: 1],
+    edit: [:get, account_id: 1, id: 1],
+    create: [:post, account_id: 1],
+    update: [:put, account_id: 1, id: 1],
+    destroy: [:delete, account_id: 1, id: 1]
+  }
+
   describe "#project_params" do
     it "permits only :name" do
       post :create, account_id: 1, project: Fabricate.attributes_for(:project)
@@ -16,7 +26,7 @@ describe ProjectsController do
   let(:permission) { Fabricate(:permission, membership: account_membership, project: project) }
 
   let(:valid_project_attributes)   { Fabricate.attributes_for(:project) }
-  let(:invalid_project_attributes) { Fabricate.attributes_for(:project, name: '') }
+  let(:invalid_project_attributes) { Fabricate.attributes_for(:project, name: "") }
 
   shared_examples "projects#index for account admin and project member" do
     before { get :index }
@@ -183,45 +193,6 @@ describe ProjectsController do
     describe "DELETE #destroy" do
       let(:forbidden_request) { delete :destroy, account_id: account, id: project }
       it_should_behave_like "a forbidden request"
-    end
-  end
-end
-
-describe ProjectsController do
-  context "unauthenticated guest trying to access" do
-    describe "GET #index" do
-      before { get :index }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "GET #show" do
-      before { get :show, id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "GET #new" do
-      before { get :new, account_id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "GET #edit" do
-      before { get :edit, account_id: 1, id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "POST #create" do
-      before { post :create, account_id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "PUT #update" do
-      before { put :update, account_id: 1, id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "DELETE #destroy" do
-      before { delete :destroy, account_id: 1, id: 1 }
-      it_should_behave_like "an authenticated request"
     end
   end
 end

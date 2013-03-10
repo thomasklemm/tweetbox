@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe AccountsController do
+  it_should_behave_like "an authenticated controller", {
+    index: [:get],
+    show: [:get, id: 1],
+    new: [:get],
+    edit: [:get, id: 1],
+    create: [:post],
+    update: [:put, id: 1],
+    destroy: [:delete, id: 1]
+  }
+
   describe "#account_params" do
     it "permits only :name" do
       post :create, account: Fabricate.attributes_for(:account)
@@ -239,45 +249,6 @@ describe AccountsController do
     describe "DELETE #destroy" do
       let(:forbidden_request) { delete :destroy, id: account }
       it_should_behave_like "a forbidden request"
-    end
-  end
-end
-
-describe AccountsController do
-  context "unauthenticated guest trying to access" do
-    describe "GET #index" do
-      before { get :index }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "GET #show" do
-      before { get :show, id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "GET #new" do
-      before { get :new }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "GET #edit" do
-      before { get :edit, id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "POST #create" do
-      before { post :create }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "PUT #update" do
-      before { put :update, id: 1 }
-      it_should_behave_like "an authenticated request"
-    end
-
-    describe "DELETE #destroy" do
-      before { delete :destroy, id: 1 }
-      it_should_behave_like "an authenticated request"
     end
   end
 end
