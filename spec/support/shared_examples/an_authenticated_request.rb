@@ -1,10 +1,7 @@
 # An authenticated controller action
-# Aan action that requires login
 #
-# Specs for the default Devise behaviour
-# when a user or guest is trying to access
-# a controller action filtered with
-#   before_filter :authenticate_user!
+# Actions that are protected by Devise's
+# before_filter :authenticate_user!
 #
 shared_examples "an authenticated controller action" do
   it { should redirect_to(login_path) }

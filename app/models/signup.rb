@@ -53,21 +53,13 @@ class Signup
   end
 
   def delegate_errors_for_user
-    name_error = @user.errors[:name]
-    email_error = @user.errors[:email]
-    password_error = @user.errors[:password]
-    @user.errors.clear
-
-    errors.add(:name, name_error) if name_error.present?
-    errors.add(:email, email_error) if email_error.present?
-    errors.add(:password, password_error) if password_error.present?
+    errors.add(:name, @user.errors[:name].first) if @user.errors[:name].present?
+    errors.add(:email, @user.errors[:email].first) if @user.errors[:email].present?
+    errors.add(:password, @user.errors[:password].first) if @user.errors[:password].present?
   end
 
   def delegate_errors_for_account
-    name_error = @account.errors[:name]
-    @account.errors.clear
-
-    errors.add(:company_name, name_error) if name_error.present?
+    errors.add(:company_name, @account.errors[:name].first) if @account.errors[:name].present?
   end
 
   def persist!

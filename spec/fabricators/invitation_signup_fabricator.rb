@@ -1,5 +1,6 @@
 Fabricator(:invitation_signup, from: :'invitation/signup') do
   invitation
+  code       { |attrs| attrs[:invitation].code }
 
   name       { sequence(:name)  { |i| "User #{i}" } }
   email      { sequence(:email) { |i| "invitation_signup_user#{i}@example.com" } }

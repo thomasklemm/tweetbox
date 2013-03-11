@@ -9,7 +9,7 @@ describe InvitationsController do
   let(:invalid_invitation_attributes) { Fabricate.attributes_for(:invitation, email: "") }
 
   describe "#invitation_params" do
-    it "permits only name and email" do
+    it "permits only name, email and project_ids parameters" do
       post :create, account_id: account, invitation: valid_invitation_attributes
       expect(subject.send(:invitation_params).keys).to eq(%w(email admin project_ids))
     end

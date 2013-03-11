@@ -31,6 +31,7 @@ describe Invitation do
   it { should validate_presence_of(:email) }
 
   it "generates code" do
+    subject.save
     expect(subject.code).to be_present
   end
 

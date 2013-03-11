@@ -1,8 +1,9 @@
 # A forbidden request
 #
-# Detected by Pundit, rescued by ApplicationController
+# Pundit raises Pundit::NotAuthorized error
+# ApplicationController rescues exception
 #
-shared_examples "a forbidden request" do
+shared_examples_for "a forbidden request" do
   def require_message
     raise "Instruction: Requires let(:forbidden_request) { get :forbidden_action, ... } to perform this example."
   end

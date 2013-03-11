@@ -26,7 +26,7 @@ describe InvitationMailer, "invitation" do
   end
 
   it "includes the invitation code in the body" do
-    raise body = mail.body.encoded
-    expect(body).to match(invitation.code)
+    body = mail.body.encoded
+    expect(body).to include(new_invitations_signup_url(code: invitation.code))
   end
 end

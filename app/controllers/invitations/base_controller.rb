@@ -4,7 +4,10 @@ class Invitations::BaseController < ApplicationController
   private
 
   def ensure_invitation
-    code = params[:code]
+    code = params[:code] ||
+      params[:signup] && params[:signup][:code] ||
+      params[:join] && params[:join][:code]
+
     code.present? or
       return redirect_to root_path, alert: 'Please provide a valid invitation code.'
 

@@ -13,7 +13,12 @@
 #
 shared_examples_for "an authenticated controller" do |actions|
   actions.each do |action, (verb, options)|
-    before { send(verb, action, options) }
-    it_should_behave_like "an authenticated controller action"
+    docstring = "#{ verb.upcase } ##{ action }"
+    docstring << " with #{ options }" if options
+
+    describe docstring do
+      before { send(verb, action, options) }
+      it_should_behave_like "an authenticated controller action"
+    end
   end
 end
