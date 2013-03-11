@@ -36,7 +36,7 @@ describe Invitations::RegistrationsController do
 
   describe "POST #create" do
     context "with valid parameters" do
-      before { post :create, registration: valid_signup_params, code: invitation.code }
+      before { post :create, registration: valid_signup_params, code: invitation }
       let(:signup) { assigns(:signup) }
 
       it { should redirect_to(projects_path) }
@@ -52,7 +52,7 @@ describe Invitations::RegistrationsController do
     end
 
     context "with invalid parameters" do
-      before { post :create, registration: invalid_signup_params, code: invitation.code }
+      before { post :create, registration: invalid_signup_params, code: invitation }
       let(:signup) { assigns(:signup) }
 
       it { should render_template(:new) }
