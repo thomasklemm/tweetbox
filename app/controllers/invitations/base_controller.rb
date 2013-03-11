@@ -5,7 +5,7 @@ class Invitations::BaseController < ApplicationController
 
   def ensure_invitation
     code = params[:code] ||
-      params[:signup] && params[:signup][:code] ||
+      params[:registration] && params[:registration][:code] ||
       params[:join] && params[:join][:code]
 
     code.present? or

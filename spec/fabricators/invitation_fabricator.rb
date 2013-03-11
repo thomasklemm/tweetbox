@@ -23,6 +23,6 @@ Fabricator(:invitation) do
   sender  { Fabricate(:user) }
   admin   false
   used    false
-  projects { [Fabricate(:project), Fabricate(:project) ] }
+  projects { |attrs| [Fabricate(:project, account: attrs[:account]), Fabricate(:project, account: attrs[:account])] }
   project_ids { |attrs| attrs[:projects].map(&:id) }
 end

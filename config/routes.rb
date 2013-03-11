@@ -20,8 +20,8 @@ Birdview::Application.routes.draw do
 
   # Invitations
   namespace :invitations do
-    resource :signup, only: [:new, :create]
-    resource :join, only: [:new, :create]
+    resources :registrations, only: [:new, :create]
+    resources :joins, only: [:new, :create]
   end
 
   resources :accounts do

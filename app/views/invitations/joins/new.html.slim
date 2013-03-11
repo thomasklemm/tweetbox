@@ -1,0 +1,9 @@
+h1 Invitations::Joins#new
+
+p Join your teammates with your existing account.
+
+= form_for @join, url: invitations_joins_path, as: :join do |f|
+  = render 'shared/error_messages', target: @join
+  / transfer the code to the create action
+  = f.hidden_field :code
+  = f.submit "Accept invitation as #{current_user.name}(#{current_user.email})"

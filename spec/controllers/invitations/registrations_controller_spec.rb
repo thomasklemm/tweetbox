@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Invitations::SignupsController do
+describe Invitations::RegistrationsController do
   it_should_behave_like "an invitations subcontroller", {
     :new => :get,
     :create => :post
@@ -36,7 +36,7 @@ describe Invitations::SignupsController do
 
   describe "POST #create" do
     context "with valid parameters" do
-      before { post :create, signup: valid_signup_params }
+      before { post :create, registration: valid_signup_params, code: invitation.code }
       let(:signup) { assigns(:signup) }
 
       it { should redirect_to(projects_path) }
@@ -52,14 +52,14 @@ describe Invitations::SignupsController do
     end
 
     context "with invalid parameters" do
-      before { post :create, signup: invalid_signup_params }
+      before { post :create, registration: invalid_signup_params, code: invitation.code }
       let(:signup) { assigns(:signup) }
 
       it { should render_template(:new) }
       it { should_not set_the_flash }
 
       it "doesn't persist the new user in the database" do
-        expect(signup.user).to be_nil
+        expect(signup.user).to be_new_record
       end
     end
   end

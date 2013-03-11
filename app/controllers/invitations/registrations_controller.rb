@@ -1,13 +1,13 @@
-class Invitations::SignupsController < Invitations::BaseController
+class Invitations::RegistrationsController < Invitations::BaseController
   before_filter :redirect_signed_in_user, only: :new
 
   def new
-    @signup = Invitation::Signup.new
+    @signup = Invitation::Registration.new
     @signup.invitation = @invitation
   end
 
   def create
-    @signup = Invitation::Signup.new(params[:signup])
+    @signup = Invitation::Registration.new(params[:registration])
     @signup.invitation = @invitation
 
     if @signup.save

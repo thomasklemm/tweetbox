@@ -22,6 +22,7 @@ div: b #{ @account.users.size } users
   = mail_to user.email, user.name
   - if user.admin_of?(@account)
     |, Account admin
+  br
 
 br
 - if policy(@account).invite?

@@ -57,7 +57,7 @@ RSpec.configure do |config|
   # config.include Pundit::Rspec::Matchers
 
   # Devise test helpers
-  config.include Devise::TestHelpers, :type => :controller
+  config.include Devise::TestHelpers, type: :controller
 end
 
 Capybara.javascript_driver = :webkit
