@@ -1,0 +1,11 @@
+h1 TwitterAccounts#index
+p Find me in app/views/twitter_accounts/index.html.slim
+
+div: b #{ @twitter_accounts.size } Twitter accounts authorized
+
+ul
+  - @twitter_accounts.each do |twitter_account|
+    li = link_to twitter_account.screen_name, project_twitter_account_path(@project, twitter_account)
+
+br
+= link_to 'Add a new Twitter account', new_project_twitter_account_path

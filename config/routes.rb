@@ -32,10 +32,18 @@ Birdview::Application.routes.draw do
   end
 
   resources :projects, only: [:index, :show] do
-    resources :twitter_accounts
+    resources :twitter_accounts, only: [:index, :show, :new] do
+      post 'auth', on: :collection, as: :authorize
+    end
     resources :searches
     resources :tweets
   end
+
+  # Omniauth to authorize Twitter accounts
+  #  There is a hidden 'auth/twitter' path too that requests can be directed to
+  #  when trying to authorize a Twitter account with this application
+  match 'auth/twitter/callback' => 'omniauth#twitter'
+  match 'auth/failure'          => 'omniauth#failure'
 
   # Static Pages
   get '*id' => 'pages#show', as: :static

@@ -5,3 +5,6 @@ div Name: #{ @project.name }
 
 - if policy(@project).edit?
   = link_to 'Edit this project', edit_account_project_path(@project.account, @project)
+
+br
+= link_to 'Twitter Accounts', project_twitter_accounts_path(@project)

@@ -27,6 +27,9 @@ class Project < ActiveRecord::Base
   after_create :setup_permissions
   after_update :update_permissions
 
+  # Twitter Accounts
+  has_many :twitter_accounts, dependent: :destroy
+
   def self.visible_to(user)
     where(id: user.project_ids)
   end

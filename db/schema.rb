@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304101214) do
+ActiveRecord::Schema.define(:version => 20130312161222) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -92,6 +92,26 @@ ActiveRecord::Schema.define(:version => 20130304101214) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "twitter_accounts", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "uid"
+    t.string   "token"
+    t.string   "token_secret"
+    t.integer  "twitter_id"
+    t.string   "name"
+    t.string   "screen_name"
+    t.string   "location"
+    t.string   "description"
+    t.string   "url"
+    t.string   "profile_image_url"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "auth_scope"
+  end
+
+  add_index "twitter_accounts", ["project_id", "uid"], :name => "index_twitter_accounts_on_project_id_and_uid", :unique => true
+  add_index "twitter_accounts", ["project_id"], :name => "index_twitter_accounts_on_project_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                   :default => "", :null => false

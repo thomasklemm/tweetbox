@@ -30,6 +30,9 @@ gem 'rack-timeout'
 # Devise (User authentication)
 gem 'devise'
 
+# Omniauth for Twitter (Authenticating Twitter accounts)
+gem 'omniauth-twitter'
+
 # Pundit (Authorization)
 gem 'pundit'
 

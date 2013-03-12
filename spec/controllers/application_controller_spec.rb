@@ -78,9 +78,24 @@ describe ApplicationController do
         end
       end
 
+      context "with a valid id in user_session[:project_id]" do
+        it "returns record" do
+          controller.user_session[:project_id] = project.id
+          expect(controller.send(:user_project)).to eq(project)
+        end
+      end
+
       context "with different ids in both params[:project_id] and params[:id]" do
         it "returns record with id of params[:project_id]" do
           controller.params[:project_id] = project.id
+          controller.params[:id] = other_project.id
+          expect(controller.send(:user_project)).to eq(project)
+        end
+      end
+
+      context "with different ids in both user_session[:project_id] and params[:id]" do
+        it "returns record with id of user_session[:project_id]" do
+          controller.user_session[:project_id] = project.id
           controller.params[:id] = other_project.id
           expect(controller.send(:user_project)).to eq(project)
         end

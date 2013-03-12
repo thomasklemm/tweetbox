@@ -22,6 +22,7 @@ describe Project do
   it { should belong_to(:account) }
   it { should have_many(:permissions) }
   it { should have_many(:users).through(:permissions) }
+  it { should have_many(:twitter_accounts).dependent(:destroy) }
 
   it { should validate_presence_of(:account) }
   it { should validate_presence_of(:name) }

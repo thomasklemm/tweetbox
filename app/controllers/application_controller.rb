@@ -44,6 +44,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_project
-    project ||= user_projects.find(params[:project_id] || params[:id])
+    project ||= user_projects.find(params[:project_id] || user_session[:project_id] || params[:id])
   end
 end
