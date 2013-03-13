@@ -37,5 +37,9 @@ describe TwitterAccount do
   it { should validate_presence_of(:token) }
   it { should validate_presence_of(:token_secret) }
 
+  it { should ensure_inclusion_of(:auth_scope).in_array(%w(read write messages)) }
 
+  describe ".from_omniauth" do
+    pending ".from_omniauth"
+  end
 end

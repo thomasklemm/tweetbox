@@ -33,10 +33,6 @@ class TwitterAccount < ActiveRecord::Base
   validates :uid, :token, :token_secret, presence: true
 
   # Auth scope
-  def auth_scope
-    self[:auth_scope] || "read"
-  end
-
   validates :auth_scope, inclusion: { in: %w(read write messages) }
 
   # Create or update existing Twitter account
