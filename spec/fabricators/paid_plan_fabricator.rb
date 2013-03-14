@@ -11,7 +11,7 @@
 #  user_limit :integer          not null
 #
 
-Fabricator(:paid_plan, from: :plan) do
+Fabricator(:paid_plan, class_name: :plan) do
   name       "Paid plan"
   price      1
   user_limit 1

@@ -1,4 +1,4 @@
-Fabricator(:invitation_signup, from: :'invitation/registration') do
+Fabricator(:invitation_signup, class_name: 'invitation/registration') do
   invitation
 
   name       { sequence(:name)  { |i| "User #{i}" } }

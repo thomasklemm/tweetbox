@@ -42,6 +42,12 @@ gem 'strong_parameters'
 # Virtus (Attributes on steroids)
 gem 'virtus'
 
+# Workflow (State machine library)
+gem 'workflow'
+
+# Twitter (Twitter REST API client)
+gem 'twitter'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do

@@ -22,10 +22,15 @@ describe Project do
   it { should belong_to(:account) }
   it { should have_many(:permissions) }
   it { should have_many(:users).through(:permissions) }
-  it { should have_many(:twitter_accounts).dependent(:destroy) }
 
   it { should validate_presence_of(:account) }
   it { should validate_presence_of(:name) }
+
+  it { should have_many(:twitter_accounts).dependent(:destroy) }
+  it { should have_many(:tweets).dependent(:destroy) }
+  it { should have_many(:authors).dependent(:destroy) }
+  it { should have_many(:conversations).dependent(:destroy) }
+
 
   it "finds projects visible to a user" do
     account = Fabricate(:account)

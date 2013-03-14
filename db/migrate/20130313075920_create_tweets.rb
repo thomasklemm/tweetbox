@@ -1,0 +1,20 @@
+class CreateTweets < ActiveRecord::Migration
+  def change
+    create_table :tweets do |t|
+      t.belongs_to :project
+      t.integer :twitter_id, limit: 8
+      t.text :text
+      t.integer :in_reply_to_status_id
+      t.integer :in_reply_to_user_id
+      t.belongs_to :conversation
+      t.text :workflow_state
+
+      t.timestamps
+    end
+    add_index :tweets, :project_id
+    add_index :tweets, :twitter_id
+    add_index :tweets, [:project_id, :twitter_id], unique: true
+    add_index :tweets, :conversation_id
+    add_index :tweets, :workflow_state # REVIEW: This could be a partial index
+  end
+end

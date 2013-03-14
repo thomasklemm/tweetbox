@@ -30,6 +30,15 @@ class Project < ActiveRecord::Base
   # Twitter Accounts
   has_many :twitter_accounts, dependent: :destroy
 
+  # Tweets
+  has_many :tweets, dependent: :destroy
+
+  # Tweet authors
+  has_many :authors, dependent: :destroy
+
+  # Conversations
+  has_many :conversations, dependent: :destroy
+
   def self.visible_to(user)
     where(id: user.project_ids)
   end

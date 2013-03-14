@@ -1,4 +1,4 @@
-Fabricator(:invitation_join, from: :'invitation/join') do
+Fabricator(:invitation_join, class_name: 'invitation/join') do
   invitation
   user
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312161222) do
+ActiveRecord::Schema.define(:version => 20130313111323) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,34 @@ ActiveRecord::Schema.define(:version => 20130312161222) do
 
   add_index "accounts", ["plan_id"], :name => "index_accounts_on_plan_id"
   add_index "accounts", ["trial_expires_at"], :name => "index_accounts_on_trial_expires_at"
+
+  create_table "authors", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "twitter_id",        :limit => 8
+    t.text     "name"
+    t.text     "screen_name"
+    t.text     "location"
+    t.text     "description"
+    t.text     "url"
+    t.boolean  "verified",                       :default => false
+    t.integer  "followers_count",                :default => 0
+    t.integer  "friends_count",                  :default => 0
+    t.text     "profile_image_url"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+  end
+
+  add_index "authors", ["project_id", "twitter_id"], :name => "index_authors_on_project_id_and_twitter_id", :unique => true
+  add_index "authors", ["project_id"], :name => "index_authors_on_project_id"
+  add_index "authors", ["twitter_id"], :name => "index_authors_on_twitter_id"
+
+  create_table "conversations", :force => true do |t|
+    t.integer  "project_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "conversations", ["project_id"], :name => "index_conversations_on_project_id"
 
   create_table "invitations", :force => true do |t|
     t.string   "code"
@@ -92,6 +120,26 @@ ActiveRecord::Schema.define(:version => 20130312161222) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "tweets", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "twitter_id",            :limit => 8
+    t.text     "text"
+    t.integer  "in_reply_to_status_id"
+    t.integer  "in_reply_to_user_id"
+    t.integer  "conversation_id"
+    t.text     "workflow_state"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "author_id"
+  end
+
+  add_index "tweets", ["author_id"], :name => "index_tweets_on_author_id"
+  add_index "tweets", ["conversation_id"], :name => "index_tweets_on_conversation_id"
+  add_index "tweets", ["project_id", "twitter_id"], :name => "index_tweets_on_project_id_and_twitter_id", :unique => true
+  add_index "tweets", ["project_id"], :name => "index_tweets_on_project_id"
+  add_index "tweets", ["twitter_id"], :name => "index_tweets_on_twitter_id"
+  add_index "tweets", ["workflow_state"], :name => "index_tweets_on_workflow_state"
 
   create_table "twitter_accounts", :force => true do |t|
     t.integer  "project_id"
