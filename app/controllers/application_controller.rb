@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_account
-    account ||= user_accounts.find(params[:account_id] || params[:id])
+    @account ||= user_accounts.find(params[:account_id] || params[:id])
   end
 
   def user_projects
@@ -44,6 +44,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_project
-    project ||= user_projects.find(params[:project_id] || user_session[:project_id] || params[:id])
+    @project ||= user_projects.find(params[:project_id] || user_session[:project_id] || params[:id])
   end
 end

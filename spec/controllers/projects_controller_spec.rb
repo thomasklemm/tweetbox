@@ -31,7 +31,6 @@ describe ProjectsController do
   shared_examples "projects#index for account admin and project member" do
     before { get :index }
     it { should respond_with(:success) }
-    it { should assign_to(:projects) }
     it { should render_template(:index) }
     it { should_not set_the_flash }
   end
@@ -39,7 +38,6 @@ describe ProjectsController do
   shared_examples "projects#show for account admin and project member" do
     before { get :show, id: project }
     it { should respond_with(:success) }
-    it { should assign_to(:project) }
     it { should authorize_resource }
     it { should render_template(:show) }
     it { should_not set_the_flash }
@@ -64,7 +62,6 @@ describe ProjectsController do
     describe "GET #new" do
       before { get :new, account_id: account }
       it { should respond_with(:success) }
-      it { should assign_to(:project) }
       it { should authorize_resource }
       it { should render_template(:new) }
       it { should_not set_the_flash }
@@ -77,7 +74,6 @@ describe ProjectsController do
     describe "POST #create" do
       context "with valid attributes" do
         before { post :create, account_id: account, project: valid_project_attributes }
-        it { should assign_to(:project) }
         it { should authorize_resource }
         it { should redirect_to(project_path(assigns(:project))) }
         it { should set_the_flash }
@@ -93,7 +89,6 @@ describe ProjectsController do
 
       context "with invalid attributes" do
         before { post :create, account_id: account, project: invalid_project_attributes }
-        it { should assign_to(:project) }
         it { should authorize_resource }
         it { should render_template(:new) }
         it { should_not set_the_flash }
@@ -111,7 +106,6 @@ describe ProjectsController do
     describe "GET #edit" do
       before { get :new, account_id: account, id: project }
       it { should respond_with(:success) }
-      it { should assign_to(:project) }
       it { should authorize_resource }
       it { should render_template(:new) }
       it { should_not set_the_flash }
@@ -120,7 +114,6 @@ describe ProjectsController do
     describe "PUT #update" do
       context "with valid attributes" do
         before { put :update, account_id: account, id: project, project: valid_project_attributes }
-        it { should assign_to(:project) }
         it { should authorize_resource }
         it { should redirect_to(project_path(assigns(:project))) }
         it { should set_the_flash }
@@ -132,21 +125,20 @@ describe ProjectsController do
 
       context "with invalid attributes" do
         before { put :update, account_id: account, id: project, project: invalid_project_attributes }
-        it { should assign_to(:project) }
         it { should authorize_resource }
         it { should render_template(:edit) }
         it { should_not set_the_flash }
 
-        it "doesn't persist the updated project attributes in the database" do
-          expect(assigns(:project).reload.name).to eq(project.name)
-          expect(assigns(:project).reload.name).to_not eq(invalid_project_attributes[:name])
+        it "doesn't persist the updated project attributes in the database" do\
+          name = assigns(:project).reload.name
+          expect(name).to eq(project.name)
+          expect(name).to_not eq(invalid_project_attributes[:name])
         end
       end
     end
 
     describe "DELETE #destroy" do
       before { delete :destroy, account_id: account, id: project }
-      it { should assign_to(:project) }
       it { should authorize_resource }
       it { should redirect_to(account_path(account)) }
       it { should set_the_flash }

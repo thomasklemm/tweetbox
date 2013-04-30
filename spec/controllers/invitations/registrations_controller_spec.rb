@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe Invitations::RegistrationsController do
-  it_should_behave_like "an invitations subcontroller", {
-    :new => :get,
-    :create => :post
-  }
-
   let(:user)       { Fabricate(:user) }
   let(:invitation) { Fabricate(:invitation) }
 
@@ -26,7 +21,6 @@ describe Invitations::RegistrationsController do
       it { should respond_with(:success) }
       it { should render_template(:new) }
       it { should_not set_the_flash }
-      it { should assign_to(:signup) }
 
       it "associates the signup with the invitation" do
         expect(assigns(:signup).invitation).to eq(invitation)
@@ -61,6 +55,43 @@ describe Invitations::RegistrationsController do
       it "doesn't persist the new user in the database" do
         expect(signup.user).to be_new_record
       end
+    end
+  end
+end
+
+describe Invitations::RegistrationsController, "ensures invitation" do
+  actions = {
+    new: :get,
+    create: :post
+  }
+
+  actions.each do |action, verb|
+    describe "ensures invitation code is present" do
+      before { send(verb, action) }
+      it { should redirect_to root_path }
+      it { should set_the_flash.to('Please provide a valid invitation code.') }
+    end
+
+    describe "loads the invitation" do
+      let(:invitation) { Fabricate(:invitation) }
+      before { send(verb, action, code: invitation) }
+      it "loads the invitation" do
+        expect(assigns(:invitation)).to eq(invitation)
+      end
+      it { should_not set_the_flash }
+    end
+
+    describe "ensures invitation is found" do
+      before { send(verb, action, code: 1) }
+      it { should redirect_to root_path }
+      it { should set_the_flash.to('Please provide a valid invitation code.') }
+    end
+
+    describe "ensures invitation has not already been used" do
+      let(:used_invitation) { Fabricate(:invitation, used: true) }
+      before { send(verb, action, code: used_invitation) }
+      it { should redirect_to root_path }
+      it { should set_the_flash.to('Your invitation code has already been used.') }
     end
   end
 end

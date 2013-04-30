@@ -26,7 +26,6 @@ describe AccountsController do
   shared_examples "accounts#index for admin and member" do
     before { get :index }
     it { should respond_with(:success) }
-    it { should assign_to(:accounts) }
     it { should render_template(:index) }
     it { should_not set_the_flash }
   end
@@ -34,7 +33,6 @@ describe AccountsController do
   shared_examples "accounts#show for admin and member" do
     before { get :show, id: account }
     it { should respond_with(:success) }
-    it { should assign_to(:account) }
     it { should authorize_resource }
     it { should render_template(:show) }
     it { should_not set_the_flash }
@@ -43,7 +41,6 @@ describe AccountsController do
   shared_examples "accounts#new for signed in user" do
     before { get :new }
     it { should respond_with(:success) }
-    it { should assign_to(:account) }
     it { should authorize_resource }
     it { should render_template(:new) }
     it { should_not set_the_flash }
@@ -55,9 +52,7 @@ describe AccountsController do
         post :create, account: valid_account_attributes
       end
 
-      it { should assign_to(:account) }
       it { should authorize_resource }
-      it { should assign_to(:membership) }
       it { should redirect_to(account_path(assigns(:account))) }
       it { should set_the_flash }
 
@@ -103,9 +98,7 @@ describe AccountsController do
         post :create, account: invalid_account_attributes
       end
 
-      it { should assign_to(:account) }
       it { should authorize_resource }
-      it { should_not assign_to(:membership) }
       it { should render_template(:new) }
       it { should_not set_the_flash }
 
@@ -144,7 +137,6 @@ describe AccountsController do
     describe "GET #edit" do
       before { get :edit, id: account }
       it { should respond_with(:success) }
-      it { should assign_to(:account) }
       it { should authorize_resource }
       it { should render_template(:edit) }
       it { should_not set_the_flash }
@@ -156,7 +148,6 @@ describe AccountsController do
           put :update, id: account, account: valid_account_attributes
         end
 
-        it { should assign_to(:account) }
         it { should authorize_resource }
         it { should redirect_to(account_path(assigns(:account)))}
         it { should set_the_flash }
@@ -171,7 +162,6 @@ describe AccountsController do
           put :update, id: account, account: invalid_account_attributes
         end
 
-        it { should assign_to(:account) }
         it { should authorize_resource }
         it { should render_template(:edit) }
         it { should_not set_the_flash }
@@ -186,7 +176,6 @@ describe AccountsController do
       context "account without associated projects" do
         before { delete :destroy, id: account }
 
-        it { should assign_to(:account) }
         it { should authorize_resource }
         it { should redirect_to(accounts_path) }
         it { should set_the_flash }
@@ -202,7 +191,6 @@ describe AccountsController do
           delete :destroy, id: account
         end
 
-        it { should assign_to(:account) }
         it { should authorize_resource }
         it { should redirect_to(account_path(assigns(:account))) }
         it { should set_the_flash }

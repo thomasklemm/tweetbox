@@ -53,13 +53,11 @@ describe Invitation do
 
   describe "#send_email" do
     it "sends an invitation email" do
-      mail = stub('invitation_mail', deliver: true)
-      InvitationMailer.stubs(:invitation).returns(mail)
+      mail = stub('invitation_mail')
+      mail.expects(:deliver).returns(true).once
+      InvitationMailer.expects(:invitation).with(subject).returns(mail).once
 
       subject.send_email
-
-      expect(InvitationMailer).to have_received(:invitation).with(subject).once
-      expect(mail).to have_received(:deliver).once
     end
   end
 end

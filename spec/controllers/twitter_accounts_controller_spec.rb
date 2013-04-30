@@ -23,7 +23,6 @@ describe TwitterAccountsController do
     describe "GET #index" do
       before { get :index, project_id: project }
       it { should respond_with(:success) }
-      it { should assign_to(:twitter_accounts) }
       it { should render_template(:index) }
       it { should_not set_the_flash }
     end
@@ -31,7 +30,6 @@ describe TwitterAccountsController do
     describe "GET #show" do
       before { get :show, project_id: project, id: twitter_account }
       it { should respond_with(:success) }
-      it { should assign_to(:twitter_account) }
       it { should render_template(:show) }
       it { should_not set_the_flash }
     end

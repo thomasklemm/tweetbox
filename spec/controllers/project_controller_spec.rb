@@ -1,56 +1,21 @@
 require 'spec_helper'
 
-class ProjectSubController < ProjectController
-  def show
-    render text: '42'
-  end
+describe ProjectController do
 
-  def login
-    render text: 'login_path'
-  end
-end
-
-describe ProjectSubController do
-  it { should be_a_kind_of(ProjectController) }
-
-  def with_test_routing
-    with_routing do |map|
-      map.draw do
-        match "test_route" => "project_sub#show"
-        match "login" => "project_sub#login", as: :login
-      end
-      yield
+  controller do
+    def show
+      render text: '42'
     end
   end
 
-  context "guest user is trying to access" do
-    describe "requires user to sign in" do
+  describe "redirects guest user to login" do
+    before { get :show, id: 1 }
 
-      it "redirects to login path" do
-        with_test_routing do
-          get :show, id: 1
-          should redirect_to(login_path)
-        end
-      end
-
-      it "sets the flash" do
-        with_test_routing do
-          get :show, id: 1
-          should set_the_flash
-        end
-      end
-
-      it "does not set or have the current user" do
-        with_test_routing do
-          get :show, id: 1
-          expect(controller.current_user).to be_nil
-        end
-      end
-
-    end
+    it { should redirect_to(login_path) }
+    it { should set_the_flash.to("You need to sign in or sign up before continuing.") }
   end
 
-  describe "grants access to project member" do
+  describe "grants access to project members" do
     let!(:user)    { Fabricate(:user) }
     let!(:project) { Fabricate(:project) }
     let!(:membership) { Fabricate(:membership, user: user, account: project.account) }
@@ -58,31 +23,21 @@ describe ProjectSubController do
 
     before do
       sign_in user
+      get :show, id: project
     end
 
-    it "ensures that user is signed in" do
-      with_test_routing do
-        get :show, id: project
-        expect(controller.current_user).to eq(user)
-      end
+    it "verfies the user is signed in" do
+      expect(controller.current_user).to eq(user)
     end
 
     it "loads the project" do
-      with_test_routing do
-        get :show, id: project
-        expect(assigns(:project)).to eq(project)
-      end
+      expect(assigns(:project)).to eq(project)
     end
 
-    it "authorizes the resource" do
-      with_test_routing do
-        get :show, id: project
-        should authorize_resource
-      end
-    end
+    it { should authorize_resource }
   end
 
-  describe "forbids access for non-project account member" do
+  describe "forbids access if user has no permissions on the project" do
     let!(:user)    { Fabricate(:user) }
     let!(:project) { Fabricate(:project) }
     let!(:membership) { Fabricate(:membership, user: user, account: project.account) }
@@ -92,10 +47,12 @@ describe ProjectSubController do
     end
 
     it "raises a record not found error" do
-      with_test_routing do
-        expect { get :show, id: project }.to raise_error(ActiveRecord::RecordNotFound)
-      end
+      expect { get :show, id: project }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
-
 end
+
+
+
+
+# end

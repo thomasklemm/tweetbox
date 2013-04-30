@@ -5,7 +5,6 @@ describe SignupsController do
   describe "GET #new" do
     before { get :new }
     it { should respond_with(:success) }
-    it { should assign_to(:signup) }
     it { should render_template(:new) }
     it { should_not set_the_flash }
   end
@@ -18,7 +17,6 @@ describe SignupsController do
       before { post :create, signup: valid_signup_attributes }
       let(:signup) { assigns(:signup) }
 
-      it { should assign_to(:signup) }
       it { should redirect_to(projects_path) }
       it { should set_the_flash }
 
@@ -39,7 +37,6 @@ describe SignupsController do
       before { post :create, signup: invalid_signup_attributes }
       let(:signup) { assigns(:signup) }
 
-      it { should assign_to(:signup) }
       it { should render_template(:new) }
       it { should_not set_the_flash }
 

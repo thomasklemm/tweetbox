@@ -1,4 +1,5 @@
-class Invitations::RegistrationsController < Invitations::BaseController
+class Invitations::RegistrationsController < ApplicationController
+  before_filter :ensure_invitation!
   before_filter :redirect_signed_in_user, only: :new
 
   def new
@@ -20,6 +21,23 @@ class Invitations::RegistrationsController < Invitations::BaseController
   end
 
   private
+
+  def ensure_invitation!
+    code = params[:code] ||
+      params[:registration] && params[:registration][:code] ||
+      params[:join] && params[:join][:code]
+
+    code.present? or
+      return redirect_to root_path, alert: 'Please provide a valid invitation code.'
+
+    @invitation = Invitation.where(code: code).first
+
+    @invitation.present? or
+      return redirect_to root_path, alert: 'Please provide a valid invitation code.'
+
+    @invitation.used? and
+      return redirect_to root_path, alert: 'Your invitation code has already been used.'
+  end
 
   def redirect_signed_in_user
     user_signed_in? and

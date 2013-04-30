@@ -4,10 +4,10 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 
 # Puma (App server)
-gem 'puma', '>= 2.0.0.b6'
+gem 'puma', '>= 2.0.0'
 
 # Rails
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Postgres database connector
 gem 'pg'
@@ -67,6 +67,9 @@ group :assets do
 
   # Packaged plugins
   gem 'select2-rails'
+
+  # Font Awesome (Icon font)
+  gem 'font-awesome-rails'
 end
 
 group :development do
@@ -96,14 +99,17 @@ group :development, :test do
 end
 
 group :test do
-  gem 'bourne', require: false
-  gem 'capybara-webkit', '>= 0.14.1'
-  gem 'database_cleaner'
-  gem 'fabrication'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
+  gem 'fabrication'
+  gem 'database_cleaner'
+  gem 'mocha'
   gem 'timecop'
-  gem 'fuubar'
+  gem 'simplecov', require: false
+  gem 'coveralls', require: false
+  gem 'capybara-webkit'
+  gem 'launchy'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :staging, :production do
@@ -111,42 +117,12 @@ group :staging, :production do
   gem 'memcachier'
   gem 'dalli'
 
-  # New Relic server monitoring
+  # New Relic (Server monitoring)
   gem 'newrelic_rpm'
 
-  # Sentry exception tracking
+  # Sentry (Error notifications)
   gem 'sentry-raven', github: 'getsentry/raven-ruby'
-end
 
-group :production do
-  # Lograge (Shorter log output)
+  # Lograge (Logging)
   gem 'lograge'
 end
-
-# Great gems:
-
-# Friendly Id (Human-Readable IDs for ActiveRecord Models)
-# gem 'friendly_id'
-
-# HTTPClient (MT-Safe HTTP Client)
-# gem 'httpclient'
-
-# Redcarpet (Markdown Parser)
-# gem 'redcarpet'
-
-# Omniauth for Facebook and Twitter (oAuth Authentication)
-# gem 'omniauth-twitter'
-# gem 'omniauth-facebook'
-
-# Sidekiq and Sinatra (for Sidekiq Web Interface)
-# gem 'sidekiq'
-# gem 'sinatra', :require => false
-
-# Cache Digests (Watch Progress of this gem!)
-# gem 'cache_digests'
-
-# Closure Tree (Nesting Structures)
-# gem 'closure_tree'
-
-# Dynamic Form (Display validation error messages)
-# gem 'dynamic_form'

@@ -24,9 +24,7 @@ describe InvitationsController do
     describe "GET #index" do
       before { get :index, account_id: account }
       it { should respond_with(:success) }
-      it { should assign_to(:account) }
       it { should authorize_resource }
-      it { should assign_to(:invitations) }
       it { should render_template(:index) }
       it { should_not set_the_flash }
     end
@@ -34,9 +32,7 @@ describe InvitationsController do
     describe "GET #new" do
       before { get :new, account_id: account }
       it { should respond_with(:success) }
-      it { should assign_to(:account) }
       it { should authorize_resource }
-      it { should assign_to(:invitation) }
       it { should render_template(:new) }
       it { should_not set_the_flash }
     end
@@ -44,9 +40,7 @@ describe InvitationsController do
     describe "POST #create" do
       context "with valid attributes" do
         before { post :create, account_id: account, invitation: valid_invitation_attributes }
-        it { should assign_to(:account) }
         it { should authorize_resource }
-        it { should assign_to(:invitation) }
         it { should redirect_to(account_invitations_path(account)) }
         it { should set_the_flash }
 
@@ -61,9 +55,7 @@ describe InvitationsController do
 
       context "with invalid attributes" do
         before { post :create, account_id: account, invitation: invalid_invitation_attributes }
-        it { should assign_to(:account) }
         it { should authorize_resource }
-        it { should assign_to(:invitation) }
         it { should render_template(:new) }
         it { should_not set_the_flash }
 
@@ -72,16 +64,14 @@ describe InvitationsController do
         end
 
         it "doesn't send an invitation email" do
-          should_not assign_to(:email_sent)
+          expect(assigns(:email_sent)).to be_nil
         end
       end
     end
 
     describe "DELETE #destroy" do
       before { delete :destroy, account_id: account, id: invitation }
-      it { should assign_to(:account) }
       it { should authorize_resource }
-      it { should assign_to(:invitation) }
       it { should redirect_to(account_invitations_path(account)) }
       it { should set_the_flash }
 
@@ -92,9 +82,7 @@ describe InvitationsController do
 
     describe "PUT #send_email" do
       before { put :send_email, account_id: account, id: invitation }
-      it { should assign_to(:account) }
       it { should authorize_resource }
-      it { should assign_to(:invitation) }
       it { should redirect_to(account_invitations_path(account)) }
       it { should set_the_flash }
 

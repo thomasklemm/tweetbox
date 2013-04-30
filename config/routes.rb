@@ -35,7 +35,6 @@ Birdview::Application.routes.draw do
     resources :twitter_accounts, only: [:index, :show, :new] do
       post 'auth', on: :collection, as: :authorize
     end
-    resources :searches
     resources :tweets
   end
 

@@ -1,3 +1,5 @@
+require 'mail'
+
 module Mail
   # == Sending Email with Override Recipient SMTP
   #

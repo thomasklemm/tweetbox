@@ -52,7 +52,7 @@ Birdview::Application.configure do
   }
 
   # Send all email to said email address
-  config.action_mailer.delivery_method = :override_recipient_smtp, { to: 'birdview-staging@tklemm.eu' }
+  # config.action_mailer.delivery_method = :override_recipient_smtp, { to: 'birdview-staging@tklemm.eu' }
 
   # Enable threaded mode
   config.threadsafe!

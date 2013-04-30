@@ -1,3 +1,4 @@
+# SimpleCov settings
 # require 'simplecov'
 # SimpleCov.start 'rails'
 
@@ -11,6 +12,9 @@ require 'rspec/rails'
 Dir[Rails.root.join("app/controllers/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("app/models/**/*.rb")].each {|f| require f}
 
+# Requires lib directory
+Dir[Rails.root.join("lib/**/*.rb")].each {|f| require f}
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -19,6 +23,9 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  # Render views globally
+  config.render_views
 
   # ## Mock Framework
   #
@@ -29,7 +36,7 @@ RSpec.configure do |config|
   # config.mock_with :rr
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -39,7 +46,7 @@ RSpec.configure do |config|
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
-  config.infer_base_class_for_anonymous_controllers = false
+  config.infer_base_class_for_anonymous_controllers = true
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -47,16 +54,12 @@ RSpec.configure do |config|
   #     --seed 1234
   # config.order = "random"
 
-  # Run focus specs
-  config.treat_symbols_as_metadata_keys_with_true_values = true
+  # Focus on specs with focus: true and :focus metadata
   config.filter_run :focus => true
   config.run_all_when_everything_filtered = true
+  config.treat_symbols_as_metadata_keys_with_true_values = true
 
-  # Pundit matchers
-  # require 'pundit/rspec'
-  # config.include Pundit::Rspec::Matchers
-
-  # Devise test helpers
+  # Devise test helpers in controllers
   config.include Devise::TestHelpers, type: :controller
 end
 
