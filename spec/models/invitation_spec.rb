@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  email      :string(255)
 #  id         :integer          not null, primary key
+#  invitee_id :integer
 #  sender_id  :integer
 #  updated_at :datetime         not null
 #  used       :boolean          default(FALSE), not null
@@ -20,44 +21,47 @@
 require 'spec_helper'
 
 describe Invitation do
-  subject { Fabricate.build(:invitation) }
+  subject(:invitation) { Fabricate.build(:invitation) }
   it { should be_valid }
 
   it { should belong_to(:account) }
   it { should belong_to(:sender).class_name('User') }
+  it { should belong_to(:invitee).class_name('User') }
   it { should have_and_belong_to_many(:projects) }
 
   it { should validate_presence_of(:account) }
   it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:sender) }
+  it { should validate_presence_of(:code) }
+  it { should validate_uniqueness_of(:code) }
 
   it "generates code" do
-    subject.save
-    expect(subject.code).to be_present
+    expect(invitation.code).to be_present
   end
 
   it "uses the code in the URL" do
-    expect(subject.to_param).to eq(subject.code)
+    expect(invitation.to_param).to eq(invitation.code)
   end
 
   it "delegates sender name" do
-    expect(subject.sender_name).to eq(subject.sender.name)
+    expect(invitation.sender_name).to eq(invitation.sender.name)
   end
 
   it "delegates sender email" do
-    expect(subject.sender_email).to eq(subject.sender.email)
+    expect(invitation.sender_email).to eq(invitation.sender.email)
   end
 
   it "delegates account name" do
-    expect(subject.account_name).to eq(subject.account.name)
+    expect(invitation.account_name).to eq(invitation.account.name)
   end
 
-  describe "#send_email" do
-    it "sends an invitation email" do
+  describe "#send_mail!" do
+    it "sends an invitation mail" do
       mail = stub('invitation_mail')
       mail.expects(:deliver).returns(true).once
-      InvitationMailer.expects(:invitation).with(subject).returns(mail).once
+      InvitationMailer.expects(:invitation).with(invitation).returns(mail).once
 
-      subject.send_email
+      invitation.send_mail!
     end
   end
 end

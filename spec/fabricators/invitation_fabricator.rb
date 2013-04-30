@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  email      :string(255)
 #  id         :integer          not null, primary key
+#  invitee_id :integer
 #  sender_id  :integer
 #  updated_at :datetime         not null
 #  used       :boolean          default(FALSE), not null

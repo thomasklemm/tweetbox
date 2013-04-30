@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
     @invitation.sender = current_user
 
     if @invitation.save
-      @email_sent = @invitation.send_email
+      @invitation.send_mail!
 
       redirect_to account_invitations_path(@account),
         notice: 'Invitation was successfully created.'
@@ -25,19 +25,21 @@ class InvitationsController < ApplicationController
     end
   end
 
-  # TODO: maybe don't destroy invitations when they have been used
   def destroy
     @invitation = @account.invitations.find_by_code!(params[:id])
     @invitation.destroy
+
     redirect_to account_invitations_path(@account),
       notice: 'Invitation was successfully destroyed.'
   end
 
-  def send_email
+  # Resend the mail with registration link and invitation code
+  def send_mail
     @invitation = @account.invitations.find_by_code!(params[:id])
     @email_sent = @invitation.send_email
+
     redirect_to account_invitations_path(@account),
-      notice: 'Invitation email was successfully sent.'
+      notice: 'Invitation mail was successfully sent.'
   end
 
   private

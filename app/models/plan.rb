@@ -25,7 +25,7 @@ class Plan < ActiveRecord::Base
   end
 
   def self.trial
-    where(trial: true).first
+    where(trial: true).first!
   end
 
   def self.paid

@@ -48,7 +48,7 @@ class Signup
   def delegate_attributes_for_account
     @account = Account.new do |account|
       account.name = company_name
-      account.plan = trial_plan
+      account.plan = Plan.trial
     end
   end
 
@@ -66,11 +66,11 @@ class Signup
     @user.save!
     @account.save!
 
-    create_admin_membership
-    create_project
+    create_admin_membership!
+    create_project!
   end
 
-  def create_admin_membership
+  def create_admin_membership!
     @membership = Membership.create! do |membership|
       membership.user = @user
       membership.account = @account
@@ -78,14 +78,9 @@ class Signup
     end
   end
 
-  def create_project
+  def create_project!
     @project = @account.projects.create! do |project|
       project.name = @account.name
     end
-  end
-
-  # Assign the trial plan to the created account
-  def trial_plan
-    !Rails.env.test? ? Plan.trial : Fabricate(:trial_plan)
   end
 end

@@ -34,7 +34,7 @@ class Account < ActiveRecord::Base
 
   # Plan
   belongs_to :plan
-  validates :plan_id, presence: true
+  validates :plan, presence: true
   delegate :free?, :billed?, :trial?, to: :plan
 
   # Validations
@@ -75,6 +75,8 @@ class Account < ActiveRecord::Base
   def expired?
     trial? && past_trial?
   end
+
+  private
 
   def past_trial?
     trial_expires_at && trial_expires_at < Time.current

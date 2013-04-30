@@ -23,6 +23,8 @@ public/system
 rerun.txt
 tags
 vendor/bundler_gems
+/.tags
+/.tags_sorted_by_file
 
 # Ignore Pow Environment Configuration Variables
 /.powrc

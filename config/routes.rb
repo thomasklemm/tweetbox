@@ -1,36 +1,32 @@
 Birdview::Application.routes.draw do
   # User authentication
   devise_for :users,
-    path_names: { sign_up: 'signup', sign_in: 'login', sign_out: 'logout' },
-    controllers: {
-      registrations: 'users/registrations'
-    }
+    path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }
 
-  # Special naming of signup, login and logout routes
+  # Special naming of user authentication routes
   devise_scope :user do
+    get 'login',     to: 'devise/sessions#new',      as: :login
     get 'login',     to: 'devise/sessions#new',      as: :new_user_session
     delete 'logout', to: 'devise/sessions#destroy',  as: :destroy_user_session
+    get 'register',  to: 'devise/registrations#new', as: :new_user_registration
   end
 
-  get 'login', to: 'devise/sessions#new', as: :login
-
   # Signups
-  get 'signup' => 'signups#new',     as: :new_signup
+  get  'signup' => 'signups#new',    as: :new_signup
   post 'signup' => 'signups#create', as: :signups
 
   # Invitations
-  namespace :invitations do
-    resources :registrations, only: [:new, :create]
-    resources :joins, only: [:new, :create]
-  end
+  get 'invitations/accept' => 'accept_invitations#accept', as: :accept_invitation
 
+  # Accounts
   resources :accounts do
     resources :projects, except: [:index, :show]
     resources :invitations, only: [:index, :new, :create, :destroy] do
-      put :send_email, on: :member, as: :send
+      put :send_mail, on: :member, as: :send
     end
   end
 
+  # Projects
   resources :projects, only: [:index, :show] do
     resources :twitter_accounts, only: [:index, :show, :new] do
       post 'auth', on: :collection, as: :authorize
