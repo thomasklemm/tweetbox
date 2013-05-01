@@ -1,13 +1,16 @@
-You have been invited to join the <%= @invitation.account_name %> account.
+Hello!
+
+This is Birdview, and we're happy to tell you that <%= @invitation.sender_name %> has invited uyou to join the <%= @invitation.account_name %> account.
 Please open the following URL in your browser to get started:
 
 <%= accept_invitation_url(invitation_code: @invitation.code) %>
 
 We hope you have a great time giving awesome Twitter support to your customers!
-Give us a shout for any questions, we are there for you: support@birdviewapp.com
+Give us a shout for any questions, we're happy to help out.
 
-Thanks!
+Thank you!
 
-Best,
-
+Have a great day,
 Team Birdview
+<a href='mailto:support@birdviewapp.com'>support@birdviewapp.com</a>
+

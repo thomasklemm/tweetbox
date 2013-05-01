@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   # Redirect the user to his main project after sign_in
   # if there is only one
+  # TODO: Cache projects_count on users
   def after_sign_in_path_for(resource)
     if current_user.projects.count == 1
       project_path(current_user.projects.first)
@@ -36,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_account
-    @account ||= user_accounts.find(params[:account_id] || params[:id])
+    @account ||= user_accounts.find(params[:account_id] || user_session[:account_id] || params[:id])
   end
 
   def user_projects

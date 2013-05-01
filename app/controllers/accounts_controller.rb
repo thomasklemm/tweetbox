@@ -59,7 +59,7 @@ class AccountsController < ApplicationController
     end
 
     if @account.destroyed?
-      redirect_to accounts_path, notice: 'Account successfully destroyed.'
+      redirect_to accounts_path, notice: 'Account was successfully destroyed.'
     else
       redirect_to account_path(@account)
     end

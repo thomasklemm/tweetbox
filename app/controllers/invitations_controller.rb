@@ -4,29 +4,29 @@ class InvitationsController < ApplicationController
   after_filter :verify_authorized
 
   def index
-    @invitations = @account.invitations
+    @invitations = account_invitations
   end
 
   def new
-    @invitation = @account.invitations.build
+    @invitation = account_invitations.build
   end
 
   def create
-    @invitation = @account.invitations.build(invitation_params)
+    @invitation = account_invitations.build(invitation_params)
     @invitation.sender = current_user
 
     if @invitation.save
-      @invitation.send_mail!
+      @sent_mail = @invitation.send_mail!
 
       redirect_to account_invitations_path(@account),
-        notice: 'Invitation was successfully created.'
+        notice: "You've invited a colleague of yours successfully."
     else
       render action: :new
     end
   end
 
   def destroy
-    @invitation = @account.invitations.find_by_code!(params[:id])
+    @invitation = account_invitations.find_by_code!(params[:id])
     @invitation.destroy
 
     redirect_to account_invitations_path(@account),
@@ -35,8 +35,8 @@ class InvitationsController < ApplicationController
 
   # Resend the mail with registration link and invitation code
   def send_mail
-    @invitation = @account.invitations.find_by_code!(params[:id])
-    @email_sent = @invitation.send_email
+    @invitation = account_invitations.find_by_code!(params[:id])
+    @sent_mail = @invitation.send_mail!
 
     redirect_to account_invitations_path(@account),
       notice: 'Invitation mail was successfully sent.'
@@ -47,6 +47,10 @@ class InvitationsController < ApplicationController
   def load_and_authorize_account
     @account = user_account
     authorize @account, :invite?
+  end
+
+  def account_invitations
+    @account.invitations
   end
 
   def invitation_params

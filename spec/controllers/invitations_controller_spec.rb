@@ -49,7 +49,7 @@ describe InvitationsController do
         end
 
         it "sends an invitation email" do
-          expect(assigns(:email_sent)).to be_true
+          expect(assigns(:sent_mail)).to be_true
         end
       end
 
@@ -64,7 +64,7 @@ describe InvitationsController do
         end
 
         it "doesn't send an invitation email" do
-          expect(assigns(:email_sent)).to be_nil
+          expect(assigns(:sent_mail)).to be_nil
         end
       end
     end
@@ -80,14 +80,14 @@ describe InvitationsController do
       end
     end
 
-    describe "PUT #send_email" do
-      before { put :send_email, account_id: account, id: invitation }
+    describe "PUT #send_mail" do
+      before { put :send_mail, account_id: account, id: invitation }
       it { should authorize_resource }
       it { should redirect_to(account_invitations_path(account)) }
       it { should set_the_flash }
 
       it "sends an invitation email" do
-        expect(assigns(:email_sent)).to be_true
+        expect(assigns(:sent_mail)).to be_true
       end
     end
   end

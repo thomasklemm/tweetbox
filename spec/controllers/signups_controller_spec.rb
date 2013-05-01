@@ -13,6 +13,8 @@ describe SignupsController do
   let(:invalid_signup_attributes) { Fabricate.attributes_for(:signup, name: '') }
 
   describe "POST #create" do
+    before { Fabricate(:trial_plan) }
+
     context "with valid attributes" do
       before { post :create, signup: valid_signup_attributes }
       let(:signup) { assigns(:signup) }

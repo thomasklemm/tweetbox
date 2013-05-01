@@ -6,12 +6,12 @@ class ProjectsController < ApplicationController
   #   resources :projects, except: [:index, :show]
   # end
   def new
-    @project = user_account.projects.build
+    @project = user_account_projects.build
     authorize @project
   end
 
   def create
-    @project = user_account.projects.build(project_params)
+    @project = user_account_projects.build(project_params)
     authorize @project
     if @project.save
       redirect_to project_path(@project),
@@ -22,12 +22,12 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = user_account.projects.find(params[:id])
+    @project = user_account_projects.find(params[:id])
     authorize @project
   end
 
   def update
-    @project = user_account.projects.find(params[:id])
+    @project = user_account_projects.find(params[:id])
     authorize @project
     if @project.update_attributes(project_params)
       redirect_to project_path(@project),
@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = user_account.projects.find(params[:id])
+    @project = user_account_projects.find(params[:id])
     authorize @project
 
     account = @project.account
@@ -57,6 +57,10 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def user_account_projects
+    user_account.projects
+  end
 
   def project_params
     params.require(:project).permit(:name)

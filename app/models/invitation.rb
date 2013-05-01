@@ -29,20 +29,9 @@ class Invitation < ActiveRecord::Base
 
   after_initialize :generate_code!
 
-  def to_param
-    code
-  end
-
-  def sender_name
-    sender.name
-  end
-
-  def sender_email
-    sender.email
-  end
-
-  def account_name
-    account.name
+  # Deactivate unused invitations after a certain amount of days
+  def active?
+    new_record? || created_at < 7.days.ago
   end
 
   def send_mail!
@@ -58,6 +47,18 @@ class Invitation < ActiveRecord::Base
     create_projects!(membership)
 
     membership
+  end
+
+  def account_name
+    account.name
+  end
+
+  def sender_name
+    sender.name
+  end
+
+  def to_param
+    code
   end
 
   private

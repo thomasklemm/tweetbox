@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Signup do
-  subject { Fabricate(:signup) }
+  subject(:signup) { Fabricate(:signup) }
   it { should be_valid }
 
   it_should_behave_like FormObject
@@ -18,11 +18,14 @@ describe Signup do
 end
 
 describe Signup, 'with a valid user and account' do
-  subject { Fabricate(:signup) }
+  # Trial plan must be present in the database
+  before { Fabricate(:trial_plan) }
+
+  subject(:signup) { Fabricate.build(:signup) }
   it { should be_valid }
 
   before do
-    @result = subject.save # time intense
+    @result = signup.save # time intense
   end
 
   it 'returns true' do
@@ -35,15 +38,15 @@ describe Signup, 'with a valid user and account' do
   its(:project)    { should be_persisted }
 
   it 'assigns the trial plan to the created account' do
-    expect(subject.account.plan).to be_trial
+    expect(signup.account.plan).to be_trial
   end
 
   it 'creates an admin membership for the user' do
-    expect(subject.user).to be_admin_of(subject.account)
+    expect(signup.user).to be_admin_of(signup.account)
   end
 
   it 'assigns permissions when creating the project' do
-    expect(subject.user).to be_member_of(subject.project)
+    expect(signup.user).to be_member_of(signup.project)
   end
 end
 

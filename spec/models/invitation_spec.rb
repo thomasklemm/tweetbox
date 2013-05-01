@@ -35,25 +35,52 @@ describe Invitation do
   it { should validate_presence_of(:code) }
   it { should validate_uniqueness_of(:code) }
 
-  it "generates code" do
+  it "generates invitation code after initialization" do
     expect(invitation.code).to be_present
   end
 
-  it "uses the code in the URL" do
+  it "persists the invitation code in the database" do
+    code = invitation.code
+    invitation.save
+    invitation.reload
+    expect(invitation.code).to eq(code)
+  end
+
+  it "prints the code as URL param" do
     expect(invitation.to_param).to eq(invitation.code)
+  end
+
+  it "delegates account name" do
+    expect(invitation.account_name).to eq(invitation.account.name)
   end
 
   it "delegates sender name" do
     expect(invitation.sender_name).to eq(invitation.sender.name)
   end
 
-  it "delegates sender email" do
-    expect(invitation.sender_email).to eq(invitation.sender.email)
+  describe "#active?" do
+    it "returns true when new record" do
+      expect(invitation).to be_new_record
+      expect(invitation).to be_active
+    end
+
+    it "returns true when the invitation is less than seven days old" do
+      Timecop.freeze
+      invitation.created_at = 7.days.ago - 1.second
+      invitation.save
+      expect(invitation).to be_active
+      Timecop.return
+    end
+
+    it "returns false when the invitation is more than seven days old" do
+      Timecop.freeze
+      invitation.created_at = 7.days.ago + 1.second
+      invitation.save
+      expect(invitation).to_not be_active
+      Timecop.return
+    end
   end
 
-  it "delegates account name" do
-    expect(invitation.account_name).to eq(invitation.account.name)
-  end
 
   describe "#send_mail!" do
     it "sends an invitation mail" do

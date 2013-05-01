@@ -1,7 +1,8 @@
 Birdview::Application.routes.draw do
   # User authentication
   devise_for :users,
-    path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }
+    path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' },
+    controllers: { registrations: 'users/registrations', passwords: 'users/passwords' }
 
   # Special naming of user authentication routes
   devise_scope :user do
