@@ -48,6 +48,12 @@ gem 'workflow'
 # Twitter (Twitter REST API client)
 gem 'twitter'
 
+# Sidekiq (Background jobs)
+gem 'sidekiq'
+
+# Clockwork (Scheduler for recurring jobs)
+gem 'clockwork'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do

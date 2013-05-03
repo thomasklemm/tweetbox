@@ -4,7 +4,7 @@
 #
 #  account_id :integer
 #  admin      :boolean          default(FALSE), not null
-#  code       :string(255)
+#  code       :string(255)      not null
 #  created_at :datetime         not null
 #  email      :string(255)
 #  id         :integer          not null, primary key

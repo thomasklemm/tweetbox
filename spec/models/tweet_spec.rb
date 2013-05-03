@@ -3,7 +3,6 @@
 # Table name: tweets
 #
 #  author_id             :integer
-#  conversation_id       :integer
 #  created_at            :datetime         not null
 #  id                    :integer          not null, primary key
 #  in_reply_to_status_id :integer
@@ -17,7 +16,6 @@
 # Indexes
 #
 #  index_tweets_on_author_id                  (author_id)
-#  index_tweets_on_conversation_id            (conversation_id)
 #  index_tweets_on_project_id                 (project_id)
 #  index_tweets_on_project_id_and_twitter_id  (project_id,twitter_id) UNIQUE
 #  index_tweets_on_twitter_id                 (twitter_id)
@@ -37,8 +35,6 @@ describe Tweet do
 
   it { should belong_to(:author) }
   it { should validate_presence_of(:author) }
-
-  it { should belong_to(:conversation) }
 
   describe "workflow" do
     it "has :new, :open, :closed, and :conversation states" do
@@ -187,9 +183,5 @@ describe Tweet do
       tweet.assign_workflow_state(:mentions_timeline)
       expect(tweet.current_state).to_not eq(:conversation)
     end
-  end
-
-  describe "#build_conversation" do
-    pending
   end
 end

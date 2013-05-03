@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130430205520) do
+ActiveRecord::Schema.define(:version => 20130313111323) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -44,24 +44,16 @@ ActiveRecord::Schema.define(:version => 20130430205520) do
   add_index "authors", ["project_id"], :name => "index_authors_on_project_id"
   add_index "authors", ["twitter_id"], :name => "index_authors_on_twitter_id"
 
-  create_table "conversations", :force => true do |t|
-    t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "conversations", ["project_id"], :name => "index_conversations_on_project_id"
-
   create_table "invitations", :force => true do |t|
-    t.string   "code"
+    t.string   "code",                          :null => false
     t.string   "email"
     t.integer  "account_id"
     t.integer  "sender_id"
+    t.integer  "invitee_id"
     t.boolean  "admin",      :default => false, :null => false
     t.boolean  "used",       :default => false, :null => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
-    t.integer  "invitee_id"
   end
 
   add_index "invitations", ["account_id"], :name => "index_invitations_on_account_id"
@@ -112,31 +104,19 @@ ActiveRecord::Schema.define(:version => 20130430205520) do
 
   add_index "projects", ["account_id"], :name => "index_projects_on_account_id"
 
-  create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
-
   create_table "tweets", :force => true do |t|
     t.integer  "project_id"
     t.integer  "twitter_id",            :limit => 8
     t.text     "text"
-    t.integer  "in_reply_to_status_id"
-    t.integer  "in_reply_to_user_id"
-    t.integer  "conversation_id"
+    t.integer  "in_reply_to_status_id", :limit => 8
+    t.integer  "in_reply_to_user_id",   :limit => 8
     t.text     "workflow_state"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.integer  "author_id"
+    t.integer  "author_id",             :limit => 8
   end
 
   add_index "tweets", ["author_id"], :name => "index_tweets_on_author_id"
-  add_index "tweets", ["conversation_id"], :name => "index_tweets_on_conversation_id"
   add_index "tweets", ["project_id", "twitter_id"], :name => "index_tweets_on_project_id_and_twitter_id", :unique => true
   add_index "tweets", ["project_id"], :name => "index_tweets_on_project_id"
   add_index "tweets", ["twitter_id"], :name => "index_tweets_on_twitter_id"
@@ -147,20 +127,25 @@ ActiveRecord::Schema.define(:version => 20130430205520) do
     t.string   "uid"
     t.string   "token"
     t.string   "token_secret"
-    t.integer  "twitter_id"
+    t.integer  "twitter_id",            :limit => 8
     t.string   "name"
     t.string   "screen_name"
     t.string   "location"
     t.string   "description"
     t.string   "url"
     t.string   "profile_image_url"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.boolean  "get_mentions",                       :default => true
+    t.integer  "max_mentions_tweet_id", :limit => 8
+    t.boolean  "get_home",                           :default => true
+    t.integer  "max_home_tweet_id",     :limit => 8
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.string   "auth_scope"
   end
 
   add_index "twitter_accounts", ["project_id", "uid"], :name => "index_twitter_accounts_on_project_id_and_uid", :unique => true
   add_index "twitter_accounts", ["project_id"], :name => "index_twitter_accounts_on_project_id"
+  add_index "twitter_accounts", ["twitter_id"], :name => "index_twitter_accounts_on_twitter_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "name",                   :default => "", :null => false

@@ -16,6 +16,10 @@ Birdview::Application.routes.draw do
   get  'signup' => 'signups#new',    as: :new_signup
   post 'signup' => 'signups#create', as: :signups
 
+  # Registrations
+  get  'register' => 'registrations#new',    as: :new_registration
+  post 'register' => 'registrations#create', as: :registrations
+
   # Invitations
   get 'invitations/accept' => 'accept_invitations#accept', as: :accept_invitation
 

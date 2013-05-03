@@ -25,23 +25,27 @@
 #
 
 class Author < ActiveRecord::Base
-  # Project
   belongs_to :project
   validates :project, presence: true
 
-  # Twitter Id
-  validates_uniqueness_of :twitter_id, scope: :project_id
-
-  # Tweets
   has_many :tweets
 
-  # Find or create an author scoped to the project
-  def self.find_or_create_author(project, status)
-    author = project.authors.where(twitter_id: status.user.id).first_or_initialize
-    author.assign_fields_from_status(status)
-    author.save && author
+  # Ensure that only one author record is created for each project
+  validates_uniqueness_of :twitter_id, scope: :project_id
+
+  # Assigns the author's fields from a Twitter status object
+  # Persists the changes to the database by saving the record
+  # Returns the author record
+  def update_fields_from_status(status)
+    self.assign_fields_from_status(status)
+    self.save && self
   end
 
+  private
+
+  # Assigns the author's fields from a Twitter status object
+  # Returns the author record without saving it and persisting
+  # the changes to the database
   def assign_fields_from_status(status)
     self.twitter_id  = status.user.id
     self.name        = status.user.name
@@ -54,5 +58,6 @@ class Author < ActiveRecord::Base
     self.followers_count   = status.user.followers_count
     self.friends_count     = status.user.friends_count
     self.profile_image_url = status.user.profile_image_url_https
+    self
   end
 end

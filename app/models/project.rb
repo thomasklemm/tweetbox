@@ -14,30 +14,20 @@
 #
 
 class Project < ActiveRecord::Base
-  # Account
   belongs_to :account
   validates :account, presence: true
 
-  # Permissions and members
   has_many :permissions, dependent: :destroy
   has_many :users, through: :permissions
 
   validates :name, presence: true
 
-  after_create :setup_permissions
-  after_update :update_permissions
-
-  # Twitter Accounts
   has_many :twitter_accounts, dependent: :destroy
-
-  # Tweets
   has_many :tweets, dependent: :destroy
-
-  # Tweet authors
   has_many :authors, dependent: :destroy
 
-  # Conversations
-  has_many :conversations, dependent: :destroy
+  after_create :setup_permissions
+  after_update :update_permissions
 
   def self.visible_to(user)
     where(id: user.project_ids)
@@ -72,7 +62,59 @@ class Project < ActiveRecord::Base
     users.map(&:id)
   end
 
+  # Create one or many tweet records
+  # from Twitter status objects
+  # Returns an array of tweet records
+  def create_tweets_from_twitter(*statuses)
+    statuses &&= statuses.reverse
+    statuses.map { |status| create_tweet_from_twitter(status) }
+  end
+
+  # Fetches the given status_id from Twitter
+  # Creates a tweet record from it
+  # Returns a tweet record
+  def get_previous_tweet(status_id)
+    status = twitter_client.status(status_id)
+    create_tweet_from_twitter(status, :none)
+  end
+
+  # Returns an Twitter::Client instance with credentials
+  # for a random one of the twitter accounts associated with the project
+  def twitter_client
+    twitter_account = twitter_accounts.sample
+
+    Twitter::Client.new(
+      oauth_token: twitter_account.token,
+      oauth_token_secret: twitter_account.token_secret
+    )
+  end
+
   private
+
+  # Creates a tweet record from a Twitter status object
+  # Returns a tweet record
+  def create_tweet_from_twitter(status, state=:new)
+    author = find_or_create_author(status)
+    find_or_create_tweet(status, author, state)
+  end
+
+  # Finds or creates an author scoped to the current project
+  # from a Twitter status object
+  # Returns an author record
+  def find_or_create_author(status)
+    author = authors.where(twitter_id: status.user.id).first_or_initialize
+    author.update_fields_from_status(status)
+  end
+
+  # Find or create a tweet record scoped to the current project
+  # from a Twitter status object and associates the author record
+  # Returns a tweet record
+  def find_or_create_tweet(status, author, state)
+    tweet = tweets.where(twitter_id: status.id).first_or_initialize
+    tweet.author = author
+    tweet.assign_state(state)
+    tweet.update_fields_from_status(status)
+  end
 
   def setup_permissions
     @new_user_ids ||= []

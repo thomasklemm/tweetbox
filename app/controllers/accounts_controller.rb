@@ -25,7 +25,7 @@ class AccountsController < ApplicationController
     if @account.save
       @membership = Membership.create!(user: current_user, account: @account, admin: true)
       redirect_to account_path(@account),
-        notice: 'Account was successfully created.'
+        notice: 'Account has been created.'
     else
       render action: :new
       # TODO: Try keeping the url the same on validation errors
@@ -42,7 +42,7 @@ class AccountsController < ApplicationController
     authorize @account
     if @account.update_attributes(account_params)
       redirect_to account_path(@account),
-        notice: 'Account was successfully updated.'
+        notice: 'Account has been updated.'
     else
       render action: :edit
     end
@@ -59,7 +59,7 @@ class AccountsController < ApplicationController
     end
 
     if @account.destroyed?
-      redirect_to accounts_path, notice: 'Account was successfully destroyed.'
+      redirect_to accounts_path, notice: 'Account has been destroyed.'
     else
       redirect_to account_path(@account)
     end
