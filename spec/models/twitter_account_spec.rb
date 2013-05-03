@@ -32,12 +32,15 @@
 require 'spec_helper'
 
 describe TwitterAccount do
-  subject { Fabricate.build(:twitter_account) }
+  subject(:twitter_account) { Fabricate.build(:twitter_account) }
   it { should be_valid }
 
   it { should belong_to(:project) }
   it { should validate_presence_of(:project) }
 
+  it { should have_many(:searches).dependent(:destroy) }
+
+  it { should validate_presence_of(:twitter_id) }
   it { should validate_uniqueness_of(:twitter_id) }
 
   it { should validate_presence_of(:uid) }
@@ -46,7 +49,26 @@ describe TwitterAccount do
 
   it { should ensure_inclusion_of(:auth_scope).in_array(%w(read write messages)) }
 
-  describe ".from_omniauth" do
-    pending ".from_omniauth"
+  describe "#twitter_client" do
+    let(:twitter_account) { Fabricate.build(:twitter_account, token: 'my_token', token_secret: 'my_token_secret') }
+    let(:client) { twitter_account.twitter_client }
+
+    it "returns a Twitter::Client instance" do
+      expect(client).to be_a(Twitter::Client)
+    end
+
+    it "sets the twitter account's credentials" do
+      expect(client.instance_values['oauth_token']).to eq('my_token')
+      expect(client.instance_values['oauth_token_secret']).to eq('my_token_secret')
+    end
+
+    it "sets the consumer credentials" do
+      expect(client.instance_values['consumer_key']).to eq('my_consumer_key')
+      expect(client.instance_values['consumer_secret']).to eq('my_consumer_secret')
+    end
   end
+
+  it { should respond_to(:client) }
+
+  pending ".from_omniauth"
 end

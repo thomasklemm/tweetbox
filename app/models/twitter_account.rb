@@ -36,7 +36,7 @@ class TwitterAccount < ActiveRecord::Base
   has_many :searches, dependent: :destroy
 
   # Each twitter account can be associated with only one project
-  validates :twitter_id, uniqueness: true
+  validates :twitter_id, presence: true, uniqueness: true
 
   # Credentials for authenticating with Twitter
   validates :uid, :token, :token_secret, presence: true

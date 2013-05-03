@@ -16,7 +16,6 @@
 #
 
 Fabricator(:search) do
-  twitter_account nil
-  project         nil
-  term            "MyText"
+  twitter_account
+  term            "term"
 end

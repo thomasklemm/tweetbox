@@ -31,6 +31,7 @@
 
 Fabricator(:twitter_account) do
   project
+  twitter_id        123456789
   uid               "uid_string"
   token             "token_string"
   token_secret      "token_secret_string"
