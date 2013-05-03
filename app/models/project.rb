@@ -23,6 +23,8 @@ class Project < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :twitter_accounts, dependent: :destroy
+  has_many :searches # dependent on existence of twitter account
+
   has_many :tweets, dependent: :destroy
   has_many :authors, dependent: :destroy
 
@@ -65,9 +67,10 @@ class Project < ActiveRecord::Base
   # Create one or many tweet records
   # from Twitter status objects
   # Returns an array of tweet records
-  def create_tweets_from_twitter(*statuses)
-    statuses &&= statuses.reverse
-    statuses.map { |status| create_tweet_from_twitter(status) }
+  def create_tweets_from_twitter(statuses, options={})
+    statuses &&= [statuses].flatten.reverse
+    state = options.fetch(:state, :new)
+    statuses.map { |status| create_tweet_from_twitter(status, state) }
   end
 
   # Fetches the given status_id from Twitter
@@ -78,15 +81,10 @@ class Project < ActiveRecord::Base
     create_tweet_from_twitter(status, :none)
   end
 
-  # Returns an Twitter::Client instance with credentials
-  # for a random one of the twitter accounts associated with the project
+  # Returns an Twitter::Client instance for a random twitter account
+  # associated with the project
   def twitter_client
-    twitter_account = twitter_accounts.sample
-
-    Twitter::Client.new(
-      oauth_token: twitter_account.token,
-      oauth_token_secret: twitter_account.token_secret
-    )
+    twitter_accounts.sample.twitter_client
   end
 
   private

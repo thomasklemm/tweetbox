@@ -3,13 +3,14 @@ class TwitterWorker
 
   def perform(type, twitter_account_id, term=nil)
     @twitter_account = TwitterAccount.find(twitter_account_id)
+    @project = @twitter_account.project
     @client = @twitter_account.client
 
-    case type.to_sym
-    when :mentions then get_mentions
-    when :home then get_home
-    when :search then get_search(term)
-    else raise "TwitterWorker: Please pass a valid type"
+    case type.to_s
+    when 'mentions' then get_mentions
+    when 'home' then get_home
+    when 'search' then get_search(term)
+    else raise "TwitterWorker: Please pass a valid type (Did not recognize #{type.to_s})"
     end
   end
 
@@ -41,17 +42,29 @@ class TwitterWorker
   private
 
   def get_mentions
-    tweets = @client.x
-    # use max_mentions_tweet_id
+    options = { count: 200 }
+    options[:since_id] = @twitter_account.max_mentions_tweet_id if @twitter_account.max_mentions_tweet_id
+
+    statuses = @client.mentions_timeline(options)
+    tweets = @project.create_tweets_from_twitter(statuses, state: :new)
+
+    # Set new max mentions tweet id to include in the next run
+    @project.update_column(:max_mentions_tweet_id, tweets.map(&:twitter_id).max)
   end
 
   def get_home
-    tweets = @client.x
-    # use max_home_tweet_id
+    options = { count: 200 }
+    options[:since_id] = @twitter_account.max_home_tweet_id if @twitter_account.max_home_tweet_id
+
+    statuses = @client.home_timeline(options)
+    tweets = @project.create_tweets_from_twitter(statuses, state: :none)
+
+    # Set new max home tweet id to include in the next run
+    @project.update_column(:max_home_tweet_id, tweets.map(&:twitter_id).max)
   end
 
   def get_search(term)
-    tweets = @client.x
+    # tweets = @client.x
     # how should we cache the current max tweet id?
   end
 end

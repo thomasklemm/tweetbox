@@ -30,18 +30,18 @@
 #
 
 class TwitterAccount < ActiveRecord::Base
-  # Project
   belongs_to :project
   validates :project, presence: true
 
-  # Ensure uniqueness of twitter_account, can be associated with only one project
-  # TODO: Add DB index to enforce uniqueness constraint
+  has_many :searches, dependent: :destroy
+
+  # Each twitter account can be associated with only one project
   validates :twitter_id, uniqueness: true
 
-  # Credentials
+  # Credentials for authenticating with Twitter
   validates :uid, :token, :token_secret, presence: true
 
-  # Auth scope
+  # The authorization scope of the stored credentials
   validates :auth_scope, inclusion: { in: %w(read write messages) }
 
   # Returns a Twitter::Client instance for the twitter account
@@ -55,38 +55,47 @@ class TwitterAccount < ActiveRecord::Base
   alias_method :client, :twitter_client
 
   # Create or update existing Twitter account
+  # Returns twitter account record
   def self.from_omniauth(project, auth, auth_scope)
     t = project.twitter_accounts.where(uid: auth.uid).first_or_initialize # uid cannot change
 
-    # Credentials
+    # Store credentials
     t.token        = auth.credentials.token   # can change, e.g. by changing access level...
     t.token_secret = auth.credentials.secret  #  ...or by revoking and reauthorizing access
 
-    # User info
-    user = auth.extra.raw_info
-    t.twitter_id  = user.id
-    t.name        = user.name
-    t.screen_name = user.screen_name
-    t.location    = user.location
-    t.description = user.description
-    t.url         = user.url
-    t.profile_image_url = user.profile_image_url_https
+    # Assign twitter authentcation scope for the provided credentials
+    t.assign_auth_scope(auth_scope)
 
-    # Set twitter authentcation scope for the provided credentials
-    t.map_auth_scope(auth_scope)
+    # Assign user info
+    t.assign_twitter_account_info(auth)
 
     # Save and return twitter account
     t.save! && t
   end
 
-  # Set correct authentication scopes of Twitter account
-  def map_auth_scope(auth_scope)
-    case auth_scope
-      when :read            then self.auth_scope = 'read'
-      when :read_and_write  then self.auth_scope = 'write'
-      when :direct_messages then self.auth_scope = 'messages'
-      else
-        raise "Please provide a valid Twitter auth scope."
+  private
+
+  # Assign user infos for authenticating twitter account
+  # from omniauth auth hash
+  def assign_twitter_account_info(auth)
+    user = auth.extra.raw_info
+    self.twitter_id  = user.id
+    self.name        = user.name
+    self.screen_name = user.screen_name
+    self.location    = user.location
+    self.description = user.description
+    self.url         = user.url
+    self.profile_image_url = user.profile_image_url_https
+    self
+  end
+
+  # Assign the matching auth scope for the stored credentials
+  def assign_auth_scope(auth_scope)
+    case auth_scope.to_s
+      when 'read'            then self.auth_scope = 'read'
+      when 'read_and_write'  then self.auth_scope = 'write'
+      when 'direct_messages' then self.auth_scope = 'messages'
+      else raise "TwitterAccount#assign_auth_scope: Please provide a valid Twitter auth scope."
       end
   end
 end
