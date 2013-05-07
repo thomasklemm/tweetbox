@@ -23,6 +23,7 @@ class RegistrationsController < ApplicationController
   private
 
   def load_invitation
-    @invitation = Invitation.where(code: session[:invitation_code]).first
+    code = session[:invitation_code] || params[:invitation_code]
+    @invitation = Invitation.where(code: code).first if code
   end
 end
