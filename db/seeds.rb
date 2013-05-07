@@ -65,10 +65,3 @@ Plan.create! do |plan|
   plan.user_limit = 30
   plan.price      = 1500
 end
-
-signup = Signup.new
-signup.name = 'Thomas Klemm',
-signup.email = 'thomas@tklemm.eu',
-signup.password = '123123123',
-signup.company_name = 'Thomas Klemm Industries'
-signup.save

@@ -1,10 +1,8 @@
-h1 Projects#show
-p Find me in app/views/projects/show.html.slim
+div
+  b.project = link_to "Project: #{ @project.name }", @project
+  | &nbsp;
+  - if policy(@project).edit?
+    = link_to 'Edit project', edit_account_project_path(@project.account, @project)
 
-div Name: #{ @project.name }
-
-- if policy(@project).edit?
-  = link_to 'Edit this project', edit_account_project_path(@project.account, @project)
-
-br
-= link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
+.secondary-nav
+  = link_to 'Twitter Accounts', project_twitter_accounts_path(@project)

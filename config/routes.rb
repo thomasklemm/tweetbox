@@ -8,6 +8,7 @@ Birdview::Application.routes.draw do
   devise_scope :user do
     get 'login',     to: 'devise/sessions#new',      as: :login
     get 'login',     to: 'devise/sessions#new',      as: :new_user_session
+    delete 'logout', to: 'devise/sessions#destroy',  as: :logout
     delete 'logout', to: 'devise/sessions#destroy',  as: :destroy_user_session
     get 'register',  to: 'devise/registrations#new', as: :new_user_registration
   end

@@ -1,1 +1,29 @@
 // experiments in SASS
+$navigation-spacing: 0.75rem
+
+.navigation
+  &.outer-container
+    height: 42px
+    line-height: 42px
+    background: #f33
+    a
+      color: #e9e9e9
+
+  .brand
+    font-weight: bold
+
+  .project-link, .account-link
+    margin-right: $navigation-spacing
+
+  .user-details
+    img.gravatar
+      display: inline
+      vertical-align: middle
+      border-radius: 3px
+
+    .name
+      margin-left: 4px
+
+  .login, .logout
+    margin-left: $navigation-spacing
+

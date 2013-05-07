@@ -54,6 +54,9 @@ gem 'sidekiq'
 # Clockwork (Scheduler for recurring jobs)
 gem 'clockwork'
 
+# Draper (Presenters / Decorators)
+gem 'draper'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do

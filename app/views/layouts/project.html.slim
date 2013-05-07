@@ -1,0 +1,6 @@
+/ A custom layout for all views rendered by the project controller and its subcontrollers
+- content_for :content do
+  .sidebar Test
+  = content_for?(:project_content) ? yield(:project_content) : yield
+
+= render template: 'layouts/application'

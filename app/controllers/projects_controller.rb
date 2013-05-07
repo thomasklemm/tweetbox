@@ -2,6 +2,9 @@ class ProjectsController < ApplicationController
   before_filter :authenticate_user!
   after_filter  :verify_authorized, except: :index
 
+  # Use the project layout only for the show action
+  layout 'project', only: :show
+
   # resources :accounts do
   #   resources :projects, except: [:index, :show]
   # end

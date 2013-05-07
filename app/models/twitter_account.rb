@@ -73,8 +73,6 @@ class TwitterAccount < ActiveRecord::Base
     t.save! && t
   end
 
-  private
-
   # Assign user infos for authenticating twitter account
   # from omniauth auth hash
   def assign_twitter_account_info(auth)

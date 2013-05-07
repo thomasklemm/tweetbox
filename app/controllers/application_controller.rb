@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
     root_url
   end
 
+  def current_user
+    UserDecorator.decorate(super) unless super.nil?
+  end
+
   private
 
   # Handle user access violations

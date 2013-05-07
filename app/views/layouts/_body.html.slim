@@ -5,13 +5,9 @@
   / any flash messages
   = render 'flashes'
 
-  - if @project.present?
-    .container
-      div.project = link_to @project.name, @project
-
   / main content
-  #content.container
-    = yield
+  .container
+    = content_for?(:content) ? yield(:content) : yield
 
   / sticky footer that stays at the bottom of the page
   #root_footer
