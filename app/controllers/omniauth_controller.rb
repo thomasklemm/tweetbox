@@ -8,8 +8,8 @@ class OmniauthController < ProjectController
     # Create or update twitter account
     twitter_account = TwitterAccount.from_omniauth(@project, auth, auth_scope)
 
-    flash.notice = "Twitter account was successfully (re)authorized."
-    redirect_to project_twitter_account_path(@project, twitter_account)
+    flash.notice = "Twitter account @#{ twitter_account.screen_name } has been successfully authorized."
+    redirect_to project_twitter_accounts_path(@project)
   end
 
   # Handle failed omniauth authorization requests

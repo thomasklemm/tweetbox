@@ -3,10 +3,25 @@ h2 TwitterAccounts
 p
   | Tweetbox will pull in @mentions for the Twitter accounts you authorize with us automatically. We'll also fetch the tweets you are sending out in regular intervals in order to show you conversations as they really happen on Twitter.
 
-p
-  ' Please proceed by
-  b = link_to 'adding a new Twitter account', new_project_twitter_account_path
-  '  to Tweetbox.
+- if @twitter_accounts.any?
+
+  .space-half
+  p
+    ' You've successfully authorized
+    b #{ pluralize(@twitter_accounts.size, 'Twitter account') }.
+
+    .twitter-accounts-wrapper
+      = render partial: 'twitter_accounts/twitter_account', collection: @twitter_accounts
+
+    .space-one-and-a-half
+
+    = link_to 'Add a Twitter account', new_project_twitter_account_path, class: 'small-button'
+
+- else
+  p
+    ' Please proceed by
+    b = link_to 'adding a new Twitter account', new_project_twitter_account_path
+    '  to Tweetbox.
 / div: b #{ @twitter_accounts.size } Twitter accounts authorized
 
 / ul

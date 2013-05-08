@@ -1,0 +1,8 @@
+.twitter-account
+  = image_tag(twitter_account.profile_image_url, class: 'avatar')
+  span.name = twitter_account.name
+  span.screen-name @#{ twitter_account.screen_name }
+
+  - if twitter_account.auth_scope == 'read'
+    span.read-only Read only access
+

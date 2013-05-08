@@ -29,6 +29,40 @@ $navigation-spacing: 0.75rem
 
 
 ul.project-sidebar
-  list-style: none
   ul.tweets
     margin-left: 30px
+
+.small-button
+  @include button
+  font-size: 13px
+
+.button
+  @include button
+  font-size: 15px
+
+.twitter-accounts-wrapper
+  .twitter-account
+    .avatar
+      vertical-align: middle
+      border-radius: 4px
+    .name
+      margin: 0 0.5rem
+      font-weight: bold
+    .screen-name
+      margin-right: 0.5rem
+    .read-only
+      font-style: italic
+      color: red
+
+#flashes
+  margin-bottom: 0.5rem
+
+  .flash-message
+    background: black(0.35)
+    padding: 0.5rem 1rem
+    color: white
+    cursor: pointer
+
+    .close
+      float: right
+      color: white

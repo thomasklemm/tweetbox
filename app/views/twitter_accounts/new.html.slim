@@ -1,8 +1,22 @@
-h1 TwitterAccounts#new
+h2 Add a new Twitter account
 
-div: b Authorize a new Twitter account
+p
+  | Tweetbox will help you handle your incoming tweets for as many accounts as you like in a quick and fun way.
+
+= link_to 'Authorize my Twitter account', authorize_project_twitter_accounts_path(@project, auth_scope: 'direct_messages'), method: :post, class: 'button'
+
+.space-one
+
+p
+  | This will allow Tweetbox to access and send tweets, @mentions, and direct messages for your account.
+
+p Alternatively, you can authorize us to just read your tweet but not send out any ones. Your decision should depend on what you'd like to do with the individual account. If you want to handle tweets and send out replies, you should grant full access. If you want to authorize a secondary account to perform more search queries per timeframe but do not want to tweet from this account, read access is just fine.
+
+.space-one
 
 ul
-  li = link_to 'Add with read access', authorize_project_twitter_accounts_path(@project, auth_scope: 'read'), method: :post
-  li = link_to 'Add with read and write access', authorize_project_twitter_accounts_path(@project, auth_scope: 'read_and_write'), method: :post
-  li = link_to 'Add with read and write access and access to direct messages', authorize_project_twitter_accounts_path(@project, auth_scope: 'direct_messages'), method: :post
+  li: b Auth with certain access level
+  li = link_to 'Add Twitter account with full read and write access', authorize_project_twitter_accounts_path(@project, auth_scope: 'direct_messages'), method: :post
+  li = link_to 'Add Twitter account with limited read access only', authorize_project_twitter_accounts_path(@project, auth_scope: 'read'), method: :post
+
+  / li = link_to 'Add with read and write access', authorize_project_twitter_accounts_path(@project, auth_scope: 'read_and_write'), method: :post

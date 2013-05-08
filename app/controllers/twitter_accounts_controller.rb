@@ -7,15 +7,15 @@ class TwitterAccountsController < ProjectController
     @twitter_accounts = project_twitter_accounts
   end
 
-  def show
-    @twitter_account = project_twitter_accounts.find(params[:id])
-  end
+  # def show
+  #   @twitter_account = project_twitter_accounts.find(params[:id])
+  # end
 
   def new
   end
 
   def destroy
-    raise NotImplementedError
+   raise NotImplementedError
   end
 
   # Redirect to twitter authorization path

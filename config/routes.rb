@@ -34,10 +34,10 @@ Birdview::Application.routes.draw do
 
   # Projects
   resources :projects, only: [:index, :show] do
-    resources :twitter_accounts, only: [:index, :show, :new, :destroy] do
+    resources :tweets
+    resources :twitter_accounts, only: [:index, :new, :destroy] do
       post 'auth', on: :collection, as: :authorize
     end
-    resources :tweets
     resources :searches
   end
 
