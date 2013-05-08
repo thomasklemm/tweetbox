@@ -1,0 +1,10 @@
+h2 Searches
+
+b #{ pluralize(@searches.size, 'search') }
+
+.searches-wrapper
+  = render partial: 'searches/search', collection: @searches
+
+.space-one
+
+= link_to 'New search', new_project_search_path(@project), class: 'small-button'

@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20130503144839) do
   create_table "searches", :force => true do |t|
     t.integer  "twitter_account_id"
     t.integer  "project_id"
-    t.text     "term"
+    t.text     "query"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end

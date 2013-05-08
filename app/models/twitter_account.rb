@@ -33,7 +33,8 @@ class TwitterAccount < ActiveRecord::Base
   belongs_to :project
   validates :project, presence: true
 
-  has_many :searches, dependent: :destroy
+  # Only destroy a twitter account if no search is associated
+  has_many :searches, dependent: :restrict
 
   # Each twitter account can be associated with only one project
   validates :twitter_id, presence: true, uniqueness: true

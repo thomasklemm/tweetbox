@@ -5,7 +5,7 @@
 #  created_at         :datetime         not null
 #  id                 :integer          not null, primary key
 #  project_id         :integer
-#  term               :text
+#  query              :text
 #  twitter_account_id :integer
 #  updated_at         :datetime         not null
 #
