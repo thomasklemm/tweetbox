@@ -56,7 +56,8 @@ class ProjectsController < ApplicationController
 
   def show
     @project = user_project
-    authorize @project
+    authorize @project, :show?
+    redirect_to project_tweets_path(@project, flow: :incoming)
   end
 
   private

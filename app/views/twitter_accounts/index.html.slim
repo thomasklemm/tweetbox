@@ -1,11 +1,17 @@
-h1 TwitterAccounts#index
-p Find me in app/views/twitter_accounts/index.html.slim
+h2 TwitterAccounts
 
-div: b #{ @twitter_accounts.size } Twitter accounts authorized
+p
+  | Tweetbox will pull in @mentions for the Twitter accounts you authorize with us automatically. We'll also fetch the tweets you are sending out in regular intervals in order to show you conversations as they really happen on Twitter.
 
-ul
-  - @twitter_accounts.each do |twitter_account|
-    li = link_to twitter_account.screen_name, project_twitter_account_path(@project, twitter_account)
+p
+  ' Please proceed by
+  b = link_to 'adding a new Twitter account', new_project_twitter_account_path
+  '  to Tweetbox.
+/ div: b #{ @twitter_accounts.size } Twitter accounts authorized
 
-br
-= link_to 'Add a new Twitter account', new_project_twitter_account_path
+/ ul
+/   - @twitter_accounts.each do |twitter_account|
+/     li = link_to twitter_account.screen_name, project_twitter_account_path(@project, twitter_account)
+
+/ br
+/ = link_to 'Add a new Twitter account', new_project_twitter_account_path

@@ -1,8 +1,0 @@
-div
-  b.project = link_to "Project: #{ @project.name }", @project
-  | &nbsp;
-  - if policy(@project).edit?
-    = link_to 'Edit project', edit_account_project_path(@project.account, @project)
-
-.secondary-nav
-  = link_to 'Twitter Accounts', project_twitter_accounts_path(@project)

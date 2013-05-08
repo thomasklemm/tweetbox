@@ -1,6 +1,21 @@
 / A custom layout for all views rendered by the project controller and its subcontrollers
 - content_for :content do
-  .sidebar Test
-  = content_for?(:project_content) ? yield(:project_content) : yield
+  .two.columns
+    ul.project-sidebar
+      li: b = link_to 'Tweets', project_tweets_path(@project, flow: :incoming)
+      ul.tweets
+        li: b = link_to 'Incoming', project_tweets_path(@project, flow: :incoming)
+        li = link_to 'Resolved', project_tweets_path(@project, flow: :resolved)
+
+      li = link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
+      li = link_to 'Searches', project_searches_path(@project)
+
+      - if policy(@project).edit?
+        li = link_to 'Edit project', edit_account_project_path(@project.account, @project)
+
+  .ten.columns
+    = content_for?(:project_content) ? yield(:project_content) : yield
 
 = render template: 'layouts/application'
+
+

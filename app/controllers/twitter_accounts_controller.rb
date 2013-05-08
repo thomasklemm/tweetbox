@@ -14,6 +14,10 @@ class TwitterAccountsController < ProjectController
   def new
   end
 
+  def destroy
+    raise NotImplementedError
+  end
+
   # Redirect to twitter authorization path
   def auth
     user_session[:project_id] = @project.id

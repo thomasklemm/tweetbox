@@ -34,10 +34,11 @@ Birdview::Application.routes.draw do
 
   # Projects
   resources :projects, only: [:index, :show] do
-    resources :twitter_accounts, only: [:index, :show, :new] do
+    resources :twitter_accounts, only: [:index, :show, :new, :destroy] do
       post 'auth', on: :collection, as: :authorize
     end
     resources :tweets
+    resources :searches
   end
 
   # Omniauth to authorize Twitter accounts
