@@ -45,6 +45,10 @@ class TwitterAccount < ActiveRecord::Base
   # The authorization scope of the stored credentials
   validates :auth_scope, inclusion: { in: %w(read write messages) }
 
+  def destroyable?
+    searches.empty?
+  end
+
   # Returns a Twitter::Client instance for the twitter account
   def twitter_client
     Twitter::Client.new(

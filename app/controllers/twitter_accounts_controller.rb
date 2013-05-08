@@ -7,15 +7,28 @@ class TwitterAccountsController < ProjectController
     @twitter_accounts = project_twitter_accounts
   end
 
-  # def show
-  #   @twitter_account = project_twitter_accounts.find(params[:id])
-  # end
+  def show
+    @twitter_account = project_twitter_account
+  end
 
   def new
   end
 
   def destroy
-   raise NotImplementedError
+    @twitter_account = project_twitter_account
+    @twitter_account.destroy
+    flash.notice = "Twitter account '@#{ @twitter_account.screen_name }' has been removed."
+  rescue ActiveRecord::DeleteRestrictionError
+    flash.alert = "Twitter account '@#{ @twitter_account.screen_name }' has not been removed because there are still search records that depend on it. Please edit these searches to use another Twitter account or remove them first."
+  ensure
+    redirect_to project_twitter_accounts_path(@project)
+  end
+
+  def toggle_mentions
+    @twitter_account = project_twitter_account
+    @twitter_account.get_mentions = !@twitter_account.get_mentions
+    @twitter_account.save!
+    redirect_to project_twitter_accounts_path(@project)
   end
 
   # Redirect to twitter authorization path
@@ -43,5 +56,9 @@ class TwitterAccountsController < ProjectController
 
   def project_twitter_accounts
     @project.twitter_accounts
+  end
+
+  def project_twitter_account
+    project_twitter_accounts.find(params[:id])
   end
 end

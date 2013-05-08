@@ -39,6 +39,7 @@ Birdview::Application.routes.draw do
     resources :tweets
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post 'auth', on: :collection, as: :authorize
+      put 'toggle_mentions', on: :member
     end
     resources :searches
   end
