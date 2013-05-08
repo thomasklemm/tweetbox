@@ -10,11 +10,11 @@
     - if twitter_account.get_mentions?
       p
         em Queries <b>mentions</b>.
-        = link_to ' Turn off', toggle_mentions_project_twitter_account_path(@project, twitter_account), method: :put, confirm: "Turn off searching for @mentions for @#{ twitter_account.screen_name }?"
-    - else
-      p
-        em Does not query for @mentions.
-        = link_to ' Turn on', toggle_mentions_project_twitter_account_path(@project, twitter_account), method: :put
+    /     = link_to ' Turn off', toggle_mentions_project_twitter_account_path(@project, twitter_account), method: :put, confirm: "Turn off searching for @mentions for @#{ twitter_account.screen_name }?"
+    / - else
+    /   p
+    /     em Does not query for @mentions.
+    /     = link_to ' Turn on', toggle_mentions_project_twitter_account_path(@project, twitter_account), method: :put
 
     - if twitter_account.get_home?
       p: em Queries outbound tweets and retweets (home timeline).
