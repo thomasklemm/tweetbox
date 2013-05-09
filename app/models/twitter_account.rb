@@ -101,4 +101,17 @@ class TwitterAccount < ActiveRecord::Base
       else raise "TwitterAccount#assign_auth_scope: Please provide a valid Twitter auth scope."
       end
   end
+
+  def update_stats!(type, new_max_tweet_id)
+    case type.to_s
+    when 'mentions'
+      self.max_mentions_tweet_id = new_max_tweet_id if new_max_tweet_id.to_i > max_mentions_tweet_id.to_i
+    when 'home'
+      self.max_home_tweet_id = new_max_tweet_id     if new_max_tweet_id.to_i > max_home_tweet_id.to_i
+    else
+      raise StandardError, "Please provide a valid type: #{ type }"
+    end
+
+    self.save!
+  end
 end

@@ -31,6 +31,9 @@ class Tweet < ActiveRecord::Base
   belongs_to :author
   validates :author, presence: true
 
+  scope :incoming, where(workflow_state: [:new, :open])
+  scope :resolved, where(workflow_state: :closed)
+
   # Ensures uniquness of a tweet scoped to the project
   validates_uniqueness_of :twitter_id, scope: :project_id
 
@@ -74,18 +77,40 @@ class Tweet < ActiveRecord::Base
     @previous_tweets ||= previous_tweets!
   end
 
+  # Finds or fetches the previous tweet from Twitter if the tweet is a reply
+  # Returns a tweet record
+  def previous_tweet
+    project.tweets.where(twitter_id: in_reply_to_status_id).first! if in_reply_to_status_id.present?
+  rescue ActiveRecord::RecordNotFound
+    project.get_previous_tweet(in_reply_to_status_id)
+  end
+
   # Caches the resulting future tweets
   def future_tweets
     @future_tweets ||= future_tweets!
+  end
+
+  # Assigns a certain workflow state given a symbol or string
+  # Knows about a whitelist of valid states
+  def assign_state(state)
+    state &&= state.to_s
+    return unless ['new', 'open', 'closed', 'none'].include?(state)
+
+    # TODO: Specs, think about real world
+    if state == 'none'
+      self.workflow_state = state unless workflow_state.present?
+    else
+      self.workflow_state = state
+    end
   end
 
   # Assigns the tweet's fields from a Twitter status object
   # Persists the changes to the database by saving the record
   # Returns the tweet record
   def update_fields_from_status(status)
-    self.assign_fields_from_status(status)
+    assign_fields_from_status(status)
     # Note that the before_save callback fetching previous tweets kicks in
-    self.save && self
+    save && self
   end
 
   private
@@ -101,13 +126,6 @@ class Tweet < ActiveRecord::Base
     self.in_reply_to_user_id   = status.in_reply_to_user_id
   end
 
-  # Assigns a certain workflow state given a symbol or string
-  # Knows about a whitelist of valid states
-  def assign_state(state)
-    state &&= state.to_s
-    return unless ['new', 'open', 'closed', 'none'].include?(state)
-    self.workflow_state = state
-  end
 
   # Returns an array of the previous tweets
   # if the tweet is a reply, otherwise returns an empty array
@@ -115,20 +133,12 @@ class Tweet < ActiveRecord::Base
     tweets = []
     tweet = self
 
-    while tweet.previous_tweet
-      tweets << tweet.previous_tweet
-      tweet = previous_tweet
-    end
+    # while tweet.previous_tweet
+    #   tweets << tweet.previous_tweet
+    #   tweet = previous_tweet
+    # end
 
     tweets.sort_by(&:created_at)
-  end
-
-  # Finds or fetches the previous tweet from Twitter if the tweet is a reply
-  # Returns a tweet record
-  def previous_tweet
-    project.tweets.where(twitter_id: in_reply_to_status_id).first! if in_reply_to_status_id.present?
-  rescue ActiveRecord::RecordNotFound
-    project.get_previous_tweet(in_reply_to_status_id)
   end
 
   # # Returns an array of the future tweets if the tweet has replies

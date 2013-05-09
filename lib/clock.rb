@@ -6,4 +6,4 @@ include Clockwork
 
 every(1.minute, 'Queuing mentions')  { TwitterWorker.schedule_mentions }
 every(1.minute, 'Queuing homes')     { TwitterWorker.schedule_homes }
-every(2.minutes, 'Queuing searches') { TwitterWorker.schedule_searches }
+every(1.minute, 'Queuing searches')  { TwitterWorker.schedule_searches }

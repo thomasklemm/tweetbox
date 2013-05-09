@@ -2,8 +2,10 @@
 #
 # Table name: searches
 #
+#  active             :boolean          default(TRUE)
 #  created_at         :datetime         not null
 #  id                 :integer          not null, primary key
+#  max_tweet_id       :integer
 #  project_id         :integer
 #  query              :text
 #  twitter_account_id :integer
@@ -25,6 +27,11 @@ class Search < ActiveRecord::Base
 
   def project=(ignored)
     raise NotImplementedError, "Use Search#twitter_account= instead"
+  end
+
+  def update_stats!(new_max_tweet_id)
+    self.max_tweet_id = new_max_tweet_id if new_max_tweet_id.to_i > max_tweet_id.to_i
+    self.save!
   end
 
   private

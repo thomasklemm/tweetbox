@@ -51,11 +51,17 @@ gem 'twitter'
 # Sidekiq (Background jobs)
 gem 'sidekiq'
 
+# Sinatra (for Sidekiq web interface)
+gem 'sinatra'
+
 # Clockwork (Scheduler for recurring jobs)
 gem 'clockwork'
 
 # Draper (Presenters / Decorators)
 gem 'draper'
+
+# Oj (Optimized JSON Parser)
+gem 'oj'
 
 # Gems used only for assets and not required
 #   in production environments by default.

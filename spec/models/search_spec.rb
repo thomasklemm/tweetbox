@@ -2,8 +2,10 @@
 #
 # Table name: searches
 #
+#  active             :boolean          default(TRUE)
 #  created_at         :datetime         not null
 #  id                 :integer          not null, primary key
+#  max_tweet_id       :integer
 #  project_id         :integer
 #  query              :text
 #  twitter_account_id :integer

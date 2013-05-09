@@ -108,8 +108,10 @@ ActiveRecord::Schema.define(:version => 20130503144839) do
     t.integer  "twitter_account_id"
     t.integer  "project_id"
     t.text     "query"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.boolean  "active",                          :default => true
+    t.integer  "max_tweet_id",       :limit => 8
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   add_index "searches", ["project_id"], :name => "index_searches_on_project_id"

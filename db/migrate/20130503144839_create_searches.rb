@@ -4,6 +4,8 @@ class CreateSearches < ActiveRecord::Migration
       t.belongs_to :twitter_account
       t.belongs_to :project
       t.text :query
+      t.boolean :active, default: true
+      t.integer :max_tweet_id, limit: 8
 
       t.timestamps
     end

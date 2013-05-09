@@ -1,13 +1,10 @@
 class TweetsController < ProjectController
   def index
-    case params[:workflow]
-      when "open"
-        @tweets = project_tweets.where(workflow_state: :open).limit(10)
-      when "closed"
-        @tweets = project_tweets.where(workflow_state: :closed).limit(10)
-      else
-        @tweets = project_tweets.where(workflow_state: :new).limit(10)
-      end
+    @tweets = if params[:flow].to_s == 'resolved'
+      project_tweets.resolved.limit(10)
+    else
+      project_tweets.incoming
+    end
   end
 
   def show

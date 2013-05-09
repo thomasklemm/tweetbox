@@ -37,8 +37,8 @@ class Author < ActiveRecord::Base
   # Persists the changes to the database by saving the record
   # Returns the author record
   def update_fields_from_status(status)
-    self.assign_fields_from_status(status)
-    self.save && self
+    assign_fields_from_status(status)
+    save && self
   end
 
   private

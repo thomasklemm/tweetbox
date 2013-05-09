@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Birdview::Application.routes.draw do
   get "searches/index"
 
@@ -49,6 +51,9 @@ Birdview::Application.routes.draw do
   #  when trying to authorize a Twitter account with this application
   match 'auth/twitter/callback' => 'omniauth#twitter'
   match 'auth/failure'          => 'omniauth#failure'
+
+  # Sidekiq Web interface
+  mount Sidekiq::Web => '/sidekiq'
 
   # Static Pages
   get '*id' => 'pages#show', as: :static
