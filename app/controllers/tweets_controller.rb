@@ -3,7 +3,7 @@ class TweetsController < ProjectController
     @tweets = if params[:flow].to_s == 'resolved'
       project_tweets.resolved.limit(10)
     else
-      project_tweets.incoming
+      project_tweets.shuffle.sample(20)
     end
   end
 

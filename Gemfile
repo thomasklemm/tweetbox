@@ -63,6 +63,9 @@ gem 'draper'
 # Oj (Optimized JSON Parser)
 gem 'oj'
 
+# Twitter Text (Autolinking tweet urls and more)
+gem 'twitter-text'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do

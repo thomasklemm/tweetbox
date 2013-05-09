@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Twitter::Autolink
+
   # Hide certain content like user details
   # when response is set to be cached in public caches
   # (such as e.g. Rack Cache)

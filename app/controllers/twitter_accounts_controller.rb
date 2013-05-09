@@ -17,9 +17,9 @@ class TwitterAccountsController < ProjectController
   def destroy
     @twitter_account = project_twitter_account
     @twitter_account.destroy
-    flash.notice = "Twitter account '@#{ @twitter_account.screen_name }' has been removed."
+    flash.notice = "Twitter account #{ @twitter_account.at_screen_name } has been removed."
   rescue ActiveRecord::DeleteRestrictionError
-    flash.alert = "Twitter account '@#{ @twitter_account.screen_name }' has not been removed because there are still search records that depend on it. Please edit these searches to use another Twitter account or remove them first."
+    flash.alert = "Twitter account #{ @twitter_account.at_screen_name } has not been removed because there are still search records that depend on it. Please edit these searches to use another Twitter account or remove them first."
   ensure
     redirect_to project_twitter_accounts_path(@project)
   end

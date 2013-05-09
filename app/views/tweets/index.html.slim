@@ -1,3 +1,6 @@
 h2 Tweets
 
 b = pluralize(@tweets.size, 'tweet')
+
+.tweets-wrapper
+  = render partial: 'tweets/tweet', collection: @tweets

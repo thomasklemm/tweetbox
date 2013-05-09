@@ -1,7 +1,7 @@
 .twitter-account
   = image_tag(twitter_account.profile_image_url, class: 'avatar')
   span.name = twitter_account.name
-  span.screen-name @#{ twitter_account.screen_name }
+  span.screen-name = twitter_account.at_screen_name
 
   - if twitter_account.auth_scope == 'read'
     span.read-only Read only access
@@ -10,7 +10,7 @@
     - if twitter_account.get_mentions?
       p
         em Queries <b>mentions</b>.
-    /     = link_to ' Turn off', toggle_mentions_project_twitter_account_path(@project, twitter_account), method: :put, confirm: "Turn off searching for @mentions for @#{ twitter_account.screen_name }?"
+    /     = link_to ' Turn off', toggle_mentions_project_twitter_account_path(@project, twitter_account), method: :put, confirm: "Turn off searching for @mentions for #{ twitter_account.at_screen_name }?"
     / - else
     /   p
     /     em Does not query for @mentions.
@@ -26,7 +26,7 @@
     = render partial: 'searches/search', collection: twitter_account.searches
   .stats
     - if twitter_account.destroyable?
-      = link_to "Remove @#{ twitter_account.screen_name }", project_twitter_account_path(@project, twitter_account), method: :delete, confirm: 'Are you sure?'
+      = link_to "Remove #{ twitter_account.at_screen_name }", project_twitter_account_path(@project, twitter_account), method: :delete, confirm: 'Are you sure?'
     - else
       p: em To remove the Twitter account please move or remove all dependent searches first.
 

@@ -152,10 +152,10 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.7.3)
     multipart-post (1.2.0)
-    neat (1.2.1)
+    neat (1.3.0)
       bourbon (>= 2.1)
       sass (>= 3.2)
-    newrelic_rpm (3.6.1.88)
+    newrelic_rpm (3.6.2.96)
     nokogiri (1.5.9)
     oauth (0.4.7)
     oj (2.0.12)
@@ -283,10 +283,15 @@ GEM
       faraday (~> 0.8, < 0.10)
       multi_json (~> 1.0)
       simple_oauth (~> 0.2)
+    twitter-text (1.6.1)
+      unf (~> 0.0.5)
     tzinfo (0.3.37)
-    uglifier (2.0.1)
+    uglifier (2.1.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    unf (0.0.5)
+      unf_ext
+    unf_ext (0.0.6)
     uniform_notifier (1.2.0)
     uuidtools (2.1.4)
     vcr (2.4.0)
@@ -353,6 +358,7 @@ DEPENDENCIES
   strong_parameters
   timecop
   twitter
+  twitter-text
   uglifier
   vcr
   virtus

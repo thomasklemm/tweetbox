@@ -33,6 +33,10 @@ class Author < ActiveRecord::Base
   # Ensure that only one author record is created for each project
   validates_uniqueness_of :twitter_id, scope: :project_id
 
+  def at_screen_name
+    "@#{ screen_name }"
+  end
+
   # Assigns the author's fields from a Twitter status object
   # Persists the changes to the database by saving the record
   # Returns the author record

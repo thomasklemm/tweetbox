@@ -45,6 +45,10 @@ class TwitterAccount < ActiveRecord::Base
   # The authorization scope of the stored credentials
   validates :auth_scope, inclusion: { in: %w(read write messages) }
 
+  def at_screen_name
+    "@#{ screen_name }"
+  end
+
   def destroyable?
     searches.empty?
   end
