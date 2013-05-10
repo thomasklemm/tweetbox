@@ -1,7 +1,83 @@
+// Experiments in SASS
+
+// Font Awesome Icons
+i
+  margin-right: 4px
+
+// floats
+.left
+  float: left
+.right
+  float: right
+
+// spaces
+.space-quarter
+  height: 0.25rem
+.space-half
+  height: 0.5rem
+.space-one
+  height: 1rem
+.space-one-and-a-half
+  height: 1.5rem
+.space-two
+  height: 2rem
+.space-two-and-a-half
+  height: 2.5rem
+.space-three
+  height: 3rem
+
+// forms
+form
+  .field
+    margin-bottom: 1rem
+    label
+      display: block
+      font-weight: 600
+    input
+      width: 100%
+    .hint
+      padding: 0 0.35rem
+
+// footer
+@import "compass/layout/sticky-footer"
+@include sticky-footer(248px, "#root", "#root_footer", "#footer")
+
+$footer-spacing: 8px
+$footer-borders: 1px dashed #bbb
+
+.footer
+  margin-top: 24px
+  border-top: $footer-borders
+  padding-top: 12px
+
+  font-size: 0.875rem
+
+  // links in footer
+  ul.links
+    float: left
+    li
+      display: inline
+      padding-right: $footer-spacing
+      margin-right: $footer-spacing
+      border-right: $footer-borders
+      &:last-of-type
+        border-right: none
+
+  // greeting and maker's name in footer
+  .greeting
+    float: right
+    span
+      padding-left: $footer-spacing
+      margin-left: $footer-spacing
+      border-left: $footer-borders
+      &:first-of-type
+        border-left: none
+
 // experiments in SASS
 $navigation-spacing: 0.75rem
 
 .navigation
+  margin-bottom: 1rem
   &.outer-container
     height: 42px
     line-height: 42px
@@ -28,18 +104,6 @@ $navigation-spacing: 0.75rem
     margin-left: $navigation-spacing
 
 
-ul.project-sidebar
-  ul.tweets
-    margin-left: 30px
-
-.small-button
-  @include button
-  font-size: 13px
-
-.button
-  @include button
-  font-size: 15px
-
 .twitter-accounts-wrapper
   .twitter-account
     margin-top: 1rem
@@ -59,33 +123,20 @@ ul.project-sidebar
     .searches-wrapper
       margin-left: 2rem
 
-
-#flashes
-  margin-bottom: 0.5rem
-
-  .flash-message
-    background: black(0.35)
-    padding: 0.5rem 1rem
-    color: white
-    cursor: pointer
-
-    .close
-      float: right
-      color: white
-
-.searches-wrapper
-  .search
+ol.searches-wrapper
+  li.search
     .query
       font-weight: bold
     .twitter-account
       font-style: italic
-    .links a
-      margin-left: 0.4rem
+    .links
+      float: right
+      a
+        margin-left: 0.4rem
 
 .tweets-wrapper
   .tweet
     a
-      color: $text
       &:hover
         text-decoration: underline
     margin-bottom: 2rem
@@ -94,7 +145,6 @@ ul.project-sidebar
       padding-right: 8px
       padding-bottom: 2rem
     .author
-      color: $text
       &:hover
         text-decoration: none !important
       .name

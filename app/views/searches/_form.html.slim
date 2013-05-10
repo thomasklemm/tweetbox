@@ -1,11 +1,13 @@
 = form_for [@project, @search] do |f|
   .field
     = f.label :query
-    = f.text_field :query
+    = f.text_field :query, placeholder: 'Your query'
 
   .field
     = f.label :twitter_account_id
     = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :screen_name
 
   .actions
-    = f.submit class: 'small-button'
+    = f.submit class: 'btn btn-primary'
+    '  or
+    = link_to 'cancel', :back, confirm: 'No new search today?'

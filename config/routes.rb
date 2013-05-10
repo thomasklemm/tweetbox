@@ -1,8 +1,6 @@
 require 'sidekiq/web'
 
 Birdview::Application.routes.draw do
-  get "searches/index"
-
   # User authentication
   devise_for :users,
     path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' },
@@ -43,7 +41,7 @@ Birdview::Application.routes.draw do
       post 'auth', on: :collection, as: :authorize
       put 'toggle_mentions', on: :member
     end
-    resources :searches
+    resources :searches, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   # Omniauth to authorize Twitter accounts
@@ -59,5 +57,5 @@ Birdview::Application.routes.draw do
   get '*id' => 'pages#show', as: :static
 
   # Root
-  root to: 'pages#show', id: 'home'
+  root to: 'projects#index'
 end

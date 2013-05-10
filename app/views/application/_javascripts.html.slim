@@ -1,10 +1,18 @@
+/ Javascripts
+
+/ jquery
+= javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js'
+
+/ twitter web intents
+= javascript_include_tag '//platform.twitter.com/widgets.js'
+
+/  application javascripts
 = javascript_include_tag :application
 
-= yield :javascript
-
-- if Rails.env.test?
+/ yield dynamic js
+- if content_for?(:javascript)
   javascript:
-    $.ajaxSetup({ async: false })
+    = yield :javascript
 
 / google analytics in production
 - if Rails.env.production?
@@ -23,3 +31,8 @@
 - if Rails.env.development?
   javascript:
     document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+
+/ test settings
+- if Rails.env.test?
+  javascript:
+    $.ajaxSetup({ async: false })

@@ -1,10 +1,22 @@
-h2 Searches
+h3 Searches
 
-b #{ pluralize(@searches.size, 'search') }
+table class='table table-hover'
+  thead
+    tr
+      th #
+      th Query
+      th Twitter account
+      th Actions
+  tbody
+    - @searches.each_with_index do |search, i|
+      tr
+        td = i+1
+        td = search.query
+        td = search.twitter_account.at_screen_name
+        td
+          = link_to 'Edit', edit_project_search_path(@project, search), class: 'btn'
+          ' &nbsp;
+          = link_to 'Destroy', project_search_path(@project, search), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
 
-.searches-wrapper
-  = render partial: 'searches/search', collection: @searches
+= link_to 'New search', new_project_search_path(@project), class: 'btn btn-primary'
 
-.space-one
-
-= link_to 'New search', new_project_search_path(@project), class: 'small-button'

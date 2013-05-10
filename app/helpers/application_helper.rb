@@ -12,4 +12,19 @@ module ApplicationHelper
   def dns_prefetch(url)
     "<link rel='dns-prefetch' href='#{ url }'>".html_safe
   end
+
+  def active_link_to(*args)
+    link = link_to(*args)
+    path_args = args.second or raise StandardError, 'Expected URL to be second argument.'
+
+    if current_path.start_with?(url_for(path_args))
+      "<li class='active'>#{ link }</li>".html_safe
+    else
+      "<li>#{ link }</li>".html_safe
+    end
+  end
+
+  def current_path
+    request.fullpath
+  end
 end

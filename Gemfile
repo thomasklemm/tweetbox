@@ -74,20 +74,14 @@ group :assets do
   gem 'sass-rails'
   gem 'compass-rails'
 
-  # Bourbon (SASS Mixins)
-  # Neat (Semantic Grids)
-  gem 'bourbon'
-  gem 'neat'
-
   # Javascripts
   gem 'coffee-rails'
   gem 'uglifier'
 
   # Packaged plugins
-  gem 'select2-rails'
-
-  # Font Awesome (Icon font)
+  gem 'bootstrap-sass', '~> 2.3.1.0'
   gem 'font-awesome-rails'
+  gem 'select2-rails'
 end
 
 group :development do
