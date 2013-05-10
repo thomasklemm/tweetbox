@@ -1,6 +1,20 @@
-h2 Tweets
+h3 = "#{ params[:flow] } tweets".titlecase
 
-b = pluralize(@tweets.size, 'tweet')
+table class='table table-hover tweets-table table-bordered'
+  tbody
+    - @tweets.each do |tweet|
+      tr
+        td.tweet
+          = link_to "https://twitter.com/intent/user?screen_name=#{ tweet.author.screen_name }", class: 'author' do
+            span.name = tweet.author.name
+            span.screen-name = tweet.author.at_screen_name
 
-.tweets-wrapper
-  = render partial: 'tweets/tweet', collection: @tweets
+          .text == auto_link_usernames_or_lists(auto_link_urls(tweet.text, { url_target: :blank }), { username_url_base: "https://twitter.com/intent/user?screen_name=", username_include_symbol: true, suppress_lists: true })
+
+          .actions
+            = link_to icon_tag(:plus, 'Mine'), '#'
+            '  or
+            = link_to icon_tag(:ok, 'Done'), 'javascript:;', class: 'done'
+
+/ .tweets-wrapper
+/   = render partial: 'tweets/tweet', collection: @tweets

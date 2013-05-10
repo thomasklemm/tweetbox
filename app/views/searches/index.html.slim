@@ -16,7 +16,9 @@ table class='table table-hover'
         td
           = link_to 'Edit', edit_project_search_path(@project, search), class: 'btn'
           ' &nbsp;
-          = link_to 'Destroy', project_search_path(@project, search), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
+          = link_to 'Remove', project_search_path(@project, search), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
 
 = link_to 'New search', new_project_search_path(@project), class: 'btn btn-primary'
+'  or
+= link_to 'show incoming tweets', project_tweets_path(@project, flow: :incoming)
 

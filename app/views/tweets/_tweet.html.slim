@@ -1,6 +1,15 @@
-.tweet
-  = image_tag(tweet.author.profile_image_url, class: 'avatar')
-  = link_to "https://twitter.com/intent/user?screen_name=#{ tweet.author.screen_name }", class: 'author' do
-    span.name = tweet.author.name
-    span.screen-name = tweet.author.at_screen_name
-  .text == auto_link_usernames_or_lists(auto_link_urls(word_wrap(tweet.text, line_width: 75), { url_target: :blank }), { username_url_base: "https://twitter.com/intent/user?screen_name=", username_include_symbol: true, suppress_lists: true })
+.tweet.row
+  .span1
+    = image_tag(tweet.author.profile_image_url, class: 'avatar img-circle')
+
+  .span9
+    = link_to "https://twitter.com/intent/user?screen_name=#{ tweet.author.screen_name }", class: 'author' do
+      span.name = tweet.author.name
+      span.screen-name = tweet.author.at_screen_name
+
+    .text == auto_link_usernames_or_lists(auto_link_urls(word_wrap(tweet.text, line_width: 75), { url_target: :blank }), { username_url_base: "https://twitter.com/intent/user?screen_name=", username_include_symbol: true, suppress_lists: true })
+
+    .actions
+      = link_to icon_tag(:plus, 'Mine'), '#'
+      '  or
+      = link_to icon_tag(:ok, 'Done'), '#'

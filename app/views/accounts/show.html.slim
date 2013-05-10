@@ -10,6 +10,8 @@ br
 div: b #{ @projects.size } projects
 - @projects.each do |project|
   b = link_to project.name, project_path(project)
+  - if policy(project).edit?
+    = link_to 'Edit project', edit_account_project_path(project.account, project)
 
 br
 - if policy(@account.projects.build).new?

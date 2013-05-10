@@ -24,9 +24,6 @@ gem 'slim-rails'
 # Figaro (Credential management in config/application.yml)
 gem 'figaro'
 
-# Rack Timeout
-gem 'rack-timeout'
-
 # Devise (User authentication)
 gem 'devise'
 
@@ -137,4 +134,7 @@ group :staging, :production do
 
   # Lograge (Logging)
   gem 'lograge'
+
+  # Rack Timeout
+  gem 'rack-timeout'
 end

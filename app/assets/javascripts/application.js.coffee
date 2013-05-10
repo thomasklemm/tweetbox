@@ -10,3 +10,6 @@ $ ->
   ##
   # Autosize
   $('textarea').autosize()
+
+  $('.done').click ->
+    $(this).parents('.tweet').hide()

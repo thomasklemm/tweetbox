@@ -27,4 +27,8 @@ module ApplicationHelper
   def current_path
     request.fullpath
   end
+
+  def icon_tag(type, text=nil)
+    "<i class='icon-#{ type.to_s }'></i>#{ text }".html_safe
+  end
 end

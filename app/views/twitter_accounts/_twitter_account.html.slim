@@ -23,7 +23,7 @@
       b = pluralize(twitter_account.searches.size, 'search')
       ' .
   .searches-wrapper
-    = render partial: 'searches/search', collection: twitter_account.searches
+    / = render partial: 'searches/search', collection: twitter_account.searches
   .stats
     - if twitter_account.destroyable?
       = link_to "Remove #{ twitter_account.at_screen_name }", project_twitter_account_path(@project, twitter_account), method: :delete, confirm: 'Are you sure?'
