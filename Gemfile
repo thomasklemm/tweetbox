@@ -63,6 +63,9 @@ gem 'oj'
 # Twitter Text (Autolinking tweet urls and more)
 gem 'twitter-text'
 
+# Use arrays and more in Postgres
+gem 'postgres_ext'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do
@@ -87,7 +90,11 @@ group :development do
   gem 'annotate', github: 'ctran/annotate_models'
 
   # Pry (A great console, replacement for IRB in development)
+  gem 'pry'
   gem 'pry-rails'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
 
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'

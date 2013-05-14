@@ -45,7 +45,7 @@ class TwitterWorker
     load_twitter_account(twitter_account_id)
 
     statuses = @client.mentions_timeline(mentions_options)
-    tweets = @project.create_tweets_from_twitter(statuses, state: :new)
+    tweets = @project.create_tweets_from_twitter(statuses, state: :new, twitter_account: @twitter_account)
 
     @twitter_account.update_stats!(:mentions, tweets.map(&:twitter_id).max)
   end
@@ -54,7 +54,7 @@ class TwitterWorker
     load_twitter_account(twitter_account_id)
 
     statuses = @client.home_timeline(home_options)
-    tweets = @project.create_tweets_from_twitter(statuses, state: :none)
+    tweets = @project.create_tweets_from_twitter(statuses, state: :none, twitter_account: @twitter_account)
 
     @twitter_account.update_stats!(:home, tweets.map(&:twitter_id).max)
   end
@@ -85,7 +85,7 @@ class TwitterWorker
     load_search(search_id)
 
     response = @client.search(@search.query, search_options)
-    tweets = @project.create_tweets_from_twitter(response.statuses, state: :new)
+    tweets = @project.create_tweets_from_twitter(response.statuses, state: :new, twitter_account: @client.twitter_account)
 
     @search.update_stats!(tweets.map(&:twitter_id).max)
   end

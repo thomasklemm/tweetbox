@@ -7,6 +7,7 @@
 #  id                    :integer          not null, primary key
 #  in_reply_to_status_id :integer
 #  in_reply_to_user_id   :integer
+#  previous_tweet_ids    :integer
 #  project_id            :integer
 #  text                  :text
 #  twitter_id            :integer
@@ -16,6 +17,7 @@
 # Indexes
 #
 #  index_tweets_on_author_id                  (author_id)
+#  index_tweets_on_previous_tweet_ids         (previous_tweet_ids)
 #  index_tweets_on_project_id                 (project_id)
 #  index_tweets_on_project_id_and_twitter_id  (project_id,twitter_id) UNIQUE
 #  index_tweets_on_twitter_id                 (twitter_id)

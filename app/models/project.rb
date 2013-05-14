@@ -69,31 +69,35 @@ class Project < ActiveRecord::Base
   # Returns an array of tweet records
   def create_tweets_from_twitter(statuses, options={})
     statuses &&= [statuses].flatten.reverse
-    state = options.fetch(:state, :new)
-    statuses.map { |status| create_tweet_from_twitter(status, state) }
+    state = options.fetch(:state, :none)
+    twitter_account = options.fetch(:twitter_account)
+    statuses.map { |status| create_tweet_from_twitter(status, state, twitter_account) }
   end
 
   # Fetches the given status_id from Twitter
   # Creates a tweet record from it
   # Returns a tweet record
-  def get_previous_tweet(status_id)
-    status = twitter_client.status(status_id)
+  def fetch_previous_tweet(twitter_account, status_id)
+    status = twitter_account.client.status(status_id)
     create_tweet_from_twitter(status, :none)
   end
 
-  # Returns an Twitter::Client instance for a random twitter account
-  # associated with the project
-  def twitter_client
-    twitter_accounts.sample.twitter_client
+  # Returns an instance of Twitter::Client instanciated with credentials
+  # of a random one of the twitter accounts associated with the project
+  def random_twitter_client
+    twitter_account = twitter_accounts.sample
+    twitter_account.client
   end
 
   private
 
   # Creates a tweet record from a Twitter status object
   # Returns a tweet record
-  def create_tweet_from_twitter(status, state=:new)
+  def create_tweet_from_twitter(status, state, twitter_account)
     author = find_or_create_author(status)
-    find_or_create_tweet(status, author, state)
+    tweet = find_or_create_tweet(status, author, state)
+    tweet.fetch_and_cache_previous_tweets(twitter_account)
+    tweet
   end
 
   # Finds or creates an author scoped to the current project

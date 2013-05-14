@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503144839) do
+ActiveRecord::Schema.define(:version => 20130514091517) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -127,9 +127,11 @@ ActiveRecord::Schema.define(:version => 20130503144839) do
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.integer  "author_id",             :limit => 8
+    t.integer  "previous_tweet_ids",    :limit => 8,                 :array => true
   end
 
   add_index "tweets", ["author_id"], :name => "index_tweets_on_author_id"
+  add_index "tweets", ["previous_tweet_ids"], :name => "index_tweets_on_previous_tweet_ids", :using => :gin
   add_index "tweets", ["project_id", "twitter_id"], :name => "index_tweets_on_project_id_and_twitter_id", :unique => true
   add_index "tweets", ["project_id"], :name => "index_tweets_on_project_id"
   add_index "tweets", ["twitter_id"], :name => "index_tweets_on_twitter_id"
