@@ -1,23 +1,33 @@
 class TwitterWorker
   include Sidekiq::Worker
 
-  def perform(type, twitter_account_id, search_id)
-    case type.to_s
-      when 'mentions' then get_mentions(twitter_account_id)
-      when 'home' then get_home(twitter_account_id)
-      when 'search' then get_search(search_id)
-      else raise StandardError, "TwitterWorker: Please pass a valid type (Could not recognize'#{type.to_s}')."
+  # Options / arguments:
+  #   - type: Required type of the query to be performed, should be in [:mentions, :home, :search]
+  #   - twitter_account_id: Required for mentions and home timeline queries
+  #   - search_id: Required for search queries
+  def perform(type, twitter_account_or_search_id)
+    type &&= type.to_s
+
+    # Raise unless type is whitelisted
+    raise StandardError, "TwitterWorker: #{type} is not a valid type." unless %w(mentions home search).include?(type)
+
+    # Delegate to the matching type action
+    case type
+    when 'mentions' then get_mentions(twitter_account_or_search_id)
+    when 'home' then get_home(twitter_account_or_search_id)
+    when 'search' then get_search(twitter_account_or_search_id)
     end
+
   rescue Twitter::Error::TooManyRequests
-    puts "Caught Twitter::Error::TooManyRequests error for twitter_account: #{twitter_account_id}, search: #{search_id}"
-    true
+    puts "TwitterWorker: Caught Twitter::Error::TooManyRequests error for #{ type }, #{ twitter_account_or_search_id }"
+    false
   end
 
   # Schedule mentions queries for all active accounts
   # to be performed asynchronously
   def self.schedule_mentions
     TwitterAccount.where(get_mentions: true).each do |twitter_account|
-      TwitterWorker.perform_async(:mentions, twitter_account.id, nil)
+      TwitterWorker.perform_async(:mentions, twitter_account.id)
     end
   end
 
@@ -25,14 +35,14 @@ class TwitterWorker
   # to be performed asynchronously
   def self.schedule_homes
     TwitterAccount.where(get_home: true).each do |twitter_account|
-      TwitterWorker.perform_async(:home, twitter_account.id, nil)
+      TwitterWorker.perform_async(:home, twitter_account.id)
     end
   end
 
   # Schedule searches for specific terms to be performed asynchronously
   def self.schedule_searches
     Search.where(active: true).each do |search|
-      TwitterWorker.perform_async(:search, nil, search.id)
+      TwitterWorker.perform_async(:search, search.id)
     end
   end
 
@@ -85,7 +95,7 @@ class TwitterWorker
     load_search(search_id)
 
     response = @client.search(@search.query, search_options)
-    tweets = @project.create_tweets_from_twitter(response.statuses, state: :new, twitter_account: @client.twitter_account)
+    tweets = @project.create_tweets_from_twitter(response.statuses, state: :new, twitter_account: @search.twitter_account)
 
     @search.update_stats!(tweets.map(&:twitter_id).max)
   end

@@ -4,7 +4,7 @@
 #
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
-#  name       :string(255)
+#  name       :text
 #  price      :integer          default(0), not null
 #  trial      :boolean          default(FALSE), not null
 #  updated_at :datetime         not null

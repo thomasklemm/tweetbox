@@ -5,7 +5,8 @@
   / main content
   .container
     .row
-      = content_for?(:content) ? yield(:content) : yield
+      .span12
+        = content_for?(:content) ? yield(:content) : yield
 
     / sticky footer that stays at the bottom of the page
     #root_footer

@@ -4,9 +4,9 @@
 #
 #  account_id :integer
 #  admin      :boolean          default(FALSE), not null
-#  code       :string(255)      not null
+#  code       :text             not null
 #  created_at :datetime         not null
-#  email      :string(255)
+#  email      :text             not null
 #  id         :integer          not null, primary key
 #  invitee_id :integer
 #  sender_id  :integer
@@ -16,6 +16,7 @@
 # Indexes
 #
 #  index_invitations_on_account_id  (account_id)
+#  index_invitations_on_code        (code) UNIQUE
 #
 
 require 'spec_helper'

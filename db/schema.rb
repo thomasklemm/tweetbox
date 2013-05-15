@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130514091517) do
+ActiveRecord::Schema.define(:version => 20130515115539) do
 
   create_table "accounts", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.integer  "plan_id"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
 
   create_table "authors", :force => true do |t|
     t.integer  "project_id"
-    t.integer  "twitter_id",        :limit => 8
+    t.integer  "twitter_id",        :limit => 8,                    :null => false
     t.text     "name"
     t.text     "screen_name"
     t.text     "location"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
   add_index "authors", ["twitter_id"], :name => "index_authors_on_twitter_id"
 
   create_table "invitations", :force => true do |t|
-    t.string   "code",                          :null => false
-    t.string   "email"
+    t.text     "code",                          :null => false
+    t.text     "email",                         :null => false
     t.integer  "account_id"
     t.integer  "sender_id"
     t.integer  "invitee_id"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
   end
 
   add_index "invitations", ["account_id"], :name => "index_invitations_on_account_id"
+  add_index "invitations", ["code"], :name => "index_invitations_on_code", :unique => true
 
   create_table "invitations_projects", :force => true do |t|
     t.integer "invitation_id", :null => false
@@ -87,7 +88,7 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
   add_index "permissions", ["user_id", "project_id"], :name => "index_permissions_on_user_id_and_project_id"
 
   create_table "plans", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "price",      :default => 0,     :null => false
     t.integer  "user_limit",                    :null => false
     t.boolean  "trial",      :default => false, :null => false
@@ -97,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
 
   create_table "projects", :force => true do |t|
     t.integer  "account_id"
-    t.string   "name"
+    t.text     "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -107,7 +108,7 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
   create_table "searches", :force => true do |t|
     t.integer  "twitter_account_id"
     t.integer  "project_id"
-    t.text     "query"
+    t.text     "query",                                             :null => false
     t.boolean  "active",                          :default => true
     t.integer  "max_tweet_id",       :limit => 8
     t.datetime "created_at",                                        :null => false
@@ -119,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
 
   create_table "tweets", :force => true do |t|
     t.integer  "project_id"
-    t.integer  "twitter_id",            :limit => 8
+    t.integer  "twitter_id",            :limit => 8, :null => false
     t.text     "text"
     t.integer  "in_reply_to_status_id", :limit => 8
     t.integer  "in_reply_to_user_id",   :limit => 8
@@ -128,10 +129,12 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
     t.datetime "updated_at",                         :null => false
     t.integer  "author_id",             :limit => 8
     t.integer  "previous_tweet_ids",    :limit => 8,                 :array => true
+    t.integer  "twitter_account_id"
   end
 
   add_index "tweets", ["author_id"], :name => "index_tweets_on_author_id"
   add_index "tweets", ["previous_tweet_ids"], :name => "index_tweets_on_previous_tweet_ids", :using => :gin
+  add_index "tweets", ["project_id", "author_id"], :name => "index_tweets_on_project_id_and_author_id"
   add_index "tweets", ["project_id", "twitter_id"], :name => "index_tweets_on_project_id_and_twitter_id", :unique => true
   add_index "tweets", ["project_id"], :name => "index_tweets_on_project_id"
   add_index "tweets", ["twitter_id"], :name => "index_tweets_on_twitter_id"
@@ -139,26 +142,25 @@ ActiveRecord::Schema.define(:version => 20130514091517) do
 
   create_table "twitter_accounts", :force => true do |t|
     t.integer  "project_id"
-    t.string   "uid"
-    t.string   "token"
-    t.string   "token_secret"
-    t.integer  "twitter_id",            :limit => 8
-    t.string   "name"
-    t.string   "screen_name"
-    t.string   "location"
-    t.string   "description"
-    t.string   "url"
-    t.string   "profile_image_url"
+    t.text     "uid",                                                  :null => false
+    t.text     "token",                                                :null => false
+    t.text     "token_secret",                                         :null => false
+    t.integer  "twitter_id",            :limit => 8,                   :null => false
+    t.text     "name"
+    t.text     "screen_name"
+    t.text     "location"
+    t.text     "description"
+    t.text     "url"
+    t.text     "profile_image_url"
     t.boolean  "get_mentions",                       :default => true
     t.integer  "max_mentions_tweet_id", :limit => 8
     t.boolean  "get_home",                           :default => true
     t.integer  "max_home_tweet_id",     :limit => 8
+    t.text     "auth_scope"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
-    t.string   "auth_scope"
   end
 
-  add_index "twitter_accounts", ["project_id", "uid"], :name => "index_twitter_accounts_on_project_id_and_uid", :unique => true
   add_index "twitter_accounts", ["project_id"], :name => "index_twitter_accounts_on_project_id"
   add_index "twitter_accounts", ["twitter_id"], :name => "index_twitter_accounts_on_twitter_id", :unique => true
 

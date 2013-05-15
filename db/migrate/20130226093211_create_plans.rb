@@ -1,7 +1,7 @@
 class CreatePlans < ActiveRecord::Migration
   def change
     create_table :plans do |t|
-      t.string :name
+      t.text :name
       t.integer :price, null: false, default: 0
       t.integer :user_limit, null: false
       t.boolean :trial, null: false, default: false

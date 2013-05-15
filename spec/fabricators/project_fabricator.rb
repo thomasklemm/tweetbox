@@ -5,7 +5,7 @@
 #  account_id :integer
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
-#  name       :string(255)
+#  name       :text
 #  updated_at :datetime         not null
 #
 # Indexes

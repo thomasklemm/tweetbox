@@ -12,7 +12,7 @@
 #  profile_image_url :text
 #  project_id        :integer
 #  screen_name       :text
-#  twitter_id        :integer
+#  twitter_id        :integer          not null
 #  updated_at        :datetime         not null
 #  url               :text
 #  verified          :boolean          default(FALSE)

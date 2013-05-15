@@ -7,7 +7,7 @@
 #  id                 :integer          not null, primary key
 #  max_tweet_id       :integer
 #  project_id         :integer
-#  query              :text
+#  query              :text             not null
 #  twitter_account_id :integer
 #  updated_at         :datetime         not null
 #

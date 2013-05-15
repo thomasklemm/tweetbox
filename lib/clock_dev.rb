@@ -4,6 +4,6 @@ require 'clockwork'
 
 include Clockwork
 
-every(15.minutes, 'Queuing mentions')  { TwitterWorker.schedule_mentions }
-every(15.minutes, 'Queuing homes')     { TwitterWorker.schedule_homes }
-every(30.minutes, 'Queuing searches')  { TwitterWorker.schedule_searches }
+# every(2.minutes, 'Queuing mentions')  { TwitterWorker.schedule_mentions }
+# every(2.minutes, 'Queuing homes')     { TwitterWorker.schedule_homes }
+# every(5.minutes, 'Queuing searches')  { TwitterWorker.schedule_searches }

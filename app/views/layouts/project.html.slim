@@ -1,23 +1,24 @@
 / A custom layout for all views rendered by the project controller and its subcontrollers
 - content_for :content do
-  .span2
-    ul.project-nav class='nav nav-pills nav-stacked'
-      li
-        b Tweets
-        ul.tweets-subnav class='nav nav-pills nav-stacked'
-          = active_link_to 'Incoming', project_tweets_path(@project, flow: :incoming)
-          = active_link_to 'Open', project_tweets_path(@project, flow: :answering)
-          = active_link_to 'Resolved', project_tweets_path(@project, flow: :resolved)
+  .row
+    .span2
+      ul.project-nav class='nav nav-pills nav-stacked'
+        li
+          b Tweets
+          ul.tweets-subnav class='nav nav-pills nav-stacked'
+            = active_link_to 'Incoming', project_tweets_path(@project, flow: :incoming)
+            = active_link_to 'Open', project_tweets_path(@project, flow: :answering)
+            = active_link_to 'Resolved', project_tweets_path(@project, flow: :resolved)
 
-      b Project
-      = active_link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
-      = active_link_to 'Searches', project_searches_path(@project)
+        b Project
+        = active_link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
+        = active_link_to 'Searches', project_searches_path(@project)
 
-  .span10
-    / any flash messages
-    = render 'flashes'
+    .span10
+      / any flash messages
+      = render 'flashes'
 
-    = content_for?(:project_content) ? yield(:project_content) : yield
+      = content_for?(:project_content) ? yield(:project_content) : yield
 
 = render template: 'layouts/application'
 
