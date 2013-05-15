@@ -79,6 +79,9 @@ class Tweet < ActiveRecord::Base
     end
   end
 
+  # Callbacks
+  after_commit :build_conversation, on: :create
+
   # Loads and memoizes the tweet's previous tweets
   # from the array of cached previous tweet ids
   def previous_tweets(reload=false)
@@ -93,7 +96,7 @@ class Tweet < ActiveRecord::Base
     previous_tweet = project.tweets.where(twitter_id: in_reply_to_status_id).first
 
     # Fetch previous tweet and whole conversation if tweets are not in the database already
-    ConversationWorker.perform_async(self.id) unless previous_tweet.present?
+    ConversationWorker.perform_async(self.id) if previous_tweet.blank?
 
     previous_tweet
   end
@@ -101,6 +104,27 @@ class Tweet < ActiveRecord::Base
   # Loads and memoizes the tweet's future tweets
   def future_tweets(reload=false)
     reload ? future_tweets! : @future_tweets ||= future_tweets!
+  end
+
+  def conversation_with_author
+    author_id = author.twitter_id
+    recipient_id = in_reply_to_user_id
+
+    return unless author_id && recipient_id
+
+    (conversation_tweets(author_id, recipient_id) + conversation_tweets(recipient_id, author_id)).uniq.sort_by(&:created_at)
+  end
+
+  def conversation_tweets(first_user_id, second_user_id)
+    project.tweets.where(in_reply_to_user_id: first_user_id).joins(:author).where(authors: {twitter_id: second_user_id}).to_a
+  end
+
+  def conversation(reload=false)
+    reload ? conversation! : @conversation ||= conversation!
+  end
+
+  def conversation!
+    @conversation = (previous_tweets.to_a + [self] + future_tweets.to_a + conversation_with_author.to_a).flatten.uniq.sort_by(&:created_at)
   end
 
   # Assigns a certain workflow state given a symbol or string
@@ -140,11 +164,16 @@ class Tweet < ActiveRecord::Base
 
   # Loads the previous tweets from the database
   def previous_tweets!
-    @previous_tweets = self.class.where(twitter_id: previous_tweet_ids)
+    @previous_tweets = self.class.where(twitter_id: previous_tweet_ids).sort_by(&:created_at)
   end
 
   # Loads the future tweets from the database
   def future_tweets!
-    @future_tweets = self.class.where('previous_tweet_ids && ARRAY[?]', self.twitter_id).to_a
+    @future_tweets = self.class.where('previous_tweet_ids && ARRAY[?]', self.twitter_id).sort_by(&:created_at)
+  end
+
+  # Fetch previous tweets and cache previous tweet ids in the background
+  def build_conversation
+    ConversationWorker.perform_async(self.id)
   end
 end

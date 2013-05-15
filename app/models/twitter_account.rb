@@ -44,6 +44,9 @@ class TwitterAccount < ActiveRecord::Base
   # The authorization scope of the stored credentials
   validates :auth_scope, inclusion: { in: %w(read write messages) }
 
+  # Callbacks
+  after_commit :schedule_home_and_mentions, on: :create
+
   def at_screen_name
     "@#{ screen_name }"
   end
@@ -106,6 +109,7 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def update_stats!(type, new_max_tweet_id)
+    type &&= type.to_s
     case type.to_s
     when 'mentions'
       self.max_mentions_tweet_id = new_max_tweet_id if new_max_tweet_id.to_i > max_mentions_tweet_id.to_i
@@ -118,13 +122,11 @@ class TwitterAccount < ActiveRecord::Base
     self.save!
   end
 
-  after_commit :schedule_home_and_mentions, on: :create
-
   private
 
   # Fetch tweets asynchronously for the first time immediately after twitter account creation
   def schedule_home_and_mentions
-    TwitterWorker.perform_async(:home, twitter_account_id: self.id)
-    TwitterWorker.perform_in(30.seconds, :mentions, twitter_account_id: self.id)
+    TwitterWorker.perform_async(:home, self.id)
+    TwitterWorker.perform_in(30.seconds, :mentions, self.id)
   end
 end

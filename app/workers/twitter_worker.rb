@@ -23,29 +23,6 @@ class TwitterWorker
     false
   end
 
-  # Schedule mentions queries for all active accounts
-  # to be performed asynchronously
-  def self.schedule_mentions
-    TwitterAccount.where(get_mentions: true).each do |twitter_account|
-      TwitterWorker.perform_async(:mentions, twitter_account.id)
-    end
-  end
-
-  # Schedule home timeline queries for all active accounts
-  # to be performed asynchronously
-  def self.schedule_homes
-    TwitterAccount.where(get_home: true).each do |twitter_account|
-      TwitterWorker.perform_async(:home, twitter_account.id)
-    end
-  end
-
-  # Schedule searches for specific terms to be performed asynchronously
-  def self.schedule_searches
-    Search.where(active: true).each do |search|
-      TwitterWorker.perform_async(:search, search.id)
-    end
-  end
-
   private
 
   ##
@@ -63,7 +40,7 @@ class TwitterWorker
   def get_home(twitter_account_id)
     load_twitter_account(twitter_account_id)
 
-    statuses = @client.home_timeline(home_options)
+    statuses = @client.user_timeline(home_options)
     tweets = @project.create_tweets_from_twitter(statuses, state: :none, twitter_account: @twitter_account)
 
     @twitter_account.update_stats!(:home, tweets.map(&:twitter_id).max)
@@ -77,14 +54,18 @@ class TwitterWorker
   end
 
   def mentions_options
+    since_id = @twitter_account.max_mentions_tweet_id
+
     options = { count: 200 }
-    options[:since_id] = @twitter_account.max_mentions_tweet_id if @twitter_account.max_mentions_tweet_id.present?
+    options[:since_id] = since_id if since_id.present?
     options
   end
 
   def home_options
+    since_id = @twitter_account.max_home_tweet_id
+
     options = { count: 200 }
-    options[:since_id] = @twitter_account.max_home_tweet_id if @twitter_account.max_home_tweet_id.present?
+    options[:since_id] = since_id if since_id.present?
     options
   end
 
@@ -108,8 +89,10 @@ class TwitterWorker
   end
 
   def search_options
+    since_id = @search.max_tweet_id
+
     options = { count: 100 }
-    options[:since_id] = @search.max_tweet_id if @search.max_tweet_id.present?
+    options[:since_id] = since_id if since_id.present?
     options
   end
 end

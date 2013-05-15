@@ -79,7 +79,7 @@ class Project < ActiveRecord::Base
     twitter_account = options.fetch(:twitter_account)
     state = options.fetch(:state, :none)
 
-    statuses.map { |status| create_tweet_from_twitter(status, state, twitter_account) }
+    statuses.map { |status| create_tweet_from_twitter(status, twitter_account, state) }
   end
 
   private

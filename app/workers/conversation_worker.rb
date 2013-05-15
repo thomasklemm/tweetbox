@@ -6,7 +6,11 @@ class ConversationWorker
   # Caches an array of previous tweet ids with the tweet itself for quick retrieval of the conversation history
   # Returns the tweet
   def perform(tweet_id)
-    load_environment(tweet_id)
+    # Load the tweet
+    @tweet = Tweet.find(tweet_id)
+    return unless @tweet.in_reply_to_status_id
+
+    load_environment
     fetch_previous_tweets_recursively
     cache_previous_tweet_ids
     @tweet
@@ -16,10 +20,7 @@ class ConversationWorker
 
   # Load the environment
   # Please pass the tweet's primary key, not its twitter_id
-  def load_environment(tweet_id)
-    # Load the tweet
-    @tweet = Tweet.find(tweet_id)
-
+  def load_environment
     # Load the twitter account that was used to retrieve the tweet
     @twitter_account = @tweet.twitter_account
 
@@ -59,7 +60,9 @@ class ConversationWorker
   # Returns a tweet record
   def fetch_tweet(status_id)
     status = @client.status(status_id)
-    @project.create_tweets_from_twitter(status, state: :none, twitter_account: @twitter_account)
+    tweets = @project.create_tweets_from_twitter(status, state: :none, twitter_account: @twitter_account)
+    puts tweets.inspect
+    tweets.first
   end
 
   # Cache previous tweet ids for the tweet
