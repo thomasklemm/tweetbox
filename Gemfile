@@ -80,7 +80,6 @@ group :assets do
 
   # Packaged plugins
   gem 'bootstrap-sass', '~> 2.3.1.0'
-  gem 'font-awesome-rails'
   gem 'select2-rails'
 end
 

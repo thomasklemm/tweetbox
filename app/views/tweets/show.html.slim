@@ -1,14 +1,13 @@
-h3 Previous tweets
-= debug @tweet.previous_tweets
+h3
+  ' Conversation with #{ @tweet.author.name }
+  span.muted (@#{ @tweet.author.screen_name })
 
-h3 Tweet
-= debug @tweet
+.tweets-wrapper
+  .tweet-wrapper
+    = render partial: 'tweets/conversation_tweet', collection: @tweet.conversation.select { |tweet| tweet.created_at < @tweet.created_at }
 
-h3 Future tweets
-= debug @tweet.future_tweets
+    = render partial: 'tweets/tweet', locals: {tweet: @tweet}
 
-h3 Conversation with author
-= debug @tweet.conversation_with_author
+    = render partial: 'tweets/conversation_tweet', collection: @tweet.conversation.select { |tweet| tweet.created_at > @tweet.created_at }
 
-h3 Conversation
-= debug @tweet.conversation
+

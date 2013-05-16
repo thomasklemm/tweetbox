@@ -25,14 +25,4 @@ class UserDecorator < Draper::Decorator
     hash = Digest::MD5.hexdigest(email.strip.downcase)
     "http://www.gravatar.com/avatar/#{ hash }?s=32"
   end
-
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
-
 end

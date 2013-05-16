@@ -36,7 +36,10 @@ Birdview::Application.routes.draw do
 
   # Projects
   resources :projects, only: [:index, :show] do
-    resources :tweets
+    resources :tweets, only: [:index, :show] do
+      put 'mark_as_open', on: :member
+      put 'mark_as_closed', on: :member
+    end
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post 'auth', on: :collection, as: :authorize
       put 'toggle_mentions', on: :member

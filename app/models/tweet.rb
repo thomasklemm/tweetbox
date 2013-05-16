@@ -124,7 +124,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def conversation!
-    @conversation = (previous_tweets.to_a + [self] + future_tweets.to_a + conversation_with_author.to_a).flatten.uniq.sort_by(&:created_at)
+    @conversation = (previous_tweets.to_a + [self] + future_tweets.to_a + conversation_with_author.to_a).flatten.sort_by(&:created_at).uniq
   end
 
   # Assigns a certain workflow state given a symbol or string
@@ -164,7 +164,7 @@ class Tweet < ActiveRecord::Base
 
   # Loads the previous tweets from the database
   def previous_tweets!
-    @previous_tweets = self.class.where(twitter_id: previous_tweet_ids).sort_by(&:created_at)
+    @previous_tweets = self.class.where(twitter_id: previous_tweet_ids).sort_by(&:created_at) if previous_tweet_ids.present?
   end
 
   # Loads the future tweets from the database

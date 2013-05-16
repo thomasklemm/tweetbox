@@ -127,8 +127,6 @@ GEM
     figaro (0.6.4)
       bundler (~> 1.0)
       rails (>= 3, < 5)
-    font-awesome-rails (3.1.1.0)
-      railties (>= 3.1)
     fssm (0.2.10)
     hashie (2.0.5)
     high_voltage (1.2.2)
@@ -342,7 +340,6 @@ DEPENDENCIES
   draper
   fabrication
   figaro
-  font-awesome-rails
   high_voltage
   jquery-rails
   launchy

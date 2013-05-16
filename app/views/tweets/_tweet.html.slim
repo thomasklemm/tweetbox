@@ -1,15 +1,32 @@
-.tweet.row
-  .span1
-    = image_tag(tweet.author.profile_image_url, class: 'avatar img-circle')
+.tweet
+  = link_to "https://twitter.com/intent/user?screen_name=#{ tweet.author.screen_name }", class: 'author' do
+    = image_tag(tweet.author.profile_image_url, class: 'avatar')
+    span.name = tweet.author.name
+    span.screen-name = tweet.author.at_screen_name
 
-  .span9
-    = link_to "https://twitter.com/intent/user?screen_name=#{ tweet.author.screen_name }", class: 'author' do
-      span.name = tweet.author.name
-      span.screen-name = tweet.author.at_screen_name
+  .text == auto_link_usernames_or_lists(auto_link_urls(tweet.text, { url_target: :blank }), { username_url_base: "https://twitter.com/intent/user?screen_name=", username_include_symbol: true, suppress_lists: true })
 
-    .text == auto_link_usernames_or_lists(auto_link_urls(word_wrap(tweet.text, line_width: 75), { url_target: :blank }), { username_url_base: "https://twitter.com/intent/user?screen_name=", username_include_symbol: true, suppress_lists: true })
+  .actions
+    / actions in new state
+    - if tweet.new?
+      = link_to icon_tag(:reply, 'Reply'), mark_as_open_project_tweet_path(@project, tweet), method: :put
+      '  |
+      = link_to icon_tag(:plus, 'Take action'), mark_as_open_project_tweet_path(@project, tweet), method: :put
+      '  |
+      = link_to icon_tag(:ok, 'Mark as done'), mark_as_closed_project_tweet_path(@project, tweet), method: :put, class: 'mark_tweet_as_closed', remote: true
 
-    .actions
-      = link_to icon_tag(:plus, 'Mine'), '#'
-      '  or
-      = link_to icon_tag(:ok, 'Done'), '#'
+    / actions in open state
+    - if tweet.open?
+      = link_to icon_tag(:reply, '<b>Reply</b>'.html_safe), 'javascript:;'
+      '  |
+      = link_to icon_tag(:comments, "#{ tweet.author.name }"), project_tweet_path(@project, tweet)
+      '  |
+      span.dropdown
+        = link_to icon_tag(:share, 'Share'), '#', :'data-toggle' => 'dropdown'
+
+        ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"
+          li = link_to icon_tag(:retweet, 'Retweet on Twitter')
+          li = link_to icon_tag(:star, 'Favorite on Twitter')
+          li = link_to icon_tag(:twitter, 'Open on Twitter'), tweet.link_to_status_on_twitter, target: :blank
+          li.divider
+          li = link_to icon_tag(:copy, 'Copy tweet'), 'javascript:;', class: 'copy-button', :'data-clipboard-text' => "#{ tweet.formatted_tweet }"

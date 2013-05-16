@@ -1,13 +1,13 @@
 h3 Twitter accounts
 
 p
-  | Tweetbox will pull in @mentions for the Twitter accounts you authorize with us automatically. We'll also fetch the tweets you are sending out in regular intervals in order to show you conversations as they really happen on Twitter.
+  | Tweetbox will pull in @mentions for the Twitter accounts you connect with us automatically. We'll also fetch the tweets you are sending out in regular intervals in order to show you conversations as they really happen on Twitter.
 
 - if @twitter_accounts.any?
 
   .space-half
   p
-    ' You've successfully authorized
+    ' You've successfully connected
     b #{ pluralize(@twitter_accounts.size, 'Twitter account') }.
 
   table class='table twitter-accounts-table'
@@ -61,6 +61,6 @@ p
     '  to Tweetbox.
 
 
-= link_to 'Add a Twitter account', new_project_twitter_account_path, class: 'btn btn-primary'
+= link_to 'Connect a Twitter account', new_project_twitter_account_path, class: 'btn btn-primary'
 '  or
 = link_to 'show searches', project_searches_path(@project)

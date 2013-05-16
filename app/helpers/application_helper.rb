@@ -29,6 +29,6 @@ module ApplicationHelper
   end
 
   def icon_tag(type, text=nil)
-    "<i class='icon-#{ type.to_s }'></i>#{ text }".html_safe
+    "<i class='icon-#{ type.to_s }'></i> #{ text }".html_safe
   end
 end
