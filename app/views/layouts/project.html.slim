@@ -7,7 +7,7 @@
           b Tweets
           ul.tweets-subnav class='nav nav-pills nav-stacked'
             = active_link_to 'Incoming', project_tweets_path(@project, flow: :incoming)
-            = active_link_to 'Open', project_tweets_path(@project, flow: :answering)
+            = active_link_to 'Replying', project_tweets_path(@project, flow: :replying)
             = active_link_to 'Resolved', project_tweets_path(@project, flow: :resolved)
 
         b Project

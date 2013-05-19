@@ -49,5 +49,9 @@
       = link_to icon_tag(:'comment-alt', 'Comment'), new_project_tweet_comment_path(@project, tweet), remote: true
 
   .space-half
+  .events style='padding-left: 10px; font-size: 13px; border-left: 1px solid #ccc'
+    = render partial: 'events/event', collection: tweet.entire_events
+
+  .space-half
   / placeholder for forms
   .forms

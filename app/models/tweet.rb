@@ -49,10 +49,17 @@ class Tweet < ActiveRecord::Base
   # Events
   has_many :events, dependent: :destroy
 
+  def entire_events
+    @entire_events ||= begin
+      entire_events = (replies.size > 0 ? replies : []) + (comments.size > 0 ? comments : []) + (events.size > 0 ? events : [])
+      entire_events.sort_by(&:created_at)
+    end
+  end
+
   # States
-  scope :incoming,  where(workflow_state: :new)
-  scope :answering, where(workflow_state: :open)
-  scope :resolved,  where(workflow_state: :closed)
+  scope :incoming, where(workflow_state: :new)
+  scope :replying, where(workflow_state: :open)
+  scope :resolved, where(workflow_state: :closed)
 
   # Ensures uniquness of a tweet scoped to the project
   validates_uniqueness_of :twitter_id, scope: :project_id

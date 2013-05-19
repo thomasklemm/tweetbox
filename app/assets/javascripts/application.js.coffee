@@ -24,8 +24,3 @@ $ ->
     $.bootstrapGrowl('Copied to Clipboard: \n "' + args.text + '"', {
         type: 'success'
       })
-
-  ##
-  # Close tweets
-  $('.mark_tweet_as_closed').click ->
-    $(this).parents('.tweet-wrapper').slideUp(600)
