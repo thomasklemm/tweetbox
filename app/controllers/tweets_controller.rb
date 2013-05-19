@@ -16,25 +16,13 @@ class TweetsController < ProjectController
 
   def mark_as_open
     @tweet.open!
-    redirect_to action: :show
+    redirect_to project_tweet_path(@project, @tweet), notice: 'Tweet has been marked as open.'
   end
 
   def mark_as_closed
     @tweet.close!
-    redirect_to :back
-  end
-
-  private
-
-  def project_tweets
-    @project.tweets
-  end
-
-  def project_tweet
-    @project.tweets.where(twitter_id: params[:id]).first!
-  end
-
-  def load_project_tweet
-    @tweet = project_tweet.decorate
+    redirect_to project_tweets_path(@project, flow: :incoming)
+    # NOTE: Adding a flash seems to stick around until really rendered,
+    #       even in a future action if the current one is via AJAX
   end
 end

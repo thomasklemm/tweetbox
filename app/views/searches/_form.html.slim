@@ -1,4 +1,6 @@
 = form_for [@project, @search] do |f|
+  = render 'shared/form_errors', target: @search
+
   .field
     = f.label :query
     = f.text_field :query, placeholder: 'Your query'

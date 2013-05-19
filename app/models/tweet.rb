@@ -39,6 +39,12 @@ class Tweet < ActiveRecord::Base
   belongs_to :twitter_account
   validates :twitter_account, presence: true
 
+  # Replies
+  has_many :replies, dependent: :restrict
+
+  # Comments
+  has_many :comments, dependent: :restrict
+
   # States
   scope :incoming,  where(workflow_state: :new)
   scope :answering, where(workflow_state: :open)

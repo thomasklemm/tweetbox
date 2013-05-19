@@ -37,13 +37,19 @@ Birdview::Application.routes.draw do
   # Projects
   resources :projects, only: [:index, :show] do
     resources :tweets, only: [:index, :show] do
+      # State transitions
       put 'mark_as_open', on: :member
       put 'mark_as_closed', on: :member
+
+      resources :replies, only: [:new, :create]
+      resources :comments, only: [:new, :create]
     end
+
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post 'auth', on: :collection, as: :authorize
       put 'toggle_mentions', on: :member
     end
+
     resources :searches, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 

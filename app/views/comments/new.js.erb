@@ -1,0 +1,6 @@
+// Remove old comment form
+$tweet = $('#<%= dom_id(@tweet) %>');
+$tweet.find('#new_comment').remove();
+
+// Append new comment form
+$tweet.find('.forms').append('<%= j render("form") %>');
