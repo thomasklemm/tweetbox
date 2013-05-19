@@ -37,10 +37,10 @@ p
             = twitter_account.searches.map(&:query).join(',<br> ').html_safe
 
           td
-            - case twitter_account.auth_scope
-            - when 'messages'
+            - case twitter_account.authorized_for
+            - when 'read_and_write_and_messages'
               span Full
-            - when 'write'
+            - when 'read_and_write'
               span Read and write
             - when 'read'
               span Read only

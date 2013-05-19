@@ -1,15 +1,14 @@
-class CreateComments < ActiveRecord::Migration
+class CreateEvents < ActiveRecord::Migration
   def change
-    create_table :comments do |t|
+    create_table :events do |t|
       t.belongs_to :project, null: false
       t.belongs_to :tweet, null: false
       t.belongs_to :user, null: false
-
-      t.text :text, null: false
+      t.text :target_state, null: false
 
       t.timestamps
     end
 
-    add_index :comments, [:project_id, :tweet_id]
+    add_index :events, [:project_id, :tweet_id]
   end
 end

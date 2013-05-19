@@ -2,16 +2,16 @@
 #
 # Table name: invitations
 #
-#  account_id :integer
-#  admin      :boolean          default(FALSE), not null
+#  account_id :integer          not null
+#  admin      :boolean          default(FALSE)
 #  code       :text             not null
 #  created_at :datetime         not null
 #  email      :text             not null
 #  id         :integer          not null, primary key
 #  invitee_id :integer
-#  sender_id  :integer
+#  sender_id  :integer          not null
 #  updated_at :datetime         not null
-#  used       :boolean          default(FALSE), not null
+#  used       :boolean          default(FALSE)
 #
 # Indexes
 #

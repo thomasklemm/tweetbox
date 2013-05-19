@@ -3,7 +3,7 @@ h3 Sign up
 .row
   .span4
     = form_for @signup do |f|
-      = render 'shared/error_messages', target: @signup
+      = render 'shared/form_errors', target: @signup
 
       .field
         = f.label :name, 'Your name'

@@ -19,7 +19,7 @@ class Comment < ActiveRecord::Base
   belongs_to :project
   validates :project, presence: true
 
-  belongs_to :tweet
+  belongs_to :tweet, counter_cache: true
   validates :tweet, presence: true
 
   belongs_to :user

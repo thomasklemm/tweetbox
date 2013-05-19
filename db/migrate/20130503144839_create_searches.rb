@@ -1,8 +1,8 @@
 class CreateSearches < ActiveRecord::Migration
   def change
     create_table :searches do |t|
-      t.belongs_to :twitter_account
-      t.belongs_to :project
+      t.belongs_to :twitter_account, null: false
+      t.belongs_to :project, null: false
 
       t.text :query, null: false
       t.boolean :active, default: true
@@ -10,7 +10,9 @@ class CreateSearches < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :searches, :twitter_account_id
+
     add_index :searches, :project_id
+    add_index :searches, :twitter_account_id
+    add_index :searches, [:project_id, :twitter_account_id]
   end
 end

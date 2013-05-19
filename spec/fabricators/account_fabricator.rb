@@ -4,7 +4,7 @@
 #
 #  created_at       :datetime         not null
 #  id               :integer          not null, primary key
-#  name             :text
+#  name             :text             not null
 #  plan_id          :integer
 #  trial_expires_at :datetime
 #  updated_at       :datetime         not null

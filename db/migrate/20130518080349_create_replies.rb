@@ -3,10 +3,11 @@ class CreateReplies < ActiveRecord::Migration
     create_table :replies do |t|
       t.belongs_to :project, null: false
       t.belongs_to :tweet, null: false
-      t.belongs_to :twitter_account, null: false
       t.belongs_to :user, null: false
 
+      t.belongs_to :twitter_account, null: false
       t.text :text, null: false
+
       t.datetime :posted_at
 
       t.timestamps

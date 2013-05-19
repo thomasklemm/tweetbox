@@ -22,7 +22,7 @@ class Reply < ActiveRecord::Base
   validates :project, presence: true
 
   # Reply to a tweet
-  belongs_to :tweet
+  belongs_to :tweet, counter_cache: true
   validates :tweet, presence: true
 
   # Twitter account to post reply with
@@ -41,6 +41,16 @@ class Reply < ActiveRecord::Base
   def project=(ignored)
     raise NotImplementedError, "Use Reply#tweet= instead"
   end
+
+  # def post!
+  #   client = twitter_account.client
+  #   if client.update(text) # FIXME: reply to tweet
+  #     self.posted_at = Time.now
+  #     self.save!
+  #   else
+  #     # ...
+  #   end
+  # end
 
   private
 

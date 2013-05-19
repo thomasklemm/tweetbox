@@ -1,7 +1,7 @@
 class CreateAuthors < ActiveRecord::Migration
   def change
     create_table :authors do |t|
-      t.belongs_to :project
+      t.belongs_to :project, null: false
 
       t.integer :twitter_id, limit: 8, null: false
       t.text :name
@@ -18,7 +18,6 @@ class CreateAuthors < ActiveRecord::Migration
     end
 
     add_index :authors, :project_id
-    add_index :authors, :twitter_id
     add_index :authors, [:project_id, :twitter_id], unique: true
   end
 end

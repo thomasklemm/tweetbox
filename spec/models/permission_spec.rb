@@ -4,10 +4,10 @@
 #
 #  created_at    :datetime         not null
 #  id            :integer          not null, primary key
-#  membership_id :integer
-#  project_id    :integer
+#  membership_id :integer          not null
+#  project_id    :integer          not null
 #  updated_at    :datetime         not null
-#  user_id       :integer
+#  user_id       :integer          not null
 #
 # Indexes
 #

@@ -2,7 +2,7 @@
 #
 # Table name: twitter_accounts
 #
-#  auth_scope            :text
+#  authorized_for        :text             not null
 #  created_at            :datetime         not null
 #  description           :text
 #  get_home              :boolean          default(TRUE)
@@ -13,7 +13,7 @@
 #  max_mentions_tweet_id :integer
 #  name                  :text
 #  profile_image_url     :text
-#  project_id            :integer
+#  project_id            :integer          not null
 #  screen_name           :text
 #  token                 :text             not null
 #  token_secret          :text             not null
@@ -24,8 +24,9 @@
 #
 # Indexes
 #
-#  index_twitter_accounts_on_project_id  (project_id)
-#  index_twitter_accounts_on_twitter_id  (twitter_id) UNIQUE
+#  index_twitter_accounts_on_project_id                 (project_id)
+#  index_twitter_accounts_on_project_id_and_twitter_id  (project_id,twitter_id)
+#  index_twitter_accounts_on_twitter_id                 (twitter_id) UNIQUE
 #
 
 Fabricator(:twitter_account) do
