@@ -18,7 +18,7 @@ class TweetsController < ProjectController
     @tweet.open!
 
     # Record event
-    @tweet.events.create!(user: current_user, event_type: :new_workflow_state, details: { target_state: :open })
+    @tweet.transitions.create!(user: current_user, target_state: 'open')
 
     redirect_to project_tweet_path(@project, @tweet)
   end
@@ -27,7 +27,7 @@ class TweetsController < ProjectController
     @tweet.close!
 
     # Record event
-    @tweet.events.create!(user: current_user, event_type: :new_workflow_state, details: { target_state: :closed })
+    @tweet.transitions.create!(user: current_user, target_state: 'closed')
 
     respond_to do |format|
       format.html { redirect_to project_tweet_path(@project, @tweet) }

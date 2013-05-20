@@ -4,7 +4,6 @@ class CreateInvitationsProjects < ActiveRecord::Migration
       t.integer :invitation_id, null: false
       t.integer :project_id, null: false
     end
-
     add_index :invitations_projects, [:invitation_id, :project_id], unique: true
   end
 end

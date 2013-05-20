@@ -7,10 +7,11 @@
     - comment = event
     .comment #{ icon_tag(:comment) } Comment: <b>"#{ comment.text }"</b>, commented by #{ comment.user.name } on #{ comment.created_at.to_s(:long) }
 
-  - if event.is_a?(Event)
+  - if event.is_a?(Transition)
+  - transition = event
     .event
-      - case event.target_state
+      - case transition.target_state
       - when 'open'
-        | #{ icon_tag(:plus) } Marked as <b>open</b> by #{ event.user.name } on #{ event.created_at.to_s(:long) }
+        | #{ icon_tag(:plus) } Marked as <b>open</b> by #{ transition.user.name } on #{ transition.created_at.to_s(:long) }
       - when 'closed'
-        | #{ icon_tag(:ok) } Marked as <b>closed</b> by #{ event.user.name } on #{ event.created_at.to_s(:long) }
+        | #{ icon_tag(:ok) } Marked as <b>closed</b> by #{ transition.user.name } on #{ transition.created_at.to_s(:long) }

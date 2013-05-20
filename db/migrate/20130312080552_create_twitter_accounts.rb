@@ -24,7 +24,6 @@ class CreateTwitterAccounts < ActiveRecord::Migration
 
       t.timestamps
     end
-
     add_index :twitter_accounts, :project_id
     # Each twitter account may be added only once globally
     add_index :twitter_accounts, :twitter_id, unique: true

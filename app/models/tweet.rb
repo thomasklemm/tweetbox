@@ -3,19 +3,13 @@
 # Table name: tweets
 #
 #  author_id             :integer          not null
-#  comments_count        :integer          default(0)
 #  created_at            :datetime         not null
-#  custom_events_count   :integer          default(0)
-#  favorites_count       :integer          default(0)
 #  id                    :integer          not null, primary key
 #  in_reply_to_status_id :integer
 #  in_reply_to_user_id   :integer
 #  previous_tweet_ids    :integer
 #  project_id            :integer          not null
-#  replies_count         :integer          default(0)
-#  retweets_count        :integer          default(0)
 #  text                  :text
-#  transitions_count     :integer          default(0)
 #  twitter_account_id    :integer          not null
 #  twitter_id            :integer          not null
 #  updated_at            :datetime         not null
@@ -43,31 +37,18 @@ class Tweet < ActiveRecord::Base
   belongs_to :twitter_account
   validates :twitter_account, presence: true
 
-  # Actions
+  # Tweet actions and events
+  has_many :actions, readonly: true
+
+  # Tweet actions
   has_many :replies, dependent: :restrict
   has_many :comments, dependent: :restrict
   has_many :retweets, dependent: :restrict
   has_many :favorites, dependent: :restrict
 
-  # Events
+  # Tweet events
   has_many :transitions, dependent: :destroy
-  has_many :custom_events, dependent: :destroy
-
-  # Returns all kinds of performed actions and events
-  def events(reload=false)
-    reload ? events! : @events ||= events!
-  end
-
-  def events!
-    models = %w(replies comments retweets favorites transitions custom_events)
-    @events = []
-
-    models.each do |m|
-      @events.concat(m) if m.size > 0
-    end
-
-    @events &&= @events.sort_by(&:created_at)
-  end
+  has_many :events, dependent: :destroy
 
   # States
   scope :incoming, where(workflow_state: :new)

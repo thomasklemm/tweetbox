@@ -20,8 +20,12 @@
 #  index_actions_on_user_id     (user_id)
 #
 
-require 'spec_helper'
-
-describe Transition do
-  pending "add some examples to (or delete) #{__FILE__}"
+Fabricator(:action) do
+  type            "MyText"
+  tweet           nil
+  user            nil
+  project         nil
+  text            "MyText"
+  twitter_account nil
+  posted_at       "2013-05-20 22:52:07"
 end

@@ -10,7 +10,6 @@ class CreateSearches < ActiveRecord::Migration
 
       t.timestamps
     end
-
     add_index :searches, :project_id
     add_index :searches, :twitter_account_id
     add_index :searches, [:project_id, :twitter_account_id]

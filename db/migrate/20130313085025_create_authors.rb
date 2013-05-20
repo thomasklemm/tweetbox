@@ -16,7 +16,6 @@ class CreateAuthors < ActiveRecord::Migration
 
       t.timestamps
     end
-
     add_index :authors, :project_id
     add_index :authors, [:project_id, :twitter_id], unique: true
   end

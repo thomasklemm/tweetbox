@@ -20,8 +20,7 @@
 #  index_actions_on_user_id     (user_id)
 #
 
-require 'spec_helper'
-
-describe Transition do
-  pending "add some examples to (or delete) #{__FILE__}"
+class Event < Action
+  # Text for custom event
+  validates :text, presence: true
 end

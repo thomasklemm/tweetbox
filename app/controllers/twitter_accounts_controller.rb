@@ -1,7 +1,7 @@
 class TwitterAccountsController < ProjectController
-  AUTH_READ_AND_WRITE_AND_MESSAGES_PATH = '/auth/twitter?use_authorize=true'
-  AUTH_READ_AND_WRITE_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=write'
-  AUTH_READ_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=read'
+  AUTH_READ_AND_WRITE_AND_MESSAGES_PATH = '/auth/twitter?use_authorize=true&force_login=true'
+  AUTH_READ_AND_WRITE_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=write&force_login=true'
+  AUTH_READ_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=read&force_login=true'
 
   def index
     @twitter_accounts = project_twitter_accounts

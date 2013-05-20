@@ -13,7 +13,6 @@ class CreateInvitations < ActiveRecord::Migration
 
       t.timestamps
     end
-
     add_index :invitations, :account_id
     add_index :invitations, :code, unique: true
   end
