@@ -1,4 +1,4 @@
-class CommentsController < ProjectController
+class Tweets::CommentsController < ProjectController
   before_filter :load_project_tweet
 
   def new

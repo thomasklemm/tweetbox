@@ -12,7 +12,9 @@
 #
 # Indexes
 #
-#  index_comments_on_project_id_and_tweet_id  (project_id,tweet_id)
+#  index_comments_on_project_id  (project_id)
+#  index_comments_on_tweet_id    (tweet_id)
+#  index_comments_on_user_id     (user_id)
 #
 
 require 'spec_helper'

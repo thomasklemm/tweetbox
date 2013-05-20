@@ -5,14 +5,17 @@
 #  author_id             :integer          not null
 #  comments_count        :integer          default(0)
 #  created_at            :datetime         not null
-#  events_count          :integer          default(0)
+#  custom_events_count   :integer          default(0)
+#  favorites_count       :integer          default(0)
 #  id                    :integer          not null, primary key
 #  in_reply_to_status_id :integer
 #  in_reply_to_user_id   :integer
 #  previous_tweet_ids    :integer
 #  project_id            :integer          not null
 #  replies_count         :integer          default(0)
+#  retweets_count        :integer          default(0)
 #  text                  :text
+#  transitions_count     :integer          default(0)
 #  twitter_account_id    :integer          not null
 #  twitter_id            :integer          not null
 #  updated_at            :datetime         not null

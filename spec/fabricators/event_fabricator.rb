@@ -2,13 +2,14 @@
 #
 # Table name: events
 #
-#  created_at   :datetime         not null
-#  id           :integer          not null, primary key
-#  project_id   :integer          not null
-#  target_state :text             not null
-#  tweet_id     :integer          not null
-#  updated_at   :datetime         not null
-#  user_id      :integer          not null
+#  created_at :datetime         not null
+#  details    :text
+#  event_type :text             not null
+#  id         :integer          not null, primary key
+#  project_id :integer          not null
+#  tweet_id   :integer          not null
+#  updated_at :datetime         not null
+#  user_id    :integer          not null
 #
 # Indexes
 #

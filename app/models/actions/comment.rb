@@ -17,9 +17,6 @@
 #  index_comments_on_user_id     (user_id)
 #
 
-Fabricator(:comment) do
-  project nil
-  tweet   nil
-  user    nil
-  text    "MyText"
+class Comment < Action
+  validates :text, presence: true
 end

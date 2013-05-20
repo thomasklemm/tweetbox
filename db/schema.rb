@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130519204315) do
+ActiveRecord::Schema.define(:version => 20130520203617) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",             :null => false
@@ -44,26 +44,45 @@ ActiveRecord::Schema.define(:version => 20130519204315) do
   add_index "authors", ["project_id"], :name => "index_authors_on_project_id"
 
   create_table "comments", :force => true do |t|
-    t.integer  "project_id", :null => false
     t.integer  "tweet_id",   :null => false
     t.integer  "user_id",    :null => false
+    t.integer  "project_id", :null => false
     t.text     "text",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "comments", ["project_id", "tweet_id"], :name => "index_comments_on_project_id_and_tweet_id"
+  add_index "comments", ["project_id"], :name => "index_comments_on_project_id"
+  add_index "comments", ["tweet_id"], :name => "index_comments_on_tweet_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
-  create_table "events", :force => true do |t|
-    t.integer  "project_id",   :null => false
-    t.integer  "tweet_id",     :null => false
-    t.integer  "user_id",      :null => false
-    t.text     "target_state", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+  create_table "custom_events", :force => true do |t|
+    t.integer  "tweet_id",   :null => false
+    t.integer  "user_id",    :null => false
+    t.integer  "project_id", :null => false
+    t.text     "text",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "events", ["project_id", "tweet_id"], :name => "index_events_on_project_id_and_tweet_id"
+  add_index "custom_events", ["project_id"], :name => "index_custom_events_on_project_id"
+  add_index "custom_events", ["tweet_id"], :name => "index_custom_events_on_tweet_id"
+  add_index "custom_events", ["user_id"], :name => "index_custom_events_on_user_id"
+
+  create_table "favorites", :force => true do |t|
+    t.integer  "tweet_id",           :null => false
+    t.integer  "user_id",            :null => false
+    t.integer  "project_id",         :null => false
+    t.integer  "twitter_account_id"
+    t.datetime "posted_at"
+    t.datetime "undone_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "favorites", ["project_id"], :name => "index_favorites_on_project_id"
+  add_index "favorites", ["tweet_id"], :name => "index_favorites_on_tweet_id"
+  add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
 
   create_table "invitations", :force => true do |t|
     t.integer  "account_id",                    :null => false
@@ -127,9 +146,9 @@ ActiveRecord::Schema.define(:version => 20130519204315) do
   add_index "projects", ["account_id"], :name => "index_projects_on_account_id"
 
   create_table "replies", :force => true do |t|
-    t.integer  "project_id",         :null => false
     t.integer  "tweet_id",           :null => false
     t.integer  "user_id",            :null => false
+    t.integer  "project_id",         :null => false
     t.integer  "twitter_account_id", :null => false
     t.text     "text",               :null => false
     t.datetime "posted_at"
@@ -137,7 +156,23 @@ ActiveRecord::Schema.define(:version => 20130519204315) do
     t.datetime "updated_at",         :null => false
   end
 
-  add_index "replies", ["project_id", "tweet_id"], :name => "index_replies_on_project_id_and_tweet_id"
+  add_index "replies", ["project_id"], :name => "index_replies_on_project_id"
+  add_index "replies", ["tweet_id"], :name => "index_replies_on_tweet_id"
+  add_index "replies", ["user_id"], :name => "index_replies_on_user_id"
+
+  create_table "retweets", :force => true do |t|
+    t.integer  "tweet_id",           :null => false
+    t.integer  "user_id",            :null => false
+    t.integer  "project_id",         :null => false
+    t.integer  "twitter_account_id", :null => false
+    t.datetime "posted_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "retweets", ["project_id"], :name => "index_retweets_on_project_id"
+  add_index "retweets", ["tweet_id"], :name => "index_retweets_on_tweet_id"
+  add_index "retweets", ["user_id"], :name => "index_retweets_on_user_id"
 
   create_table "searches", :force => true do |t|
     t.integer  "twitter_account_id",                                :null => false
@@ -153,6 +188,19 @@ ActiveRecord::Schema.define(:version => 20130519204315) do
   add_index "searches", ["project_id"], :name => "index_searches_on_project_id"
   add_index "searches", ["twitter_account_id"], :name => "index_searches_on_twitter_account_id"
 
+  create_table "transitions", :force => true do |t|
+    t.integer  "tweet_id",     :null => false
+    t.integer  "user_id",      :null => false
+    t.integer  "project_id",   :null => false
+    t.text     "target_state", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "transitions", ["project_id"], :name => "index_transitions_on_project_id"
+  add_index "transitions", ["tweet_id"], :name => "index_transitions_on_tweet_id"
+  add_index "transitions", ["user_id"], :name => "index_transitions_on_user_id"
+
   create_table "tweets", :force => true do |t|
     t.integer  "project_id",                                        :null => false
     t.integer  "twitter_account_id",                                :null => false
@@ -165,9 +213,12 @@ ActiveRecord::Schema.define(:version => 20130519204315) do
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
     t.integer  "previous_tweet_ids",    :limit => 8,                                :array => true
+    t.integer  "transitions_count",                  :default => 0
     t.integer  "replies_count",                      :default => 0
     t.integer  "comments_count",                     :default => 0
-    t.integer  "events_count",                       :default => 0
+    t.integer  "retweets_count",                     :default => 0
+    t.integer  "favorites_count",                    :default => 0
+    t.integer  "custom_events_count",                :default => 0
   end
 
   add_index "tweets", ["previous_tweet_ids"], :name => "index_tweets_on_previous_tweet_ids", :using => :gin

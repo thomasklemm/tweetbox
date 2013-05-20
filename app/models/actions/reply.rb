@@ -19,10 +19,18 @@
 #  index_replies_on_user_id     (user_id)
 #
 
-Fabricator(:reply) do
-  project         nil
-  tweet           nil
-  twitter_account nil
-  text            "MyText"
-  posted_at       "2013-05-18 10:03:50"
+class Reply < Action
+  # Twitter account that performs the reply
+  belongs_to :twitter_account
+  validates :twitter_account, presence: true
+
+  validates :text, presence: true
+
+  def posted?
+    posted_at.present?
+  end
+
+  def post!
+    # ...
+  end
 end
