@@ -5,13 +5,13 @@
     span.brand = link_to 'Tweetbox', root_path
 
     span.right
-      span.project-link = current_user.project_link
-      span.account-link = current_user.account_link
-
       - if user_signed_in?
+        span.project-link = current_user.project_link
+        span.account-link = current_user.account_link
+
         span.user-details
           = image_tag(current_user.gravatar_image_url, class: 'gravatar')
           span.name = current_user.name
           span.logout = link_to 'Logout', logout_path, method: :delete
-        - else
+      - else
         span.login = link_to 'Login', login_path

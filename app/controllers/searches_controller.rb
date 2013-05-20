@@ -3,9 +3,6 @@ class SearchesController < ProjectController
     @searches = project_searches
   end
 
-  def show
-    @search = project_search
-  end
 
   def new
     @search = project_searches.build
@@ -15,7 +12,7 @@ class SearchesController < ProjectController
     @search = project_searches.build(search_params)
 
     if @search.save
-      redirect_to project_search_path(@project, @search), notice: 'Search has been created.'
+      redirect_to project_searches_path(@project), notice: 'Search has been created.'
     else
       render :new
     end
@@ -29,7 +26,7 @@ class SearchesController < ProjectController
     @search = project_search
 
     if @search.update_attributes(search_params)
-      redirect_to project_search_path(@project, @search), notice: 'Search has been updated.'
+      redirect_to project_searches_path(@project), notice: 'Search has been updated.'
     else
       render :edit
     end
@@ -38,7 +35,7 @@ class SearchesController < ProjectController
   def destroy
     @search = project_search
     @search.destroy
-    redirect_to project_searches_path, notice: "Search '#{ @search.query }' has been destroyed."
+    redirect_to project_searches_path, notice: "Search has been destroyed."
   end
 
   private

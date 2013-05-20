@@ -1,6 +1,4 @@
-h2 Tweets
-
-b = pluralize(@tweets.size, 'tweet')
+h3 = "#{ params[:flow] } tweets".titlecase
 
 .tweets-wrapper
-  = render partial: 'tweets/tweet', collection: @tweets
+  = render partial: 'tweets/tweet_in_list', collection: @tweets, as: :tweet

@@ -2,10 +2,10 @@
 #
 # Table name: projects
 #
-#  account_id :integer
+#  account_id :integer          not null
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
-#  name       :string(255)
+#  name       :text             not null
 #  updated_at :datetime         not null
 #
 # Indexes
@@ -64,36 +64,35 @@ class Project < ActiveRecord::Base
     users.map(&:id)
   end
 
+  # Returns an instance of Twitter::Client instanciated with credentials
+  # of a random one of the twitter accounts associated with the project
+  # def random_twitter_client
+  #   twitter_account = twitter_accounts.sample
+  #   twitter_account.client
+  # end
+
   # Create one or many tweet records
   # from Twitter status objects
   # Returns an array of tweet records
   def create_tweets_from_twitter(statuses, options={})
     statuses &&= [statuses].flatten.reverse
-    state = options.fetch(:state, :new)
-    statuses.map { |status| create_tweet_from_twitter(status, state) }
-  end
+    twitter_account = options.fetch(:twitter_account)
+    state = options.fetch(:state, :none)
 
-  # Fetches the given status_id from Twitter
-  # Creates a tweet record from it
-  # Returns a tweet record
-  def get_previous_tweet(status_id)
-    status = twitter_client.status(status_id)
-    create_tweet_from_twitter(status, :none)
-  end
-
-  # Returns an Twitter::Client instance for a random twitter account
-  # associated with the project
-  def twitter_client
-    twitter_accounts.sample.twitter_client
+    statuses.map { |status| create_tweet_from_twitter(status, twitter_account, state) }
   end
 
   private
 
   # Creates a tweet record from a Twitter status object
   # Returns a tweet record
-  def create_tweet_from_twitter(status, state=:new)
+  def create_tweet_from_twitter(status, twitter_account, state)
     author = find_or_create_author(status)
-    find_or_create_tweet(status, author, state)
+    tweet = find_or_create_tweet(status, author, twitter_account, state)
+    # REWORK THIS!
+    # add unless state == :none
+    # tweet.delay.fetch_and_update_previous_tweet_ids(twitter_account)
+    tweet
   end
 
   # Finds or creates an author scoped to the current project
@@ -106,11 +105,15 @@ class Project < ActiveRecord::Base
 
   # Find or create a tweet record scoped to the current project
   # from a Twitter status object and associates the author record
-  # Returns a tweet record
-  def find_or_create_tweet(status, author, state)
+  # Returns a saved tweet record
+  def find_or_create_tweet(status, author, twitter_account, state)
     tweet = tweets.where(twitter_id: status.id).first_or_initialize
+
     tweet.author = author
+    tweet.twitter_account = twitter_account
     tweet.assign_state(state)
+
+    # Saves the record
     tweet.update_fields_from_status(status)
   end
 

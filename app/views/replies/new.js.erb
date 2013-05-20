@@ -1,0 +1,6 @@
+// Remove old reply form
+$tweet = $('#<%= dom_id(@tweet) %>');
+$tweet.find('#new_reply').remove();
+
+// Append new reply form
+$tweet.find('.forms').append('<%= j render("form") %>');

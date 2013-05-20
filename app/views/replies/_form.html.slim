@@ -1,0 +1,16 @@
+= form_for [@project, @tweet, @reply] do |f|
+  = render 'shared/form_errors', target: @reply
+
+  .field
+    = f.text_area :text, { placeholder: 'Your reply', rows: 5 }
+
+  .field style="#{ 'display: none' if @project.twitter_accounts.one? }"
+      = f.label :twitter_account_id, 'Post as'
+      = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :screen_name, { selected: @tweet.twitter_account_id }
+
+  - if @project.twitter_accounts.one?
+    - twitter_account = @project.twitter_accounts.first
+    p #{ twitter_account.name } (@#{ twitter_account.screen_name }) will post this reply.
+
+  .actions
+    = f.submit 'Post Reply', class: 'btn btn-primary'

@@ -10,9 +10,9 @@
 #  location          :text
 #  name              :text
 #  profile_image_url :text
-#  project_id        :integer
+#  project_id        :integer          not null
 #  screen_name       :text
-#  twitter_id        :integer
+#  twitter_id        :integer          not null
 #  updated_at        :datetime         not null
 #  url               :text
 #  verified          :boolean          default(FALSE)
@@ -21,7 +21,6 @@
 #
 #  index_authors_on_project_id                 (project_id)
 #  index_authors_on_project_id_and_twitter_id  (project_id,twitter_id) UNIQUE
-#  index_authors_on_twitter_id                 (twitter_id)
 #
 
 Fabricator(:author) do

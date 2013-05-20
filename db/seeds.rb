@@ -1,7 +1,7 @@
 # Plans
 Plan.create! do |plan|
-  plan.name       = 'Awesome trial'
-  plan.user_limit = 30
+  plan.name       = 'The awesome trial'
+  plan.user_limit = 31
   plan.price      = 0
   plan.trial      = true
 end
@@ -13,7 +13,7 @@ Plan.create! do |plan|
 end
 
 Plan.create! do |plan|
-  plan.name       = 'Guy and gal in a garage'
+  plan.name       = 'A guy and a gal in a garage'
   plan.user_limit = 2
   plan.price      = 10
 end
@@ -61,7 +61,7 @@ Plan.create! do |plan|
 end
 
 Plan.create! do |plan|
-  plan.name       = 'Team of thirty'
+  plan.name       = 'Stars and stripes forever'
   plan.user_limit = 30
   plan.price      = 1500
 end

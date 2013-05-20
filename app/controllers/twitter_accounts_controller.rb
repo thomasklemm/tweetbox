@@ -1,7 +1,7 @@
 class TwitterAccountsController < ProjectController
-  AUTH_DIRECT_MESSAGES_PATH = '/auth/twitter?use_authorize=true'
+  AUTH_READ_AND_WRITE_AND_MESSAGES_PATH = '/auth/twitter?use_authorize=true'
   AUTH_READ_AND_WRITE_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=write'
-  AUTH_READ_PATH            = '/auth/twitter?use_authorize=true&x_auth_access_type=read'
+  AUTH_READ_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=read'
 
   def index
     @twitter_accounts = project_twitter_accounts
@@ -24,32 +24,23 @@ class TwitterAccountsController < ProjectController
     redirect_to project_twitter_accounts_path(@project)
   end
 
-  def toggle_mentions
-    @twitter_account = project_twitter_account
-    @twitter_account.get_mentions = !@twitter_account.get_mentions
-    @twitter_account.save!
-    redirect_to project_twitter_accounts_path(@project)
-  end
-
   # Redirect to twitter authorization path
   def auth
     user_session[:project_id] = @project.id
+    user_session[:twitter_authorize_for] = params[:authorize_for]
 
-    case params[:auth_scope].to_s
-      when 'direct_messages'
-        user_session[:twitter_auth_scope] = :direct_messages
-        return redirect_to AUTH_DIRECT_MESSAGES_PATH
-      when 'read_and_write'
-        user_session[:twitter_auth_scope] = :read_and_write
-        return redirect_to AUTH_READ_AND_WRITE_PATH
-      when 'read'
-        user_session[:twitter_auth_scope] = :read
-        return redirect_to AUTH_READ_PATH
-      else
-        user_session.delete(:project_id)
-        flash[:notice] = "Please provide a valid authorization scope."
-        redirect_to project_twitter_accounts_path
-      end
+    case params[:authorize_for].to_s
+    when 'read_and_write_and_messages'
+      return redirect_to AUTH_READ_AND_WRITE_AND_MESSAGES_PATH
+    when 'read_and_write'
+      return redirect_to AUTH_READ_AND_WRITE_PATH
+    when 'read'
+      return redirect_to AUTH_READ_PATH
+    else
+      user_session.delete(:project_id)
+      flash[:notice] = "Please provide a valid authorization scope."
+      redirect_to project_twitter_accounts_path
+    end
   end
 
   private

@@ -1,7 +1,75 @@
+// Experiments in SASS
+
+// Links
+a:hover
+  text-decoration: none
+
+// Icons
+i
+  padding-top: 1px
+
+// floats
+.left
+  float: left
+.right
+  float: right
+
+// spaces
+.space-quarter
+  height: 0.25rem
+.space-half
+  height: 0.5rem
+.space-one
+  height: 1rem
+.space-one-and-a-half
+  height: 1.5rem
+.space-two
+  height: 2rem
+.space-two-and-a-half
+  height: 2.5rem
+.space-three
+  height: 3rem
+
+// footer
+@import "compass/layout/sticky-footer"
+@include sticky-footer(248px, "#root", "#root_footer", "#footer")
+
+$footer-spacing: 8px
+$footer-borders: 1px dashed #bbb
+
+.footer
+  margin-top: 24px
+  border-top: $footer-borders
+  padding-top: 12px
+
+  font-size: 0.875rem
+
+  // links in footer
+  ul.links
+    float: left
+    li
+      display: inline
+      padding-right: $footer-spacing
+      margin-right: $footer-spacing
+      border-right: $footer-borders
+      &:last-of-type
+        border-right: none
+
+  // greeting and maker's name in footer
+  .greeting
+    float: right
+    span
+      padding-left: $footer-spacing
+      margin-left: $footer-spacing
+      border-left: $footer-borders
+      &:first-of-type
+        border-left: none
+
 // experiments in SASS
 $navigation-spacing: 0.75rem
 
 .navigation
+  margin-bottom: 1rem
   &.outer-container
     height: 42px
     line-height: 42px
@@ -28,24 +96,10 @@ $navigation-spacing: 0.75rem
     margin-left: $navigation-spacing
 
 
-ul.project-sidebar
-  ul.tweets
-    margin-left: 30px
-
-.small-button
-  @include button
-  font-size: 13px
-
-.button
-  @include button
-  font-size: 15px
-
 .twitter-accounts-wrapper
   .twitter-account
     margin-top: 1rem
     .avatar
-      vertical-align: middle
-      border-radius: 4px
     .name
       margin: 0 0.5rem
       font-weight: bold
@@ -59,51 +113,100 @@ ul.project-sidebar
     .searches-wrapper
       margin-left: 2rem
 
-
-#flashes
-  margin-bottom: 0.5rem
-
-  .flash-message
-    background: black(0.35)
-    padding: 0.5rem 1rem
-    color: white
-    cursor: pointer
-
-    .close
-      float: right
-      color: white
-
-.searches-wrapper
-  .search
-    .query
+.twitter-accounts-table
+  .twitter-account
+    img.avatar
+    .screen-name
       font-weight: bold
-    .twitter-account
-      font-style: italic
-    .links a
-      margin-left: 0.4rem
+    .name
 
-.tweets-wrapper
-  .tweet
-    a
-      color: $text
-      &:hover
-        text-decoration: underline
-    margin-bottom: 2rem
+// .tweets-table
+//   .tweet
+//     padding: 1rem
+//     .author
+//       color: $textColor
+//       .name
+//         font-weight: bold
+//       .screen-name
+//         margin-left: 5px
+//     .text
+//       height: 2 * $baseLineHeight
+
+// .tweets-wrapper
+//   .tweet
+//     .avatar
+//     .author
+//       &:hover
+//         text-decoration: none !important
+//       .name
+//         font-weight: bold
+//         &:hover
+//           text-decoration: underline !important
+//       .screen-name
+//         padding-left: 5px
+
+//     &:not(:last-of-type)
+//       padding-bottom: 1rem
+//       border-bottom: 1px solid #ddd
+//       margin-bottom: 1rem
+
+//     .text
+//       white-space: pre-wrap
+//       // margin-left: 58px
+
+.tweets-wrapper .tweet-wrapper
+  &:not(:last-of-type)
+    padding-bottom: 1rem
+    border-bottom: 1px solid #ddd
+    margin-bottom: 1rem
+
+  .tweet, .conversation-tweet
+    padding: 12px
+    padding-left: 72px
+
     .avatar
       float: left
-      padding-right: 8px
-      padding-bottom: 2rem
+      margin-top: 4px
+      margin-left: -58px
+      border-radius: 2px
+
     .author
-      color: $text
-      &:hover
-        text-decoration: none !important
       .name
         font-weight: bold
-        &:hover
-          text-decoration: underline !important
+        color: $textColor
       .screen-name
-        padding-left: 5px
+        margin-left: 5px
+        @extend .muted
 
     .text
-      white-space: pre-wrap
-      // margin-left: 58px
+      height: (2 * $baseLineHeight) + 3px
+
+  .tweet
+    background: #f3f3f3
+    border: 1px solid #fff
+    box-shadow: 0 0 5px 3px hsla(0, 0%, 0%, 0.1)
+
+  .conversation-tweet
+    // margin-top: -12px
+
+.zeroclipboard-is-hover
+  color: $dropdownLinkColorHover !important
+  background-color: $dropdownLinkBackgroundHover
+
+.zeroclipboard-is-active
+  color: $dropdownLinkColor
+  background-color: $dropdownBackground
+
+// .zeroclipboard-is-hover
+//   color: rgb(51, 51, 51)
+//   background-color: rgb(230, 230, 230)
+//   text-decoration: none
+//   background-position: 0px -15px
+//   transition: background-position 0.1s linear 0s
+
+// .zeroclipboard-is-active
+//   color: rgb(51, 51, 51)
+//   background-color: rgb(230, 230, 230)
+//   background-image: none
+//   outline: 0px none
+//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15) inset, 0px 1px 2px rgba(0, 0, 0, 0.05)

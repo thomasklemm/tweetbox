@@ -1,0 +1,16 @@
+.event-wrapper
+  - if event.is_a?(Reply)
+    - reply = event
+    .reply #{ icon_tag(:reply) } Reply: <b>"#{ reply.text }"</b>, replied via #{ reply.twitter_account.at_screen_name } by #{ reply.user.name } on #{ reply.created_at.to_s(:long) }
+
+  - if event.is_a?(Comment)
+    - comment = event
+    .comment #{ icon_tag(:comment) } Comment: <b>"#{ comment.text }"</b>, commented by #{ comment.user.name } on #{ comment.created_at.to_s(:long) }
+
+  - if event.is_a?(Event)
+    .event
+      - case event.target_state
+      - when 'open'
+        | #{ icon_tag(:plus) } Marked as <b>open</b> by #{ event.user.name } on #{ event.created_at.to_s(:long) }
+      - when 'closed'
+        | #{ icon_tag(:ok) } Marked as <b>closed</b> by #{ event.user.name } on #{ event.created_at.to_s(:long) }

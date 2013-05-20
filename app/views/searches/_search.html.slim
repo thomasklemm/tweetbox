@@ -1,6 +1,0 @@
-.search
-  span.query "#{ search.query }"
-  span.twitter-account  queried with #{ search.twitter_account.at_screen_name }
-  span.links
-    = link_to 'Edit search', edit_project_search_path(@project, search)
-    = link_to 'Destroy search', project_search_path(@project, search), method: :delete, confirm: 'Are you sure?'

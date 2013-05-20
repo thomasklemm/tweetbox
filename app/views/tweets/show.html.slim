@@ -1,0 +1,13 @@
+h3
+  ' Conversation with #{ @tweet.author.name }
+  span.muted (@#{ @tweet.author.screen_name })
+
+.tweets-wrapper
+  .tweet-wrapper
+    = render partial: 'tweets/conversation_tweet', collection: @tweet.conversation.select { |tweet| tweet.created_at < @tweet.created_at }
+
+    = render partial: 'tweets/tweet', locals: {tweet: @tweet}
+
+    = render partial: 'tweets/conversation_tweet', collection: @tweet.conversation.select { |tweet| tweet.created_at > @tweet.created_at }
+
+

@@ -3,18 +3,16 @@
 / flash messages
 - unless publicly_cached?
   - if flash
-    #flashes.container
-      / render each flash, with only authorized attribtes
-      / delete devise timedout key from flash before iterating
-      /
-      / From the Devise wiki:
-      /  Remember that Devise uses flash messages to let users know if sign in was successful or failed.
-      /  Devise expects your application to call "flash[:notice]" and "flash[:alert]" as appropriate.
-      /  Do not print the entire flash hash, print specific keys or at least remove the :timedout key
-      /  from the hash as Devise adds this key in some circumstances, this key is not meant for display.
-      - flashes_to_display = flash.to_hash.slice(:notice, :alert, :success, :error, 'notice', 'alert', 'success', 'error')
-      - flashes_to_display.each do |type, message|
-        div class="flash-message #{type}"
-          span = message
-          / close message
-          = link_to '&times'.html_safe, 'javascript:;', class: 'close'
+    / render each flash, with only authorized attribtes
+    / delete devise timedout key from flash before iterating
+    /
+    / From the Devise wiki:
+    /  Remember that Devise uses flash messages to let users know if sign in was successful or failed.
+    /  Devise expects your application to call "flash[:notice]" and "flash[:alert]" as appropriate.
+    /  Do not print the entire flash hash, print specific keys or at least remove the :timedout key
+    /  from the hash as Devise adds this key in some circumstances, this key is not meant for display.
+    - flashes_to_display = flash.to_hash.slice(:notice, :alert, :success, :error, 'notice', 'alert', 'success', 'error')
+    - flashes_to_display.each do |type, message|
+      div class="alert alert-info"
+        button type="button" class="close" data-dismiss="alert" &times;
+        = message

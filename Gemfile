@@ -24,9 +24,6 @@ gem 'slim-rails'
 # Figaro (Credential management in config/application.yml)
 gem 'figaro'
 
-# Rack Timeout
-gem 'rack-timeout'
-
 # Devise (User authentication)
 gem 'devise'
 
@@ -66,6 +63,9 @@ gem 'oj'
 # Twitter Text (Autolinking tweet urls and more)
 gem 'twitter-text'
 
+# Use arrays and more in Postgres
+gem 'postgres_ext'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do
@@ -74,20 +74,13 @@ group :assets do
   gem 'sass-rails'
   gem 'compass-rails'
 
-  # Bourbon (SASS Mixins)
-  # Neat (Semantic Grids)
-  gem 'bourbon'
-  gem 'neat'
-
   # Javascripts
   gem 'coffee-rails'
   gem 'uglifier'
 
   # Packaged plugins
+  gem 'bootstrap-sass', '~> 2.3.1.0'
   gem 'select2-rails'
-
-  # Font Awesome (Icon font)
-  gem 'font-awesome-rails'
 end
 
 group :development do
@@ -96,7 +89,11 @@ group :development do
   gem 'annotate', github: 'ctran/annotate_models'
 
   # Pry (A great console, replacement for IRB in development)
+  gem 'pry'
   gem 'pry-rails'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
 
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'
@@ -143,4 +140,7 @@ group :staging, :production do
 
   # Lograge (Logging)
   gem 'lograge'
+
+  # Rack Timeout
+  gem 'rack-timeout'
 end

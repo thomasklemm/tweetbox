@@ -2,21 +2,16 @@
   / interim navigation
   = render 'navigation'
 
-  / any flash messages
-  = render 'flashes'
-
   / main content
   .container
-    = content_for?(:content) ? yield(:content) : yield
+    .row
+      .span12
+        = content_for?(:content) ? yield(:content) : yield
 
-  / sticky footer that stays at the bottom of the page
-  #root_footer
+    / sticky footer that stays at the bottom of the page
+    #root_footer
 
 #footer
   = render 'footer'
-
-/ async javascript snippets at the end of the body
-/ to improve overall load times
-= render 'javascript'
 
 

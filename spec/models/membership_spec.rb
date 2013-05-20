@@ -2,12 +2,12 @@
 #
 # Table name: memberships
 #
-#  account_id :integer
+#  account_id :integer          not null
 #  admin      :boolean          default(FALSE), not null
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
 #  updated_at :datetime         not null
-#  user_id    :integer
+#  user_id    :integer          not null
 #
 # Indexes
 #

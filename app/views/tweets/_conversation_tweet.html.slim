@@ -1,0 +1,7 @@
+.conversation-tweet
+  = link_to "https://twitter.com/intent/user?screen_name=#{ conversation_tweet.author.screen_name }", class: 'author' do
+    = image_tag(conversation_tweet.author.profile_image_url, class: 'avatar')
+    span.name = conversation_tweet.author.name
+    span.screen-name = conversation_tweet.author.at_screen_name
+
+  .text == auto_link_usernames_or_lists(auto_link_urls(conversation_tweet.text, { url_target: :blank }), { username_url_base: "https://twitter.com/intent/user?screen_name=", username_include_symbol: true, suppress_lists: true })

@@ -1,0 +1,9 @@
+.tweet-wrapper class=dom_id(tweet)
+  / previous tweets
+  = render partial: 'tweets/conversation_tweet', collection: tweet.previous_tweets
+
+  / tweet
+  = render partial: 'tweets/tweet', locals: {tweet: tweet}
+
+  / future tweets
+  = render partial: 'tweets/conversation_tweet', collection: tweet.future_tweets
