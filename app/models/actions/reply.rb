@@ -28,7 +28,20 @@ class Reply < Action
     posted_at.present?
   end
 
+  def postable?
+    valid? && !posted?
+  end
+
+  # Returns the posted tweet
   def post!
-    # ...
+    return false unless postable?
+
+    status = twitter_account.client.update(text, in_reply_to_status_id: tweet.twitter_id)
+    reply = project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :none)
+
+    # Set timestamp
+    touch(:posted_at)
+
+    reply
   end
 end

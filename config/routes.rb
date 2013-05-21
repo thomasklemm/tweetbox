@@ -37,14 +37,16 @@ Birdview::Application.routes.draw do
   # Projects
   resources :projects, only: [:index, :show] do
     resources :tweets, only: [:index, :show] do
+      get 'conversation', on: :member
+
       # State transitions
       put 'mark_as_open', on: :member
       put 'mark_as_closed', on: :member
 
       resources :replies,   controller: 'tweets/replies',  only: [:new, :create]
-      resources :comments,  controller: 'tweets/comments', only: [:new, :create, :destroy]
+      resources :comments,  controller: 'tweets/comments', only: [:new, :create]
       resources :retweets,  controller: 'tweets/retweets', only: [:new, :create]
-      resources :favorites, controller: 'tweets/favorites', only: [:new, :create, :destroy]
+      resources :favorites, controller: 'tweets/favorites', only: [:new, :create]
     end
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do

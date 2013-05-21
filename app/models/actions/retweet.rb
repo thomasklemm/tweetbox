@@ -27,13 +27,16 @@ class Retweet < Action
     posted_at.present?
   end
 
+  def postable?
+    valid? && !posted?
+  end
+
   def post!
-    return false unless valid?
-    return true if posted?
+    return false unless postable?
 
     twitter_account.client.retweet!(tweet.twitter_id)
 
     # Set timestamp
-    update_column(:posted_at, Time.current)
+    touch(:posted_at) && true
   end
 end

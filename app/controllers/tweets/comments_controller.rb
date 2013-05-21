@@ -8,7 +8,6 @@ class Tweets::CommentsController < ProjectController
 
   def create
     @comment = @tweet.comments.build(comment_params)
-    @comment.user = current_user
 
     if @comment.save
       redirect_to project_tweet_path(@project, @tweet), notice: 'Comment has been created.'
@@ -20,6 +19,6 @@ class Tweets::CommentsController < ProjectController
   private
 
   def comment_params
-    params.require(:comment).permit(:text)
+    params.require(:comment).permit(:text).merge(user: current_user)
   end
 end

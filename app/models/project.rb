@@ -76,24 +76,21 @@ class Project < ActiveRecord::Base
   # Returns an array of tweet records
   def create_tweets_from_twitter(statuses, options={})
     statuses &&= [statuses].flatten.reverse
-    twitter_account = options.fetch(:twitter_account)
-    state = options.fetch(:state, :none)
-
-    statuses.map { |status| create_tweet_from_twitter(status, twitter_account, state) }
+    statuses.map { |status| create_tweet_from_twitter(status, options) }
   end
-
-  private
 
   # Creates a tweet record from a Twitter status object
   # Returns a tweet record
-  def create_tweet_from_twitter(status, twitter_account, state)
+  def create_tweet_from_twitter(status, options={})
+    twitter_account = options.fetch(:twitter_account) { raise "Passing a :twitter_account is required" }
+    state = options.fetch(:state, :none)
+
     author = find_or_create_author(status)
     tweet = find_or_create_tweet(status, author, twitter_account, state)
-    # REWORK THIS!
-    # add unless state == :none
-    # tweet.delay.fetch_and_update_previous_tweet_ids(twitter_account)
     tweet
   end
+
+  private
 
   # Finds or creates an author scoped to the current project
   # from a Twitter status object

@@ -1,4 +1,7 @@
 h3 = "#{ params[:flow] } tweets".titlecase
 
-.tweets-wrapper
-  = render partial: 'tweets/tweet_in_list', collection: @tweets, as: :tweet
+- if @tweets.any?
+  .tweets-wrapper
+    = render partial: 'tweets/tweet_in_list', collection: @tweets, as: :tweet
+- else
+  p: b Tweetbox Zero. Congrats!

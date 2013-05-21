@@ -8,10 +8,11 @@ class Tweets::RepliesController < ProjectController
 
   def create
     @reply = @tweet.replies.build(reply_params)
-    @reply.user = current_user
 
     if @reply.save
-      redirect_to project_tweet_path(@project, @tweet), notice: 'Reply has been created.'
+      @reply.post!
+
+      redirect_to project_tweet_path(@project, @tweet), notice: 'Reply has been posted.'
     else
       render :new
     end
@@ -20,6 +21,6 @@ class Tweets::RepliesController < ProjectController
   private
 
   def reply_params
-    params.require(:reply).permit(:text, :twitter_account_id)
+    params.require(:reply).permit(:text, :twitter_account_id).merge(user: current_user)
   end
 end

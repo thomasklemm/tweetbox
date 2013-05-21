@@ -14,6 +14,11 @@ class TweetsController < ProjectController
   def show
   end
 
+  def conversation
+    params[:conversation] = true
+    render :show
+  end
+
   def mark_as_open
     @tweet.open!
 
