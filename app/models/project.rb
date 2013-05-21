@@ -71,6 +71,10 @@ class Project < ActiveRecord::Base
   #   twitter_account.client
   # end
 
+  def writable_twitter_accounts
+    twitter_accounts.writable
+  end
+
   # Create one or many tweet records
   # from Twitter status objects
   # Returns an array of tweet records

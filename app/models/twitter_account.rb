@@ -43,6 +43,8 @@ class TwitterAccount < ActiveRecord::Base
   VALID_AUTHORIZATION_SCOPES = %w(read read_and_write read_and_write_and_messages)
   validates :authorized_for, presence: true, inclusion: { in: VALID_AUTHORIZATION_SCOPES }
 
+  scope :writable, -> { where(authorized_for: %w(read_and_write read_and_write_and_messages)) }
+
   # Only destroy a twitter account if no search is associated
   has_many :searches, dependent: :restrict
 
