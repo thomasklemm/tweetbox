@@ -24,12 +24,12 @@ class Status < ActiveRecord::Base
   belongs_to :user
   belongs_to :twitter_account
 
+  before_validation :generate_code, if: :new_record?
+  before_validation :generate_posted_text, if: :new_record?
+
   validates :project, :user, :twitter_account, presence: true
   validates :text, presence: true
   validates :code, presence: true, uniqueness: true
-
-  before_validation :generate_code, if: :new_record?
-  before_validation :generate_posted_text, if: :new_record?
 
   def posted?
     !!posted_at
@@ -72,7 +72,7 @@ class Status < ActiveRecord::Base
 
     # If the tweet is too long, shorten it and append the public url
     # Limits the size of the initial tweet and iterations
-    shortened_text = posted_text[0..240]
+    shortened_text = posted_text[0..210]
     text_parts = [shortened_text, "... #{ public_url }"]
 
     while length > 140

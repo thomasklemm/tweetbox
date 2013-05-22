@@ -23,5 +23,5 @@ Fabricator(:status) do
   project
   user
   twitter_account
-  text              "MyText"
+  text              "My status text"
 end

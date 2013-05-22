@@ -1,6 +1,10 @@
 require 'sidekiq/web'
 
 Birdview::Application.routes.draw do
+  get "statuses/new"
+
+  get "statuses/create"
+
   # User authentication
   devise_for :users,
     path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' },
