@@ -2,7 +2,7 @@ class Tweets::RepliesController < ProjectController
   before_filter :load_project_tweet
 
   def new
-    @reply = @tweet.replies.build
+    @reply = @tweet.replies.build(twitter_account: @tweet.twitter_account)
     # NOTE: renders html or js
   end
 

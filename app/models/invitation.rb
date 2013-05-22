@@ -65,8 +65,7 @@ class Invitation < ActiveRecord::Base
   private
 
   def generate_code!
-    self.code ||= SecureRandom.hex(12)
-    self.code.force_encoding("UTF-8") if self.code.respond_to?(:encoding)
+    self.code ||= Random.new.code(16)
   end
 
   def create_membership!(invitee)
