@@ -56,6 +56,9 @@ Birdview::Application.routes.draw do
     resources :searches, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
+  # Statuses
+  resources :statuses
+
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to
   #  when trying to authorize a Twitter account with this application

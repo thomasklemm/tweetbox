@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520205207) do
+ActiveRecord::Schema.define(:version => 20130522083734) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",             :null => false
@@ -133,6 +133,21 @@ ActiveRecord::Schema.define(:version => 20130520205207) do
   add_index "searches", ["project_id", "twitter_account_id"], :name => "index_searches_on_project_id_and_twitter_account_id"
   add_index "searches", ["project_id"], :name => "index_searches_on_project_id"
   add_index "searches", ["twitter_account_id"], :name => "index_searches_on_twitter_account_id"
+
+  create_table "statuses", :force => true do |t|
+    t.integer  "project_id",         :null => false
+    t.integer  "user_id",            :null => false
+    t.integer  "twitter_account_id", :null => false
+    t.text     "code",               :null => false
+    t.text     "text",               :null => false
+    t.text     "posted_text"
+    t.datetime "posted_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "statuses", ["code"], :name => "index_statuses_on_code", :unique => true
+  add_index "statuses", ["project_id"], :name => "index_statuses_on_project_id"
 
   create_table "tweets", :force => true do |t|
     t.integer  "project_id",                         :null => false

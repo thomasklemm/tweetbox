@@ -35,5 +35,5 @@ Fabricator(:twitter_account) do
   uid               "uid_string"
   token             "token_string"
   token_secret      "token_secret_string"
-  auth_scope        "read"
+  authorized_for    "read_and_write"
 end
