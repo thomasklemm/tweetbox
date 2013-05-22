@@ -1,0 +1,35 @@
+.new-status-wrapper ng-controller='StatusController'
+  div ng-init="statusText = ''"
+  div ng-init="previewText = ''"
+  div ng-init="twitterAccounts = #{ @project.writable_twitter_accounts.select([:id, :screen_name, :name, :profile_image_url]).to_json }"
+  div ng-init="selectedTwitterAccount = twitterAccounts[0]"
+
+  = form_for [@project, @status] do |f|
+    = render 'shared/form_errors', target: @status
+
+    .field
+      = f.text_area :text, autofocus: true, ng_model: 'statusText', ng_change: 'updatePreview()', class: 'input-xlarge', rows: 4
+
+    .field
+      select ng-model='selectedTwitterAccount' ng-options="t as t.screen_name for t in twitterAccounts"
+
+      input type='text' ng-model='selectedTwitterAccount.id' name="status[twitter_account_id]" style='display: none'
+
+    .actions
+      = f.submit 'Post status', class: 'btn btn-primary'
+      span.character-counter {{ statusCharCount() }} characters
+
+
+  .space-one
+
+  .preview-status-wrapper
+    .preview-status
+
+      .author
+        img src="{{ selectedTwitterAccount.profile_image_url}}" class='avatar'
+        span.name {{ selectedTwitterAccount.name }}
+        span.screen-name @{{ selectedTwitterAccount.screen_name }}
+
+      .text {{ previewText }}
+
+    .character-counter style='margin-top: 7px' {{ previewCharCount() }} characters

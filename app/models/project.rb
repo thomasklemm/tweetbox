@@ -28,6 +28,8 @@ class Project < ActiveRecord::Base
   has_many :tweets, dependent: :destroy
   has_many :authors, dependent: :destroy
 
+  has_many :statuses, dependent: :destroy
+
   after_create :setup_permissions
   after_update :update_permissions
 
