@@ -4,7 +4,7 @@ describe Signup do
   subject(:signup) { Fabricate(:signup) }
   it { should be_valid }
 
-  it_should_behave_like FormObject
+  it_should_behave_like Reformer
 
   it { should respond_to(:user) }
   it { should respond_to(:account) }

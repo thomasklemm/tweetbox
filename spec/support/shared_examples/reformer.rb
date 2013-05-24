@@ -1,8 +1,8 @@
 # Form objects using virtus
-shared_examples_for FormObject do
-  it { should be_kind_of(FormObject) }
-  it { should be_kind_of(Virtus) }
+shared_examples_for Reformer do
+  it { should be_kind_of(Reformer) }
 
+  it { should be_kind_of(Virtus) }
   it { should be_kind_of(ActiveModel::Conversion) }
   it { should be_kind_of(ActiveModel::Validations) }
   it "does comply with ActiveModel naming" do

@@ -1,7 +1,7 @@
 # The signup class is a form object class that helps with
 # creating a user, account and project all in one step and form
 class Signup
-  include FormObject
+  include Reformer
 
   attr_reader :user
   attr_reader :account

@@ -2,7 +2,7 @@
 # creating a user and allows for a customized registration and
 # registration upon invitation process
 class Registration
-  include FormObject
+  include Reformer
 
   attr_reader :user
 

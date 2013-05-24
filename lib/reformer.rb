@@ -1,6 +1,6 @@
 # Form objects handle complex form logic
 # more easily than fat controllers
-module FormObject
+module Reformer
   extend ActiveSupport::Concern
 
   included do
