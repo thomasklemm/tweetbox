@@ -1,10 +1,11 @@
 class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
-      t.belongs_to :tweet
-      t.belongs_to :user
-      t.belongs_to :project
-      t.text :kind
+      t.belongs_to :tweet, null: false
+      t.belongs_to :user, null: false
+      t.belongs_to :project, null: false
+      t.text :kind, null: false
+      t.text :text
 
       t.timestamps
     end

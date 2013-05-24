@@ -37,18 +37,27 @@ class Tweet < ActiveRecord::Base
   belongs_to :twitter_account
   validates :twitter_account, presence: true
 
+  # Events
   has_many :events, dependent: :destroy
 
-  has_many :replies, class_name: 'Tweet', foreign_key: 'in_reply_to_tweet_id'
-  belongs_to :in_reply_to_tweet, class_name: 'Tweet'
+  # Replies
+  belongs_to :reply_to_tweet, class_name: 'Tweet'
+  has_many :replies, class_name: 'Tweet', foreign_key: 'reply_to_tweet_id'
 
-  # States
-  scope :incoming, where(workflow_state: :new)
-  scope :replying, where(workflow_state: :open)
-  scope :resolved, where(workflow_state: :closed)
+  # Retweets
+  belongs_to :retweet_to_tweet, class_name: 'Tweet'
+  has_many :retweets, class_name: 'Tweet', foreign_key: 'retweet_to_tweet_id'
 
   # Ensures uniquness of a tweet scoped to the project
   validates_uniqueness_of :twitter_id, scope: :project_id
+
+  # Callbacks
+  after_commit :build_conversation, on: :create
+
+  # States
+  # scope :incoming, where(workflow_state: :new)
+  # scope :replying, where(workflow_state: :open)
+  # scope :resolved, where(workflow_state: :closed)
 
   workflow do
     # Tweets that have been fetched solely to build up conversation histories
@@ -82,11 +91,9 @@ class Tweet < ActiveRecord::Base
     end
 
     # Tweets in :posted state have been posted with Tweetbox
+    # or have been retweeted with Tweetbox
     # The :posted state is one of the most awesome ones in the whole wide world...
     state :posted
-
-    # Tweets in :retweeted state have been retweeted with Tweetbox
-    state :retweeted
   end
 
   # Executes transition to a given :to state
@@ -107,9 +114,6 @@ class Tweet < ActiveRecord::Base
       raise "Tweet#transition requires a :to options parameter in [:open, :closed]. #{ to } could not be recognized."
     end
   end
-
-  # Callbacks
-  after_commit :build_conversation, on: :create
 
   # Loads and memoizes the tweet's previous tweets
   # from the array of cached previous tweet ids
@@ -153,7 +157,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def conversation!
-    @conversation = (previous_tweets.to_a + [self] + future_tweets.to_a + conversation_with_author.to_a).flatten.sort_by(&:created_at).uniq
+    @conversation = (previous_tweets.to_a + [self] + future_tweets.to_a).flatten.sort_by(&:created_at).uniq
   end
 
   # Assigns a certain workflow state given a symbol or string

@@ -1,21 +1,4 @@
-- if params[:conversation]
-  h3
-    ' Conversation with #{ @tweet.author.name }
-    span.muted (@#{ @tweet.author.screen_name })
-- else
-  h3 Tweet
+h4 Show tweet
 
 .tweets-wrapper
-  .tweet-wrapper
-    - if params[:conversation]
-      = render partial: 'tweets/conversation_tweet', collection: @tweet.conversation.select { |tweet| tweet.created_at < @tweet.created_at }
-    - else
-      = render partial: 'tweets/conversation_tweet', collection: @tweet.previous_tweets
-
-    = render partial: 'tweets/tweet', locals: {tweet: @tweet}
-
-    - if params[:conversation]
-      = render partial: 'tweets/conversation_tweet', collection: @tweet.conversation.select { |tweet| tweet.created_at > @tweet.created_at }
-    - else
-      = render partial: 'tweets/conversation_tweet', collection: @tweet.future_tweets
-
+  = render partial: 'tweets/tweet_in_conversation', object: @tweet, as: :tweet

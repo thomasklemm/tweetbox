@@ -103,6 +103,10 @@ class Project < ActiveRecord::Base
     twitter_accounts.writable
   end
 
+  def default_twitter_account
+    writable_twitter_accounts.try(:first)
+  end
+
   private
 
   # Finds or creates an author scoped to the current project

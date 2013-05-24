@@ -1,6 +1,5 @@
 class NewStatus
-  include ActiveAttr::BasicModel
-  include Virtus
+  include Reformer
 
   attribute :text, String
   attribute :posted_text, String

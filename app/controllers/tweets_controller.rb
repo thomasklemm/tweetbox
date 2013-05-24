@@ -2,12 +2,7 @@ class TweetsController < TweetController
   before_filter :load_project_tweet, except: :index
 
   def index
-    @tweets = case params[:flow].to_s
-    when 'incoming' then project_tweets.incoming.limit(20)
-    when 'replying' then project_tweets.replying.limit(10)
-    when 'resolved' then project_tweets.resolved.limit(10)
-    else return redirect_to project_tweets_path(@project, flow: :incoming)
-    end
+    @tweets = project_tweets.limit(20)
     @tweets &&= @tweets.decorate
   end
 
@@ -30,5 +25,11 @@ class TweetsController < TweetController
         format.js # renders transition.js.erb template
       end
     end
+  end
+
+  private
+
+  def project_tweets
+    @project.tweets
   end
 end

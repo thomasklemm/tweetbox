@@ -1,7 +1,7 @@
-h3 = "#{ params[:flow] } tweets".titlecase
+h3 Tweets
 
 - if @tweets.any?
   .tweets-wrapper
-    = render partial: 'tweets/tweet_in_list', collection: @tweets, as: :tweet
+    = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
 - else
-  p: b Tweetbox Zero. Congrats!
+  b Tweetbox Zero. Congrats!

@@ -6,9 +6,9 @@
         li
           b Tweets
           ul.tweets-subnav class='nav nav-pills nav-stacked'
-            = active_link_to 'Incoming', project_tweets_path(@project, flow: :incoming)
-            = active_link_to 'Replying', project_tweets_path(@project, flow: :replying)
-            = active_link_to 'Resolved', project_tweets_path(@project, flow: :resolved)
+            = active_link_to 'Incoming', incoming_project_tweets_path(@project)
+            = active_link_to 'Open', open_project_tweets_path(@project)
+            = active_link_to 'Resolved', resolved_project_tweets_path(@project)
             = active_link_to 'New status', new_project_status_path(@project)
 
         b Project

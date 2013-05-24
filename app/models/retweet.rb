@@ -3,22 +3,18 @@ class Retweet
 
   attribute :project, Project
   attribute :old_tweet, Tweet
-  attribute :twitter_account, TwitterAccount
+  attribute :twitter_account_id, Integer
   attribute :user, User
 
   attr_reader :new_tweet
 
   validates :project,
             :old_tweet,
-            :twitter_account,
+            :twitter_account_id,
             :user, presence: true
 
-  def initialize(project, tweet, user, opts={})
-    self.project = project
+  def tweet=(tweet)
     self.old_tweet = tweet
-    self.user = user
-    twitter_account_id = opts.fetch(:twitter_account_id) { raise 'Retweet.new requires a :twitter_account_id' }
-    self.twitter_account = project.twitter_accounts.find(twitter_account_id)
   end
 
   def save
@@ -32,6 +28,10 @@ class Retweet
 
   private
 
+  def twitter_account
+    project.twitter_accounts.find(twitter_account_id) if twitter_account_id
+  end
+
   def post!
     status = post_retweet
     create_new_tweet(status)
@@ -41,12 +41,13 @@ class Retweet
 
   # Returns new Twitter status object
   def post_retweet
-    twitter_account.client.retweet!(old_tweet.twitter_id)
+    response = twitter_account.client.retweet!(old_tweet.twitter_id)
+    response.first.retweeted_status
   end
 
   # Creates a new tweet from the given Twitter status object and returns it
   def create_new_tweet(status)
-    @new_tweet = project.create_tweet_from_twitter(status, state: :retweeted, twitter_account: twitter_account)
+    @new_tweet = project.create_tweet_from_twitter(status, state: :posted, twitter_account: twitter_account)
   end
 
   def create_events_on_tweets

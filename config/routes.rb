@@ -1,10 +1,6 @@
 require 'sidekiq/web'
 
 Birdview::Application.routes.draw do
-  get "statuses/new"
-
-  get "statuses/create"
-
   # User authentication
   devise_for :users,
     path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' },
@@ -40,32 +36,36 @@ Birdview::Application.routes.draw do
 
   # Projects
   resources :projects, only: [:index, :show] do
-    resources :statuses, only: [:new, :create]
-
+    # Tweets
     resources :tweets, only: :show do
       collection do
-        get '/' => 'tweets#index' # state1
-        get '/state2' => 'tweets#index'
-        get '/state3?page=123' => 'tweets#index'
+        get ''         => :index, as: :incoming
+        get 'open'     => :index, as: :open
+        get 'resolved' => :index, as: :resolved
       end
 
       member do
-        put  'transition' => 'tweets#transition' # transition_project_tweet_path(@project, @tweet, to: :opened/:closed)
-
-        resources :reweets,   controller: 'tweets/retweets',  only: [:new, :create]
-        resources :favorites, controller: 'tweets/favorites', only: [:new, :create]
+        put  'transition'
       end
+
+      resources :replies,   only: [:new, :create], on: :member
+      resources :retweets,   only: [:new, :create], on: :member
+      resources :favorites, only: [:new, :create], on: :member
+      resources :comments,  only: [:new, :create], on: :member
     end
 
-    resources :authors, only: :show
-
+    resources :statuses, only: [:new, :create]
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do
-      post 'auth', on: :collection, as: :authorize
+      collection do
+        post 'auth', as: :authorize
+      end
     end
 
     resources :searches, except: :show
   end
+
+
 
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to

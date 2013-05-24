@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522083734) do
+ActiveRecord::Schema.define(:version => 20130523225534) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",             :null => false
@@ -23,22 +23,6 @@ ActiveRecord::Schema.define(:version => 20130522083734) do
 
   add_index "accounts", ["plan_id"], :name => "index_accounts_on_plan_id"
   add_index "accounts", ["trial_expires_at"], :name => "index_accounts_on_trial_expires_at"
-
-  create_table "actions", :force => true do |t|
-    t.text     "type",               :null => false
-    t.integer  "tweet_id",           :null => false
-    t.integer  "user_id",            :null => false
-    t.integer  "project_id",         :null => false
-    t.text     "text"
-    t.integer  "twitter_account_id"
-    t.datetime "posted_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-  end
-
-  add_index "actions", ["project_id"], :name => "index_actions_on_project_id"
-  add_index "actions", ["tweet_id"], :name => "index_actions_on_tweet_id"
-  add_index "actions", ["user_id"], :name => "index_actions_on_user_id"
 
   create_table "authors", :force => true do |t|
     t.integer  "project_id",                                        :null => false
@@ -58,6 +42,20 @@ ActiveRecord::Schema.define(:version => 20130522083734) do
 
   add_index "authors", ["project_id", "twitter_id"], :name => "index_authors_on_project_id_and_twitter_id", :unique => true
   add_index "authors", ["project_id"], :name => "index_authors_on_project_id"
+
+  create_table "events", :force => true do |t|
+    t.integer  "tweet_id",   :null => false
+    t.integer  "user_id",    :null => false
+    t.integer  "project_id", :null => false
+    t.text     "kind",       :null => false
+    t.text     "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "events", ["project_id"], :name => "index_events_on_project_id"
+  add_index "events", ["tweet_id"], :name => "index_events_on_tweet_id"
+  add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
   create_table "invitations", :force => true do |t|
     t.integer  "account_id",                    :null => false
@@ -133,23 +131,6 @@ ActiveRecord::Schema.define(:version => 20130522083734) do
   add_index "searches", ["project_id", "twitter_account_id"], :name => "index_searches_on_project_id_and_twitter_account_id"
   add_index "searches", ["project_id"], :name => "index_searches_on_project_id"
   add_index "searches", ["twitter_account_id"], :name => "index_searches_on_twitter_account_id"
-
-  create_table "statuses", :force => true do |t|
-    t.integer  "project_id",                         :null => false
-    t.integer  "user_id",                            :null => false
-    t.integer  "twitter_account_id",                 :null => false
-    t.text     "code",                               :null => false
-    t.text     "text",                               :null => false
-    t.text     "posted_text"
-    t.datetime "posted_at"
-    t.integer  "in_reply_to_tweet_id"
-    t.integer  "in_reply_to_status_id", :limit => 8
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-  end
-
-  add_index "statuses", ["code"], :name => "index_statuses_on_code", :unique => true
-  add_index "statuses", ["project_id"], :name => "index_statuses_on_project_id"
 
   create_table "tweets", :force => true do |t|
     t.integer  "project_id",                         :null => false
