@@ -37,18 +37,10 @@ class Tweet < ActiveRecord::Base
   belongs_to :twitter_account
   validates :twitter_account, presence: true
 
-  # Tweet actions and events
-  has_many :actions, readonly: true
-
-  # Tweet actions
-  has_many :replies, dependent: :restrict
-  has_many :comments, dependent: :restrict
-  has_many :retweets, dependent: :restrict
-  has_many :favorites, dependent: :restrict
-
-  # Tweet events
-  has_many :transitions, dependent: :destroy
   has_many :events, dependent: :destroy
+
+  has_many :replies, class_name: 'Tweet', foreign_key: 'in_reply_to_tweet_id'
+  belongs_to :in_reply_to_tweet, class_name: 'Tweet'
 
   # States
   scope :incoming, where(workflow_state: :new)
@@ -87,6 +79,32 @@ class Tweet < ActiveRecord::Base
     state :closed do
       event :open, transitions_to: :open
       event :close, transitions_to: :closed
+    end
+
+    # Tweets in :posted state have been posted with Tweetbox
+    # The :posted state is one of the most awesome ones in the whole wide world...
+    state :posted
+
+    # Tweets in :retweeted state have been retweeted with Tweetbox
+    state :retweeted
+  end
+
+  # Executes transition to a given :to state
+  # Requires the current_user record
+  # Creates a matching event history association events with the current_user
+  def transition!(opts={})
+    to   = opts.fetch(:to)   { raise "Tweet#transition! requires :to => :open/:closed options parameter"  }
+    user = opts.fetch(:user) { raise "Tweet#transition! requires :user => current_user options parameter"  }
+
+    case to.to_s
+    when 'open'
+      self.open!
+      events.create!(kind: :opened, user: user)
+    when 'closed'
+      self.close!
+      events.create!(kind: :closed, user: user)
+    else
+      raise "Tweet#transition requires a :to options parameter in [:open, :closed]. #{ to } could not be recognized."
     end
   end
 

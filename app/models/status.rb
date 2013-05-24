@@ -2,16 +2,18 @@
 #
 # Table name: statuses
 #
-#  code               :text             not null
-#  created_at         :datetime         not null
-#  id                 :integer          not null, primary key
-#  posted_at          :datetime
-#  posted_text        :text
-#  project_id         :integer          not null
-#  text               :text             not null
-#  twitter_account_id :integer          not null
-#  updated_at         :datetime         not null
-#  user_id            :integer          not null
+#  code                  :text             not null
+#  created_at            :datetime         not null
+#  id                    :integer          not null, primary key
+#  in_reply_to_status_id :integer
+#  in_reply_to_tweet_id  :integer
+#  posted_at             :datetime
+#  posted_text           :text
+#  project_id            :integer          not null
+#  text                  :text             not null
+#  twitter_account_id    :integer          not null
+#  updated_at            :datetime         not null
+#  user_id               :integer          not null
 #
 # Indexes
 #
@@ -24,12 +26,23 @@ class Status < ActiveRecord::Base
   belongs_to :user
   belongs_to :twitter_account
 
+  belongs_to :in_reply_to_tweet, class_name: 'Tweet'
+  after_initialize :find_or_fetch_in_reply_to_tweet
+
   before_validation :generate_code, if: :new_record?
   before_validation :generate_posted_text, if: :new_record?
 
   validates :project, :user, :twitter_account, presence: true
   validates :text, presence: true
   validates :code, presence: true, uniqueness: true
+
+  def reply?
+    !!in_reply_to_status_id
+  end
+
+  def in_reply_to_status_id
+    self[:in_reply_to_status_id].presence || in_reply_to_tweet.try(:twitter_id)
+  end
 
   def posted?
     !!posted_at
@@ -48,7 +61,28 @@ class Status < ActiveRecord::Base
   end
 
   def public_url
-    "https://tweetbox.com/statuses/#{ code }"
+    "https://birdview.dev/read-more/#{ code }"
+  end
+
+  # Returns newly created tweet record
+  def post!
+    return :not_valid if !valid?
+    return :already_posted if posted?
+
+    # Post status
+    options = reply? ? { in_reply_to_status_id: in_reply_to_status_id } : {}
+    status = twitter_account.client.update(posted_text, options)
+
+    # Create tweet from status
+    tweet = project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :posted)
+
+    # Set timestamp
+    touch(:posted_at)
+
+    # TODO: Create :posted event
+
+    # Return newly created tweet record
+    tweet
   end
 
   private
@@ -59,7 +93,7 @@ class Status < ActiveRecord::Base
 
   # Generates a unique random code
   def generate_code
-    self.code ||= Random.new.code(8)
+    self.code ||= RandomCode.new.code(8)
   end
 
   def generate_posted_text
@@ -83,11 +117,8 @@ class Status < ActiveRecord::Base
 
     posted_text
   end
+
+  def find_or_fetch_in_reply_to_tweet
+    self.in_reply_to_tweet = project.find_or_fetch_tweet(in_reply_to_status_id) if in_reply_to_status_id.present?
+  end
 end
-
-# Reply
-# belongs_to :in_reply_to_tweet
-
-
-# delegate :url_helpers, to: 'Rails.application.routes'
-# url_helpers.status_path(self)

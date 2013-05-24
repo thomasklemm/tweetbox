@@ -1,8 +1,20 @@
+- twitter_accounts = @project.writable_twitter_accounts
+- fallback_twitter_account = twitter_accounts.first
+- selected_twitter_account = @status.in_reply_to_tweet.try(:twitter_account) || fallback_twitter_account
+
+- twitter_accounts_in_json = twitter_accounts.select([:id, :screen_name, :name, :profile_image_url]).to_json
+- selected_twitter_account_position_in_twitter_accounts = twitter_accounts.index(selected_twitter_account) || twitter_accounts.index(fallback_twitter_account)
+
+- in_reply_to_tweet = @status.in_reply_to_tweet
+- initial_status_text = in_reply_to_tweet ? "#{ in_reply_to_tweet.author.at_screen_name } " : "#{ @in_reply_to_user ? '@' + @in_reply_to_user + ' ' : ''}"
+
 .new-status-wrapper ng-controller='StatusController'
-  div ng-init="statusText = ''"
-  div ng-init="previewText = ''"
-  div ng-init="twitterAccounts = #{ @project.writable_twitter_accounts.select([:id, :screen_name, :name, :profile_image_url]).to_json }"
-  div ng-init="selectedTwitterAccount = twitterAccounts[0]"
+  div ng-init="statusText = '#{ initial_status_text }'"
+  div ng-init="previewText = statusText"
+  div ng-init="twitterAccounts = #{ twitter_accounts_in_json  }"
+  div ng-init="selectedTwitterAccount = twitterAccounts[#{ selected_twitter_account_position_in_twitter_accounts }]"
+
+  h3 New {{ reply() && 'reply' || 'status' }}
 
   = form_for [@project, @status] do |f|
     = render 'shared/form_errors', target: @status
@@ -15,21 +27,33 @@
 
       input type='text' ng-model='selectedTwitterAccount.id' name="status[twitter_account_id]" style='display: none'
 
-    .actions
-      = f.submit 'Post status', class: 'btn btn-primary'
-      span.character-counter {{ statusCharCount() }} characters
+    .field
+      = f.hidden_field :in_reply_to_status_id
 
+    .actions
+      = f.submit "Post {{ reply() && 'reply' || 'status' }}", class: 'btn btn-primary'
+      span.character-counter {{ statusCharCount() }} characters
 
   .space-one
 
   .preview-status-wrapper
-    .preview-status
+    - if in_reply_to_tweet
+      div ng-show='reply()'
+        .in-reply-to-status
+          .author
+            img src=in_reply_to_tweet.author.profile_image_url class='avatar'
+            span.name = in_reply_to_tweet.author.name
+            span.screen-name = in_reply_to_tweet.author.at_screen_name
 
+          .text = in_reply_to_tweet.text
+
+    .preview-status
       .author
-        img src="{{ selectedTwitterAccount.profile_image_url}}" class='avatar'
+        img ng-src="{{ selectedTwitterAccount.profile_image_url}}" class='avatar'
         span.name {{ selectedTwitterAccount.name }}
         span.screen-name @{{ selectedTwitterAccount.screen_name }}
 
       .text {{ previewText }}
 
     .character-counter style='margin-top: 7px' {{ previewCharCount() }} characters
+

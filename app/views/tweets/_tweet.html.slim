@@ -22,7 +22,7 @@
 
     / actions in open state
     - if tweet.open?
-      = link_to icon_tag(:reply, 'Reply'), new_project_tweet_reply_path(@project, tweet), remote: true
+      = link_to icon_tag(:reply, 'Reply'), new_project_status_path(@project, in_reply_to_status_id: tweet.twitter_id)
       '  |
       = link_to icon_tag(:'comment-alt', 'Comment'), new_project_tweet_comment_path(@project, tweet), remote: true
       '  |

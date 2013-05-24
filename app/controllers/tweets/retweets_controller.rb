@@ -1,28 +1,21 @@
-class Tweets::RetweetsController < ProjectController
-  before_filter :load_project_tweet
-
+class Tweets::RetweetsController < TweetController
   def new
-    @retweet = @tweet.retweets.build
-    # NOTE: renders html or js
+    @retweet = Retweet.new
   end
 
   def create
-    @retweet = @tweet.retweets.build(retweet_params)
+    @retweet = Retweet.new(retweet_params)
 
-    return render :new unless @retweet.valid?
-
-    # Can raise as another retweet might have been posted already
-    @retweet.post!
-    flash.notice = 'Retweet has been posted.'
-  rescue
-    flash.notice = 'Tweet has already been retweeted, and can be retweeted only once.'
-  ensure
-    redirect_to project_tweet_path(@project, @tweet)
+    if @retweet.save
+      redirect_to project_tweet_path(@project, @retweet.new_tweet), notice: "Retweet has been posted."
+    else
+      render :new
+    end
   end
 
   private
 
   def retweet_params
-    params.require(:retweet).permit(:twitter_account_id).merge(user: current_user)
+    params[:retweet].merge(project: @project, user: current_user)
   end
 end

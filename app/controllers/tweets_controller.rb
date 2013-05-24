@@ -1,4 +1,4 @@
-class TweetsController < ProjectController
+class TweetsController < TweetController
   before_filter :load_project_tweet, except: :index
 
   def index
@@ -14,29 +14,21 @@ class TweetsController < ProjectController
   def show
   end
 
-  def conversation
-    params[:conversation] = true
-    render :show
-  end
-
-  def mark_as_open
-    @tweet.open!
-
-    # Record event
-    @tweet.transitions.create!(user: current_user, target_state: 'open')
-
-    redirect_to project_tweet_path(@project, @tweet)
-  end
-
-  def mark_as_closed
-    @tweet.close!
-
-    # Record event
-    @tweet.transitions.create!(user: current_user, target_state: 'closed')
-
+  def transition
     respond_to do |format|
-      format.html { redirect_to project_tweet_path(@project, @tweet) }
-      format.js
+      case params[:to].to_s
+      when 'open'
+        @tweet.transition!(to: :open, user: current_user)
+        format.html { redirect_to project_tweet_path(@project, @tweet) }
+        format.js # renders transition.js.erb template
+      when 'closed'
+        @tweet.transition!(to: :closed, user: current_user)
+        format.html { redirect_to project_tweet_path(@project, @tweet) }
+        format.js # renders transition.js.erb template
+      else
+        format.html { redirect_to :back, alert: 'Valid :to => :open/:closed parameter required.' }
+        format.js # renders transition.js.erb template
+      end
     end
   end
 end

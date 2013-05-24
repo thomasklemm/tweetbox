@@ -40,26 +40,31 @@ Birdview::Application.routes.draw do
 
   # Projects
   resources :projects, only: [:index, :show] do
-    resources :tweets, only: [:index, :show] do
-      get 'conversation', on: :member
+    resources :statuses, only: [:new, :create]
 
-      # State transitions
-      put 'mark_as_open', on: :member
-      put 'mark_as_closed', on: :member
+    resources :tweets, only: :show do
+      collection do
+        get '/' => 'tweets#index' # state1
+        get '/state2' => 'tweets#index'
+        get '/state3?page=123' => 'tweets#index'
+      end
 
-      resources :replies,   controller: 'tweets/replies',  only: [:new, :create]
-      resources :comments,  controller: 'tweets/comments', only: [:new, :create]
-      resources :retweets,  controller: 'tweets/retweets', only: [:new, :create]
-      resources :favorites, controller: 'tweets/favorites', only: [:new, :create]
+      member do
+        put  'transition' => 'tweets#transition' # transition_project_tweet_path(@project, @tweet, to: :opened/:closed)
+
+        resources :reweets,   controller: 'tweets/retweets',  only: [:new, :create]
+        resources :favorites, controller: 'tweets/favorites', only: [:new, :create]
+      end
     end
+
+    resources :authors, only: :show
+
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post 'auth', on: :collection, as: :authorize
     end
 
-    resources :searches, only: [:index, :new, :create, :edit, :update, :destroy]
-
-    resources :statuses, only: [:new, :create]
+    resources :searches, except: :show
   end
 
   # Omniauth to authorize Twitter accounts

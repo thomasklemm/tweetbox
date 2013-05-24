@@ -255,25 +255,32 @@ $navigation-spacing: 0.75rem
 .preview-status-wrapper
   width: 420px
 
-.preview-status
-  padding: 12px 10px 12px 72px
-  background: #f9f9f9
+  .preview-status, .in-reply-to-status
+    padding: 12px 10px 12px 72px
+    border: 5px solid #f9f9f9
 
-  .avatar
-    float: left
-    margin-top: 5px
-    margin-left: -58px
-    border-radius: 2px
+    .avatar
+      float: left
+      margin-top: 5px
+      margin-left: -58px
+      border-radius: 2px
 
-  .author
-    .name
-      font-weight: bold
-      color: $textColor
-    .screen-name
-      margin-left: 5px
-      @extend .muted
+    .author
+      .name
+        font-weight: bold
+        color: $textColor
+      .screen-name
+        margin-left: 5px
+        @extend .muted
 
-  .text
-    min-height: (3 * $baseLineHeight)
-    white-space: pre-wrap  // pre-wrap and pre-line seem to be good options
+    .text
+      white-space: pre-wrap  // pre-wrap and pre-line seem to be good options
 
+  .preview-status
+    .text
+      min-height: (3 * $baseLineHeight)
+
+  .in-reply-to-status
+    background: #f9f9f9
+    .text
+      min-height: (2 * $baseLineHeight)

@@ -66,17 +66,6 @@ class Project < ActiveRecord::Base
     users.map(&:id)
   end
 
-  # Returns an instance of Twitter::Client instanciated with credentials
-  # of a random one of the twitter accounts associated with the project
-  # def random_twitter_client
-  #   twitter_account = twitter_accounts.sample
-  #   twitter_account.client
-  # end
-
-  def writable_twitter_accounts
-    twitter_accounts.writable
-  end
-
   # Create one or many tweet records
   # from Twitter status objects
   # Returns an array of tweet records
@@ -94,6 +83,24 @@ class Project < ActiveRecord::Base
     author = find_or_create_author(status)
     tweet = find_or_create_tweet(status, author, twitter_account, state)
     tweet
+  end
+
+  # Finds the tweet record with the twitter_id among the project tweets
+  # If it could not be found, it will be retrieved from twitter
+  # Returns a tweet record
+  def find_or_fetch_tweet(twitter_id)
+    tweets.where(twitter_id: twitter_id).first.presence || fetch_tweet(twitter_id)
+  end
+
+  # Returns an instance of Twitter::Client instanciated with credentials
+  # of a random one of the twitter accounts associated with the project
+  def random_project_twitter_client
+    twitter_account = twitter_accounts.sample
+    twitter_account.client
+  end
+
+  def writable_twitter_accounts
+    twitter_accounts.writable
   end
 
   private
@@ -118,6 +125,15 @@ class Project < ActiveRecord::Base
 
     # Saves the record
     tweet.update_fields_from_status(status)
+  end
+
+  # Fetches the given twitter_id from Twitter
+  # Returns a tweet record
+  def fetch_tweet(twitter_id)
+    status = random_project_twitter_client.status(twitter_id)
+    # TODO: Define standard twitter account
+    create_tweet_from_twitter(status, state: :none, twitter_account: twitter_accounts.first )
+  rescue
   end
 
   def setup_permissions

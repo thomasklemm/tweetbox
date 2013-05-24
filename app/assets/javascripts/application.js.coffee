@@ -30,6 +30,9 @@
 
       @previewText = @virtualText + "...\nhttp://tweetbox.com/read-more"
 
+  $scope.reply = ->
+    @statusText[0] == '@'
+
 # Birdview
 $ ->
   ##

@@ -135,15 +135,17 @@ ActiveRecord::Schema.define(:version => 20130522083734) do
   add_index "searches", ["twitter_account_id"], :name => "index_searches_on_twitter_account_id"
 
   create_table "statuses", :force => true do |t|
-    t.integer  "project_id",         :null => false
-    t.integer  "user_id",            :null => false
-    t.integer  "twitter_account_id", :null => false
-    t.text     "code",               :null => false
-    t.text     "text",               :null => false
+    t.integer  "project_id",                         :null => false
+    t.integer  "user_id",                            :null => false
+    t.integer  "twitter_account_id",                 :null => false
+    t.text     "code",                               :null => false
+    t.text     "text",                               :null => false
     t.text     "posted_text"
     t.datetime "posted_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "in_reply_to_tweet_id"
+    t.integer  "in_reply_to_status_id", :limit => 8
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "statuses", ["code"], :name => "index_statuses_on_code", :unique => true

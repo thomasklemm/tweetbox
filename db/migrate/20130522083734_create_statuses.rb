@@ -9,6 +9,9 @@ class CreateStatuses < ActiveRecord::Migration
       t.text :posted_text
       t.datetime :posted_at
 
+      t.belongs_to :in_reply_to_tweet
+      t.integer :in_reply_to_status_id, limit: 8
+
       t.timestamps
     end
     add_index :statuses, :project_id

@@ -60,9 +60,7 @@ class ConversationWorker
   # Returns a tweet record
   def fetch_tweet(status_id)
     status = @client.status(status_id)
-    tweets = @project.create_tweets_from_twitter(status, state: :none, twitter_account: @twitter_account)
-    puts tweets.inspect
-    tweets.first
+    @project.create_tweet_from_twitter(status, state: :none, twitter_account: @twitter_account)
   end
 
   # Cache previous tweet ids for the tweet
