@@ -29,7 +29,7 @@ class Retweet
   private
 
   def twitter_account
-    project.twitter_accounts.find(twitter_account_id) if twitter_account_id
+    @twitter_account ||= project.twitter_accounts.find(twitter_account_id) if twitter_account_id
   end
 
   def post!

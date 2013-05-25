@@ -164,10 +164,14 @@ class Tweet < ActiveRecord::Base
   # Knows about a whitelist of valid states
   def assign_state(state)
     state &&= state.to_s
-    return unless %w(none new open closed).include?(state)
+    return unless Tweet.workflow_spec.state_names.map(&:to_s).include?(state)
 
     # Assigns known states, but only assign none state if there isn't already a state present
-    state == 'none' ? self.workflow_state ||= state : self.workflow_state = state
+    if state == 'none'
+      self.workflow_state ||= state
+    else
+      self.workflow_state = state
+    end
   end
 
   # Assigns the tweet's fields from a Twitter status object

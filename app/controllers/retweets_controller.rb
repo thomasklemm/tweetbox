@@ -7,7 +7,7 @@ class RetweetsController < TweetController
     @retweet = Retweet.new(retweet_params)
 
     if @retweet.save
-      redirect_to project_tweet_path(@project, @retweet.new_tweet), notice: "Retweet has been posted."
+      redirect_to project_tweet_path(@project, @retweet.old_tweet), notice: "Retweet has been posted."
     else
       render :new
     end
