@@ -89,14 +89,7 @@ class Project < ActiveRecord::Base
   # If it could not be found, it will be retrieved from twitter
   # Returns a tweet record
   def find_or_fetch_tweet(twitter_id)
-    tweets.where(twitter_id: twitter_id).first.presence || fetch_tweet(twitter_id)
-  end
-
-  # Returns an instance of Twitter::Client instanciated with credentials
-  # of a random one of the twitter accounts associated with the project
-  def random_project_twitter_client
-    twitter_account = twitter_accounts.sample
-    twitter_account.client
+    tweets.where(twitter_id: twitter_id).first || fetch_tweet(twitter_id)
   end
 
   def writable_twitter_accounts
@@ -134,8 +127,7 @@ class Project < ActiveRecord::Base
   # Fetches the given twitter_id from Twitter
   # Returns a tweet record
   def fetch_tweet(twitter_id)
-    status = random_project_twitter_client.status(twitter_id)
-    # TODO: Define standard twitter account
+    status = default_twitter_account.client.status(twitter_id)
     create_tweet_from_twitter(status, state: :none, twitter_account: twitter_accounts.first )
   rescue
   end

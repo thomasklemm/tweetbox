@@ -48,8 +48,8 @@ Birdview::Application.routes.draw do
         put  'transition'
       end
 
-      resources :replies,   only: [:new, :create], on: :member
-      resources :retweets,   only: [:new, :create], on: :member
+      resources :replies,   only: [:new, :create], on: :member, controller: 'statuses'
+      resources :retweets,  only: [:new, :create], on: :member
       resources :favorites, only: [:new, :create], on: :member
       resources :comments,  only: [:new, :create], on: :member
     end

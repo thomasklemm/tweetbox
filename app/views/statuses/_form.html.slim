@@ -1,15 +1,16 @@
 - twitter_accounts = @project.writable_twitter_accounts
-- default_twitter_account = @project.default_twitter_account
-- selected_twitter_account = default_twitter_account
+- default_twitter_account =  @project.default_twitter_account
+- selected_twitter_account = @status.twitter_account || default_twitter_account
 
 - twitter_accounts_in_json = twitter_accounts.select([:id, :screen_name, :name, :profile_image_url]).to_json
-- selected_twitter_account_position_in_twitter_accounts = twitter_accounts.index(selected_twitter_account) || twitter_accounts.index(default_twitter_account)
+- selected_twitter_account_position_in_twitter_accounts = twitter_accounts.index(selected_twitter_account)
 
-/ - in_reply_to_tweet = @status.in_reply_to_tweet
-/ - initial_status_text = in_reply_to_tweet ? "#{ in_reply_to_tweet.author.at_screen_name } " : "#{ @in_reply_to_user ? '@' + @in_reply_to_user + ' ' : ''}"
+- reply_to_tweet = @status.reply_to_tweet
+- fallback_reply_to_user = params[:in_reply_to_user]
+- initial_status_text =  ("#{ reply_to_tweet.author.at_screen_name } " if reply_to_tweet) || ("@#{ fallback_reply_to_user } " if fallback_reply_to_user) || ""
 
 .new-status-wrapper ng-controller='StatusController'
-  div ng-init="statusText = ''"
+  div ng-init="statusText = '#{ initial_status_text }'"
   div ng-init="previewText = statusText"
   div ng-init="twitterAccounts = #{ twitter_accounts_in_json  }"
   div ng-init="selectedTwitterAccount = twitterAccounts[#{ selected_twitter_account_position_in_twitter_accounts }]"
@@ -27,8 +28,8 @@
 
       input type='text' ng-model='selectedTwitterAccount.id' name="status[twitter_account_id]" style='display: none'
 
-    / .field
-    /   = f.hidden_field :in_reply_to_status_id
+    .field
+      = f.hidden_field :in_reply_to_status_id
 
     .actions
       = f.submit "Post {{ reply() && 'reply' || 'status' }}", class: 'btn btn-primary'
@@ -37,15 +38,15 @@
   .space-one
 
   .preview-status-wrapper
-    / - if in_reply_to_tweet
-    /   div ng-show='reply()'
-    /     .in-reply-to-status
-    /       .author
-    /         img src=in_reply_to_tweet.author.profile_image_url class='avatar'
-    /         span.name = in_reply_to_tweet.author.name
-    /         span.screen-name = in_reply_to_tweet.author.at_screen_name
+    - if reply_to_tweet
+      div ng-show='reply()'
+        .in-reply-to-status
+          .author
+            img src=reply_to_tweet.author.profile_image_url class='avatar'
+            span.name = reply_to_tweet.author.name
+            span.screen-name = reply_to_tweet.author.at_screen_name
 
-    /       .text = in_reply_to_tweet.text
+          .text = reply_to_tweet.text
 
     .preview-status
       .author
@@ -56,4 +57,3 @@
       .text {{ previewText }}
 
     .character-counter style='margin-top: 7px' {{ previewCharCount() }} characters
-

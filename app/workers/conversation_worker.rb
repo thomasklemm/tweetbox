@@ -42,7 +42,7 @@ class ConversationWorker
       tweet = previous_tweet
     end
 
-    @previous_tweets &&= @previous_tweets.sort_by(&:created_at)
+    @previous_tweets &&= @previous_tweets.compact.sort_by(&:created_at)
   end
 
   # Finds the previous tweet for the given one
@@ -61,6 +61,9 @@ class ConversationWorker
   def fetch_tweet(status_id)
     status = @client.status(status_id)
     @project.create_tweet_from_twitter(status, state: :none, twitter_account: @twitter_account)
+  # Sometimes a status gets deleted by the author
+  rescue Twitter::Error::NotFound
+    nil
   end
 
   # Cache previous tweet ids for the tweet

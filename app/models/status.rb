@@ -5,17 +5,27 @@ class Status
   attribute :user, User
   attribute :twitter_account_id, Integer
   attribute :text, String
+  attribute :in_reply_to_status_id
 
-  attr_accessor :old_tweet
-  attr_reader   :new_tweet
+  attr_reader :reply_to_tweet
+  attr_reader :new_tweet
 
   validates :project,
             :user,
             :twitter_account_id,
             :text, presence: true
 
-  def tweet=(tweet)
-    self.old_tweet = tweet
+  def reply?
+    !!in_reply_to_status_id
+  end
+
+  def in_reply_to_status_id=(twitter_id)
+    super
+    @reply_to_tweet = project.find_or_fetch_tweet(twitter_id)
+  end
+
+  def twitter_account
+    @twitter_account ||= twitter_account!
   end
 
   def save
@@ -35,10 +45,6 @@ class Status
 
   def valid_tweet?
     !Twitter::Validation.tweet_invalid?(posted_text)
-  end
-
-  def twitter_account
-    @twitter_account ||= project.twitter_accounts.find(twitter_account_id) if twitter_account_id
   end
 
   def code
@@ -74,16 +80,29 @@ class Status
     "http://birdview.dev/read-more/#{ code }"
   end
 
+  def twitter_account!
+    (project.twitter_accounts.find(twitter_account_id) if twitter_account_id) ||
+    (reply_to_tweet.twitter_account if reply_to_tweet.present?)
+  end
+
   ##
   # Posting
 
   # Returns a tweet record
   def post!
-    status = twitter_account.client.update(posted_text, update_status_options)
-    @new_tweet = project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :posted)
+    status = post_status
+    create_new_tweet(status)
+  end
+
+  def post_status
+    twitter_account.client.update(posted_text, update_status_options)
   end
 
   def update_status_options
-    old_tweet.present? ? { in_reply_to_status_id: old_tweet.twitter_id } : {}
+    reply? ? { in_reply_to_status_id: in_reply_to_status_id  } : {}
+  end
+
+  def create_new_status(status)
+    @new_tweet = project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :posted)
   end
 end
