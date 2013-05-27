@@ -92,6 +92,8 @@ class Status
   def post!
     status = post_status
     create_new_tweet(status)
+    create_events_on_tweets
+    true
   end
 
   def post_status
@@ -102,7 +104,16 @@ class Status
     reply? ? { in_reply_to_status_id: in_reply_to_status_id  } : {}
   end
 
-  def create_new_status(status)
+  def create_new_tweet(status)
     @new_tweet = project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :posted)
+  end
+
+  def create_events_on_tweets
+    # Build history (from existing tweets)
+    ConversationWorker.new.perform(@new_tweet.id)
+
+    # TODO: Link new and old tweets
+    new_tweet.events.create!(kind: :posted, user: user)
+    reply_to_tweet.events.create!(kind: :replied, user: user) if reply_to_tweet
   end
 end

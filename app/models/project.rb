@@ -87,7 +87,7 @@ class Project < ActiveRecord::Base
 
   # Finds the tweet record with the twitter_id among the project tweets
   # If it could not be found, it will be retrieved from twitter
-  # Returns a tweet record
+  # Returns a tweet record or nil if the tweet could not be found on Twitter
   def find_or_fetch_tweet(twitter_id)
     tweets.where(twitter_id: twitter_id).first || fetch_tweet(twitter_id)
   end
@@ -125,11 +125,12 @@ class Project < ActiveRecord::Base
   end
 
   # Fetches the given twitter_id from Twitter
-  # Returns a tweet record
+  # Returns a tweet record or nil when it could not be found
   def fetch_tweet(twitter_id)
     status = default_twitter_account.client.status(twitter_id)
     create_tweet_from_twitter(status, state: :none, twitter_account: twitter_accounts.first )
-  rescue
+  rescue Twitter::Error::NotFound
+    nil
   end
 
   def setup_permissions

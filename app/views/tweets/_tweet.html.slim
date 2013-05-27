@@ -16,8 +16,7 @@
 
       / share dropdown
       span.dropdown
-        = link_to icon_tag(:share, 'Share'), '#', 'data-toggle' => 'dropdown'
-
+        = link_to icon_tag(:share, 'Share'), '#', :'data-toggle' => 'dropdown', class: 'dropdown-link'
         ul.dropdown-menu role='menu'
           li = tweet.retweet_button('Retweet')
           li
@@ -30,16 +29,13 @@
           li = tweet.copy_tweet_button('Copy tweet')
 
     - if tweet.closed?
-      = tweet.open_button('(Re)Open')
+      = tweet.open_button('Reopen')
 
     - if tweet.posted?
-      p Posted
+      = tweet.comment_button('Comment')
 
     - if tweet.none?
-      p None state.
-
+      = tweet.open_button('Open')
 
   .events
-    = debug tweet.events
-
-  = debug tweet
+    = render tweet.events

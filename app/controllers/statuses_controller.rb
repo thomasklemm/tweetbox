@@ -5,9 +5,10 @@ class StatusesController < ProjectController
 
   def create
     @status = Status.new(status_params)
-    raise @status.inspect
+
     if @status.save
-      redirect_to project_tweet_path(@project, @status.new_tweet), notice: "Status has been posted."
+      target_tweet = @status.reply_to_tweet || @status.new_tweet
+      redirect_to project_tweet_path(@project, target_tweet), notice: "#{ @status.reply? ? 'Reply' : 'Status' } has been posted."
     else
       render :new
     end

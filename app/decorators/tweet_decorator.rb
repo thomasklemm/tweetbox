@@ -3,6 +3,7 @@ class TweetDecorator < Draper::Decorator
   delegate_all
 
   decorates_association :conversation
+  decorates_association :events
 
   # TODO: Add boolean flag or timestamp
   def retweeted?
