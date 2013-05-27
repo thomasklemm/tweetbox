@@ -6,7 +6,9 @@
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-# require 'rspec/autorun' # remove for Zeus
+
+# Custom pundit matchers from the gem
+require 'pundit/rspec'
 
 # Requires namespaced models and controllers
 Dir[Rails.root.join("app/controllers/**/*.rb")].each {|f| require f}
