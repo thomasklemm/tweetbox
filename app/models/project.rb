@@ -23,22 +23,19 @@ class Project < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :twitter_accounts, dependent: :destroy
-  has_many :searches # dependent on existence of twitter account
+  has_many :searches # destroyed when twitter account is destroyed
 
   has_many :tweets, dependent: :destroy
   has_many :authors, dependent: :destroy
 
-  has_many :statuses, dependent: :destroy
-
   after_create :setup_permissions
   after_update :update_permissions
 
+  scope :by_name, order('projects.name')
+
+
   def self.visible_to(user)
     where(id: user.project_ids)
-  end
-
-  def self.by_name
-    order('projects.name')
   end
 
   def has_member?(user)

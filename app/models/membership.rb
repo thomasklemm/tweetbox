@@ -26,9 +26,7 @@ class Membership < ActiveRecord::Base
 
   delegate :name, :email, to: :user
 
-  def self.admin
-    where(admin: true)
-  end
+  scope :admin, where(admin: true)
 
   def self.by_name
     joins(:user).order('users.name')
