@@ -2,8 +2,8 @@ class CreateInvitations < ActiveRecord::Migration
   def change
     create_table :invitations do |t|
       t.belongs_to :account, null: false
-      t.belongs_to :sender, null: false
-      t.belongs_to :invitee
+      t.belongs_to :host, null: false
+      t.belongs_to :new_user
 
       t.text :code, null: false
       t.text :email, null: false

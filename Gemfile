@@ -25,7 +25,7 @@ gem 'slim-rails'
 gem 'figaro'
 
 # Devise (User authentication)
-gem 'devise'
+gem 'devise', '>= 3.0.0.rc'
 
 # Omniauth for Twitter (Authenticating Twitter accounts)
 gem 'omniauth-twitter'

@@ -36,8 +36,8 @@ class User < ActiveRecord::Base
          :validatable, :confirmable
 
   # Memberships and accounts
-  has_many :memberships
-  has_many :accounts, through: :memberships
+  has_one :memberships
+  has_one :account, through: :membership
 
   # Permissions and projects
   has_many :permissions
@@ -48,15 +48,7 @@ class User < ActiveRecord::Base
   # Devise validates password on presence, confirmation, and length
   validates :name, presence: true
 
-  def self.by_name
-    order('users.name')
-  end
-
-  def self.search(query)
-    return [] if query.nil?
-    query &&= "%#{ query }%"
-    where('name LIKE ? OR email LIKE ?', query, query)
-  end
+  scope :by_name, order('users.name')
 
   def admin_of?(account)
     memberships.exists?(account_id: account.id, admin: true)
@@ -65,8 +57,4 @@ class User < ActiveRecord::Base
   def member_of?(account_or_project)
     account_or_project.has_member?(self)
   end
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password,
-    :password_confirmation, :remember_me # project_ids
 end

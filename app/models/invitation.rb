@@ -21,8 +21,8 @@
 
 class Invitation < ActiveRecord::Base
   belongs_to :account
-  belongs_to :sender, class_name: 'User'
-  belongs_to :invitee, class_name: 'User'
+  belongs_to :host, class_name: 'User'
+  belongs_to :new_user, class_name: 'User'
   has_and_belongs_to_many :projects
 
   validates :account, :email, :sender, presence: true

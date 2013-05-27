@@ -16,7 +16,7 @@
 #
 
 class Account < ActiveRecord::Base
-  # Memberships and members
+  # Memberships and users
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   has_many :admins, through: :memberships,
@@ -32,22 +32,11 @@ class Account < ActiveRecord::Base
   # Invitations
   has_many :invitations, dependent: :destroy
 
-  # Plan
-  belongs_to :plan
-  validates :plan, presence: true
-  delegate :free?, :billed?, :trial?, to: :plan
-
   # Validations
   validates :name, presence: true
 
-  before_create :set_trial_expiration
-
   def has_member?(user)
     memberships.exists?(user_id: user.id)
-  end
-
-  def admin_emails
-    admins.map(&:email)
   end
 
   def users_by_name
@@ -62,27 +51,8 @@ class Account < ActiveRecord::Base
     memberships.by_name
   end
 
-  # TODO: Cache users_count
-  def users_count
-    users.count
-  end
-
   # TODO: Cache projects_count
   def projects_count
     projects.count
-  end
-
-  def expired?
-    trial? && past_trial?
-  end
-
-  private
-
-  def past_trial?
-    trial_expires_at && trial_expires_at < Time.current
-  end
-
-  def set_trial_expiration
-    self.trial_expires_at = 31.days.from_now(created_at || Time.current)
   end
 end

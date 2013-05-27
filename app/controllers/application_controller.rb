@@ -2,12 +2,14 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
 
+  # Redirect user back on detected access violation
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Redirect the user to his main project after sign_in
   # if there is only one
   # TODO: Cache projects_count on users
   def after_sign_in_path_for(resource)
+    # TODO: Extract user_projects_path somewhere else
     if current_user.projects.count == 1
       project_path(current_user.projects.first)
     else
@@ -19,6 +21,7 @@ class ApplicationController < ActionController::Base
     root_url
   end
 
+  # Returns the decorated current_user
   def current_user
     UserDecorator.decorate(super) unless super.nil?
   end
@@ -29,7 +32,7 @@ class ApplicationController < ActionController::Base
   # to actions his access level does not permit
   # detected by pundit
   def user_not_authorized
-    flash[:error] = "You are not authorized to access or perform this action."
+    flash[:error] = "You are not authorized perform this action."
     redirect_to :back
   end
 
@@ -37,18 +40,18 @@ class ApplicationController < ActionController::Base
   helper_method :user_projects, :user_project
 
   def user_accounts
-    accounts ||= current_user.accounts
+    @user_accounts ||= current_user.accounts
   end
 
   def user_account
-    @account ||= user_accounts.find(params[:account_id] || user_session[:account_id] || params[:id])
+    @user_account ||= user_accounts.find(params[:account_id] || user_session[:account_id] || params[:id])
   end
 
   def user_projects
-    projects ||= current_user.projects
+    @user_projects ||= current_user.projects
   end
 
   def user_project
-    @project ||= user_projects.find(params[:project_id] || user_session[:project_id] || params[:id])
+    @user_project ||= user_projects.find(params[:project_id] || user_session[:project_id] || params[:id])
   end
 end

@@ -5,17 +5,15 @@ class ProjectPolicy < ApplicationPolicy
     user.admin_of?(project.account)
   end
 
-  def member_action
-    user.member_of?(project)
-  end
-
-  alias_method :show?,   :member_action
-  # TODO: Specs
-  alias_method :access?, :member_action
-
   alias_method :new?,     :admin_action
   alias_method :create?,  :admin_action
   alias_method :update?,  :admin_action
   alias_method :edit?,    :admin_action
   alias_method :destroy?, :admin_action
+
+  def member_action
+    user.member_of?(project)
+  end
+
+  alias_method :access?, :member_action
 end

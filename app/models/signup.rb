@@ -48,7 +48,6 @@ class Signup
   def delegate_attributes_for_account
     @account = Account.new do |account|
       account.name = company_name
-      account.plan = Plan.trial
     end
   end
 
