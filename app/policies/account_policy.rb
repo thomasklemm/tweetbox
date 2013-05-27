@@ -9,9 +9,9 @@ class AccountPolicy < ApplicationPolicy
     user.member_of?(account)
   end
 
-  # Any signed in user can create a project
+  # Any signed in user can create an account
   def create?
-    user.present?
+    true
   end
   alias_method :new?, :create?
 

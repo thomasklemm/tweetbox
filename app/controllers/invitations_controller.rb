@@ -1,8 +1,4 @@
-class InvitationsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :load_and_authorize_account
-  after_filter :verify_authorized
-
+class InvitationsController < AccountController
   def index
     @invitations = account_invitations
   end
@@ -16,12 +12,12 @@ class InvitationsController < ApplicationController
     @invitation.sender = current_user
 
     if @invitation.save
-      @sent_mail = @invitation.send_mail!
+      @invitation.send_mail!
 
       redirect_to account_invitations_path(@account),
-        notice: "You've invited a colleague of yours successfully."
+        notice: "Invitation has been created and mailed."
     else
-      render action: :new
+      render :new
     end
   end
 
@@ -30,24 +26,19 @@ class InvitationsController < ApplicationController
     @invitation.destroy
 
     redirect_to account_invitations_path(@account),
-      notice: 'Invitation was successfully destroyed.'
+      notice: 'Invitation has been destroyed.'
   end
 
   # Resend the mail with registration link and invitation code
-  def send_mail
+  def resend
     @invitation = account_invitations.find_by_code!(params[:id])
-    @sent_mail = @invitation.send_mail!
+    @invitation.send_mail!
 
     redirect_to account_invitations_path(@account),
-      notice: 'Invitation mail was successfully sent.'
+      notice: 'An invitation email has been sent out.'
   end
 
   private
-
-  def load_and_authorize_account
-    @account = user_account
-    authorize @account, :invite?
-  end
 
   def account_invitations
     @account.invitations

@@ -36,8 +36,8 @@ class User < ActiveRecord::Base
          :validatable, :confirmable
 
   # Memberships and accounts
-  has_many :memberships
-  has_many :accounts, through: :memberships
+  has_one :memberships
+  has_one :account, through: :membership
 
   # Permissions and projects
   has_many :permissions
