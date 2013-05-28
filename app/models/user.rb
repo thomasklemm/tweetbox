@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
          :validatable, :confirmable
 
   # Memberships and accounts
-  has_one :memberships
+  has_one :membership
   has_one :account, through: :membership
 
   # Permissions and projects
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   scope :by_name, order('users.name')
 
   def admin_of?(account)
-    memberships.exists?(account_id: account.id, admin: true)
+    membership.account == account && membership.admin?
   end
 
   def member_of?(account_or_project)

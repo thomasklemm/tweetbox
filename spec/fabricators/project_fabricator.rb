@@ -14,6 +14,6 @@
 #
 
 Fabricator(:project) do
-  name    { sequence(:name) { |i| "Project #{i}" } }
   account
+  name    "Project name"
 end

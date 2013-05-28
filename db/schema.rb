@@ -14,15 +14,10 @@
 ActiveRecord::Schema.define(:version => 20130523225534) do
 
   create_table "accounts", :force => true do |t|
-    t.text     "name",             :null => false
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.integer  "plan_id"
-    t.datetime "trial_expires_at"
+    t.text     "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "accounts", ["plan_id"], :name => "index_accounts_on_plan_id"
-  add_index "accounts", ["trial_expires_at"], :name => "index_accounts_on_trial_expires_at"
 
   create_table "authors", :force => true do |t|
     t.integer  "project_id",                                        :null => false
@@ -59,12 +54,12 @@ ActiveRecord::Schema.define(:version => 20130523225534) do
 
   create_table "invitations", :force => true do |t|
     t.integer  "account_id",                    :null => false
-    t.integer  "sender_id",                     :null => false
+    t.integer  "issuer_id",                     :null => false
     t.integer  "invitee_id"
     t.text     "code",                          :null => false
     t.text     "email",                         :null => false
     t.boolean  "admin",      :default => false
-    t.boolean  "used",       :default => false
+    t.datetime "used_at"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end
@@ -99,15 +94,6 @@ ActiveRecord::Schema.define(:version => 20130523225534) do
 
   add_index "permissions", ["membership_id", "project_id"], :name => "index_permissions_on_membership_and_project", :unique => true
   add_index "permissions", ["user_id", "project_id"], :name => "index_permissions_on_user_id_and_project_id"
-
-  create_table "plans", :force => true do |t|
-    t.text     "name",                          :null => false
-    t.integer  "price",      :default => 0,     :null => false
-    t.integer  "user_limit",                    :null => false
-    t.boolean  "trial",      :default => false, :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
 
   create_table "projects", :force => true do |t|
     t.integer  "account_id", :null => false

@@ -19,8 +19,8 @@
 #
 
 Fabricator(:event) do
-  tweet   nil
-  user    nil
-  project nil
-  kind    "MyText"
+  tweet
+  user
+  project
+  kind    %w(opened closed).sample
 end

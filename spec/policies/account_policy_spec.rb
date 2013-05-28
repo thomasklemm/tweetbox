@@ -12,9 +12,17 @@ describe AccountPolicy do
   let!(:membership) { Fabricate(:membership, user: user, account: account) }
 
   permissions :access? do
-    it { should permit(admin, account) }
-    it { should_not permit(user, account) }
-    it { should_not permit(admin, other_account) }
-    it { should_not permit(user, other_account) }
+    it "grants users on the account with admin membership access" do
+      should permit(admin, account)
+    end
+
+    it "denies user on the account to access the account without admin membership" do
+      should_not permit(user, account)
+    end
+
+    it "denies users access to other accounts where there is no membership" do
+      should_not permit(admin, other_account)
+      should_not permit(user, other_account)
+    end
   end
 end

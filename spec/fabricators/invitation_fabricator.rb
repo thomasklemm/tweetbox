@@ -9,9 +9,9 @@
 #  email      :text             not null
 #  id         :integer          not null, primary key
 #  invitee_id :integer
-#  sender_id  :integer          not null
+#  issuer_id  :integer          not null
 #  updated_at :datetime         not null
-#  used       :boolean          default(FALSE)
+#  used_at    :datetime
 #
 # Indexes
 #
@@ -22,7 +22,7 @@
 Fabricator(:invitation) do
   email   { sequence(:email) { |i| "invitation#{ i }@example.com" } }
   account
-  sender  { Fabricate(:user) }
+  host    { Fabricate(:user) }
   admin   false
   used    false
   projects { |attrs| [Fabricate(:project, account: attrs[:account]), Fabricate(:project, account: attrs[:account])] }

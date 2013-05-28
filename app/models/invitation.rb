@@ -9,9 +9,9 @@
 #  email      :text             not null
 #  id         :integer          not null, primary key
 #  invitee_id :integer
-#  sender_id  :integer          not null
+#  issuer_id  :integer          not null
 #  updated_at :datetime         not null
-#  used       :boolean          default(FALSE)
+#  used_at    :datetime
 #
 # Indexes
 #

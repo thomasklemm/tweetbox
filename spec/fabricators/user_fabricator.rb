@@ -33,5 +33,5 @@ Fabricator(:user) do
   email { sequence(:email) { |i| "user#{i}@example.com" } }
   password              'password'
   password_confirmation 'password'
-  confirmed_at           Time.now
+  confirmed_at           Time.current
 end
