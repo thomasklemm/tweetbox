@@ -21,26 +21,39 @@
 
 class Invitation < ActiveRecord::Base
   belongs_to :account
-  belongs_to :host, class_name: 'User'
-  belongs_to :new_user, class_name: 'User'
-  has_and_belongs_to_many :projects
+  belongs_to :issuer, class_name: 'User'
 
-  validates :account, :email, :sender, presence: true
-  validates :code, presence: true, uniqueness: true
+  belongs_to :invitee, class_name: 'User'
 
-  after_initialize :generate_code!
+  has_many :invitation_projects, dependent: :destroy
+  has_many :projects, through: :invitation_projects
 
-  # Deactivate unused invitations after a certain amount of days
+  validates :account,
+            :issuer,
+            :email,
+            :code, presence: true
+  validates :code, uniqueness: true
+
+  after_initialize :generate_code
+
+  # Invitations will become inactive after a certain timespan
+  # to enhance security
   def active?
-    new_record? || created_at < 7.days.ago
+    new_record? || within_invitation_period?
   end
 
-  def send_mail!
-    InvitationMailer.invitation(self).deliver
+  def within_invitation_period?
+    # TODO: Check logic
+    created_at < ACTIVE_INVITATION_DURATION.ago
   end
 
-  # TODO: Specs
-  def accept!(invitee)
+  # Sends an invitation email sporting a link that helps registering
+  def deliver_invitation_mail
+    mail = InvitationMailer.invitation(self)
+    mail.deliver
+  end
+
+  def accept(invitee)
     return false unless invitee.present?
 
     membership = create_membership!(invitee)
@@ -50,22 +63,15 @@ class Invitation < ActiveRecord::Base
     membership
   end
 
-  def account_name
-    account.name
-  end
-
-  def sender_name
-    sender.name
-  end
-
   def to_param
     code
   end
 
   private
 
-  def generate_code!
-    self.code ||= Random.new.code(16)
+  # Generates a random and unique invitation code
+  def generate_code
+    self.code ||= Random.new.code(32)
   end
 
   def create_membership!(invitee)
@@ -85,4 +91,7 @@ class Invitation < ActiveRecord::Base
   def create_projects!(membership)
     projects.map { |project| project.permissions.where(membership_id: membership.id).first_or_create! }
   end
+
+  # Duration for which a saved invitation is considered active
+  ACTIVE_INVITATION_DURATION = 7.days
 end

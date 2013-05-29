@@ -20,7 +20,7 @@ class Permission < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
 
-  validates :membership_id, :project_id, :user_id, presence: true
+  validates :membership, :project, :user, presence: true
   validates_uniqueness_of :membership_id, scope: :project_id
 
   before_validation :assign_user_id_from_membership
@@ -32,6 +32,6 @@ class Permission < ActiveRecord::Base
   private
 
   def assign_user_id_from_membership
-    self.user_id = membership.user_id if membership
+    self.user_id = membership.try(:user_id)
   end
 end

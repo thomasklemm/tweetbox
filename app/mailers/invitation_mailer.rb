@@ -2,25 +2,33 @@ class InvitationMailer < ActionMailer::Base
   # Send out a mail with a link that allows new users
   # to accept an invitation
   def invitation(invitation)
-    @invitation = invitation
+    @invitation = invitation.decorate
 
     mail from: mail_from,
-         to: @invitation.email,
+         to: mail_to,
          subject: mail_subject,
-         reply_to: InvitationMailer.support_email
+         reply_to: mail_reply_to
   end
 
   private
 
   def mail_subject
-    "#{ @invitation.sender_name } has invited you to join Birdview."
+    "#{ @invitation.issuer_name } invites you to join Tweetbox."
   end
 
   def mail_from
-    "#{ @invitation.sender_name } <#{ InvitationMailer.support_email }>"
+    "Tweetbox <#{ InvitationMailer.support_email }>"
+  end
+
+  def mail_to
+    @invitation.email
+  end
+
+  def mail_reply_to
+    @invitation.issuer_email
   end
 
   def self.support_email
-    'support@birdviewapp.com'
+    'help@birdview.dev'
   end
 end

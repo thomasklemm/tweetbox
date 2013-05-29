@@ -3,8 +3,7 @@ require 'sidekiq/web'
 Birdview::Application.routes.draw do
   # User authentication
   devise_for :users,
-    path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' },
-    controllers: { registrations: 'users/registrations', passwords: 'users/passwords' }
+    path_names: { sign_in: 'login', sign_out: 'logout' }
 
   # Special naming of user authentication routes
   devise_scope :user do
@@ -12,7 +11,6 @@ Birdview::Application.routes.draw do
     get 'login',     to: 'devise/sessions#new',      as: :new_user_session
     delete 'logout', to: 'devise/sessions#destroy',  as: :logout
     delete 'logout', to: 'devise/sessions#destroy',  as: :destroy_user_session
-    get 'register',  to: 'devise/registrations#new', as: :new_user_registration
   end
 
   # Signups
@@ -22,9 +20,6 @@ Birdview::Application.routes.draw do
   # Registrations
   get  'register' => 'registrations#new',    as: :new_registration
   post 'register' => 'registrations#create', as: :registrations
-
-  # Invitations
-  get 'invitations/accept' => 'accept_invitations#accept', as: :accept_invitation
 
   # Accounts
   resources :accounts do

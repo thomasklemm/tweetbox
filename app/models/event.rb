@@ -22,16 +22,18 @@ class Event < ActiveRecord::Base
   belongs_to :tweet
   belongs_to :user
   belongs_to :project
+
   validates :tweet, :user, :project, presence: true
 
   VALID_KINDS_OF_EVENTS = %w(opened closed posted replied retweeted favorited unfavorited)
   validates :kind, presence: true, inclusion: { in: VALID_KINDS_OF_EVENTS }
 
+  before_validation :assign_project_id_from_tweet
+
+  # Cast symbols to strings before writing and validating the kind of event
   def kind=(new_kind)
     super(new_kind.to_s)
   end
-
-  before_validation :assign_project_id_from_tweet
 
   def project=(ignored)
     raise NotImplementedError, "Use Event#tweet= instead"

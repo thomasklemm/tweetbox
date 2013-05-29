@@ -21,14 +21,6 @@ class Membership < ActiveRecord::Base
   has_many :permissions, dependent: :destroy
   has_many :projects, through: :permissions
 
-  validates :user_id, :account_id, presence: true
+  validates :user, :account, presence: true
   validates_uniqueness_of :user_id, scope: :account_id
-
-  delegate :name, :email, to: :user
-
-  scope :admin, where(admin: true)
-
-  def self.by_name
-    joins(:user).order('users.name')
-  end
 end
