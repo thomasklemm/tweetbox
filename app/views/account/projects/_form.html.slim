@@ -1,0 +1,9 @@
+= form_for [:account, @project] do |f|
+  = render 'shared/form_errors', target: @project
+
+  .field
+    = f.label :name, 'Project name'
+    = f.text_field :name, autofocus: true
+
+  .actions
+    = f.submit class: 'btn btn-primary'

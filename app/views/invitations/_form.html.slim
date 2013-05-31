@@ -1,23 +1,34 @@
-= form_for [@account, @invitation] do |f|
+= form_for [:account, @invitation] do |f|
   = render 'shared/form_errors', target: @invitation
 
   .field
-    = f.label :email, 'Email'
-    = f.text_field :email, class: 'input-xlarge'
+    = f.label :name
+    = f.text_field :name, autofocus: true
 
   .field
-    label.checkbox
-      = f.check_box :admin
-      = f.label :admin, 'Make an admin? (Invitee can for example access all projects, change account settings, invite people and more.)'
+    = f.label :email
+    = f.email_field :email
 
-  h5 Projects
-  p Which projects should your colleague be able to access and work on? You can always change permissions for any project later on.
+  .space-one
+
+  h5 Project permissions
+  p
+    | Grant access for any projects your colleage will
+    br
+    | be able to help you on. Don't worry, you can
+    br
+    | always change permissions for any project later.
 
   / collection check boxes
   .field
+    / ensure that project_ids are always sent
+    = hidden_field_tag "invitation[project_ids][]", nil
+
     - @account.projects.each do |project|
       label class='checkbox'
-        = check_box_tag "invitation[project_ids][]", project.id, @invitation.project_ids.include?(project.id)
-        = project.name
+        = check_box_tag "invitation[project_ids][]", project.id, (@invitation.project_ids.include?(project.id) || @invitation.new_record?)
+        b = project.name
 
-  = f.submit "Send invitation", class: 'btn btn-primary'
+  .space-two
+
+  = f.submit class: 'btn btn-primary'

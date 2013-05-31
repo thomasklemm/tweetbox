@@ -23,8 +23,20 @@ Birdview::Application.routes.draw do
 
   # Accounts
   resource :account do
-    resources :invitations, only: [:new, :create, :destroy] do
-      post :deliver_mail, on: :member
+    resources :projects, only: [:index, :new, :create, :edit, :update], controller: 'account/projects' do
+      put :deactivate
+      put :reactivate
+    end
+
+    resource :team, only: :show, to: 'accounts#team'
+
+    resources :invitations, only: [:index, :new, :create, :edit, :update] do
+      member do
+        put :deactivate
+        put :reactivate
+
+        post :deliver_mail
+      end
     end
   end
 

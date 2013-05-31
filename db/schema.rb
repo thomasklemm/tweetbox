@@ -60,17 +60,16 @@ ActiveRecord::Schema.define(:version => 20130523225534) do
   add_index "invitation_projects", ["invitation_id", "project_id"], :name => "index_invitation_projects_on_invitation_id_and_project_id", :unique => true
 
   create_table "invitations", :force => true do |t|
-    t.integer  "account_id",                    :null => false
-    t.integer  "issuer_id",                     :null => false
+    t.integer  "account_id", :null => false
+    t.integer  "issuer_id",  :null => false
     t.integer  "invitee_id"
-    t.text     "name",                          :null => false
-    t.text     "email",                         :null => false
-    t.text     "code",                          :null => false
-    t.boolean  "admin",      :default => false
+    t.text     "name",       :null => false
+    t.text     "email",      :null => false
+    t.text     "code",       :null => false
     t.datetime "used_at"
     t.datetime "expires_at"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "invitations", ["account_id"], :name => "index_invitations_on_account_id"

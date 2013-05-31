@@ -90,7 +90,7 @@ class Registration
     @membership = Membership.create! do |membership|
       membership.user    = @user
       membership.account = invitation.account
-      membership.admin   = invitation.admin
+      membership.admin   = false
     end
   end
 
@@ -101,7 +101,7 @@ class Registration
   end
 
   def mark_invitation_as_used
-    @invitation.mark_as_used(@user)
+    @invitation.use!(@user)
   end
 
   ##

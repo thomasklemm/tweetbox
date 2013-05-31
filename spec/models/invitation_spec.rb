@@ -3,7 +3,6 @@
 # Table name: invitations
 #
 #  account_id :integer          not null
-#  admin      :boolean          default(FALSE)
 #  code       :text             not null
 #  created_at :datetime         not null
 #  email      :text             not null

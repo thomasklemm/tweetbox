@@ -1,8 +1,9 @@
 class InvitationsController < AccountController
-  before_filter :load_invitation, only: [:destroy, :deliver_mail]
+  before_filter :load_invitation, only: [:edit, :update, :deactivate, :reactivate, :deliver_mail]
+  before_filter :ensure_invitation_is_active, only: [:edit, :update]
 
   def index
-    @invitations = account_invitations
+    @invitations = account_invitation.newest_first.decorate
   end
 
   def new
@@ -14,27 +15,43 @@ class InvitationsController < AccountController
 
     if @invitation.save
       @invitation.deliver_mail
-      redirect_to account_path, notice: "Invitation has been created and mailed."
+      redirect_to account_invitations_path, notice: "Invitation has been created and mailed."
     else
       render :new
     end
   end
 
-  def destroy
-    @invitation.destroy
-    redirect_to account_path, notice: 'Invitation has been destroyed.'
+  def edit
+  end
+
+  def update
+    if @invitation.update_attributes(invitation_params)
+      redirect_to account_invitations_path, notice: "Invitation has been updated."
+    else
+      render :edit
+    end
+  end
+
+  def deactivate
+    @invitation.deactivate!
+    redirect_to :back, notice: 'Invitation has been deactivated.'
+  end
+
+  def reactivate
+    @invitation.reactivate!
+    redirect_to :back, notice: 'Invitation has been reactivated.'
   end
 
   # Send invitation mail once again
   def deliver_mail
     @invitation.deliver_mail
-    redirect_to account_path, notice: 'Invitation email has been sent.'
+    redirect_to account_invitations_path, notice: 'Invitation email has been sent.'
   end
 
   private
 
   def account_invitations
-    @account.invitations
+    user_account.invitations
   end
 
   def account_invitation
@@ -42,10 +59,15 @@ class InvitationsController < AccountController
   end
 
   def load_invitation
-    @invitation = account_invitation
+    @invitation = account_invitation.decorate
+  end
+
+  def ensure_invitation_is_active
+    @invitation.active? or
+      return redirect_to account_invitations_path, notice: 'Only active invitations can be edited.'
   end
 
   def invitation_params
-    params.require(:invitation).permit(:email, :admin, { project_ids: [] }).merge(issuer: current_user)
+    params.require(:invitation).permit(:name, :email, { project_ids: [] }).merge(issuer: current_user)
   end
 end

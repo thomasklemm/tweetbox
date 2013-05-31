@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
   private
 
   def invitation_params
-    params.slice(:invitation_code, :email)
+    params.slice(:invitation_code, :name, :email)
   end
 
   def registration_params

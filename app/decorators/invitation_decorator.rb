@@ -13,4 +13,13 @@ class InvitationDecorator < Draper::Decorator
   def active_until
     expires_at.utc.to_s(:long)
   end
+
+  def registration_url
+    new_registration_url(invitation_code: code, email: email, name: name)
+  end
+
+  def copy_registration_url(text)
+    link_to icon_tag(:copy, text), 'javascript:;',
+      class: 'copy-button btn btn-success', 'data-clipboard-text' => "#{ registration_url }"
+  end
 end

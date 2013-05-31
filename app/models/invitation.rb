@@ -3,7 +3,6 @@
 # Table name: invitations
 #
 #  account_id :integer          not null
-#  admin      :boolean          default(FALSE)
 #  code       :text             not null
 #  created_at :datetime         not null
 #  email      :text             not null
@@ -37,6 +36,9 @@ class Invitation < ActiveRecord::Base
             :code, presence: true
   validates :code, uniqueness: true
 
+  scope :oldest_first, -> { order('invitation.created_at ASC') }
+  scope :newest_first, -> { order('invitation.created_at DESC') }
+
   after_initialize :generate_code
   before_create :set_expiration_date
 
@@ -49,24 +51,32 @@ class Invitation < ActiveRecord::Base
   end
 
   def used?
-    !!used_at
+    used_at.present? || invitee.present?
   end
 
   def to_param
     code
   end
 
-  # Set the used_at flag
-  def mark_as_used(invitee)
+  # Sends an invitation email sporting a link that helps registering
+  def deliver_mail
+    mail = InvitationMailer.invitation(self)
+    mail.deliver
+  end
+
+  def use!(invitee)
     self.invitee = invitee
     self.used_at = Time.current
     self.save!
   end
 
-  # Sends an invitation email sporting a link that helps registering
-  def deliver_mail
-    mail = InvitationMailer.invitation(self)
-    mail.deliver
+  def deactivate!
+    touch(:expires_at)
+  end
+
+  def reactivate!
+    self.expires_at = ACTIVE_INVITATION_PERIOD.from_now
+    self.save!
   end
 
   private

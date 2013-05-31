@@ -1,8 +1,4 @@
-class AccountsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :load_and_authorize_user_account
-  after_filter :verify_authorized
-
+class AccountsController < AccountController
   def show
   end
 
@@ -17,12 +13,11 @@ class AccountsController < ApplicationController
     end
   end
 
-  private
-
-  def load_and_authorize_user_account
-    @account = user_account
-    authorize @account, :access?
+  def team
+    render 'shared/team'
   end
+
+  private
 
   def account_params
     params.require(:account).permit(:name)

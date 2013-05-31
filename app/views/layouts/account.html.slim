@@ -1,0 +1,42 @@
+/ A custom layout for all views rendered by the account controller and its subcontrollers
+- content_for :content do
+  .row
+    / account navigation
+    .span2
+      ul class='nav nav-list'
+        li.nav-header Account
+        = active_link_to 'Projects', account_projects_path
+        = active_link_to 'Team', account_team_path
+        = active_link_to 'Invitations', account_invitations_path
+
+        li.divider
+
+        = active_link_to 'Rename account', edit_account_path
+
+
+      / ul class='nav nav-list'
+      /   li.nav-header Tweets
+      /   = active_link_to 'Incoming', incoming_project_tweets_path(@project), exact: true
+      /   = active_link_to 'Open', open_project_tweets_path(@project), exact: true
+      /   = active_link_to 'Resolved', resolved_project_tweets_path(@project), exact: true
+
+      /   li.divider
+
+      /   li.nav-header Statuses
+      /   = active_link_to 'New status', new_project_status_path(@project), exact: true
+
+      /   li.divider
+
+      /   li.nav-header Project
+      /   = active_link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
+      /   = active_link_to 'Searches', project_searches_path(@project)
+
+    .span10
+      / any flash messages
+      = render 'flashes'
+
+      = content_for?(:account_content) ? yield(:account_content) : yield
+
+= render template: 'layouts/application'
+
+

@@ -16,13 +16,12 @@ div class='navbar navbar-static-top' style='margin-bottom: 1rem'
 
       / user signed in
       - if user_signed_in?
-        / project links
         ul class='nav pull-left'
+          / project links
           - current_user.projects.each do |project|
             = active_link_to project.name, project
 
         ul class='nav pull-right'
-
           / account link
           = active_link_to 'Account', account_path
 
@@ -37,36 +36,3 @@ div class='navbar navbar-static-top' style='margin-bottom: 1rem'
             / dropdown
             ul class='dropdown-menu'
               li = link_to 'Logout', logout_path, method: :delete
-
-
-
-      / / login link
-      / - unless user_signed_in?
-
-
-      / span.right
-      /   - if user_signed_in?
-      /     span.project-link = current_user.project_link
-      /     span.account-link = current_user.account_link
-
-      /
-      /       span.logout
-      /   - else
-      /     a.login = link_to 'Login', login_path
-
-
-/ .navigation.outer-container
-/   .container
-/     span.brand = link_to 'Tweetbox', root_path
-
-/     span.right
-/       - if user_signed_in?
-/         span.project-link = current_user.project_link
-/         span.account-link = current_user.account_link
-
-/         span.user-details
-/           = image_tag(current_user.gravatar_image_url, class: 'gravatar')
-/           span.name = current_user.name
-/           span.logout = link_to 'Logout', logout_path, method: :delete
-/       - else
-/         span.login = link_to 'Login', login_path

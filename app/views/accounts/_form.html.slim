@@ -1,4 +1,6 @@
-= form_for @account do |f|
+= form_for @account, url: account_path do |f|
+  = render 'shared/form_errors', target: @account
+
   .field
     = f.label :name
     = f.text_field :name
