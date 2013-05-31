@@ -1,31 +1,90 @@
-h1 Accounts#show
-p Find me in app/views/accounts/show.html.slim
+h3
+  span #{ @account.name } account
+  ' &nbsp;
+  / edit account link
+  - if policy(@account).edit?
+    small = link_to icon_tag(:edit, 'Edit'), edit_account_path
 
-div Name: #{ @account.name }
-- if policy(@account).edit?
-  = link_to 'Edit account', edit_account_path(@account)
+/ projects
+h4 Projects
+table class='table table-hover'
+  thead
+    tr
+      th #
+      th Name
+      th Statistics
+      th
 
-br
-br
-div: b #{ @projects.size } projects
-- @projects.each do |project|
-  b = link_to project.name, project_path(project)
-  - if policy(project).edit?
-    = link_to 'Edit project', edit_account_project_path(project.account, project)
+  tbody
+    - @account.projects.each_with_index do |project, i|
+      tr
+        td = i+1
+        td: b = project.name
+        td
+          div #{ project.twitter_accounts.size } connected Twitter accounts
+          div #{ project.searches.size } extra searches
+          div #{ project.tweets.size } indexed tweets
+        td
+          = link_to 'Edit', edit_project_path(project), class: 'btn'
 
-br
 - if policy(@account.projects.build).new?
-  = link_to 'Create a new project', new_account_project_path(@account)
+  div = link_to 'New project', new_project_path, class: 'btn btn-primary'
 
-br
-br
-div: b #{ @account.users.size } users
-- @account.users.each do |user|
-  = mail_to user.email, user.name
-  - if user.admin_of?(@account)
-    |, Account admin
-  br
+.space-two
 
-br
-- if policy(@account).invite?
-  = link_to 'Manage invitations', account_invitations_path(@account)
+h4 Team members
+table class='table table-hover'
+  thead
+    tr
+      th #
+      th Name
+      th Email
+      th
+
+  tbody
+    - @account.users.each_with_index do |user, i|
+      tr
+        td = i+1
+        td = user.name
+        td = user.email
+        td
+
+.space-two
+
+h4 Invitations
+table class='table table-hover'
+  thead
+    tr
+      th #
+      th Email
+      th Invitation code
+      th Issued by
+      th Active?
+      th
+
+  tbody
+    - @account.invitations.decorate.each_with_index do |invitation, i|
+      tr
+        td = i+1
+        td = invitation.email
+        td = invitation.code
+        td = invitation.issuer_name
+        td = invitation.active?
+        td
+          = link_to 'Remove', ''
+
+= link_to 'Invite a colleague', new_account_invitation_path, class: 'btn btn-primary'
+
+
+/ br
+/ br
+/ div: b #{ @account.users.size } users
+/ - @account.users.each do |user|
+/   = mail_to user.email, user.name
+/   - if user.admin_of?(@account)
+/     |, Account admin
+/   br
+
+/ br
+/ - if policy(@account).invite?
+/ = link_to 'Manage invitations', account_invitations_path(@account)

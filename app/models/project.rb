@@ -97,6 +97,10 @@ class Project < ActiveRecord::Base
     writable_twitter_accounts.try(:first)
   end
 
+  def to_param
+    "#{ id }-#{ name.parameterize }"
+  end
+
   private
 
   # Finds or creates an author scoped to the current project

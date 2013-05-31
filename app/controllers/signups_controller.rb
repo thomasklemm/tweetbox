@@ -10,7 +10,7 @@ class SignupsController < ApplicationController
       sign_in @signup.user
       redirect_to projects_path, notice: 'You signed up successfully.'
     else
-      render action: :new
+      render :new
     end
   end
 end

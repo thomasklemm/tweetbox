@@ -22,15 +22,14 @@ Birdview::Application.routes.draw do
   post 'register' => 'registrations#create', as: :registrations
 
   # Accounts
-  resources :accounts do
-    resources :projects, except: [:index, :show]
-    resources :invitations, only: [:index, :new, :create, :destroy] do
-      put :send_mail, on: :member, as: :send
+  resource :account do
+    resources :invitations, only: [:new, :create, :destroy] do
+      post :deliver_mail, on: :member
     end
   end
 
   # Projects
-  resources :projects, only: [:index, :show] do
+  resources :projects do
     # Tweets
     resources :tweets, only: :show do
       collection do

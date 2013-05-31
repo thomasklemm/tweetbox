@@ -1,16 +1,15 @@
-Hello!
+<p>Hey there!</p>
 
-This is Birdview, and we're happy to tell you that <%= @invitation.sender_name %> has invited uyou to join the <%= @invitation.account_name %> account.
-Please open the following URL in your browser to get started:
+<p>Good news from Tweetbox! <%= @invitation.issuer_name %> invites you to join him at a Tweetbox account. Together and all your colleages you'll be able to give your customers all the love you want to give and answer their support tweets almost before they have been sent :-D.</p>
 
-<%= accept_invitation_url(invitation_code: @invitation.code) %>
+<%= link_to 'Join Tweetbox', new_registration_url(invitation_code: @invitation.code, email: @invitation.email) %>
 
-We hope you have a great time giving awesome Twitter support to your customers!
-Give us a shout for any questions, we're happy to help out.
+<p>By clicking the link above, you'll be able to register and join <%= @invitation.issuer_name %> in your freshly created Tweetbox account.</p>
 
-Thank you!
+<p>If clicking the link does not work, you can also copy and paste this URL to your browser to get started: <%= new_registration_url(invitation_code: @invitation.code, email: @invitation.email) %>.
 
-Have a great day,
-Team Birdview
-<a href='mailto:support@birdviewapp.com'>support@birdviewapp.com</a>
+Your invitation is active until <%= @invitation.active_until %></p>
 
+<p>Have a great time, and give your customers a big hug from us, too.</p>
+
+The team behind Tweetbox

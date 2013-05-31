@@ -3,8 +3,6 @@ class AccountController < ApplicationController
   before_filter :load_and_authorize_account
   after_filter :verify_authorized
 
-  layout 'account'
-
   private
 
   def load_and_authorize_account

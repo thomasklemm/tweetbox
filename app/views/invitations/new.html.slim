@@ -1,20 +1,3 @@
-h1 Invitations#new
+h3 Invite a colleague
 
-= form_for [@account, @invitation] do |f|
-  = f.label :email
-  = f.text_field :email
-
-  br
-  = f.check_box :admin
-  = f.label :admin, 'Give account admin rights? (e.g. access all projects, invite people and more)'
-
-  br
-  b Projects
-  br
-  = f.collection_select(:project_ids, @account.projects, :id, :name, {}, { multiple: true, style: 'width: 100%' })
-  coffee:
-    $ ->
-      $("#invitation_project_ids").select2()
-
-  br
-  = f.submit
+= render 'form'

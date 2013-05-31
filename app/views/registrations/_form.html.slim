@@ -1,0 +1,21 @@
+= form_for @registration do |f|
+  = render 'shared/form_errors', target: @registration
+
+  .field
+    = f.label :name, 'Your name'
+    = f.text_field :name, autofocus: true, class: 'input-xlarge'
+
+  .field
+    = f.label :email, 'Your email'
+    = f.email_field :email, class: 'input-xlarge'
+
+  .field
+    = f.label :password, 'Pick a password (at least 8 numbers and characters)'
+    = f.password_field :password, class: 'input-xlarge'
+
+  .field
+    = f.label :invitation_code
+    = f.text_field :invitation_code, class: 'input-xlarge', disabled: true
+
+  .actions
+    = f.submit 'Register', class: 'btn btn-primary'

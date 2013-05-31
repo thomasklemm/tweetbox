@@ -52,27 +52,29 @@ ActiveRecord::Schema.define(:version => 20130523225534) do
   add_index "events", ["tweet_id"], :name => "index_events_on_tweet_id"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
+  create_table "invitation_projects", :force => true do |t|
+    t.integer "invitation_id", :null => false
+    t.integer "project_id",    :null => false
+  end
+
+  add_index "invitation_projects", ["invitation_id", "project_id"], :name => "index_invitation_projects_on_invitation_id_and_project_id", :unique => true
+
   create_table "invitations", :force => true do |t|
     t.integer  "account_id",                    :null => false
     t.integer  "issuer_id",                     :null => false
     t.integer  "invitee_id"
-    t.text     "code",                          :null => false
+    t.text     "name",                          :null => false
     t.text     "email",                         :null => false
+    t.text     "code",                          :null => false
     t.boolean  "admin",      :default => false
     t.datetime "used_at"
+    t.datetime "expires_at"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end
 
   add_index "invitations", ["account_id"], :name => "index_invitations_on_account_id"
   add_index "invitations", ["code"], :name => "index_invitations_on_code", :unique => true
-
-  create_table "invitations_projects", :force => true do |t|
-    t.integer "invitation_id", :null => false
-    t.integer "project_id",    :null => false
-  end
-
-  add_index "invitations_projects", ["invitation_id", "project_id"], :name => "index_invitations_projects_on_invitation_id_and_project_id", :unique => true
 
   create_table "memberships", :force => true do |t|
     t.integer  "user_id",                       :null => false

@@ -1,5 +1,7 @@
 = form_for @account do |f|
-  = f.label :name
-  = f.text_field :name
+  .field
+    = f.label :name
+    = f.text_field :name
 
-  = f.submit
+  .actions
+    = f.submit class: 'btn btn-primary'

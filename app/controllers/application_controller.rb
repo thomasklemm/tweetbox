@@ -36,15 +36,10 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   end
 
-  helper_method :user_accounts, :user_account
-  helper_method :user_projects, :user_project
-
-  def user_accounts
-    @user_accounts ||= current_user.accounts
-  end
+  helper_method :user_account, :user_projects, :user_project
 
   def user_account
-    @user_account ||= user_accounts.find(params[:account_id] || user_session[:account_id] || params[:id])
+    @user_account ||= current_user.account
   end
 
   def user_projects

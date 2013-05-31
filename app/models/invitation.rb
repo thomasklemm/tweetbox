@@ -7,9 +7,11 @@
 #  code       :text             not null
 #  created_at :datetime         not null
 #  email      :text             not null
+#  expires_at :datetime
 #  id         :integer          not null, primary key
 #  invitee_id :integer
 #  issuer_id  :integer          not null
+#  name       :text             not null
 #  updated_at :datetime         not null
 #  used_at    :datetime
 #
@@ -30,68 +32,53 @@ class Invitation < ActiveRecord::Base
 
   validates :account,
             :issuer,
+            :name,
             :email,
             :code, presence: true
   validates :code, uniqueness: true
 
   after_initialize :generate_code
+  before_create :set_expiration_date
 
-  # Invitations will become inactive after a certain timespan
-  # to enhance security
   def active?
-    new_record? || within_invitation_period?
+    !used? && !expired?
   end
 
-  def within_invitation_period?
-    # TODO: Check logic
-    created_at < ACTIVE_INVITATION_DURATION.ago
+  def expired?
+    expires_at < Time.current
   end
 
-  # Sends an invitation email sporting a link that helps registering
-  def deliver_invitation_mail
-    mail = InvitationMailer.invitation(self)
-    mail.deliver
-  end
-
-  def accept(invitee)
-    return false unless invitee.present?
-
-    membership = create_membership!(invitee)
-    mark_as_used!(invitee)
-    create_projects!(membership)
-
-    membership
+  def used?
+    !!used_at
   end
 
   def to_param
     code
   end
 
+  # Set the used_at flag
+  def mark_as_used(invitee)
+    self.invitee = invitee
+    self.used_at = Time.current
+    self.save!
+  end
+
+  # Sends an invitation email sporting a link that helps registering
+  def deliver_mail
+    mail = InvitationMailer.invitation(self)
+    mail.deliver
+  end
+
   private
 
   # Generates a random and unique invitation code
   def generate_code
-    self.code ||= Random.new.code(32)
+    self.code ||= RandomCode.new.code(32)
   end
 
-  def create_membership!(invitee)
-    Membership.create! do |membership|
-      membership.user    = invitee
-      membership.account = account
-      membership.admin   = admin
-    end
+  def set_expiration_date
+    self.expires_at = ACTIVE_INVITATION_PERIOD.from_now
   end
 
-  def mark_as_used!(invitee)
-    self.invitee = invitee
-    self.used = true
-    self.save!
-  end
-
-  def create_projects!(membership)
-    projects.map { |project| project.permissions.where(membership_id: membership.id).first_or_create! }
-  end
-
-  # Duration for which a saved invitation is considered active
-  ACTIVE_INVITATION_DURATION = 7.days
+  ACTIVE_INVITATION_PERIOD = 7.days
 end

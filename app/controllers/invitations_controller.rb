@@ -1,4 +1,6 @@
 class InvitationsController < AccountController
+  before_filter :load_invitation, only: [:destroy, :deliver_mail]
+
   def index
     @invitations = account_invitations
   end
@@ -9,33 +11,24 @@ class InvitationsController < AccountController
 
   def create
     @invitation = account_invitations.build(invitation_params)
-    @invitation.sender = current_user
 
     if @invitation.save
-      @invitation.send_mail!
-
-      redirect_to account_invitations_path(@account),
-        notice: "Invitation has been created and mailed."
+      @invitation.deliver_mail
+      redirect_to account_path, notice: "Invitation has been created and mailed."
     else
       render :new
     end
   end
 
   def destroy
-    @invitation = account_invitations.find_by_code!(params[:id])
     @invitation.destroy
-
-    redirect_to account_invitations_path(@account),
-      notice: 'Invitation has been destroyed.'
+    redirect_to account_path, notice: 'Invitation has been destroyed.'
   end
 
-  # Resend the mail with registration link and invitation code
-  def resend
-    @invitation = account_invitations.find_by_code!(params[:id])
-    @invitation.send_mail!
-
-    redirect_to account_invitations_path(@account),
-      notice: 'An invitation email has been sent out.'
+  # Send invitation mail once again
+  def deliver_mail
+    @invitation.deliver_mail
+    redirect_to account_path, notice: 'Invitation email has been sent.'
   end
 
   private
@@ -44,7 +37,15 @@ class InvitationsController < AccountController
     @account.invitations
   end
 
+  def account_invitation
+    account_invitations.find_by_code!(params[:id])
+  end
+
+  def load_invitation
+    @invitation = account_invitation
+  end
+
   def invitation_params
-    params.require(:invitation).permit(:email, :admin, project_ids: [])
+    params.require(:invitation).permit(:email, :admin, { project_ids: [] }).merge(issuer: current_user)
   end
 end

@@ -5,11 +5,13 @@ class CreateInvitations < ActiveRecord::Migration
       t.belongs_to :issuer, null: false
       t.belongs_to :invitee
 
-      t.text :code, null: false
+      t.text :name, null: false
       t.text :email, null: false
-
+      t.text :code, null: false
       t.boolean :admin, default: false
+
       t.datetime :used_at
+      t.datetime :expires_at
 
       t.timestamps
     end

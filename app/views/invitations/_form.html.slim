@@ -1,0 +1,23 @@
+= form_for [@account, @invitation] do |f|
+  = render 'shared/form_errors', target: @invitation
+
+  .field
+    = f.label :email, 'Email'
+    = f.text_field :email, class: 'input-xlarge'
+
+  .field
+    label.checkbox
+      = f.check_box :admin
+      = f.label :admin, 'Make an admin? (Invitee can for example access all projects, change account settings, invite people and more.)'
+
+  h5 Projects
+  p Which projects should your colleague be able to access and work on? You can always change permissions for any project later on.
+
+  / collection check boxes
+  .field
+    - @account.projects.each do |project|
+      label class='checkbox'
+        = check_box_tag "invitation[project_ids][]", project.id, @invitation.project_ids.include?(project.id)
+        = project.name
+
+  = f.submit "Send invitation", class: 'btn btn-primary'

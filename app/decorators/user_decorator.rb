@@ -1,24 +1,21 @@
 class UserDecorator < Draper::Decorator
+  include Draper::LazyHelpers
   delegate_all
+
 
   # Link to project if only one is present,
   # else link to all projects
+  # TODO: Cache projects_count on users
   def project_link
     if projects.size == 1
-      h.link_to 'Project', h.project_path(projects.first)
+      link_to 'Project', project_path(projects.first)
     else
-      h.link_to 'Projects', h.projects_path
+      link_to 'Projects', projects_path
     end
   end
 
-  # Link to account if only one is present,
-  # else link to all accounts
   def account_link
-    if accounts.size == 1
-      h.link_to 'Account', h.account_path(accounts.first)
-    else
-      h.link_to 'Accounts', h.accounts_path
-    end
+    link_to 'Account', account_path
   end
 
   # Gravatar with retro fallback
