@@ -20,12 +20,15 @@ module ApplicationHelper
   def active_link_to(*args)
     link = link_to(*args)
     path_args = args.second or raise StandardError, 'Expected URL to be second argument.'
+    exact = args.third.try(:fetch, :exact, false)
 
-    if current_path.start_with?(url_for(path_args))
-      "<li class='active'>#{ link }</li>".html_safe
+    match = if exact
+      current_path == url_for(path_args)
     else
-      "<li>#{ link }</li>".html_safe
+      current_path.start_with?(url_for(path_args))
     end
+
+    content_tag(:li, link, class: "#{ 'active' if match }")
   end
 
   private
