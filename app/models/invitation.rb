@@ -36,8 +36,7 @@ class Invitation < ActiveRecord::Base
             :code, presence: true
   validates :code, uniqueness: true
 
-  scope :oldest_first, -> { order('invitation.created_at ASC') }
-  scope :newest_first, -> { order('invitation.created_at DESC') }
+  scope :by_created_at_desc, -> { order('invitations.created_at DESC') }
 
   after_initialize :generate_code
   before_create :set_expiration_date

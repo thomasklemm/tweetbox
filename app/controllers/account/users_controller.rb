@@ -17,7 +17,7 @@ class Account::UsersController < AccountController
   end
 
   def upgrade_to_admin
-    @user.become_admin!
+    @account.make_admin!(@user)
     redirect_to account_users_path, notice: "#{ @user.try(:name) } has become an admin of your account."
   end
 

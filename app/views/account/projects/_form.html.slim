@@ -15,18 +15,9 @@
 
     - @account.users.each do |user|
       label class='checkbox'
-        = check_box_tag "project[user_ids][]", user.id, @project.user_ids.include?(user.id)
+        = check_box_tag "project[user_ids][]", user.id, @project.user_ids.include?(user.id) || (@project.new_record? && user.admin_of?(@account))
         = user.name
         = ' (account admin)' if user.admin_of?(@account)
-
-
-    / = hidden_field_tag "project[membership_ids][]", nil
-
-    / - @account.memberships.each do |membership|
-    /   label class='checkbox'
-    /     = check_box_tag "project[membership_ids][]", membership.id, @project.membership_ids.include?(membership.id)
-    /     = membership.user_name
-    /     = ' (account admin)' if @account.admin_ids.include?(membership.user_id)
 
   .space-one
 

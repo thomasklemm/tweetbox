@@ -39,4 +39,17 @@ class Account < ActiveRecord::Base
   def projects_by_name
     projects.by_name
   end
+
+  def make_admin!(user)
+    membership = memberships.find(user.membership.id)
+    membership.admin!
+    set_permissions_for_new_admin(user)
+  end
+
+  private
+
+  def set_permissions_for_new_admin(user)
+    user.project_ids = project_ids
+    user.save!
+  end
 end

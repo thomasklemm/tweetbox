@@ -60,11 +60,6 @@ class User < ActiveRecord::Base
     account_or_project.has_member?(self)
   end
 
-  def become_admin!
-    membership.admin = true
-    membership.save!
-  end
-
   def to_param
     "#{ id }-#{ name.parameterize }"
   end
