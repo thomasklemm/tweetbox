@@ -18,8 +18,26 @@ div class='navbar navbar-static-top' style='margin-bottom: 1rem'
       - if user_signed_in?
         ul class='nav pull-left'
           / project links
-          - current_user.projects.each do |project|
-            = active_link_to project.name, project
+          - if current_user.projects.size <= 3
+            / for few projects
+            - current_user.projects.by_name.each do |project|
+              = active_link_to project.name, project
+
+          - else
+            / for many projects
+            li class='dropdown'
+              a href='#' class='dropdown-toggle' data-toggle='dropdown'
+                - if @project.present?
+                  b = @project.name
+                - else
+                  span Projects
+                | &nbsp;
+                b class='caret'
+
+              / dropdown
+              ul class='dropdown-menu'
+                - current_user.projects.by_name.each do |project|
+                  = active_link_to project.name, project
 
         ul class='nav pull-right'
           / account link

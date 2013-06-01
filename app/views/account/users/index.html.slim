@@ -20,6 +20,8 @@ table class='table table-hover'
         td = "Account admin" if user.admin_of?(@account)
         td
           = link_to 'Manage project permissions', edit_account_user_path(user), class: 'btn'
+          - unless user.admin_of?(@account)
+              = link_to 'Make an admin', upgrade_to_admin_account_user_path(user), method: :put, class: 'btn', confirm: "Do you really want to make #{ user.name } an account admin?"
 
 / actions
 = link_to 'Invite a colleage', new_account_invitation_path, class: 'btn btn-primary'

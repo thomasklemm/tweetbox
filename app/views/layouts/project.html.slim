@@ -3,7 +3,10 @@
   .row
     / project navigation
     .span2
+
       ul class='nav nav-list'
+        li: b = @project.name
+
         li.nav-header Tweets
         = active_link_to 'Incoming', incoming_project_tweets_path(@project), exact: true
         = active_link_to 'Open', open_project_tweets_path(@project), exact: true

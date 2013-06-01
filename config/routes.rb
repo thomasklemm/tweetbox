@@ -25,7 +25,9 @@ Birdview::Application.routes.draw do
   resource :account do
     resources :projects, only: [:index, :new, :create, :edit, :update], controller: 'account/projects'
 
-    resources :users, only: [:index, :show, :edit, :update], path: 'team', controller: 'account/users'
+    resources :users, only: [:index, :show, :edit, :update], path: 'team', controller: 'account/users' do
+      put :upgrade_to_admin, on: :member
+    end
 
     resources :invitations, only: [:index, :new, :create, :edit, :update], controller: 'account/invitations' do
       member do

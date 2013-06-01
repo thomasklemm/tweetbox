@@ -1,5 +1,5 @@
 class Account::UsersController < AccountController
-  before_filter :load_user, only: [:show, :edit, :update]
+  before_filter :load_user, only: [:show, :edit, :update, :upgrade_to_admin]
 
   def index
     @users = account_users
@@ -14,6 +14,11 @@ class Account::UsersController < AccountController
     else
       render :edit
     end
+  end
+
+  def upgrade_to_admin
+    @user.become_admin!
+    redirect_to account_users_path, notice: "#{ @user.try(:name) } has become an admin of your account."
   end
 
   private
