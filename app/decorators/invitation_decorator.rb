@@ -20,6 +20,6 @@ class InvitationDecorator < Draper::Decorator
 
   def copy_registration_url(text)
     link_to icon_tag(:copy, text), 'javascript:;',
-      class: 'copy-button btn btn-success', 'data-clipboard-text' => "#{ registration_url }"
+      class: 'copy-button btn', 'data-clipboard-text' => "#{ registration_url }"
   end
 end

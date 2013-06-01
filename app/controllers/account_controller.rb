@@ -9,6 +9,6 @@ class AccountController < ApplicationController
 
   def load_and_authorize_account
     @account ||= user_account
-    authorize @account, :access?
+    authorize @account, :manage?
   end
 end

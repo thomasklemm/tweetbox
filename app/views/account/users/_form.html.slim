@@ -1,0 +1,23 @@
+= form_for [:account, @user] do |f|
+  = render 'shared/form_errors', target: @user
+
+  .field
+    p
+      ' Set the projects that
+      strong = @user.name
+      '  will be able to work on.
+
+    / collection check boxes
+    = hidden_field_tag "user[project_ids][]", nil
+
+    - @account.projects.each do |project|
+      label class='checkbox'
+        = check_box_tag "user[project_ids][]", project.id, @user.project_ids.include?(project.id)
+        = project.name
+
+  .space-one
+
+  .actions
+    = f.submit class: 'btn btn-primary'
+    '  or
+    = link_to 'show all team members', account_users_path

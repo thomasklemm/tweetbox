@@ -1,4 +1,4 @@
-class InvitationsController < AccountController
+class Account::InvitationsController < AccountController
   before_filter :load_invitation, only: [:edit, :update, :deactivate, :reactivate, :deliver_mail]
   before_filter :ensure_invitation_is_active, only: [:edit, :update]
 

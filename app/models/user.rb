@@ -59,4 +59,14 @@ class User < ActiveRecord::Base
   def member_of?(account_or_project)
     account_or_project.has_member?(self)
   end
+
+  def to_param
+    "#{ id }-#{ name.parameterize }"
+  end
+
+  # REVIEW: Is there a security risk? What other ways are there of doing this?
+  # e.g. flexible setters in permission, give a try
+  def project_ids=(new_project_ids)
+    self.membership.project_ids = new_project_ids
+  end
 end

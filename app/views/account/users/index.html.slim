@@ -1,0 +1,27 @@
+h3 Team
+
+table class='table table-hover'
+  thead
+    tr
+      th #
+      th Gravatar
+      th Name
+      th Email
+      th Admin?
+      th
+
+  tbody
+    - @users.each_with_index do |user, i|
+      tr
+        td = i+1
+        td = image_tag(user.gravatar_image_url(36))
+        td = user.name
+        td = user.email
+        td = "Account admin" if user.admin_of?(@account)
+        td
+          = link_to 'Manage project permissions', edit_account_user_path(user), class: 'btn'
+
+/ actions
+= link_to 'Invite a colleage', new_account_invitation_path, class: 'btn btn-primary'
+'  or
+= link_to 'show all invitations', account_invitations_path
