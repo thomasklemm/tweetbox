@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   before_filter :ensure_new_user
-  before_filter :load_and_ensure_active_invitation
+  before_filter :load_and_ensure_active_invitation, only: :new
 
   def new
     @registration = Registration.new(invitation_params)

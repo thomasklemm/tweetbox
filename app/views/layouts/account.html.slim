@@ -11,25 +11,7 @@
 
         li.divider
 
-        = active_link_to 'Rename account', edit_account_path
-
-
-      / ul class='nav nav-list'
-      /   li.nav-header Tweets
-      /   = active_link_to 'Incoming', incoming_project_tweets_path(@project), exact: true
-      /   = active_link_to 'Open', open_project_tweets_path(@project), exact: true
-      /   = active_link_to 'Resolved', resolved_project_tweets_path(@project), exact: true
-
-      /   li.divider
-
-      /   li.nav-header Statuses
-      /   = active_link_to 'New status', new_project_status_path(@project), exact: true
-
-      /   li.divider
-
-      /   li.nav-header Project
-      /   = active_link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
-      /   = active_link_to 'Searches', project_searches_path(@project)
+        = active_link_to 'Manage account', edit_account_path
 
     .span10
       / any flash messages

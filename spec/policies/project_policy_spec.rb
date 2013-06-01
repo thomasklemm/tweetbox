@@ -31,7 +31,7 @@ describe ProjectPolicy do
     end
   end
 
-  permissions :new?, :create?, :edit?, :update?, :destroy? do
+  permissions :manage? do
     it "allows account admins to create, update and destroy projects" do
       should permit(admin, project)
       should_not permit(user, project)

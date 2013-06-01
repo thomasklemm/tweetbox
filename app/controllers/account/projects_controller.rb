@@ -48,7 +48,7 @@ class Account::ProjectsController < AccountController
   end
 
   def project_params
-    params.require(:project).permit(:name)
+    params.require(:project).permit(:name, { membership_ids: [] })
   end
 end
 

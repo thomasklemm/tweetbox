@@ -1,5 +1,7 @@
 class AccountsController < AccountController
   def show
+    # Redirect to first interesting resource
+    redirect_to account_projects_path
   end
 
   def edit
@@ -11,10 +13,6 @@ class AccountsController < AccountController
     else
       render :edit
     end
-  end
-
-  def team
-    render 'shared/team'
   end
 
   private

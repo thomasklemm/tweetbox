@@ -22,14 +22,6 @@ describe Account do
   it { should have_many(:projects).dependent(:restrict) }
   it { should have_many(:invitations).dependent(:destroy) }
 
-  it { should belong_to(:plan) }
-  it { should validate_presence_of(:plan) }
-  describe "delegates to plan" do
-    it { should respond_to(:free?) }
-    it { should respond_to(:billed?) }
-    it { should respond_to(:trial?) }
-  end
-
   it { should validate_presence_of(:name) }
 
   describe "with memberships" do
@@ -92,32 +84,6 @@ describe Account do
   it "finds memberships by name" do
     memberships = [Fabricate(:membership, account: account), Fabricate(:membership, account: account)]
     expect(account.memberships_by_name).to eq(memberships)
-  end
-
-  let(:trial_plan) { Fabricate(:trial_plan) }
-  let(:paid_plan)  { Fabricate(:paid_plan) }
-
-  it "is expired with a trial plan after 31 days" do
-    account = Fabricate(:account, created_at: 31.days.ago, plan: trial_plan)
-    expect(account).to be_expired
-  end
-
-  it "isn't expired with a trial plan before 31 days" do
-    account = Fabricate(:account, created_at: (31.days.ago + 1.second), plan: trial_plan)
-    expect(account).not_to be_expired
-  end
-
-  it "isn't expired with paid plan after 31 days" do
-    account = Fabricate(:account, created_at: (60.days.ago), plan: paid_plan)
-    expect(account).not_to be_expired
-  end
-
-  it "isn't expired without an expiration date after 31 days" do
-    account = Fabricate(:account, created_at: 60.days.ago, plan: trial_plan)
-    account.trial_expires_at = nil
-    account.save!
-
-    expect(account).not_to be_expired
   end
 end
 

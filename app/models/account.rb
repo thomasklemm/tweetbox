@@ -39,13 +39,4 @@ class Account < ActiveRecord::Base
   def projects_by_name
     projects.by_name
   end
-
-  def memberships_by_name
-    memberships.by_name
-  end
-
-  # TODO: Cache projects_count
-  def projects_count
-    projects.count
-  end
 end

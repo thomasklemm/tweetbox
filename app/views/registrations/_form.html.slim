@@ -14,8 +14,7 @@
     = f.password_field :password, class: 'input-xlarge'
 
   .field
-    = f.label :invitation_code
-    = f.text_field :invitation_code, class: 'input-xlarge', disabled: true
+    = f.hidden_field :invitation_code, class: 'input-xlarge'
 
   .actions
     = f.submit 'Register', class: 'btn btn-primary'

@@ -23,4 +23,6 @@ class Membership < ActiveRecord::Base
 
   validates :user, :account, presence: true
   validates_uniqueness_of :user_id, scope: :account_id
+
+  delegate :name, to: :user, prefix: true
 end

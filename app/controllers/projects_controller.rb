@@ -1,20 +1,17 @@
-class ProjectsController < ApplicationController
-  before_filter :authenticate_user!
-  after_filter  :verify_authorized, except: :index
+class ProjectsController < ProjectController
+  skip_before_filter :load_and_authorize_project, only: :index
+  skip_after_filter :verify_authorized, only: :index
 
-  # Use the project layout only for the show action
-  # and the projects layout for the index action
   layout 'projects', only: :index
-  layout 'project', only: :show
 
-  # resources :projects, only: [:index, :show]
   def index
     @projects = user_projects
+
+    # Open project if there is only one?
+    @projects.size == 1 and return redirect_to @projects.first
   end
 
   def show
-    @project = user_project
-    authorize @project, :access?
     redirect_to incoming_project_tweets_path(@project)
   end
 end

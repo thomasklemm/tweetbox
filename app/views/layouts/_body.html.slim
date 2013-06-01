@@ -6,6 +6,10 @@
   .container
     .row
       .span12
+        / render flashes unless they are embedded in a special layout
+        - unless content_for?(:content)
+          = render 'flashes'
+
         = content_for?(:content) ? yield(:content) : yield
 
     / sticky footer that stays at the bottom of the page
