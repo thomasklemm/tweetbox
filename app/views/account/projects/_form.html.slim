@@ -8,16 +8,25 @@
   .space-one
 
   .field
-    = f.label :membership_ids, 'Team members'
+    = f.label :user_ids, 'Team members'
 
     / collection check boxes
-    = hidden_field_tag "project[membership_ids][]", nil
+    = hidden_field_tag "project[user_ids][]", nil
 
-    - @account.memberships.each do |membership|
+    - @account.users.each do |user|
       label class='checkbox'
-        = check_box_tag "project[membership_ids][]", membership.id, @project.membership_ids.include?(membership.id)
-        = membership.user_name
-        = ' (account admin)' if @account.admin_ids.include?(membership.user_id)
+        = check_box_tag "project[user_ids][]", user.id, @project.user_ids.include?(user.id)
+        = user.name
+        = ' (account admin)' if user.admin_of?(@account)
+
+
+    / = hidden_field_tag "project[membership_ids][]", nil
+
+    / - @account.memberships.each do |membership|
+    /   label class='checkbox'
+    /     = check_box_tag "project[membership_ids][]", membership.id, @project.membership_ids.include?(membership.id)
+    /     = membership.user_name
+    /     = ' (account admin)' if @account.admin_ids.include?(membership.user_id)
 
   .space-one
 

@@ -20,18 +20,33 @@ class Permission < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
 
+  before_validation :set_user_from_membership, if: :membership_id_changed?
+  before_validation :set_membership_from_user, if: :user_id_changed?
+  before_validation :ensure_user_is_membership_user
+
   validates :membership, :project, :user, presence: true
+  validate :membership_and_user_must_be_associated_with_project_account
   validates_uniqueness_of :membership_id, scope: :project_id
-
-  before_validation :assign_user_id_from_membership
-
-  def user=(ignored)
-    raise NotImplementedError, "Use Permission#membership= instead"
-  end
 
   private
 
-  def assign_user_id_from_membership
-    self.user_id = membership.try(:user_id)
+  def set_user_from_membership
+    self.user = membership.try(:user)
+  end
+
+  def set_membership_from_user
+    self.membership = user.try(:membership)
+  end
+
+  # Validates that the user is the one referenced by the membership
+  def ensure_user_is_membership_user
+    self.user = membership.try(:user)
+  end
+
+  def membership_and_user_must_be_associated_with_project_account
+    unless project.account.has_member?(user)
+      errors.add(:membership, "is not associated with the project's account")
+      errors.add(:user, "is not associated with the project's account")
+    end
   end
 end

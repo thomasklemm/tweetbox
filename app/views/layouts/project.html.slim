@@ -20,6 +20,10 @@
         = active_link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
         = active_link_to 'Searches', project_searches_path(@project)
 
+        / edit project
+        - if policy(@project).manage?
+          li = link_to 'Manage project', edit_account_project_path(@project)
+
     .span10
       / any flash messages
       = render 'flashes'

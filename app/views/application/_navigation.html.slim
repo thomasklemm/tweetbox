@@ -23,7 +23,8 @@ div class='navbar navbar-static-top' style='margin-bottom: 1rem'
 
         ul class='nav pull-right'
           / account link
-          = active_link_to 'Account', account_path
+          - if policy(current_user.account).manage?
+            = active_link_to 'Account', account_path
 
           / user details and logout link
           li class='dropdown'
