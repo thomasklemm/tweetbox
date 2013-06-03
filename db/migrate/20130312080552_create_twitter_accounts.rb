@@ -2,7 +2,6 @@ class CreateTwitterAccounts < ActiveRecord::Migration
   def change
     create_table :twitter_accounts do |t|
       t.belongs_to :project, null: false
-
       t.text :uid, null: false
       t.text :token, null: false
       t.text :token_secret, null: false
@@ -15,18 +14,20 @@ class CreateTwitterAccounts < ActiveRecord::Migration
       t.text :url
       t.text :profile_image_url
 
-      t.text :authorized_for, null: false
+      t.text :access_scope
 
-      t.boolean :get_mentions, default: true
-      t.integer :max_mentions_tweet_id, limit: 8
-      t.boolean :get_home, default: true
-      t.integer :max_home_tweet_id, limit: 8
+      t.integer :max_mentions_timeline_twitter_id, limit: 8
+      t.integer :max_user_timeline_twitter_id, limit: 8
+      t.integer :max_direct_messages_sent_twitter_id, limit: 8
+      t.integer :max_direct_messages_received_twitter_id, limit: 8
 
       t.timestamps
     end
     add_index :twitter_accounts, :project_id
+    add_index :twitter_accounts, [:project_id, :twitter_id]
+    add_index :twitter_accounts, [:project_id, :access_scope]
+
     # Each twitter account may be added only once globally
     add_index :twitter_accounts, :twitter_id, unique: true
-    add_index :twitter_accounts, [:project_id, :twitter_id]
   end
 end

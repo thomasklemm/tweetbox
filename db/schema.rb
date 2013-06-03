@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130603085527) do
+ActiveRecord::Schema.define(:version => 20130603101033) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",           :null => false
@@ -64,9 +64,9 @@ ActiveRecord::Schema.define(:version => 20130603085527) do
     t.integer  "account_id", :null => false
     t.integer  "issuer_id",  :null => false
     t.integer  "invitee_id"
-    t.text     "name",       :null => false
-    t.text     "email",      :null => false
     t.text     "code",       :null => false
+    t.text     "name"
+    t.text     "email"
     t.datetime "used_at"
     t.datetime "expires_at"
     t.datetime "created_at", :null => false
@@ -98,10 +98,11 @@ ActiveRecord::Schema.define(:version => 20130603085527) do
   add_index "permissions", ["user_id", "project_id"], :name => "index_permissions_on_user_id_and_project_id"
 
   create_table "projects", :force => true do |t|
-    t.integer  "account_id", :null => false
-    t.text     "name",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "account_id",                 :null => false
+    t.text     "name",                       :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "default_twitter_account_id"
   end
 
   add_index "projects", ["account_id"], :name => "index_projects_on_account_id"
@@ -145,30 +146,31 @@ ActiveRecord::Schema.define(:version => 20130603085527) do
     t.text     "uid",                                                  :null => false
     t.text     "token",                                                :null => false
     t.text     "token_secret",                                         :null => false
-    t.integer  "twitter_id",            :limit => 8,                   :null => false
+    t.integer  "twitter_id",                              :limit => 8, :null => false
     t.text     "name"
     t.text     "screen_name"
     t.text     "location"
     t.text     "description"
     t.text     "url"
     t.text     "profile_image_url"
-    t.text     "authorized_for",                                       :null => false
-    t.boolean  "get_mentions",                       :default => true
-    t.integer  "max_mentions_tweet_id", :limit => 8
-    t.boolean  "get_home",                           :default => true
-    t.integer  "max_home_tweet_id",     :limit => 8
+    t.text     "access_scope"
+    t.integer  "max_mentions_timeline_twitter_id",        :limit => 8
+    t.integer  "max_user_timeline_twitter_id",            :limit => 8
+    t.integer  "max_direct_messages_sent_twitter_id",     :limit => 8
+    t.integer  "max_direct_messages_received_twitter_id", :limit => 8
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
   end
 
+  add_index "twitter_accounts", ["project_id", "access_scope"], :name => "index_twitter_accounts_on_project_id_and_access_scope"
   add_index "twitter_accounts", ["project_id", "twitter_id"], :name => "index_twitter_accounts_on_project_id_and_twitter_id"
   add_index "twitter_accounts", ["project_id"], :name => "index_twitter_accounts_on_project_id"
   add_index "twitter_accounts", ["twitter_id"], :name => "index_twitter_accounts_on_twitter_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.text     "name",                   :default => "",   :null => false
-    t.text     "email",                  :default => "",   :null => false
-    t.text     "encrypted_password",     :default => "",   :null => false
+    t.text     "name",                   :default => "", :null => false
+    t.text     "email",                  :default => "", :null => false
+    t.text     "encrypted_password",     :default => "", :null => false
     t.text     "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -181,9 +183,8 @@ ActiveRecord::Schema.define(:version => 20130603085527) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.text     "unconfirmed_email"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.boolean  "active",                 :default => true
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

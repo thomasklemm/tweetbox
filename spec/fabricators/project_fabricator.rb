@@ -2,11 +2,12 @@
 #
 # Table name: projects
 #
-#  account_id :integer          not null
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  name       :text             not null
-#  updated_at :datetime         not null
+#  account_id                 :integer          not null
+#  created_at                 :datetime         not null
+#  default_twitter_account_id :integer
+#  id                         :integer          not null, primary key
+#  name                       :text             not null
+#  updated_at                 :datetime         not null
 #
 # Indexes
 #

@@ -36,15 +36,15 @@ p
             br
             = twitter_account.searches.map(&:query).join(',<br> ').html_safe
 
-          td
-            - case twitter_account.authorized_for
-            - when 'read_and_write_and_messages'
-              span Full
-            - when 'read_and_write'
-              span Read and write
-            - when 'read'
-              span Read only
-          td
+          / td
+          /   - case twitter_account.authorized_for
+          /   - when 'read_and_write_and_messages'
+          /     span Full
+          /   - when 'read_and_write'
+          /     span Read and write
+          /   - when 'read'
+          /     span Read only
+          / td
 
             / - if twitter_account.destroyable?
             = link_to 'Remove', project_twitter_account_path(@project, twitter_account), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'

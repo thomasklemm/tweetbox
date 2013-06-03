@@ -2,61 +2,68 @@
 #
 # Table name: twitter_accounts
 #
-#  authorized_for        :text             not null
-#  created_at            :datetime         not null
-#  description           :text
-#  get_home              :boolean          default(TRUE)
-#  get_mentions          :boolean          default(TRUE)
-#  id                    :integer          not null, primary key
-#  location              :text
-#  max_home_tweet_id     :integer
-#  max_mentions_tweet_id :integer
-#  name                  :text
-#  profile_image_url     :text
-#  project_id            :integer          not null
-#  screen_name           :text
-#  token                 :text             not null
-#  token_secret          :text             not null
-#  twitter_id            :integer          not null
-#  uid                   :text             not null
-#  updated_at            :datetime         not null
-#  url                   :text
+#  access_scope                            :text
+#  created_at                              :datetime         not null
+#  description                             :text
+#  id                                      :integer          not null, primary key
+#  location                                :text
+#  max_direct_messages_received_twitter_id :integer
+#  max_direct_messages_sent_twitter_id     :integer
+#  max_mentions_timeline_twitter_id        :integer
+#  max_user_timeline_twitter_id            :integer
+#  name                                    :text
+#  profile_image_url                       :text
+#  project_id                              :integer          not null
+#  screen_name                             :text
+#  token                                   :text             not null
+#  token_secret                            :text             not null
+#  twitter_id                              :integer          not null
+#  uid                                     :text             not null
+#  updated_at                              :datetime         not null
+#  url                                     :text
 #
 # Indexes
 #
-#  index_twitter_accounts_on_project_id                 (project_id)
-#  index_twitter_accounts_on_project_id_and_twitter_id  (project_id,twitter_id)
-#  index_twitter_accounts_on_twitter_id                 (twitter_id) UNIQUE
+#  index_twitter_accounts_on_project_id                   (project_id)
+#  index_twitter_accounts_on_project_id_and_access_scope  (project_id,access_scope)
+#  index_twitter_accounts_on_project_id_and_twitter_id    (project_id,twitter_id)
+#  index_twitter_accounts_on_twitter_id                   (twitter_id) UNIQUE
 #
 
 class TwitterAccount < ActiveRecord::Base
+  extend Enumerize
+
+  ACCESS_SCOPES = %w(read write)
+  QUERIES = %w(mentions_timeline user_time direct_messages_received direct_messages_sent)
+
   belongs_to :project
   validates :project, presence: true
 
   # Each twitter account can be associated with only one project
   validates :twitter_id, presence: true, uniqueness: true
 
-  # Credentials for authenticating with Twitter
+  # Credentials used for authenticating with Twitter
   validates :uid, :token, :token_secret, presence: true
 
-  # Authorization scope of the stored credentials
-  VALID_AUTHORIZATION_SCOPES = %w(read read_and_write read_and_write_and_messages)
-  validates :authorized_for, presence: true, inclusion: { in: VALID_AUTHORIZATION_SCOPES }
-
-  scope :writable, -> { where(authorized_for: %w(read_and_write read_and_write_and_messages)) }
+  # Access scope
+  enumerize :access_scope, in: ACCESS_SCOPES
+  # #access_scope.read?
+  # #access_scope.write?
+  # TwitterAccount.with_access_scope(:read)
+  # TwitterAccount.with_access_scope(:read, :write)
 
   # Only destroy a twitter account if no search is associated
   has_many :searches, dependent: :restrict
 
   # Callbacks
-  after_commit :schedule_home_and_mentions, on: :create
+  before_save :set_first_authorized_twitter_account_to_be_project_default
 
   def at_screen_name
     "@#{ screen_name }"
   end
 
   def destroyable?
-    searches.empty?
+    project.default_twitter_account_id != id && searches.empty?
   end
 
   # Returns a Twitter::Client instance for the twitter account
@@ -71,21 +78,43 @@ class TwitterAccount < ActiveRecord::Base
 
   # Create or update existing Twitter account
   # Returns twitter account record
-  def self.from_omniauth(project, auth, authorization_scope)
-    t = project.twitter_accounts.where(uid: auth.uid).first_or_initialize # uid cannot change
+  def self.from_omniauth(project, auth, access_scope)
+    twitter_account = project.twitter_accounts.where(uid: auth.uid).first_or_initialize # uid cannot change
+    twitter_account.update_from_omniauth(auth, access_scope) && twitter_account
+  end
 
+  def update_from_omniauth(auth, access_scope)
     # Store credentials
-    t.token        = auth.credentials.token   # can change, e.g. by changing access level...
-    t.token_secret = auth.credentials.secret  #  ...or by revoking and reauthorizing access
+    self.token        = auth.credentials.token   # can change, e.g. by changing access level...
+    self.token_secret = auth.credentials.secret  #  ...or by revoking and reauthorizing access
 
     # Assign twitter authentcation scope for the provided credentials
-    t.assign_authorized_for(authorization_scope)
+    assign_access_scope(access_scope)
 
     # Assign user info
-    t.assign_twitter_account_info(auth)
+    assign_twitter_account_info(auth)
 
     # Save and return twitter account
-    t.save! && t
+    self.save! && self
+  end
+
+  def update_stats!(type, new_max_twitter_id)
+    type &&= type.to_s
+    QUERIES.include?(type) or raise StandardError, "Please provide a valid type: '#{ type }' could not be recognized."
+    write_attribute("max_#{type}_twitter_id", new_max_twitter_id)
+    self.save!
+  end
+
+  # Set the current twitter account to be the project's default twitter account
+  def default!
+    project.default_twitter_account = self
+    project.save!
+  end
+
+  private
+
+  def set_first_authorized_twitter_account_to_be_project_default
+    default! unless project.default_twitter_account.present?
   end
 
   # Assign user infos for authenticating twitter account
@@ -102,37 +131,11 @@ class TwitterAccount < ActiveRecord::Base
     self
   end
 
-  # Assign the authorized for scope for the credentials
-  def assign_authorized_for(scope)
-    raise "TwitterAccount#assign_authorized_for: Please provide a valid scope." unless
-      VALID_AUTHORIZATION_SCOPES.include?(scope.to_s)
+  # Assign the access scope for the credentials
+  def assign_access_scope(scope)
+    ACCESS_SCOPES.include?(scope.to_s) or
+      raise StandardError, "TwitterAccount#assign_access_scope: '#{ scope }' is not a valid scope."
 
-    self.authorized_for = scope
-  end
-
-  def authorized_for=(new_scope)
-    super new_scope.to_s
-  end
-
-  def update_stats!(type, new_max_tweet_id)
-    type &&= type.to_s
-    case type.to_s
-    when 'mentions'
-      self.max_mentions_tweet_id = new_max_tweet_id if new_max_tweet_id.to_i > max_mentions_tweet_id.to_i
-    when 'home'
-      self.max_home_tweet_id = new_max_tweet_id     if new_max_tweet_id.to_i > max_home_tweet_id.to_i
-    else
-      raise StandardError, "Please provide a valid type: #{ type }"
-    end
-
-    self.save!
-  end
-
-  private
-
-  # Fetch tweets asynchronously for the first time immediately after twitter account creation
-  def schedule_home_and_mentions
-    TwitterWorker.perform_async(:home, self.id)
-    TwitterWorker.perform_in(30.seconds, :mentions, self.id)
+    self.access_scope = scope.to_s
   end
 end

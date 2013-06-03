@@ -20,5 +20,5 @@ table class='table table-hover'
 
 = link_to 'New search', new_project_search_path(@project), class: 'btn btn-primary'
 '  or
-= link_to 'show incoming tweets', project_tweets_path(@project, flow: :incoming)
+= link_to 'show incoming tweets', incoming_project_tweets_path(@project)
 

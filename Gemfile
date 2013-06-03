@@ -66,6 +66,9 @@ gem 'twitter-text'
 # Use arrays and more in Postgres
 gem 'postgres_ext'
 
+# Enumerated attributes
+gem 'enumerize'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do

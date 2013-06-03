@@ -3,17 +3,17 @@ h3 Connect a Twitter account
 p
   | Tweetbox will help you handle your incoming tweets for as many accounts as you like in a quick and fun way. Connecting your Twitter account will allow you to fetch tweets and mentions from Twitter, and reply to tweets as they come in.
 
-= link_to 'Connect a Twitter account', authorize_project_twitter_accounts_path(@project, authorize_for: 'read_and_write_and_messages'), method: :post, class: 'btn btn-primary'
+= link_to 'Connect a Twitter account', authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'
 '  or
 = link_to 'cancel', project_twitter_accounts_path(@project)
 
-/ .space-two
+/ / .space-two
 
-- if Rails.env.development?
-  .space-one
+/ - if Rails.env.development?
+/   .space-one
 
-  = link_to 'Authorize read-only', authorize_project_twitter_accounts_path(@project, authorize_for: 'read'), method: :post, class: 'btn'
-  span  in development only
+/   = link_to 'Authorize read-only', authorize_project_twitter_accounts_path(@project, access_scope: 'read'), method: :post, class: 'btn'
+/   span  in development only
 
 / p Alternatively, you can authorize us to just read your tweet but not send out any ones. Your decision should depend on what you'd like to do with the individual account. If you want to handle tweets and send out replies, you should grant full access. If you want to authorize a <b>secondary account</b> to perform more search queries per timeframe but do not want to tweet from this account, read access is just fine.
 

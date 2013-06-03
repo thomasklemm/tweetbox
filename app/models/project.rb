@@ -2,11 +2,12 @@
 #
 # Table name: projects
 #
-#  account_id :integer          not null
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  name       :text             not null
-#  updated_at :datetime         not null
+#  account_id                 :integer          not null
+#  created_at                 :datetime         not null
+#  default_twitter_account_id :integer
+#  id                         :integer          not null, primary key
+#  name                       :text             not null
+#  updated_at                 :datetime         not null
 #
 # Indexes
 #
@@ -21,7 +22,9 @@ class Project < ActiveRecord::Base
   has_many :users, through: :permissions
 
   has_many :twitter_accounts, dependent: :destroy
-  has_many :searches # destroyed when twitter account is destroyed
+  belongs_to :default_twitter_account, class_name: 'TwitterAccount'
+
+  has_many :searches, readonly: true
 
   has_many :tweets, dependent: :destroy
   has_many :authors, dependent: :destroy

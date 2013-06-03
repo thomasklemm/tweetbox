@@ -2,11 +2,12 @@
 #
 # Table name: projects
 #
-#  account_id :integer          not null
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  name       :text             not null
-#  updated_at :datetime         not null
+#  account_id                 :integer          not null
+#  created_at                 :datetime         not null
+#  default_twitter_account_id :integer
+#  id                         :integer          not null, primary key
+#  name                       :text             not null
+#  updated_at                 :datetime         not null
 #
 # Indexes
 #
@@ -26,6 +27,8 @@ describe Project do
   it { should have_many(:users).through(:permissions) }
 
   it { should have_many(:twitter_accounts).dependent(:destroy) }
+  it { should belong_to(:default_twitter_account) }
+
   it { should have_many(:searches) }
 
   it { should have_many(:tweets).dependent(:destroy) }

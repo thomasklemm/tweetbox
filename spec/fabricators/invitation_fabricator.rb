@@ -5,12 +5,12 @@
 #  account_id :integer          not null
 #  code       :text             not null
 #  created_at :datetime         not null
-#  email      :text             not null
+#  email      :text
 #  expires_at :datetime
 #  id         :integer          not null, primary key
 #  invitee_id :integer
 #  issuer_id  :integer          not null
-#  name       :text             not null
+#  name       :text
 #  updated_at :datetime         not null
 #  used_at    :datetime
 #

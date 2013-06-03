@@ -1,46 +1,49 @@
 class TwitterAccountsController < ProjectController
-  AUTH_READ_AND_WRITE_AND_MESSAGES_PATH = '/auth/twitter?use_authorize=true&force_login=true'
-  AUTH_READ_AND_WRITE_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=write&force_login=true'
-  AUTH_READ_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=read&force_login=true'
+  ACCESS_SCOPE_WRITE_PATH = '/auth/twitter?use_authorize=true&force_login=true'
+  ACCESS_SCOPE_READ_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=read&force_login=true'
+
+  before_filter :load_twitter_account, only: [:show, :destroy, :default]
 
   def index
     @twitter_accounts = project_twitter_accounts
   end
 
   def show
-    @twitter_account = project_twitter_account
   end
 
   def new
   end
 
   def destroy
-    @twitter_account = project_twitter_account
+    @twitter_account.destroyable? or return redirect_to :back,
+      alert: "Twitter account could not be removed due to restrictions."
+
     @twitter_account.destroy
-    flash.notice = "Twitter account #{ @twitter_account.at_screen_name } has been removed."
-  rescue ActiveRecord::DeleteRestrictionError
-    flash.alert = "Twitter account #{ @twitter_account.at_screen_name } has not been removed because there are still search records that depend on it. Please edit these searches to use another Twitter account or remove them first."
-  ensure
-    redirect_to project_twitter_accounts_path(@project)
+    redirect_to project_twitter_accounts_path(@project),
+      notice: "Twitter account has been removed."
   end
 
   # Redirect to twitter authorization path
+  #   authorize_project_twitter_accounts_path(@project, access_scope: 'write')
   def auth
-    user_session[:project_id] = @project.id
-    user_session[:twitter_authorize_for] = params[:authorize_for]
+    access_scope = params[:access_scope]
+    TwitterAccount::ACCESS_SCOPES.include?(access_scope) or
+      return redirect_to :back, notice: "Please provide a valid access scope for the new Twitter account."
 
-    case params[:authorize_for].to_s
-    when 'read_and_write_and_messages'
-      return redirect_to AUTH_READ_AND_WRITE_AND_MESSAGES_PATH
-    when 'read_and_write'
-      return redirect_to AUTH_READ_AND_WRITE_PATH
-    when 'read'
-      return redirect_to AUTH_READ_PATH
-    else
-      user_session.delete(:project_id)
-      flash[:notice] = "Please provide a valid authorization scope."
-      redirect_to project_twitter_accounts_path
+    user_session[:project_id] = @project.id
+    user_session[:access_scope] = access_scope
+
+    case access_scope
+    when 'write' then return redirect_to ACCESS_SCOPE_WRITE_PATH
+    when 'read'  then return redirect_to ACCESS_SCOPE_READ_PATH
+    else raise ''
     end
+  end
+
+  # Set the project's default twitter account
+  def default
+    @twitter_account.default!
+    redirect_to project_twitter_accounts_path(@project), notice: "Twitter account has been set as the project's default Twitter account."
   end
 
   private
@@ -51,5 +54,9 @@ class TwitterAccountsController < ProjectController
 
   def project_twitter_account
     project_twitter_accounts.find(params[:id])
+  end
+
+  def load_twitter_account
+    @twitter_account = project_twitter_account
   end
 end

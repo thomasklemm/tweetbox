@@ -7,6 +7,7 @@ class Signup
   attr_reader :account
   attr_reader :membership
   attr_reader :project
+  attr_reader :permission
 
   attribute :name, String
   attribute :company_name, String
@@ -67,6 +68,7 @@ class Signup
 
     create_admin_membership!
     create_project!
+    create_permission!
   end
 
   def create_admin_membership!
@@ -81,5 +83,9 @@ class Signup
     @project = @account.projects.create! do |project|
       project.name = @account.name
     end
+  end
+
+  def create_permission!
+    @permission = @project.permissions.create!(membership: @membership)
   end
 end
