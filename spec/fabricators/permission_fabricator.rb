@@ -16,6 +16,10 @@
 #
 
 Fabricator(:permission) do
-  project
-  membership { |attrs| Fabricate(:membership, account: attrs[:project].account) }
+  user
+  membership do |attrs|
+    account = Fabricate(:account)
+    Fabricate(:membership, account: account, user: attrs[:user]) }
+
+  project { |attrs| Fabricate(:project, account: attrs[:membership].account) }
 end
