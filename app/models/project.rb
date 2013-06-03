@@ -14,7 +14,7 @@
 #
 
 class Project < ActiveRecord::Base
-  belongs_to :account
+  belongs_to :account, counter_cache: true
   validates :account, presence: true
 
   has_many :permissions, dependent: :destroy

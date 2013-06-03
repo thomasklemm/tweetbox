@@ -2,10 +2,11 @@
 #
 # Table name: accounts
 #
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  name       :text             not null
-#  updated_at :datetime         not null
+#  created_at     :datetime         not null
+#  id             :integer          not null, primary key
+#  name           :text             not null
+#  projects_count :integer
+#  updated_at     :datetime         not null
 #
 
 class Account < ActiveRecord::Base
@@ -32,16 +33,10 @@ class Account < ActiveRecord::Base
     memberships.exists?(user_id: user.id)
   end
 
-  def users_by_name
-    users.by_name
-  end
-
-  def projects_by_name
-    projects.by_name
-  end
-
+  # Make a given user an admin of the current account
+  # Sets permissions for each project of the account
   def make_admin!(user)
-    membership = memberships.find(user.membership.id)
+    membership = memberships.find(user.membership_id)
     membership.admin!
     set_permissions_for_new_admin(user)
   end

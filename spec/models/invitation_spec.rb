@@ -27,70 +27,80 @@ describe Invitation do
   it { should be_valid }
 
   it { should belong_to(:account) }
-  it { should belong_to(:sender).class_name('User') }
+  it { should belong_to(:issuer).class_name('User') }
   it { should belong_to(:invitee).class_name('User') }
-  it { should have_and_belong_to_many(:projects) }
+
+  it { should have_many(:invitation_projects).dependent(:destroy) }
+  it { should have_many(:projects).through(:invitation_projects) }
 
   it { should validate_presence_of(:account) }
+  it { should validate_presence_of(:issuer) }
+  it { should validate_presence_of(:name) }
   it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:sender) }
   it { should validate_presence_of(:code) }
-  it { should validate_uniqueness_of(:code) }
 
-  it "generates invitation code after initialization" do
-    expect(invitation.code).to be_present
+  context "saved invitation" do
+    before { invitation.save }
+    it { should validate_uniqueness_of(:code) }
   end
 
-  it "persists the invitation code in the database" do
-    code = invitation.code
-    invitation.save
-    invitation.reload
-    expect(invitation.code).to eq(code)
-  end
+  describe "callbacks" do
+    describe "#generate_code after initialization" do
+      it "generates invitation code" do
+        expect(invitation.code).to be_present
+        expect(invitation.code.length).to be(32)
+      end
 
-  it "prints the code as URL param" do
-    expect(invitation.to_param).to eq(invitation.code)
-  end
+      it "persists the invitation code in the database and does not change it on reloading the record" do
+        code = invitation.code
+        invitation.save
+        invitation.reload
+        expect(invitation.code).to eq(code)
+      end
+    end
 
-  it "delegates account name" do
-    expect(invitation.account_name).to eq(invitation.account.name)
-  end
-
-  it "delegates sender name" do
-    expect(invitation.sender_name).to eq(invitation.sender.name)
+    describe "#set_expiration_date before create" do
+      pending
+    end
   end
 
   describe "#active?" do
-    it "returns true when new record" do
-      expect(invitation).to be_new_record
-      expect(invitation).to be_active
-    end
+    pending
+  end
 
-    it "returns true when the invitation is less than seven days old" do
-      Timecop.freeze
-      invitation.created_at = 7.days.ago - 1.second
-      invitation.save
-      expect(invitation).to be_active
-      Timecop.return
-    end
+  describe "#expired?" do
+    pending
+  end
 
-    it "returns false when the invitation is more than seven days old" do
-      Timecop.freeze
-      invitation.created_at = 7.days.ago + 1.second
-      invitation.save
-      expect(invitation).to_not be_active
-      Timecop.return
+  describe "#used?" do
+    pending
+  end
+
+  describe "#use!" do
+    pending
+  end
+
+  describe "#deactivate!" do
+    pending
+  end
+
+  describe "#reactivate!" do
+    pending
+  end
+
+  describe "#to_param" do
+    it "prints the code as URL param" do
+      expect(invitation.to_param).to eq(invitation.code)
     end
   end
 
-
-  describe "#send_mail!" do
+  describe "#deliver_mail" do
     it "sends an invitation mail" do
       mail = stub('invitation_mail')
       mail.expects(:deliver).returns(true).once
       InvitationMailer.expects(:invitation).with(invitation).returns(mail).once
 
-      invitation.send_mail!
+      invitation.deliver_mail
     end
   end
 end

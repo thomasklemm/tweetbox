@@ -53,16 +53,6 @@ class Invitation < ActiveRecord::Base
     used_at.present? || invitee.present?
   end
 
-  def to_param
-    code
-  end
-
-  # Sends an invitation email sporting a link that helps registering
-  def deliver_mail
-    mail = InvitationMailer.invitation(self)
-    mail.deliver
-  end
-
   def use!(invitee)
     self.invitee = invitee
     self.used_at = Time.current
@@ -76,6 +66,16 @@ class Invitation < ActiveRecord::Base
   def reactivate!
     self.expires_at = ACTIVE_INVITATION_PERIOD.from_now
     self.save!
+  end
+
+  def to_param
+    code
+  end
+
+  # Sends an invitation email sporting a link that helps registering
+  def deliver_mail
+    mail = InvitationMailer.invitation(self)
+    mail.deliver
   end
 
   private

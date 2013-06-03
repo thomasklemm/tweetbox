@@ -21,11 +21,11 @@
 #
 
 Fabricator(:invitation) do
-  email   { sequence(:email) { |i| "invitation#{ i }@example.com" } }
   account
-  host    { Fabricate(:user) }
-  admin   false
-  used    false
-  projects { |attrs| [Fabricate(:project, account: attrs[:account]), Fabricate(:project, account: attrs[:account])] }
-  project_ids { |attrs| attrs[:projects].map(&:id) }
+  issuer    { Fabricate(:user) }
+
+  name      "Invitee name"
+  email     { sequence(:email) { |i| "invitation#{ i }@example.com" } }
+
+  project_ids { |attrs| [Fabricate(:project, account: attrs[:account]), Fabricate(:project, account: attrs[:account])].map(&:id) }
 end

@@ -2,6 +2,7 @@
 #
 # Table name: users
 #
+#  active                 :boolean          default(TRUE)
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :text
 #  confirmed_at           :datetime

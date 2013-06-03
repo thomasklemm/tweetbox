@@ -17,37 +17,36 @@
 require 'spec_helper'
 
 describe Membership do
-  subject { Fabricate(:membership) }
+  subject(:membership) { Fabricate.build(:membership) }
   it { should be_valid }
 
   it { should belong_to(:user) }
   it { should belong_to(:account) }
 
-  it { should validate_presence_of(:user_id) }
-  it { should validate_presence_of(:account_id) }
-  it { should validate_uniqueness_of(:user_id).scoped_to(:account_id) }
-
   it { should have_many(:permissions).dependent(:destroy) }
   it { should have_many(:projects).through(:permissions) }
 
-  let(:user)       { Fabricate(:user) }
-  let(:membership) { Fabricate(:membership, user: user) }
+  it { should validate_presence_of(:user) }
+  it { should validate_presence_of(:account) }
 
-  context "given an existing account membership" do
-    before { Fabricate(:membership) }
+  context "saved record" do
+    before { membership.save }
     it { should validate_uniqueness_of(:user_id).scoped_to(:account_id) }
   end
 
-  describe "delegates to user" do
-    it { should respond_to(:name) }
-    it { should respond_to(:email) }
+  describe "#admin" do
+    it "defaults to non-admin membership" do
+      expect(membership).to_not be_admin
+    end
   end
 
-  it "returns memberships by name" do
-    Fabricate(:membership, user: Fabricate(:user, name: 'def'))
-    Fabricate(:membership, user: Fabricate(:user, name: 'abc'))
-    Fabricate(:membership, user: Fabricate(:user, name: 'ghi'))
+  describe "#admin!" do
+    before { membership.save }
 
-    expect(Membership.by_name.map(&:name)).to eq(%w(abc def ghi))
+    it "marks a membership as an admin membership" do
+      membership.admin!
+      membership.reload
+      expect(membership).to be_admin
+    end
   end
 end
