@@ -15,7 +15,6 @@
 
 class Project < ActiveRecord::Base
   belongs_to :account, counter_cache: true
-  validates :account, presence: true
 
   has_many :permissions, dependent: :destroy
   has_many :memberships, through: :permissions
@@ -27,7 +26,7 @@ class Project < ActiveRecord::Base
   has_many :tweets, dependent: :destroy
   has_many :authors, dependent: :destroy
 
-  validates :name, presence: true
+  validates :account, :name, presence: true
 
   scope :by_name, -> { order('projects.name') }
   scope :visible_to, ->(user) { where(id: user.project_ids) }
@@ -62,14 +61,6 @@ class Project < ActiveRecord::Base
   # Returns a tweet record or nil if the tweet could not be found on Twitter
   def find_or_fetch_tweet(twitter_id)
     tweets.where(twitter_id: twitter_id).first || fetch_tweet(twitter_id)
-  end
-
-  def writable_twitter_accounts
-    twitter_accounts.writable
-  end
-
-  def default_twitter_account
-    writable_twitter_accounts.try(:first)
   end
 
   def to_param

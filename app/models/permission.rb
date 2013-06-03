@@ -16,15 +16,15 @@
 #
 
 class Permission < ActiveRecord::Base
-  belongs_to :membership
   belongs_to :project
+  belongs_to :membership
   belongs_to :user
 
   before_validation :set_user_from_membership, if: :membership_id_changed?
   before_validation :set_membership_from_user, if: :user_id_changed?
   before_validation :ensure_user_is_membership_user
 
-  validates :membership, :project, :user, presence: true
+  validates :project, :membership, :user, presence: true
   validate :membership_and_user_must_be_associated_with_project_account
   validates_uniqueness_of :membership_id, scope: :project_id
 
