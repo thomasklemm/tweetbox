@@ -14,45 +14,32 @@ p
     thead
       tr
         th #
-        th
+        th Avatar
         th Twitter account
-        th Mentions
-        th Searches
-        th Access level
-        th Actions
+        th
+
     tbody
       - @twitter_accounts.each_with_index do |twitter_account, i|
         tr.twitter-account
           td = i+1
-          td = link_to "https://twitter.com/intent/user?screen_name=#{ twitter_account.screen_name }" do
+
+          / avatar
+          td = link_to twitter_account.user_intent_url do
             = image_tag(twitter_account.profile_image_url, class: 'avatar img-polaroid')
-          td = link_to "https://twitter.com/intent/user?screen_name=#{ twitter_account.screen_name }" do
+
+          / name
+          td = link_to twitter_account.user_intent_url do
             .screen-name = twitter_account.at_screen_name
-            '
-            .name (#{ twitter_account.name })
-          td: b Tracking <br> mentions
+            .name = "(#{ twitter_account.name })"
+
+          / actions
           td
-            b Performs #{ pluralize twitter_account.searches.size, 'search query' }:
-            br
-            = twitter_account.searches.map(&:query).join(',<br> ').html_safe
+            = link_to 'Import tweets', import_project_twitter_account_path(@project, twitter_account), class: 'btn'
 
-          / td
-          /   - case twitter_account.authorized_for
-          /   - when 'read_and_write_and_messages'
-          /     span Full
-          /   - when 'read_and_write'
-          /     span Read and write
-          /   - when 'read'
-          /     span Read only
-          / td
-
-            / - if twitter_account.destroyable?
-            = link_to 'Remove', project_twitter_account_path(@project, twitter_account), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
-            / - else
-              em Please move or remove all associated searches before removing the Twitter account.
-
-    /  .twitter-accounts-wrapper
-      = render partial: 'twitter_accounts/twitter_account', collection: @twitter_accounts
+            / / - if twitter_account.destroyable?
+            / = link_to 'Remove', project_twitter_account_path(@project, twitter_account), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
+            / / - else
+            /   em Please move or remove all associated searches before removing the Twitter account.
 
 - else
   p

@@ -37,6 +37,12 @@ class Tweet < ActiveRecord::Base
   belongs_to :twitter_account
   validates :twitter_account, presence: true
 
+  # Use default account if the one used to retrieve the tweet is no longer present
+  def twitter_account
+    twitter_account = super
+    twitter_account.presence || project.default_twitter_account
+  end
+
   # Events
   has_many :events, dependent: :destroy
 

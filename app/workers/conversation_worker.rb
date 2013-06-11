@@ -2,33 +2,43 @@ class ConversationWorker
   include Sidekiq::Worker
 
   # Builds the complete conversation history for a tweet (given its primary key, not twitter_id)
+  # Optionally takes the primary id of a twitter account to fetch the history with, defaults to
+  # the twitter account that the tweet has been retrieved with.
   # Ensures that all previous tweets are fetched and stored in the database
   # Caches an array of previous tweet ids with the tweet itself for quick retrieval of the conversation history
   # Returns the tweet
-  def perform(tweet_id)
-    # Load the tweet
-    @tweet = Tweet.find(tweet_id)
-    return unless @tweet.in_reply_to_status_id
+  def perform(tweet_id, twitter_account_id=nil)
+    # Only proceed if there is a history
+    load_tweet(tweet_id)
+    return unless tweet_is_a_reply?
 
-    load_environment
+    load_project
+    load_twitter_account(twitter_account_id)
+
     fetch_previous_tweets_recursively
     cache_previous_tweet_ids
+
     @tweet
   end
 
   private
 
-  # Load the environment
-  # Please pass the tweet's primary key, not its twitter_id
-  def load_environment
-    # Load the twitter account that was used to retrieve the tweet
-    @twitter_account = @tweet.twitter_account
+  def load_tweet(tweet_id)
+    @tweet = Tweet.find(tweet_id)
+  end
 
-    # Instantiate a twitter client for the twitter account
-    @client = @twitter_account.client
+  def tweet_is_a_reply?
+    @tweet.is_a_reply?
+  end
 
-    # Load the project associated with the tweet
+  def load_project
     @project = @tweet.project
+  end
+
+  # Load given twitter account or the one that has been used to retrieve the tweet
+  # Note that this falls back to picking a random project twitter account if the original one has been removed from our records
+  def load_twitter_account(twitter_account_id)
+    @twitter_account = twitter_account_id ? TwitterAccount.find(twitter_account_id) : @tweet.twitter_account
   end
 
   # Find or fetch the previous tweets recursively
@@ -61,9 +71,19 @@ class ConversationWorker
   def fetch_tweet(status_id)
     status = @client.status(status_id)
     @project.create_tweet_from_twitter(status, state: :none, twitter_account: @twitter_account)
+
+  # Retry on rate limit errors
+  rescue Twitter::Error::TooManyRequests
+    random_twitter_account = TwitterAccount.random
+    perform(@tweet.id, random_twitter_account.id)
+
   # Sometimes a status gets deleted by the author
   rescue Twitter::Error::NotFound
     nil
+
+  # Retry on all other errors
+  rescue
+    perform_in(5.minutes, @tweet.id)
   end
 
   # Cache previous tweet ids for the tweet

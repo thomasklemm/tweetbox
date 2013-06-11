@@ -39,6 +39,12 @@ class TwitterAccount < ActiveRecord::Base
   belongs_to :project
   validates :project, presence: true
 
+  # Only destroy a twitter account if no search is associated
+  has_many :searches, dependent: :restrict
+
+  # Tweets retrieved with current twitter account
+  has_many :tweets, dependent: :nullify
+
   # Each twitter account can be associated with only one project
   validates :twitter_id, presence: true, uniqueness: true
 
@@ -51,9 +57,6 @@ class TwitterAccount < ActiveRecord::Base
   # #access_scope.write?
   # TwitterAccount.with_access_scope(:read)
   # TwitterAccount.with_access_scope(:read, :write)
-
-  # Only destroy a twitter account if no search is associated
-  has_many :searches, dependent: :restrict
 
   # Callbacks
   before_save :set_first_authorized_twitter_account_to_be_project_default
@@ -98,10 +101,11 @@ class TwitterAccount < ActiveRecord::Base
     self.save! && self
   end
 
-  def update_stats!(type, new_max_twitter_id)
+  def update_statistics(type, new_max_twitter_id)
     type &&= type.to_s
     QUERIES.include?(type) or raise StandardError, "Please provide a valid type: '#{ type }' could not be recognized."
-    write_attribute("max_#{type}_twitter_id", new_max_twitter_id)
+    # TODO: See if new max is greater than old max
+    write_attribute("max_#{type}_timeline_twitter_id", new_max_twitter_id)
     self.save!
   end
 

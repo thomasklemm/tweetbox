@@ -2,10 +2,10 @@ class TwitterAccountsController < ProjectController
   ACCESS_SCOPE_WRITE_PATH = '/auth/twitter?use_authorize=true&force_login=true'
   ACCESS_SCOPE_READ_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=read&force_login=true'
 
-  before_filter :load_twitter_account, only: [:show, :destroy, :default]
+  before_filter :load_twitter_account, only: [:show, :destroy, :default, :get_import, :post_import]
 
   def index
-    @twitter_accounts = project_twitter_accounts
+    @twitter_accounts = project_twitter_accounts.decorate
   end
 
   def show
@@ -46,6 +46,14 @@ class TwitterAccountsController < ProjectController
     redirect_to project_twitter_accounts_path(@project), notice: "Twitter account has been set as the project's default Twitter account."
   end
 
+  # Instruct Tweetbox to import the past mentions
+  def get_import
+    render 'import'
+  end
+
+  def post_import
+  end
+
   private
 
   def project_twitter_accounts
@@ -57,6 +65,6 @@ class TwitterAccountsController < ProjectController
   end
 
   def load_twitter_account
-    @twitter_account = project_twitter_account
+    @twitter_account = project_twitter_account.decorate
   end
 end

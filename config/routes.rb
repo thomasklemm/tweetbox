@@ -63,13 +63,16 @@ Birdview::Application.routes.draw do
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post 'auth', as: :authorize, on: :collection
-      post 'default', on: :member
+
+      member do
+        post 'default'
+        get 'import', action: 'get_import'
+        post 'import', action: 'post_import'
+      end
     end
 
     resources :searches, except: :show
   end
-
-
 
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to
@@ -80,9 +83,6 @@ Birdview::Application.routes.draw do
   # Sidekiq Web interface
   mount Sidekiq::Web => '/sidekiq'
 
-  # Static Pages
-  get '*id' => 'pages#show', as: :static
-
   # Root
-  root to: 'projects#index'
+  root to: 'high_voltage/pages#show', id: 'landing'
 end
