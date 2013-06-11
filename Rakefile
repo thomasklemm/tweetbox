@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Birdview::Application.load_tasks
+Tweetbox::Application.load_tasks

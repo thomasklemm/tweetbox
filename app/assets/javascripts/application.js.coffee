@@ -33,7 +33,7 @@
   $scope.reply = ->
     @statusText[0] == '@'
 
-# Birdview
+# Tweetbox
 $ ->
   ##
   # Autosize

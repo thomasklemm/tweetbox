@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 
-Birdview::Application.routes.draw do
+Tweetbox::Application.routes.draw do
   # User authentication
   devise_for :users,
     path_names: { sign_in: 'login', sign_out: 'logout' }

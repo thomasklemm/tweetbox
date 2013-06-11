@@ -77,7 +77,7 @@ class Status
   end
 
   def public_status_url
-    "http://birdview.dev/read-more/#{ code }"
+    "http://tweetbox.dev/read-more/#{ code }"
   end
 
   def twitter_account!

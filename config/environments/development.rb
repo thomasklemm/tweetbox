@@ -1,4 +1,4 @@
-Birdview::Application.configure do
+Tweetbox::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -40,7 +40,7 @@ Birdview::Application.configure do
 
   # Default actiomailer url host
   # required by devise
-  config.action_mailer.default_url_options = { host: 'birdview.dev' }
+  config.action_mailer.default_url_options = { host: 'tweetbox.dev' }
 
   # Quiet Assets
   config.quiet_assets = true

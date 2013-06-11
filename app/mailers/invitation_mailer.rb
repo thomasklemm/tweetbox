@@ -29,6 +29,6 @@ class InvitationMailer < ActionMailer::Base
   end
 
   def self.support_email
-    'help@birdview.dev'
+    'help@tweetbox.dev'
   end
 end

@@ -1,8 +1,12 @@
-.tweet id=dom_id(tweet)
+= div_for tweet do
   = link_to tweet.author_intent_url, class: 'author' do
     = tweet.author_profile
 
   .text = tweet.linked_text
+
+  .main-actions
+    = link_to icon_tag(:reply), '#'
+    = link_to icon_tag(:check), '#'
 
   .actions
     - if tweet.new?
@@ -11,7 +15,6 @@
 
     - if tweet.open?
       = tweet.reply_button('Reply')
-      = tweet.comment_button('Comment')
       = tweet.close_button('Resolve')
 
       / share dropdown
@@ -20,9 +23,9 @@
         ul.dropdown-menu role='menu'
           li = tweet.retweet_button('Retweet')
           li
-            - if !tweet.favorited?
+            - unless tweet.favorited?
               = tweet.favorite_button('Favorite')
-            - else
+            - if tweet.favorited?
               = tweet.unfavorite_button('Unfavorite')
           li = tweet.open_in_twitter_button('Open in Twitter')
           li.divider
@@ -30,9 +33,6 @@
 
     - if tweet.closed?
       = tweet.open_button('Reopen')
-
-    - if tweet.posted?
-      = tweet.comment_button('Comment')
 
     - if tweet.none?
       = tweet.open_button('Open')

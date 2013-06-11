@@ -18,7 +18,7 @@ describe InvitationMailer, "invitation" do
   end
 
   it "sets the subject" do
-    expect(mail.subject).to eq("#{ invitation.sender_name } has invited you to join Birdview.")
+    expect(mail.subject).to eq("#{ invitation.sender_name } has invited you to join Tweetbox.")
   end
 
   it "sets reply_to to the user that sent the invitation" do

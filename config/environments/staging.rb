@@ -1,4 +1,4 @@
-Birdview::Application.configure do
+Tweetbox::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -52,7 +52,7 @@ Birdview::Application.configure do
   }
 
   # Send all email to said email address
-  # config.action_mailer.delivery_method = :override_recipient_smtp, { to: 'birdview-staging@tklemm.eu' }
+  # config.action_mailer.delivery_method = :override_recipient_smtp, { to: 'tweetbox-staging@tklemm.eu' }
 
   # Enable threaded mode
   config.threadsafe!
