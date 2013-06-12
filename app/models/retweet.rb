@@ -51,7 +51,7 @@ class Retweet
   end
 
   def create_events_on_tweets
-    old_tweet.events.create!(kind: :retweeted, user: user)
-    new_tweet.events.create!(kind: :retweeted, user: user)
+    old_tweet.events.create!(kind: :retweet, user: user)
+    new_tweet.events.create!(kind: :post, user: user)
   end
 end

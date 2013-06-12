@@ -1,16 +1,17 @@
 = form_for [@project, @tweet, @retweet] do |f|
 
+  / tweet to be retweeted
   .tweets-wrapper
     .tweet-wrapper
-
       .tweet
-        = @tweet.author_profile
-        .text = @tweet.text
+        = link_to @tweet.author_intent_url, class: 'author' do
+          = @tweet.author_profile
 
+        .text = @tweet.text
 
   .field
     = f.label :twitter_account_id
-    = f.collection_select :twitter_account_id, @project.writable_twitter_accounts, :id, :screen_name
+    = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :screen_name
 
   .action
     = f.submit 'Retweet', class: 'btn btn-primary'
