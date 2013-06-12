@@ -5,7 +5,7 @@
 #  active             :boolean          default(TRUE)
 #  created_at         :datetime         not null
 #  id                 :integer          not null, primary key
-#  max_tweet_id       :integer
+#  max_twitter_id     :integer
 #  project_id         :integer          not null
 #  query              :text             not null
 #  twitter_account_id :integer          not null
@@ -30,9 +30,8 @@ class Search < ActiveRecord::Base
     raise NotImplementedError, "Use Search#twitter_account= instead"
   end
 
-  def update_stats!(new_max_tweet_id)
-    self.max_tweet_id = new_max_tweet_id if new_max_tweet_id.to_i > max_tweet_id.to_i
-    self.save!
+  def update_max_twitter_id(twitter_id)
+    update_attributes(max_twitter_id: twitter_id) if twitter_id.to_i > max_twitter_id.to_i
   end
 
   private

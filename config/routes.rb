@@ -50,7 +50,16 @@ Tweetbox::Application.routes.draw do
       end
 
       member do
-        put  'transition'
+        # Incoming tweets
+        put 'appreciate'
+        put 'open_case'
+        put 'open_case_and_start_reply'
+
+        # Open tweets
+        put 'resolve'
+
+        # Legacy
+        put 'transition'
       end
 
       resources :replies,   only: [:new, :create], on: :member, controller: 'statuses'

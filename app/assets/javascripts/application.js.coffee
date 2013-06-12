@@ -34,7 +34,7 @@
     @statusText[0] == '@'
 
 # Tweetbox
-$ ->
+jQuery ->
   ##
   # Autosize
   $('textarea').autosize()

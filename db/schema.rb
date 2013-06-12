@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(:version => 20130603101033) do
     t.integer  "project_id",                                        :null => false
     t.text     "query",                                             :null => false
     t.boolean  "active",                          :default => true
-    t.integer  "max_tweet_id",       :limit => 8
+    t.integer  "max_twitter_id",     :limit => 8
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
   end

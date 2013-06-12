@@ -7,20 +7,25 @@
       ul class='nav nav-list'
         li: b = @project.name
 
-        li.nav-header Tweets
+        .space-half
+
+        = link_to 'Post a tweet', new_project_status_path(@project), class: 'btn btn-primary'
+
+        li.divider
+
+        li.nav-header New tweets
         = active_link_to 'Incoming', incoming_project_tweets_path(@project), exact: true
-        = active_link_to 'Open', open_project_tweets_path(@project), exact: true
+        = active_link_to 'In progress', open_project_tweets_path(@project), exact: true
+
+        li.divider
+
+        li.nav-header Archived tweets
         = active_link_to 'Resolved', resolved_project_tweets_path(@project), exact: true
 
         li.divider
 
-        li.nav-header Statuses
-        = active_link_to 'New status', new_project_status_path(@project), exact: true
-
-        li.divider
-
         li.nav-header Project
-        = active_link_to 'Twitter Accounts', project_twitter_accounts_path(@project)
+        = active_link_to 'Twitter accounts', project_twitter_accounts_path(@project)
         = active_link_to 'Searches', project_searches_path(@project)
 
         / edit project

@@ -101,12 +101,12 @@ class TwitterAccount < ActiveRecord::Base
     self.save! && self
   end
 
-  def update_statistics(type, new_max_twitter_id)
-    type &&= type.to_s
-    QUERIES.include?(type) or raise StandardError, "Please provide a valid type: '#{ type }' could not be recognized."
-    # TODO: See if new max is greater than old max
-    write_attribute("max_#{type}_timeline_twitter_id", new_max_twitter_id)
-    self.save!
+  def update_max_mentions_timeline_twitter_id(twitter_id)
+    update_attributes(max_mentions_timeline_twitter_id: twitter_id) if twitter_id.to_i > max_mentions_timeline_twitter_id.to_i
+  end
+
+  def update_max_user_timeline_twitter_id(twitter_id)
+    update_attributes(max_user_timeline_twitter_id: twitter_id) if twitter_id.to_i > max_user_timeline_twitter_id.to_i
   end
 
   # Set the current twitter account to be the project's default twitter account

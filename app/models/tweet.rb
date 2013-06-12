@@ -222,6 +222,6 @@ class Tweet < ActiveRecord::Base
 
   # Fetch previous tweets and cache previous tweet ids in the background
   def build_conversation
-    ConversationWorker.perform_async(self.id)
+    ConversationWorker.perform_async(id)
   end
 end

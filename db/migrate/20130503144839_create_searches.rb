@@ -6,7 +6,7 @@ class CreateSearches < ActiveRecord::Migration
 
       t.text :query, null: false
       t.boolean :active, default: true
-      t.integer :max_tweet_id, limit: 8
+      t.integer :max_twitter_id, limit: 8
 
       t.timestamps
     end

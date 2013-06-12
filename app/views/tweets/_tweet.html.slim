@@ -1,41 +1,51 @@
-= div_for tweet do
+= div_for tweet, class: "#{ 'main-tweet' if tweet == main_tweet }" do
+  .main-actions
+    - if tweet.new?
+      = tweet.open_case_button(nil, :reply, title: 'Open case and work on this Tweet')
+      = tweet.appreciate_tweet_button('Done', :ok, title: 'Appreciate and close this Tweet')
+
+    - if tweet.open?
+      = tweet.new_reply_button('Reply', :reply, title: 'Reply to this Tweet', class: 'open')
+      = tweet.resolve_case_button('Resolve', :ok, title: 'Resolve this Case', class: 'open')
+
   = link_to tweet.author_intent_url, class: 'author' do
     = tweet.author_profile
 
   .text = tweet.linked_text
 
-  .main-actions
-    = link_to icon_tag(:reply), '#'
-    = link_to icon_tag(:check), '#'
-
   .actions
     - if tweet.new?
-      = tweet.open_button('Take action')
-      = tweet.close_button('Appreciate')
+      = tweet.open_case_button('Open Case', :reply, title: 'Work on this Tweet')
+      = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
 
     - if tweet.open?
-      = tweet.reply_button('Reply')
-      = tweet.close_button('Resolve')
+      = tweet.new_reply_button('Reply', :reply, title: 'Reply to this Tweet')
+      = tweet.resolve_case_button('Resolve', :ok, title: 'Resolve this Case')
 
       / share dropdown
       span.dropdown
-        = link_to icon_tag(:share, 'Share'), '#', :'data-toggle' => 'dropdown', class: 'dropdown-link'
+        = link_to icon_tag(:share, 'More'), '#', :'data-toggle' => 'dropdown', class: 'dropdown-link'
+
         ul.dropdown-menu role='menu'
-          li = tweet.retweet_button('Retweet')
-          li
-            - unless tweet.favorited?
-              = tweet.favorite_button('Favorite')
-            - if tweet.favorited?
-              = tweet.unfavorite_button('Unfavorite')
-          li = tweet.open_in_twitter_button('Open in Twitter')
+          / share on Twitter
+          li = tweet.retweet_button('Retweet', :retweet, title: 'Retweet this Tweet')
+          li = tweet.favorite_button('Favorite', :star, title: 'Favorite this Tweet')
+          li = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
+
           li.divider
-          li = tweet.copy_tweet_button('Copy tweet')
+
+          / Copy tweet
+          li = tweet.copy_link('Copy Link on Twitter', nil, title: 'Copy the link of this Tweet on Twitter')
+          li = tweet.copy_text('Copy Tweet', nil, title: 'Copy the tweet to paste it into a chat and more')
 
     - if tweet.closed?
-      = tweet.open_button('Reopen')
+      = tweet.open_case_button('Reopen Case', :'unlock-alt', title: 'Work on this Tweet')
+      = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
 
     - if tweet.none?
-      = tweet.open_button('Open')
+      = tweet.open_case_button('Make a Case', 'unlock-alt', title: 'Work on this Tweet')
+      = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
 
   .events
-    = render tweet.events
+    = render tweet.events.decorate
+

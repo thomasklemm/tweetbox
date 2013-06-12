@@ -1,6 +1,8 @@
 class StatusesController < ProjectController
   def new
     @status = Status.new(reply_params)
+    # Create start_reply event
+    @status.reply_to_tweet && @status.reply_to_tweet.events.create!(kind: :start_reply, user: current_user)
   end
 
   def create

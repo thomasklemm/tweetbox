@@ -1,8 +1,0 @@
-= form_for [@project, @tweet, @comment] do |f|
-  = render 'shared/form_errors', target: @comment
-
-  .field
-    = f.text_area :text, { placeholder: 'Your comment', rows: 5 }
-
-  .actions
-    = f.submit class: 'btn btn-primary'

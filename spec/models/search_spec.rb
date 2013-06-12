@@ -5,7 +5,7 @@
 #  active             :boolean          default(TRUE)
 #  created_at         :datetime         not null
 #  id                 :integer          not null, primary key
-#  max_tweet_id       :integer
+#  max_twitter_id     :integer
 #  project_id         :integer          not null
 #  query              :text             not null
 #  twitter_account_id :integer          not null

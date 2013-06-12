@@ -3,16 +3,7 @@ class TweetDecorator < Draper::Decorator
   delegate_all
 
   decorates_association :conversation
-  decorates_association :events
-
-  # TODO: Add boolean flag or timestamp
-  def retweeted?
-    false
-  end
-
-  def favorited?
-    false
-  end
+  # decorates_association :events
 
   USER_INTENT_BASE_URL = "https://twitter.com/intent/user?screen_name="
 
@@ -38,52 +29,46 @@ class TweetDecorator < Draper::Decorator
     lt.html_safe
   end
 
-  def open_button(text)
-    link_to icon_tag(:plus, text),
-      transition_project_tweet_path(project, self, to: :open), method: :put
+  def open_case_button(text, icon, opts={})
+    link_to icon_tag(icon, text), open_case_project_tweet_path(project, self), opts.merge(method: :put)
   end
 
-  def close_button(text)
-    link_to icon_tag(:ok, text),
-      transition_project_tweet_path(project, self, to: :closed), method: :put
+  def appreciate_tweet_button(text, icon, opts={})
+    link_to icon_tag(icon, text), appreciate_project_tweet_path(project, self), opts.merge(method: :put)
   end
 
-  def reply_button(text)
-    link_to icon_tag(:reply, text),
-      new_project_tweet_reply_path(project, self)
+  def new_reply_button(text, icon, opts={})
+    link_to icon_tag(icon, text), new_project_tweet_reply_path(project, self), opts
   end
 
-  def comment_button(text)
-    link_to icon_tag(:'comment-alt', text),
-      new_project_tweet_comment_path(project, self)
+  def resolve_case_button(text, icon, opts={})
+    link_to icon_tag(icon, text), resolve_project_tweet_path(project, self), opts.merge(method: :put)
   end
 
-  def retweet_button(text)
-    link_to icon_tag(:retweet, text),
-      new_project_tweet_retweet_path(project, self)
+  def retweet_button(text, icon, opts={})
+    link_to icon_tag(icon, text), new_project_tweet_retweet_path(project, self), opts
   end
 
-  def favorite_button(text)
-    link_to icon_tag(:star, text),
-      new_project_tweet_favorite_path(project, self, type: :favorite)
+  def favorite_button(text, icon, opts={})
+    link_to icon_tag(icon, text), new_project_tweet_favorite_path(project, self), opts
   end
 
-  def unfavorite_button(text)
-    link_to icon_tag(:'star-empty', text),
-      new_project_tweet_favorite_path(project, self, type: :unfavorite)
-  end
-
-  def open_in_twitter_button(text)
-    link_to icon_tag(:twitter, text), status_in_twitter_url
-  end
-
-  def status_in_twitter_url
+  def status_on_twitter_url
     "https://twitter.com/#{ author.screen_name }/status/#{ twitter_id }"
   end
 
-  def copy_tweet_button(text)
-    link_to icon_tag(:copy, text), 'javascript:;',
-      class: 'copy-button', 'data-clipboard-text' => "#{ formatted_tweet_text }"
+  def open_in_twitter_link(text, icon, opts={})
+    link_to icon_tag(icon, text), status_on_twitter_url, opts.merge(target: :blank)
+  end
+
+  def copy_link(text, icon, opts={})
+    link_to icon_tag(icon, text), 'javascript:;', class: 'copy-button',
+      'data-clipboard-text' => "#{ status_on_twitter_url }"
+  end
+
+  def copy_text(text, icon, opts={})
+    link_to icon_tag(icon, text), 'javascript:;', class: 'copy-button',
+      'data-clipboard-text' => "#{ formatted_tweet_text }"
   end
 
   def formatted_tweet_text

@@ -160,9 +160,11 @@ $navigation-spacing: 0.75rem
     border-bottom: 1px solid #ddd
     margin-bottom: 1rem
 
+.tweet-wrapper
   .tweet
     padding: 12px
     padding-left: 72px
+    padding-right: 72px
 
     .avatar
       float: left
@@ -181,10 +183,43 @@ $navigation-spacing: 0.75rem
     .text
       height: (2 * $baseLineHeight) + 3px
 
+    .main-actions
+      float: right
+      margin-right: -58px
+
+      a
+        display: inline-block
+        background: $blue
+        color: $white
+        padding: 1rem 0.5rem
+
+        &:hover
+          background: darken($blue, 8%)
+
+        &:not(:first-of-type)
+          margin-left: 4px
+
+        &.open
+          background: $green
+
+    &.main-tweet
+      background: #eee
+
     .actions a:not(:first-of-type), .dropdown-link
       margin-left: 8px
       border-left: 1px solid #ccc
       padding-left: 8px
+
+    &:not(.main-tweet)
+      .actions a
+        visibility: hidden
+      &:hover .actions a
+        visibility: visible
+
+    .events
+      margin-top: 6px
+      .event
+        font-size: 13px
 
 .zeroclipboard-is-hover
   color: $dropdownLinkColorHover !important
@@ -272,6 +307,7 @@ $navigation-spacing: 0.75rem
 
     .text
       white-space: pre-wrap  // pre-wrap and pre-line seem to be good options
+      color: $textColor
 
   .preview-status
     .text

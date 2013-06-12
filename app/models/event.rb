@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
 
   validates :tweet, :user, :project, presence: true
 
-  VALID_KINDS_OF_EVENTS = %w(opened closed posted replied retweeted favorited unfavorited)
+  VALID_KINDS_OF_EVENTS = %w(appreciate open_case resolve start_reply post_reply post retweet favorite unfavorite)
   validates :kind, presence: true, inclusion: { in: VALID_KINDS_OF_EVENTS }
 
   before_validation :assign_project_id_from_tweet

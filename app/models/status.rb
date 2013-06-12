@@ -113,7 +113,8 @@ class Status
     ConversationWorker.new.perform(@new_tweet.id)
 
     # TODO: Link new and old tweets
-    new_tweet.events.create!(kind: :posted, user: user)
-    reply_to_tweet.events.create!(kind: :replied, user: user) if reply_to_tweet
+    # Create post_reply and post events
+    reply_to_tweet && reply_to_tweet.events.create!(kind: :post_reply, user: user)
+    new_tweet.events.create!(kind: :post, user: user)
   end
 end

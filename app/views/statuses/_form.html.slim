@@ -33,7 +33,7 @@
 
     .actions
       = f.submit "Post {{ reply() && 'reply' || 'status' }}", class: 'btn btn-primary'
-      span.character-counter {{ statusCharCount() }} characters
+      span.character-counter = "{{ statusCharCount() }} characters"
 
   .space-one
 
@@ -41,19 +41,20 @@
     - if reply_to_tweet
       div ng-show='reply()'
         .in-reply-to-status
-          .author
-            img src=reply_to_tweet.author.profile_image_url class='avatar'
-            span.name = reply_to_tweet.author.name
-            span.screen-name = reply_to_tweet.author.at_screen_name
+          = link_to project_tweet_path(@project, reply_to_tweet) do
+            .author
+              img src=reply_to_tweet.author.profile_image_url class='avatar'
+              span.name = reply_to_tweet.author.name
+              span.screen-name = reply_to_tweet.author.at_screen_name
 
-          .text = reply_to_tweet.text
+            .text = reply_to_tweet.text
 
     .preview-status
       .author
         img ng-src="{{ selectedTwitterAccount.profile_image_url}}" class='avatar'
-        span.name {{ selectedTwitterAccount.name }}
+        span.name = "{{ selectedTwitterAccount.name }}"
         span.screen-name @{{ selectedTwitterAccount.screen_name }}
 
-      .text {{ previewText }}
+      .text = "{{ previewText }}"
 
     .character-counter style='margin-top: 7px' {{ previewCharCount() }} characters
