@@ -11,6 +11,11 @@
   = link_to tweet.author_intent_url, class: 'author' do
     = tweet.author_profile
 
+  span.timestamp
+    i.icon-time
+    '
+    abbr.timeago title=tweet.created_at.iso8601
+
   .text = tweet.linked_text
 
   .actions
@@ -31,6 +36,8 @@
           li = tweet.retweet_button('Retweet', :retweet, title: 'Retweet this Tweet')
           li = tweet.favorite_button('Favorite', :star, title: 'Favorite this Tweet')
           li = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
+          - if Rails.env.development?
+            li = link_to icon_tag(:expand, 'Details'), project_tweet_path(@project, tweet)
 
           li.divider
 

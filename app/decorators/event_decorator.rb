@@ -59,6 +59,6 @@ class EventDecorator < Draper::Decorator
   end
 
   def formatted_timestamp
-    "<abbr class='timeago' title='#{ created_at.iso8601 }'>#{ created_at.to_s(:long) }</abbr>".html_safe
+    "<span class='timestamp'><i class='icon-time'></i> <abbr class='timeago' title='#{ created_at.iso8601 }'>#{ created_at.to_s(:long) }</abbr></span>".html_safe
   end
 end

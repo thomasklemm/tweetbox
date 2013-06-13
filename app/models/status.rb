@@ -5,10 +5,9 @@ class Status
   attribute :user, User
   attribute :twitter_account_id, Integer
   attribute :text, String
-  attribute :in_reply_to_status_id
 
   attr_reader :reply_to_tweet
-  attr_reader :new_tweet
+  attr_reader :posted_tweet
 
   validates :project,
             :user,
@@ -19,9 +18,8 @@ class Status
     !!in_reply_to_status_id
   end
 
-  def in_reply_to_status_id=(twitter_id)
-    super
-    @reply_to_tweet = project.find_or_fetch_tweet(twitter_id)
+  def in_reply_to_status_id
+    @reply_to_tweet.try(:twitter_id)
   end
 
   def twitter_account
@@ -42,6 +40,10 @@ class Status
 
   ##
   # Prerequisites
+
+  def twitter_account!
+    (twitter_account_id && project.twitter_accounts.find(twitter_account_id)) || reply_to_tweet.try(:twitter_account)
+  end
 
   def valid_tweet?
     !Twitter::Validation.tweet_invalid?(posted_text)
@@ -77,44 +79,50 @@ class Status
   end
 
   def public_status_url
-    "http://tweetbox.dev/read-more/#{ code }"
-  end
-
-  def twitter_account!
-    (project.twitter_accounts.find(twitter_account_id) if twitter_account_id) ||
-    (reply_to_tweet.twitter_account if reply_to_tweet.present?)
+    "http://tweetbox.dev/tweets/#{ twitter_account.screen_name }/#{ code }"
   end
 
   ##
   # Posting
 
-  # Returns a tweet record
+  # Returns the posted tweet
   def post!
     status = post_status
-    create_new_tweet(status)
-    create_events_on_tweets
-    true
+    tweet = create_posted_tweet(status)
+
+    build_conversation_history(tweet)
+    create_events
+    add_associations_between_tweets
+
+    tweet
   end
 
   def post_status
-    twitter_account.client.update(posted_text, update_status_options)
+    twitter_account.client.update(posted_text, post_status_options)
   end
 
-  def update_status_options
+  def post_status_options
     reply? ? { in_reply_to_status_id: in_reply_to_status_id  } : {}
   end
 
-  def create_new_tweet(status)
-    @new_tweet = project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :posted)
+  def create_posted_tweet(status)
+    @posted_tweet = project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :posted)
   end
 
-  def create_events_on_tweets
-    # Build history (from existing tweets)
-    ConversationWorker.new.perform(@new_tweet.id)
+  # Builds from tweets in the database, at least it should ;)
+  def build_conversation_history(tweet)
+    ConversationWorker.new.perform(tweet.id)
+  end
 
-    # TODO: Link new and old tweets
-    # Create post_reply and post events
-    reply_to_tweet && reply_to_tweet.events.create!(kind: :post_reply, user: user)
-    new_tweet.events.create!(kind: :post, user: user)
+  def create_events
+    @posted_tweet.try(:create_event, :post, user)
+    @reply_to_tweet.try(:create_event, :post_reply, user)
+  end
+
+  def add_associations_between_tweets
+    if @posted_tweet && @reply_to_tweet
+      @posted_tweet.reply_to_tweet = @reply_to_tweet
+      @posted_tweet.save! && @reply_to_tweet.save!
+    end
   end
 end

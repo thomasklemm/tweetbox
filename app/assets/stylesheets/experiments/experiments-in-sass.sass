@@ -179,6 +179,11 @@ $navigation-spacing: 0.75rem
         margin-left: 5px
         @extend .muted
 
+    .timestamp
+      margin-left: 10px
+      @extend .muted
+      font-size: 12px
+
     .text
       height: (2 * $baseLineHeight) + 3px
 
@@ -221,11 +226,11 @@ $navigation-spacing: 0.75rem
         .user-name
           font-weight: bold
 
-        .timeago
+        .timestamp
           @extend .muted
           float: right
           visibility: hidden
-        &:hover .timeago
+        &:hover .timestamp
           visibility: visible
 
 abbr.timeago

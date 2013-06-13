@@ -39,8 +39,7 @@ class Tweet < ActiveRecord::Base
 
   # Use default account if the one used to retrieve the tweet is no longer present
   def twitter_account
-    twitter_account = super
-    twitter_account.presence || project.default_twitter_account
+    super.presence || project.default_twitter_account
   end
 
   # Events
@@ -57,68 +56,36 @@ class Tweet < ActiveRecord::Base
   # Ensures uniquness of a tweet scoped to the project
   validates_uniqueness_of :twitter_id, scope: :project_id
 
-  # Callbacks
-  after_commit :build_conversation, on: :create
-
   # States
-  # scope :incoming, where(workflow_state: :new)
-  # scope :replying, where(workflow_state: :open)
-  # scope :resolved, where(workflow_state: :closed)
+  scope :incoming, where(workflow_state: :incoming)
+  scope :resolved, where(workflow_state: :resolved)
 
+  # Workflow
   workflow do
     # Tweets that have been fetched solely to build up conversation histories
-    # can be marked with the :none state. They require no action, but an agent
-    # may decide to open a case from them.
-    # Unless a different state is assigned, all tweets are marked as :none.
-    state :none do
-      event :open, transitions_to: :open
-      event :close, transitions_to: :closed
+    # can be marked with the :conversation state. They require no action,
+    # but a human may decide to move them to :incoming state.
+    # The default state is :conversation.
+    state :conversation do
+      event :activate, transitions_to: :incoming
+      event :resolve, transitions_to: :resolved
     end
 
-    # New tweets that require a decision are marked as :new
-    state :new do
-      event :open, transitions_to: :open
-      event :close, transitions_to: :closed
+    # Incoming tweets require a decision on whether they need a reply or not
+    state :incoming do
+      event :activate, transitions_to: :incoming
+      event :resolve, transitions_to: :resolved
     end
 
-    # Open tweets require an action such as a reply. The :open state
-    # marks in essence open cases on our helpdesk.
-    state :open do
-      event :open, transitions_to: :open
-      event :close, transitions_to: :closed
+    # Resolved tweets
+    state :resolved do
+      event :activate, transitions_to: :incoming
+      event :resolve, transitions_to: :resolved
     end
 
-    # Closed tweets are tweets that have been dealt with. They may have
-    # marked as :closed after a reply has been sent, or simply been appreciated
-    # and marked as :closed without requiring an action.
-    state :closed do
-      event :open, transitions_to: :open
-      event :close, transitions_to: :closed
-    end
-
-    # Tweets in :posted state have been posted with Tweetbox
-    # or have been retweeted with Tweetbox
-    # The :posted state is one of the most awesome ones in the whole wide world...
+    # Tweets in :posted state have been posted or retweeted from within Tweetbox,
+    # which is extremely awesome!
     state :posted
-  end
-
-  # Executes transition to a given :to state
-  # Requires the current_user record
-  # Creates a matching event history association events with the current_user
-  def transition!(opts={})
-    to   = opts.fetch(:to)   { raise "Tweet#transition! requires :to => :open/:closed options parameter"  }
-    user = opts.fetch(:user) { raise "Tweet#transition! requires :user => current_user options parameter"  }
-
-    case to.to_s
-    when 'open'
-      self.open!
-      events.create!(kind: :opened, user: user)
-    when 'closed'
-      self.close!
-      events.create!(kind: :closed, user: user)
-    else
-      raise "Tweet#transition requires a :to options parameter in [:open, :closed]. #{ to } could not be recognized."
-    end
   end
 
   # Loads and memoizes the tweet's previous tweets
@@ -171,13 +138,7 @@ class Tweet < ActiveRecord::Base
   def assign_state(state)
     state &&= state.to_s
     return unless Tweet.workflow_spec.state_names.map(&:to_s).include?(state)
-
-    # Assigns known states, but only assign none state if there isn't already a state present
-    if state == 'none'
-      self.workflow_state ||= state
-    else
-      self.workflow_state = state
-    end
+    state == 'conversation' ? self.workflow_state ||= state : self.workflow_state = state
   end
 
   # Assigns the tweet's fields from a Twitter status object
@@ -186,6 +147,10 @@ class Tweet < ActiveRecord::Base
   def update_fields_from_status(status)
     assign_fields_from_status(status)
     save && self
+  end
+
+  def create_event(kind, user)
+    events.create!(kind: kind, user: user)
   end
 
   def to_param
@@ -219,6 +184,9 @@ class Tweet < ActiveRecord::Base
   def future_tweets!
     @future_tweets = self.class.where('previous_tweet_ids && ARRAY[?]', self.twitter_id).sort_by(&:created_at)
   end
+
+  # Callbacks
+  after_commit :build_conversation, on: :create
 
   # Fetch previous tweets and cache previous tweet ids in the background
   def build_conversation

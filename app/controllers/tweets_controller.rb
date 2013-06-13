@@ -1,9 +1,17 @@
 class TweetsController < TweetController
-  before_filter :load_project_tweet, except: :index
-  # respond_to :js, only: [:appreciate, :resolve, :open_case]
+  skip_before_filter :load_project_tweet, only: :index
 
   def index
-    @tweets = project_tweets.where(workflow_state: [:new, :open, :closed]).limit(20)
+    @tweets = if incoming_tweets?
+      project_tweets.incoming
+    elsif open_tweets?
+      project_tweets.in_progress
+    elsif closed_tweets?
+      project_tweets.closed
+    else
+      project_tweets.incoming
+    end
+
     @tweets &&= @tweets.decorate
   end
 
@@ -12,27 +20,21 @@ class TweetsController < TweetController
 
   def appreciate
     @tweet.close!
-    create_event(:appreciate)
+    @tweet.create_event(:appreciate, current_user)
     redirect_to incoming_project_tweets_path(@project), notice: 'Tweet has been appreciated.'
-  end
-
-  def resolve
-    @tweet.close!
-    create_event(:resolve)
-    redirect_to incoming_project_tweets_path(@project), notice: 'Case has been resolved.'
   end
 
   def open_case
     @tweet.open!
-    create_event(:open_case)
+    @tweet.create_event(:open_case, current_user)
     redirect_to project_tweet_path(@project, @tweet), notice: 'Case has been opened.'
   end
 
-  # def open_case_and_start_reply
-  #   @tweet.open!
-  #   create_event(:open_case)
-  #   redirect_to new_project_tweet_reply_path(@project, @tweet), notice: 'Reply has been started.'
-  # end
+  def resolve
+    @tweet.close!
+    @tweet.create_event(:resolve, current_user)
+    redirect_to incoming_project_tweets_path(@project), notice: 'Case has been resolved.'
+  end
 
   private
 
@@ -40,7 +42,18 @@ class TweetsController < TweetController
     @project.tweets
   end
 
-  def create_event(kind)
-    @tweet.events.create!(kind: kind, user: current_user)
+  ##
+  # Path matchers
+
+  def incoming_tweets?
+    request.path == incoming_project_tweets_path(@project)
+  end
+
+  def open_tweets?
+    request.path == open_project_tweets_path(@project)
+  end
+
+  def closed_tweets?
+    request.path == resolved_project_tweets_path(@project)
   end
 end
