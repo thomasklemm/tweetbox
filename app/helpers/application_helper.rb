@@ -31,6 +31,18 @@ module ApplicationHelper
     content_tag(:li, link, class: "#{ 'active' if match }")
   end
 
+  def incoming_tweets_path?
+    current_path == incoming_project_tweets_path(@project)
+  end
+
+  def resolved_tweets_path?
+    current_path == resolved_project_tweets_path(@project)
+  end
+
+  def posted_tweets_path?
+    current_path == posted_project_tweets_path(@project)
+  end
+
   private
 
   def current_path

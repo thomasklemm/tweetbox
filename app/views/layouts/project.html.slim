@@ -5,28 +5,22 @@
     .span2
 
       ul class='nav nav-list'
-        li: b = @project.name
-
-        .space-half
-
-        = link_to 'Post a tweet', new_project_status_path(@project), class: 'btn btn-primary'
-
-        li.divider
-
-        li.nav-header New tweets
-        = active_link_to 'Incoming', incoming_project_tweets_path(@project), exact: true
-        = active_link_to 'In progress', open_project_tweets_path(@project), exact: true
+        / tweets
+        li.nav-header Tweets
+        = active_link_to icon_tag(:'plus-sign', 'Incoming'), incoming_project_tweets_path(@project), exact: true
+        = active_link_to icon_tag(:ok, 'Resolved'), resolved_project_tweets_path(@project), exact: true
+        = active_link_to icon_tag(:reply, 'Posted'), posted_project_tweets_path(@project), exact: true
 
         li.divider
 
-        li.nav-header Archived tweets
-        = active_link_to 'Resolved', resolved_project_tweets_path(@project), exact: true
+        = active_link_to icon_tag(:twitter, 'Post a Tweet'), new_project_status_path(@project)
 
         li.divider
 
+        / project
         li.nav-header Project
         = active_link_to 'Twitter accounts', project_twitter_accounts_path(@project)
-        = active_link_to 'Searches', project_searches_path(@project)
+        = active_link_to icon_tag(:search, 'Searches'), project_searches_path(@project)
 
         / edit project
         - if policy(@project).manage?

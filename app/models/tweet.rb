@@ -59,6 +59,7 @@ class Tweet < ActiveRecord::Base
   # States
   scope :incoming, where(workflow_state: :incoming)
   scope :resolved, where(workflow_state: :resolved)
+  scope :posted,   where(workflow_state: :posted)
 
   # Workflow
   workflow do

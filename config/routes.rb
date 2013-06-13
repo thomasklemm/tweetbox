@@ -45,21 +45,12 @@ Tweetbox::Application.routes.draw do
     resources :tweets, only: :show do
       collection do
         get ''         => :index, as: :incoming
-        get 'open'     => :index, as: :open
         get 'resolved' => :index, as: :resolved
+        get 'posted'   => :index, as: :posted
       end
 
       member do
-        # Incoming tweets
-        put 'appreciate'
-        put 'open_case'
-        put 'open_case_and_start_reply'
-
-        # Open tweets
         put 'resolve'
-
-        # Legacy
-        put 'transition'
       end
 
       resources :replies,   only: [:new, :create], on: :member, controller: 'statuses'
