@@ -7,6 +7,7 @@
 //= require ZeroClipboard
 //= require jquery.bootstrap-growl
 //= require twitter-text
+//= require jquery.timeago
 
 # Preview new status
 @StatusController = ($scope) ->
@@ -50,3 +51,7 @@ jQuery ->
     $.bootstrapGrowl('Copied to Clipboard: \n "' + args.text + '"', {
         type: 'success'
       })
+
+  ##
+  # Timeago
+  $("abbr.timeago").timeago()

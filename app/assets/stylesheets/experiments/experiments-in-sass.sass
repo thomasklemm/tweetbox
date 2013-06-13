@@ -164,7 +164,6 @@ $navigation-spacing: 0.75rem
   .tweet
     padding: 12px
     padding-left: 72px
-    padding-right: 72px
 
     .avatar
       float: left
@@ -185,7 +184,6 @@ $navigation-spacing: 0.75rem
 
     .main-actions
       float: right
-      margin-right: -58px
 
       a
         display: inline-block
@@ -220,6 +218,18 @@ $navigation-spacing: 0.75rem
       margin-top: 6px
       .event
         font-size: 13px
+        .user-name
+          font-weight: bold
+
+        .timeago
+          @extend .muted
+          float: right
+          visibility: hidden
+        &:hover .timeago
+          visibility: visible
+
+abbr.timeago
+  border-bottom: none
 
 .zeroclipboard-is-hover
   color: $dropdownLinkColorHover !important
