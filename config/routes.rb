@@ -50,7 +50,7 @@ Tweetbox::Application.routes.draw do
       end
 
       member do
-        put 'resolve'
+        post 'resolve'
       end
 
       resources :replies,   only: [:new, :create], on: :member, controller: 'statuses'

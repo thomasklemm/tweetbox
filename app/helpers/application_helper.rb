@@ -43,6 +43,10 @@ module ApplicationHelper
     current_path == posted_project_tweets_path(@project)
   end
 
+  def show_tweet?(tweet)
+    current_path == project_tweet_path(@project, tweet)
+  end
+
   private
 
   def current_path

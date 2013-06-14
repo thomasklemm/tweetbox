@@ -1,1 +1,3 @@
-# TODO: Make an undo link that just links to the tweet
+// Link to tweet
+<% string = "You resolved this tweet a few seconds ago. #{ link_to 'See it again', [@project, @tweet] }.".html_safe %>
+$('#<%= dom_id(@tweet) %>_wrapper').html('<%= string %>')

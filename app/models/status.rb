@@ -1,10 +1,13 @@
 class Status
   include Reformer
+  include Draper::Decoratable
 
   attribute :project, Project
   attribute :user, User
   attribute :twitter_account_id, Integer
   attribute :text, String
+
+  attribute :in_reply_to_status_id, Integer
 
   attr_reader :reply_to_tweet
   attr_reader :posted_tweet
@@ -14,12 +17,14 @@ class Status
             :twitter_account_id,
             :text, presence: true
 
-  def reply?
-    !!in_reply_to_status_id
+  # Note: The order the params are being passed makes a difference
+  def in_reply_to_status_id=(twitter_id)
+    super
+    @reply_to_tweet = project.tweets.where(twitter_id: twitter_id).first! if twitter_id.present?
   end
 
-  def in_reply_to_status_id
-    @reply_to_tweet.try(:twitter_id)
+  def reply?
+    !!in_reply_to_status_id
   end
 
   def twitter_account
@@ -92,7 +97,6 @@ class Status
 
     build_conversation_history(tweet)
     create_events
-    add_associations_between_tweets
 
     tweet
   end
@@ -115,14 +119,7 @@ class Status
   end
 
   def create_events
-    @posted_tweet.try(:create_event, :post, user)
+    @posted_tweet.create_event(:post, user)
     @reply_to_tweet.try(:create_event, :post_reply, user)
-  end
-
-  def add_associations_between_tweets
-    if @posted_tweet && @reply_to_tweet
-      @posted_tweet.reply_to_tweet = @reply_to_tweet
-      @posted_tweet.save! && @reply_to_tweet.save!
-    end
   end
 end

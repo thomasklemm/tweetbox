@@ -1,21 +1,9 @@
-- twitter_accounts = @project.twitter_accounts
-- default_twitter_account =  @project.default_twitter_account
-- selected_twitter_account = @status.twitter_account || default_twitter_account
-
-- twitter_accounts_in_json = twitter_accounts.select([:id, :screen_name, :name, :profile_image_url]).to_json
-- selected_twitter_account_position_in_twitter_accounts = twitter_accounts.index(selected_twitter_account)
-
-- reply_to_tweet = @status.reply_to_tweet
-- fallback_reply_to_user = params[:in_reply_to_user]
-- initial_status_text =  ("#{ reply_to_tweet.author.at_screen_name } " if reply_to_tweet) || ("@#{ fallback_reply_to_user } " if fallback_reply_to_user) || ""
 
 .new-status-wrapper ng-controller='StatusController'
-  div ng-init="statusText = '#{ initial_status_text }'"
+  div ng-init="statusText = '#{ @status.initial_text }'"
   div ng-init="previewText = statusText"
-  div ng-init="twitterAccounts = #{ twitter_accounts_in_json  }"
-  div ng-init="selectedTwitterAccount = twitterAccounts[#{ selected_twitter_account_position_in_twitter_accounts }]"
-
-  h3 New {{ reply() && 'reply' || 'status' }}
+  div ng-init="twitterAccounts = #{ @status.project_twitter_accounts_in_json  }"
+  div ng-init="selectedTwitterAccount = twitterAccounts[#{ @status.selected_twitter_account_position }]"
 
   = form_for [@project, @status] do |f|
     = render 'shared/form_errors', target: @status
@@ -38,17 +26,6 @@
   .space-one
 
   .preview-status-wrapper
-    - if reply_to_tweet
-      div ng-show='reply()'
-        .in-reply-to-status
-          = link_to project_tweet_path(@project, reply_to_tweet) do
-            .author
-              img src=reply_to_tweet.author.profile_image_url class='avatar'
-              span.name = reply_to_tweet.author.name
-              span.screen-name = reply_to_tweet.author.at_screen_name
-
-            .text = reply_to_tweet.text
-
     .preview-status
       .author
         img ng-src="{{ selectedTwitterAccount.profile_image_url}}" class='avatar'
@@ -57,4 +34,4 @@
 
       .text = "{{ previewText }}"
 
-    .character-counter style='margin-top: 7px' {{ previewCharCount() }} characters
+      .character-counter style='margin-top: 7px' {{ previewCharCount() }} characters

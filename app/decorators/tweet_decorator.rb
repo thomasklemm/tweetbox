@@ -29,21 +29,29 @@ class TweetDecorator < Draper::Decorator
     lt.html_safe
   end
 
-  def open_case_button(text, icon, opts={})
-    link_to icon_tag(icon, text), open_case_project_tweet_path(project, self), opts.merge(method: :put)
+  def resolve_button(text, icon, opts={})
+    link_to icon_tag(icon, text), resolve_project_tweet_path(project, self), opts.merge(method: :post)
   end
 
-  def appreciate_tweet_button(text, icon, opts={})
-    link_to icon_tag(icon, text), appreciate_project_tweet_path(project, self), opts.merge(method: :put)
-  end
-
-  def new_reply_button(text, icon, opts={})
+  def reply_button(text, icon, opts={})
     link_to icon_tag(icon, text), new_project_tweet_reply_path(project, self), opts
   end
 
-  def resolve_case_button(text, icon, opts={})
-    link_to icon_tag(icon, text), resolve_project_tweet_path(project, self), opts.merge(method: :put)
-  end
+  # def open_case_button(text, icon, opts={})
+  #   link_to icon_tag(icon, text), open_case_project_tweet_path(project, self), opts.merge(method: :put)
+  # end
+
+  # def appreciate_tweet_button(text, icon, opts={})
+  #   link_to icon_tag(icon, text), appreciate_project_tweet_path(project, self), opts.merge(method: :put)
+  # end
+
+  # def new_reply_button(text, icon, opts={})
+  #   link_to icon_tag(icon, text), new_project_tweet_reply_path(project, self), opts
+  # end
+
+  # def resolve_case_button(text, icon, opts={})
+  #   link_to icon_tag(icon, text), resolve_project_tweet_path(project, self), opts.merge(method: :put)
+  # end
 
   def retweet_button(text, icon, opts={})
     link_to icon_tag(icon, text), new_project_tweet_retweet_path(project, self), opts

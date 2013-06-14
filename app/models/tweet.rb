@@ -34,14 +34,6 @@ class Tweet < ActiveRecord::Base
 
   has_many :events, dependent: :destroy
 
-  # Replies
-  belongs_to :reply_to_tweet, class_name: 'Tweet'
-  has_many :replies, class_name: 'Tweet', foreign_key: 'reply_to_tweet_id'
-
-  # Retweets
-  belongs_to :retweet_to_tweet, class_name: 'Tweet'
-  has_many :retweets, class_name: 'Tweet', foreign_key: 'retweet_to_tweet_id'
-
   # Validations
   validates :project, :author, :twitter_account, presence: true
   validates_uniqueness_of :twitter_id, scope: :project_id
@@ -71,8 +63,8 @@ class Tweet < ActiveRecord::Base
     end
   end
 
-  def resolve!(user)
-    super
+  def resolve_and_record!(user)
+    resolve!
     create_event(:resolve, user)
   end
 
