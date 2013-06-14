@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(:version => 20130603101033) do
     t.text     "text"
     t.integer  "in_reply_to_status_id", :limit => 8
     t.integer  "in_reply_to_user_id",   :limit => 8
-    t.text     "workflow_state",                     :null => false
+    t.text     "state"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.integer  "previous_tweet_ids",    :limit => 8,                 :array => true
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(:version => 20130603101033) do
 
   add_index "tweets", ["previous_tweet_ids"], :name => "index_tweets_on_previous_tweet_ids", :using => :gin
   add_index "tweets", ["project_id", "author_id"], :name => "index_tweets_on_project_id_and_author_id"
+  add_index "tweets", ["project_id", "state"], :name => "index_tweets_on_project_id_and_state"
   add_index "tweets", ["project_id", "twitter_id"], :name => "index_tweets_on_project_id_and_twitter_id", :unique => true
-  add_index "tweets", ["project_id", "workflow_state"], :name => "index_tweets_on_project_id_and_workflow_state"
   add_index "tweets", ["project_id"], :name => "index_tweets_on_project_id"
 
   create_table "twitter_accounts", :force => true do |t|

@@ -32,7 +32,7 @@ class TwitterWorker
     load_twitter_account_and_project(twitter_account_id)
 
     statuses = @twitter_account.client.mentions_timeline(mentions_timeline_options)
-    tweets = @project.create_tweets_from_twitter(statuses, state: :new, twitter_account: @twitter_account)
+    tweets = @project.create_tweets_from_twitter(statuses, state: :incoming, twitter_account: @twitter_account)
 
     @twitter_account.update_max_mentions_timeline_twitter_id(max_twitter_id(tweets))
   end
@@ -41,7 +41,7 @@ class TwitterWorker
     load_twitter_account_and_project(twitter_account_id)
 
     statuses = @twitter_account.client.user_timeline(user_timeline_options)
-    tweets = @project.create_tweets_from_twitter(statuses, state: :none, twitter_account: @twitter_account)
+    tweets = @project.create_tweets_from_twitter(statuses, state: :conversation, twitter_account: @twitter_account)
 
     @twitter_account.update_max_user_timeline_twitter_id(max_twitter_id(tweets))
   end
@@ -58,7 +58,7 @@ class TwitterWorker
     load_search_and_project(search_id)
 
     response = @twitter_account.client.search(@search.query, search_options)
-    tweets = @project.create_tweets_from_twitter(response.statuses, state: :new, twitter_account: @twitter_account)
+    tweets = @project.create_tweets_from_twitter(response.statuses, state: :incoming, twitter_account: @twitter_account)
 
     @search.update_max_twitter_id(max_twitter_id(tweets))
   end

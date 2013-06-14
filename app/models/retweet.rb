@@ -34,24 +34,24 @@ class Retweet
 
   def post!
     status = post_retweet
-    create_new_tweet(status)
-    create_events_on_tweets
-    true
+    tweet = create_new_tweet(status)
+
+    create_events
+    tweet
   end
 
-  # Returns new Twitter status object
+  # Returns posted Twitter status object
   def post_retweet
     response = twitter_account.client.retweet!(old_tweet.twitter_id)
     response.first.retweeted_status
   end
 
-  # Creates a new tweet from the given Twitter status object and returns it
   def create_new_tweet(status)
     @new_tweet = project.create_tweet_from_twitter(status, state: :posted, twitter_account: twitter_account)
   end
 
-  def create_events_on_tweets
-    old_tweet.events.create!(kind: :retweet, user: user)
-    new_tweet.events.create!(kind: :post, user: user)
+  def create_events
+    old_tweet.create_event(:retweet, user)
+    new_tweet.create_event(:post, user)
   end
 end

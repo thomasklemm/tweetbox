@@ -9,40 +9,29 @@
 #  in_reply_to_user_id   :integer
 #  previous_tweet_ids    :integer
 #  project_id            :integer          not null
+#  state                 :text
 #  text                  :text
 #  twitter_account_id    :integer          not null
 #  twitter_id            :integer          not null
 #  updated_at            :datetime         not null
-#  workflow_state        :text             not null
 #
 # Indexes
 #
-#  index_tweets_on_previous_tweet_ids             (previous_tweet_ids)
-#  index_tweets_on_project_id                     (project_id)
-#  index_tweets_on_project_id_and_author_id       (project_id,author_id)
-#  index_tweets_on_project_id_and_twitter_id      (project_id,twitter_id) UNIQUE
-#  index_tweets_on_project_id_and_workflow_state  (project_id,workflow_state)
+#  index_tweets_on_previous_tweet_ids         (previous_tweet_ids)
+#  index_tweets_on_project_id                 (project_id)
+#  index_tweets_on_project_id_and_author_id   (project_id,author_id)
+#  index_tweets_on_project_id_and_state       (project_id,state)
+#  index_tweets_on_project_id_and_twitter_id  (project_id,twitter_id) UNIQUE
 #
 
 class Tweet < ActiveRecord::Base
-  include Workflow
+  include ActiveModel::Transitions
 
   belongs_to :project
-  validates :project, presence: true
-
   belongs_to :author
-  validates :author, presence: true
-
   # Allows us to fetch previous tweets through the same twitter account
   belongs_to :twitter_account
-  validates :twitter_account, presence: true
 
-  # Use default account if the one used to retrieve the tweet is no longer present
-  def twitter_account
-    super.presence || project.default_twitter_account
-  end
-
-  # Events
   has_many :events, dependent: :destroy
 
   # Replies
@@ -53,45 +42,43 @@ class Tweet < ActiveRecord::Base
   belongs_to :retweet_to_tweet, class_name: 'Tweet'
   has_many :retweets, class_name: 'Tweet', foreign_key: 'retweet_to_tweet_id'
 
-  # Ensures uniquness of a tweet scoped to the project
+  # Validations
+  validates :project, :author, :twitter_account, presence: true
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # States
-  scope :incoming, where(workflow_state: :incoming)
-  scope :resolved, where(workflow_state: :resolved)
-  scope :posted,   where(workflow_state: :posted)
+  scope :incoming, -> { where(state: :incoming) }
+  scope :resolved, -> { where(state: :resolved) }
+  scope :posted,   -> { where(state: :posted) }
 
-  # Workflow
-  workflow do
-    # Tweets that have been fetched solely to build up conversation histories
-    # can be marked with the :conversation state. They require no action,
-    # but a human may decide to move them to :incoming state.
-    # The default state is :conversation.
-    state :conversation do
-      event :activate, transitions_to: :incoming
-      event :resolve, transitions_to: :resolved
-    end
-
-    # Incoming tweets require a decision on whether they need a reply or not
-    state :incoming do
-      event :activate, transitions_to: :incoming
-      event :resolve, transitions_to: :resolved
-    end
-
-    # Resolved tweets
-    state :resolved do
-      event :activate, transitions_to: :incoming
-      event :resolve, transitions_to: :resolved
-    end
-
-    # Tweets in :posted state have been posted or retweeted from within Tweetbox,
-    # which is extremely awesome!
+  # States and transitions
+  # - :conversation marks tweets that have been pulled in to build up conversations
+  # - :incoming marks incoming tweets that require a decision
+  # - :resolved marks tweets that have received the required actions
+  # - :posted marks tweet posted through Tweetbox, those are quite awesome!
+  state_machine initial: :conversation do
+    state :conversation
+    state :incoming
+    state :resolved
     state :posted
+
+    event :activate do
+      transitions to: :incoming, from: [:conversation, :incoming, :resolved]
+    end
+
+    event :resolve do
+      transitions to: :resolved, from: [:incoming, :resolved]
+    end
   end
 
-  # Workflow callbacks creating events
-  def resolve(user)
+  def resolve!(user)
+    super
     create_event(:resolve, user)
+  end
+
+  # Use default account if the one used to retrieve the tweet is no longer present
+  def twitter_account
+    super.presence || project.default_twitter_account
   end
 
   # Loads and memoizes the tweet's previous tweets
@@ -142,9 +129,9 @@ class Tweet < ActiveRecord::Base
   # Assigns a certain workflow state given a symbol or string
   # Knows about a whitelist of valid states
   def assign_state(state)
-    state &&= state.to_s
-    return unless Tweet.workflow_spec.state_names.map(&:to_s).include?(state)
-    state == 'conversation' ? self.workflow_state ||= state : self.workflow_state = state
+    state &&= state.try(:to_sym)
+    return unless Tweet.available_states.include?(state)
+    state == :conversation ? self.state ||= state : self.state = state
   end
 
   # Assigns the tweet's fields from a Twitter status object

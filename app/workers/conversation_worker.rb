@@ -66,7 +66,7 @@ class ConversationWorker
   # Returns a tweet record
   def fetch_tweet(status_id)
     status = @twitter_account.client.status(status_id)
-    @project.create_tweet_from_twitter(status, state: :none, twitter_account: @twitter_account)
+    @project.create_tweet_from_twitter(status, state: :conversation, twitter_account: @twitter_account)
 
   # Sometimes a status gets deleted by the author
   rescue Twitter::Error::NotFound

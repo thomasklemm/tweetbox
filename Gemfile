@@ -39,8 +39,8 @@ gem 'strong_parameters'
 # Virtus (Attributes on steroids)
 gem 'virtus'
 
-# Workflow (State machine library)
-gem 'workflow'
+# Transitions (State machine)
+gem 'transitions', :require => ['transitions', 'active_model/transitions']
 
 # Twitter (Twitter REST API client)
 gem 'twitter'

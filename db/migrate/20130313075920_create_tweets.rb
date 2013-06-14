@@ -10,7 +10,7 @@ class CreateTweets < ActiveRecord::Migration
       t.integer :in_reply_to_status_id, limit: 8
       t.integer :in_reply_to_user_id, limit: 8
 
-      t.text :workflow_state, null: false
+      t.text :state
 
       t.timestamps
     end
@@ -18,6 +18,6 @@ class CreateTweets < ActiveRecord::Migration
     add_index :tweets, :project_id
     add_index :tweets, [:project_id, :twitter_id], unique: true
     add_index :tweets, [:project_id, :author_id]
-    add_index :tweets, [:project_id, :workflow_state]
+    add_index :tweets, [:project_id, :state]
   end
 end

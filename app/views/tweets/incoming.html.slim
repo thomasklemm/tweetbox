@@ -1,0 +1,10 @@
+h3 New Tweets
+
+/ incoming tweets
+- if @tweets.any?
+  .tweets-wrapper
+    = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
+
+/ inbox zero
+- if @tweets.empty?
+  p.well <strong>Inbox Zero</strong> <br /> No new tweets.
