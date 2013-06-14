@@ -42,11 +42,11 @@ Tweetbox::Application.routes.draw do
   # Projects
   resources :projects do
     # Tweets
-    resources :tweets, only: :show do
+    resources :tweets, only: [:index, :show] do
       collection do
-        get ''         => :index, as: :incoming
-        get 'resolved' => :index, as: :resolved
-        get 'posted'   => :index, as: :posted
+        get ''         => :incoming, as: :incoming
+        get 'resolved' => :resolved
+        get 'posted'   => :posted
       end
 
       member do

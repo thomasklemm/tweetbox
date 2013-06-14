@@ -1,23 +1,34 @@
 class TweetsController < TweetController
-  skip_before_filter :load_tweet, only: :index
+  skip_before_filter :load_tweet, only: [:incoming, :resolved, :posted]
 
-  def index
-    @tweets = resolved_tweets_path? && project_tweets.resolved ||
-      posted_tweets_path? && project_tweets.posted ||
-      project_tweets.incoming
+  ##
+  # Collection actions
 
-    @tweets &&= @tweets.decorate
+  def incoming
+    @tweets = project_tweets.incoming.decorate
   end
+
+  alias_method :index, :incoming
+
+  def resolved
+    @tweets = project_tweets.resolved.decorate
+  end
+
+  def posted
+    @tweets = project_tweets.posted.decorate
+  end
+
+  ##
+  # Member actions
 
   def show
   end
 
   def resolve
-    @tweet.resolve! && @tweet.create_event(:resolve, current_user)
+    @tweet.resolve!(current_user)
 
     respond_to do |format|
-      format.html { redirect_to incoming_project_tweets_path(@project),
-        notice: 'Tweet has been resolved.' }
+      format.html { redirect_to [@project, :tweets], notice: 'Tweet has been resolved.' }
       format.js
     end
   end

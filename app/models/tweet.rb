@@ -89,6 +89,11 @@ class Tweet < ActiveRecord::Base
     state :posted
   end
 
+  # Workflow callbacks creating events
+  def resolve(user)
+    create_event(:resolve, user)
+  end
+
   # Loads and memoizes the tweet's previous tweets
   # from the array of cached previous tweet ids
   def previous_tweets(reload=false)
