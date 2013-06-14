@@ -16,7 +16,7 @@ class EventDecorator < Draper::Decorator
   end
 
   def render_post_reply
-    "#{ formatted_user_name } replied to this tweet. See it below. #{ formatted_timestamp }".html_safe
+    "#{ formatted_user_name } replied to this tweet. #{ formatted_timestamp }".html_safe
   end
 
   def render_favorite
