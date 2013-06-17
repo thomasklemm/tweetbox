@@ -150,7 +150,7 @@ class Tweet < ActiveRecord::Base
   # the changes to the database
   def assign_fields_from_status(status)
     self.twitter_id = status.id
-    self.text       = Twitter::Urls.expand(status.text, status.urls)
+    self.text       = 'test' # Twitter::Urls.expand(status.text, status.urls)
     self.created_at = status.created_at
     self.in_reply_to_status_id = status.in_reply_to_status_id
     self.in_reply_to_user_id   = status.in_reply_to_user_id

@@ -1,4 +1,4 @@
-require 'sidekiq/web'
+# require 'sidekiq/web'
 
 Tweetbox::Application.routes.draw do
   # User authentication
@@ -77,7 +77,7 @@ Tweetbox::Application.routes.draw do
   match 'auth/failure'          => 'omniauth#failure'
 
   # Sidekiq Web interface
-  mount Sidekiq::Web => '/sidekiq'
+  # mount Sidekiq::Web => '/sidekiq'
 
   # Root
   root to: 'high_voltage/pages#show', id: 'landing'
