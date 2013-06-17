@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe InvitationsController do
+describe Account::InvitationsController do
   let(:account) { Fabricate(:account) }
   let(:user)    { Fabricate(:user) }
   let(:invitation) { Fabricate(:invitation, account: account) }
@@ -91,6 +91,4 @@ describe InvitationsController do
       end
     end
   end
-
-
 end

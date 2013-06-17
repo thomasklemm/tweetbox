@@ -21,6 +21,5 @@
 Fabricator(:event) do
   tweet
   user
-  project
-  kind    %w(opened closed).sample
+  kind    Event::VALID_KINDS.sample
 end
