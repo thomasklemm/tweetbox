@@ -26,6 +26,7 @@
 
 class Tweet < ActiveRecord::Base
   include ActiveModel::Transitions
+  # include Twitter::Urls
 
   belongs_to :project
   belongs_to :author
@@ -149,15 +150,10 @@ class Tweet < ActiveRecord::Base
   # the changes to the database
   def assign_fields_from_status(status)
     self.twitter_id = status.id
-    self.text       = rewrite_urls_in_text(status)
+    self.text       = Twitter::Urls.expand(status.text, status.urls)
     self.created_at = status.created_at
     self.in_reply_to_status_id = status.in_reply_to_status_id
     self.in_reply_to_user_id   = status.in_reply_to_user_id
-  end
-
-  # Returns the tweet text with urls rewritten to their target
-  def rewrite_urls_in_text(status)
-    Twitter::Rewriter.rewrite_entities(status.text, status.urls) { |url| url.expanded_url }
   end
 
   # Loads the previous tweets from the database

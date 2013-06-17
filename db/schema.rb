@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130603101033) do
+ActiveRecord::Schema.define(:version => 20130617032705) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",           :null => false
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20130603101033) do
     t.text     "profile_image_url"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
+    t.integer  "statuses_count",                 :default => 0
   end
 
   add_index "authors", ["project_id", "twitter_id"], :name => "index_authors_on_project_id_and_twitter_id", :unique => true

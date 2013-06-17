@@ -12,6 +12,7 @@
 #  profile_image_url :text
 #  project_id        :integer          not null
 #  screen_name       :text
+#  statuses_count    :integer          default(0)
 #  twitter_id        :integer          not null
 #  updated_at        :datetime         not null
 #  url               :text

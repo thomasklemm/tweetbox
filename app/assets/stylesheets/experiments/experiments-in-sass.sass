@@ -213,10 +213,10 @@ $navigation-spacing: 0.75rem
       border-left: 1px solid #ccc
       padding-left: 8px
 
-    &:not(.main-tweet)
-      .actions a
+    &.conversation-tweet
+      .actions
         visibility: hidden
-      &:hover .actions a
+      &:hover .actions
         visibility: visible
 
     .events
@@ -281,9 +281,4 @@ abbr.timeago
 
   .preview-status
     .text
-      min-height: (3 * $baseLineHeight)
-
-  .in-reply-to-status
-    background: #f9f9f9
-    .text
-      min-height: (2 * $baseLineHeight)
+      min-height: (4 * $baseLineHeight)

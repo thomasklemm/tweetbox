@@ -51,24 +51,20 @@ Tweetbox::Application.routes.draw do
 
       member do
         post 'resolve'
+        post 'activate'
       end
 
       resources :replies,   only: [:new, :create], on: :member, controller: 'statuses'
       resources :retweets,  only: [:new, :create], on: :member
       resources :favorites, only: [:new, :create], on: :member
-      resources :comments,  only: [:new, :create], on: :member
     end
 
     resources :statuses, only: [:new, :create]
+    resources :authors, only: :show
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post 'auth', as: :authorize, on: :collection
-
-      member do
-        post 'default'
-        get 'import', action: 'get_import'
-        post 'import', action: 'post_import'
-      end
+      post 'default', on: :member
     end
 
     resources :searches, except: :show

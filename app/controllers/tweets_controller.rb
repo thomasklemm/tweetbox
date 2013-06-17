@@ -32,4 +32,9 @@ class TweetsController < TweetController
       format.js
     end
   end
+
+  def activate
+    @tweet.activate!
+    redirect_to [@project, @tweet]
+  end
 end
