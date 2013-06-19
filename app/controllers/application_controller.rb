@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   # to actions his access level does not permit
   # detected by pundit
   def user_not_authorized
-    flash[:error] = "You are not authorized perform this action."
+    flash[:error] = "You are not authorized to perform this action."
     redirect_to :back
   end
 

@@ -23,8 +23,4 @@ class Membership < ActiveRecord::Base
 
   validates :user, :account, presence: true
   validates_uniqueness_of :user_id, scope: :account_id
-
-  def admin!
-    update_column(:admin, true)
-  end
 end

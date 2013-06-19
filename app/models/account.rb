@@ -10,7 +10,6 @@
 #
 
 class Account < ActiveRecord::Base
-  # Memberships and users
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   has_many :admins, through: :memberships,
@@ -20,31 +19,33 @@ class Account < ActiveRecord::Base
                         source: :user,
                         conditions: { 'memberships.admin' => false }
 
-  # Projects
   has_many :projects, dependent: :restrict
-
-  # Invitations
   has_many :invitations, dependent: :destroy
 
-  # Validations
   validates :name, presence: true
 
   def has_member?(user)
     memberships.exists?(user_id: user.id)
   end
 
-  # Make a given user an admin of the current account
-  # Sets permissions for each project of the account
-  def make_admin!(user)
-    membership = memberships.find(user.membership_id)
-    membership.admin!
-    set_permissions_for_new_admin(user)
+  # Grant the given user an admin membership of the account
+  # Creates permissions for each project on the account, too
+  def grant_admin_membership!(user)
+    upgrade_membership_to_admin_membership(user)
+    create_project_permissions(user)
   end
 
   private
 
-  def set_permissions_for_new_admin(user)
-    user.project_ids = project_ids
-    user.save!
+  # Grant the given user an admin membership of the account
+  def upgrade_membership_to_admin_membership(user)
+    raise Pundit::NotAuthorizedError unless has_member?(user)
+    membership = user.membership
+    membership.admin = true && membership.save!
+  end
+
+  # Create permissions for all projects on the account for the given user
+  def create_project_permissions(user)
+    projects.each { |project| user.projects << project }
   end
 end

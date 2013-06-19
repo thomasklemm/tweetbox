@@ -28,25 +28,23 @@ describe Membership do
 
   it { should validate_presence_of(:user) }
   it { should validate_presence_of(:account) }
+end
 
-  context "saved record" do
-    before { membership.save }
-    it { should validate_uniqueness_of(:user_id).scoped_to(:account_id) }
-  end
+describe Membership, 'persisted' do
+  subject(:membership) { Fabricate(:membership) }
+  it { should be_valid }
+
+  it { should validate_uniqueness_of(:user_id).scoped_to(:account_id) }
 
   describe "#admin" do
     it "defaults to non-admin membership" do
-      expect(membership).to_not be_admin
+      expect(membership.user).to_not be_admin_of(membership.account)
     end
-  end
 
-  describe "#admin!" do
-    before { membership.save }
-
-    it "marks a membership as an admin membership" do
-      membership.admin!
-      membership.reload
-      expect(membership).to be_admin
+    it "allows users to be admins" do
+      membership.admin = true
+      membership.save!
+      expect(membership.user).to be_admin_of(membership.account)
     end
   end
 end

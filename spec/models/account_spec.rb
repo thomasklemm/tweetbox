@@ -60,10 +60,33 @@ describe Account do
       expect(account).not_to have_member(Fabricate(:user))
     end
   end
-
-  describe "#make_admin!" do
-    pending
-  end
 end
 
+describe Account, 'persisted' do
+  subject(:account) { Fabricate(:account) }
+  it { should be_valid }
 
+  let!(:user) { Fabricate(:user) }
+  let!(:membership) { Fabricate(:membership, account: account, user: user, admin: false) }
+  let(:other_user) { Fabricate(:user) }
+
+  let!(:project) { Fabricate(:project, account: account) }
+
+  describe "#grant_admin_membership!(user)", :focus do
+    it "ensures that user is member of account" do
+      expect{ account.grant_admin_membership!(other_user) }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    it "sets the admin flag on the account membership" do
+      expect(membership).to_not be_admin
+      account.grant_admin_membership!(user)
+      expect(membership).to_not be_admin
+    end
+
+    it "creates permissions for all projects on the account" do
+      expect(project).to_not have_member(user)
+      account.grant_admin_membership!(user)
+      expect(project).to have_member(user)
+    end
+  end
+end

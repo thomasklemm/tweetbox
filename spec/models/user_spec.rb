@@ -30,85 +30,132 @@
 
 require 'spec_helper'
 
-describe User, "valid" do
-  subject { Fabricate(:user) }
+describe User do
+  subject(:user) { Fabricate.build(:user) }
   it { should be_valid }
 
-  it { should have_many(:memberships) }
-  it { should have_many(:accounts).through(:memberships) }
+  it { should have_one(:membership) }
+  it { should have_one(:account).through(:membership) }
 
   it { should have_many(:permissions) }
   it { should have_many(:projects).through(:permissions) }
 
   it { should validate_presence_of(:name) }
+
+  # Added by Devise
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
   it { should validate_presence_of(:password) }
 
+  describe "#password" do
+    it "ensures password length" do
+      user = Fabricate.build(:user, password: '0' * 7)
+      expect(user).to have(2).errors_on(:password)
+      expect(user.errors_on(:password).uniq.length).to eq(1)
+      expect(user.errors_on(:password)).to include("is too short (minimum is 8 characters)")
+
+      user = Fabricate.build(:user, password: '0' * 8)
+      expect(user).to be_valid
+
+      user = Fabricate.build(:user, password: '0' * 128)
+      expect(user).to be_valid
+
+      user = Fabricate.build(:user, password: '0' * 129)
+      expect(user).to have(2).errors_on(:password)
+      expect(user.errors_on(:password).uniq.length).to eq(1)
+      expect(user.errors_on(:password)).to include("is too long (maximum is 128 characters)")
+    end
+  end
+  # TODO: Should not be confirmed at first, but when timestamp is set
+end
+
+describe User, 'persisted' do
+  subject(:user) { Fabricate(:user) }
+  it { should be_valid }
+
   let(:account) { Fabricate(:account) }
+  let(:other_user) { Fabricate(:user) }
+  let(:other_account) { Fabricate(:account) }
 
-  it "is an admin of an account with admin membership" do
-    Fabricate(:membership, user: subject, account: account, admin: true)
-    expect(subject).to be_admin_of(account)
+  let(:project) { Fabricate(:project, account: account) }
+  let(:other_project) { Fabricate(:project, account: account) }
 
-    expect(subject.memberships.admin.first.account).to eq(account)
+  describe "#to_param" do
+    it "returns includes the id and name" do
+      expect(user.to_param).to match(%r{\d+\-\w+})
+      expect(user.to_param).to eq("#{ user.id }-#{ user.name.parameterize }")
+    end
   end
 
-  it "isn't an admin of an account with a non admin membership" do
-    Fabricate(:membership, user: subject, account: account, admin: false)
-    expect(subject).not_to be_admin_of(account)
+  describe "#admin_of?(account)" do
+    context "with admin account membership" do
+      let!(:admin_membership) { Fabricate(:membership, account: account, user: user, admin: true) }
+
+      it "returns true" do
+        expect(user).to be_admin_of(account)
+      end
+    end
+
+    context "with non-admin account membership" do
+      let!(:membership) { Fabricate(:membership, account: account, user: user, admin: false) }
+
+      it "returns false" do
+        expect(user).to_not be_admin_of(account)
+      end
+    end
+
+    context "without account membership" do
+      before { Fabricate(:membership, account: account, user: user, admin: true) }
+
+      it "returns false" do
+        expect(other_user).to_not be_admin_of(account)
+      end
+    end
   end
 
-  it "isn't an admin of an account without a membership" do
-    expect(subject).not_to be_admin_of(account)
-  end
+  describe "#member_of?(account_or_project)" do
+    context "with admin account membership" do
+      let!(:admin_membership) { Fabricate(:membership, account: account, user: user, admin: true) }
 
-  it "is a member with a membership for the given account" do
-    Fabricate(:membership, user: subject, account: account)
-    expect(subject).to be_member_of(account)
-  end
+      it "returns true" do
+        expect(user).to be_member_of(account)
+      end
+    end
 
-  it "isn't a member without a membership for the given account" do
-    other_account = Fabricate(:account)
-    Fabricate(:membership, user: subject, account: other_account)
-    expect(subject).not_to be_member_of(account)
-    expect(subject).to be_member_of(other_account)
-  end
+    context "with non-admin account membership" do
+      let!(:membership) { Fabricate(:membership, account: account, user: user, admin: false) }
 
-  let(:project) { Fabricate(:project) }
+      it "returns true" do
+        expect(user).to be_member_of(account)
+      end
+    end
 
-  it "is a member with a membership for the given project" do
-    membership = Fabricate(:membership, user: subject, account: project.account)
-    Fabricate(:permission, membership: membership, project: project)
-    expect(subject).to be_member_of(project)
-  end
+    context "without account membership" do
+      before { Fabricate(:membership, account: account, user: user, admin: true) }
 
-  it "isn't a member without a membership for the given project" do
-    other_project = Fabricate(:project)
-    membership = Fabricate(:membership, user: subject, account: other_project.account)
-    Fabricate(:permission, membership: membership, project: other_project)
-    expect(subject).not_to be_member_of(project)
-  end
+      it "returns false" do
+        expect(other_user).to_not be_member_of(account)
+      end
+    end
 
-  it "returns users by name" do
-    Fabricate(:user, name: 'def')
-    Fabricate(:user, name: 'abc')
-    Fabricate(:user, name: 'ghi')
+    context "with account membership" do
+    let!(:membership) { Fabricate(:membership, account: account, user: user, admin: false) }
 
-    expect(User.by_name.map(&:name)).to eq(%w(abc def ghi))
-  end
+      context "with project permission" do
+        let!(:permission) { Fabricate(:permission, project: project, user: user) }
 
-  it "searches records for email and name" do
-    email = Fabricate(:user, email: 'match@example.com')
-    name  = Fabricate(:user, name: 'match max' )
-    no_match = Fabricate(:user)
+        it "returns true" do
+          expect(user).to be_member_of(project)
+        end
+      end
 
-    expect(User.search('match')).to include(email)
-    expect(User.search('match')).to include(name)
-    expect(User.search('match')).not_to include(no_match)
-  end
+      context "without project permission" do
+        let!(:other_permission) { Fabricate(:permission, project: other_project, user: user) }
 
-  it "return nothing for nil search" do
-    expect(User.search(nil)).to eq([])
+        it "returns false" do
+          expect(user).to_not be_member_of(project)
+        end
+      end
+    end
   end
 end
