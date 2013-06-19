@@ -27,7 +27,7 @@ describe Project do
   it { should have_many(:users).through(:permissions) }
 
   it { should have_many(:twitter_accounts).dependent(:destroy) }
-  it { should belong_to(:default_twitter_account) }
+  it { should belong_to(:default_twitter_account).class_name('TwitterAccount') }
 
   it { should have_many(:searches) }
 
@@ -36,16 +36,11 @@ describe Project do
 
   it { should validate_presence_of(:account) }
   it { should validate_presence_of(:name) }
+end
 
-  describe ".by_name" do
-    it "returns projects by name" do
-      Fabricate(:project, name: 'def')
-      Fabricate(:project, name: 'abc')
-      Fabricate(:project, name: 'ghi')
-
-      expect(Project.by_name.map(&:name)).to eq(%w(abc def ghi))
-    end
-  end
+describe Project, 'persisted' do
+  subject(:project) { Fabricate(:project) }
+  it { should be_valid }
 
   describe ".visible_to(user)" do
     it "finds projects visible to a user" do
@@ -65,37 +60,26 @@ describe Project do
 
   describe "#has_member?" do
     let(:user) { Fabricate(:user) }
-    let(:membership) { Fabricate(:membership, account: project.account, user: user) }
+    let!(:membership) { Fabricate(:membership, account: project.account, user: user) }
 
     context "with permission" do
       let!(:permission) { Fabricate(:permission, project: project, membership: membership) }
-      it { should have_member(user) }
+      it "has member" do
+        expect(project).to have_member(user)
+      end
     end
 
     context "without permission" do
-      before { membership.save }
-      it { should_not have_member(user) }
+      it "does not have member" do
+        expect(project).to_not have_member(user)
+      end
     end
   end
 
   describe "#to_param" do
-    it "includes the id and name" do
-      project.name = "Tweetbox Project"
-      project.save
-
-      expect(project.to_param).to eq("#{ project.id }-tweetbox-project")
+    it "returns includes the id and name" do
+      expect(project.to_param).to match(%r{\d+\-\w+})
+      expect(project.to_param).to eq("#{ project.id }-#{ project.name.parameterize }")
     end
-  end
-
-  describe "#create_tweets_from_twitter" do
-    pending
-  end
-
-  describe "#create_tweet_from_twitter" do
-    pending
-  end
-
-  describe "#find_or_fetch_tweet" do
-    pending
   end
 end

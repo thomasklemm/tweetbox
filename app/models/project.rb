@@ -31,7 +31,6 @@ class Project < ActiveRecord::Base
 
   validates :account, :name, presence: true
 
-  scope :by_name, -> { order('projects.name') }
   scope :visible_to, ->(user) { where(id: user.project_ids) }
 
   def has_member?(user)
