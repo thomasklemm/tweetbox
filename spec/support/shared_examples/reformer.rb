@@ -1,4 +1,4 @@
-# Form objects using virtus
+# Form objects using Virtus
 shared_examples_for Reformer do
   it { should be_kind_of(Reformer) }
 

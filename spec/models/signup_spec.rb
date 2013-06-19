@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Signup do
-  subject(:signup) { Fabricate(:signup) }
+  subject(:signup) { Fabricate.build(:signup) }
   it { should be_valid }
 
   it_should_behave_like Reformer
@@ -10,6 +10,7 @@ describe Signup do
   it { should respond_to(:account) }
   it { should respond_to(:membership) }
   it { should respond_to(:project) }
+  it { should respond_to(:permission) }
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:email) }
@@ -17,10 +18,7 @@ describe Signup do
   it { should validate_presence_of(:company_name) }
 end
 
-describe Signup, 'with a valid user and account' do
-  # Trial plan must be present in the database
-  before { Fabricate(:trial_plan) }
-
+describe Signup, 'with a valid user and account fields' do
   subject(:signup) { Fabricate.build(:signup) }
   it { should be_valid }
 
@@ -36,10 +34,7 @@ describe Signup, 'with a valid user and account' do
   its(:account)    { should be_persisted }
   its(:membership) { should be_persisted }
   its(:project)    { should be_persisted }
-
-  it 'assigns the trial plan to the created account' do
-    expect(signup.account.plan).to be_trial
-  end
+  its(:permission) { should be_persisted }
 
   it 'creates an admin membership for the user' do
     expect(signup.user).to be_admin_of(signup.account)
