@@ -18,7 +18,7 @@ describe Signup do
   it { should validate_presence_of(:company_name) }
 end
 
-describe Signup, 'with a valid user and account fields' do
+describe Signup, 'valid user and account fields' do
   subject(:signup) { Fabricate.build(:signup) }
   it { should be_valid }
 

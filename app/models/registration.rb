@@ -18,6 +18,7 @@ class Registration
   attribute :name, String
   attribute :email, String
   attribute :password, String
+  attribute :invitation_code, String # to add errors
 
   validates :name,
             :email,
@@ -114,13 +115,13 @@ class Registration
   end
 
   def invitation_must_not_be_used
-    if @invitation.used?
+    if @invitation.try(:used?)
       errors.add(:invitation_code, 'has already been used')
     end
   end
 
   def invitation_must_not_be_expired
-    if @invitation.expired?
+    if @invitation.try(:expired?)
       errors.add(:invitation_code, 'has expired')
     end
   end
