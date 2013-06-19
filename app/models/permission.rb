@@ -44,7 +44,7 @@ class Permission < ActiveRecord::Base
   end
 
   def membership_and_user_must_be_associated_with_project_account
-    unless project.account.has_member?(user)
+    unless project && project.account && user && project.account.has_member?(user)
       errors.add(:membership, "is not associated with the project's account")
       errors.add(:user, "is not associated with the project's account")
     end

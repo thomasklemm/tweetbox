@@ -72,7 +72,7 @@ describe Account, 'persisted' do
 
   let!(:project) { Fabricate(:project, account: account) }
 
-  describe "#grant_admin_membership!(user)", :focus do
+  describe "#grant_admin_membership!(user)" do
     it "ensures that user is member of account" do
       expect{ account.grant_admin_membership!(other_user) }.to raise_error(Pundit::NotAuthorizedError)
     end

@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe Permission do
+describe Permission, 'persisted' do
   subject(:permission) { Fabricate(:permission) }
   it { should be_valid }
 
@@ -28,37 +28,34 @@ describe Permission do
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:membership) }
   it { should validate_presence_of(:user) }
+  it { should validate_uniqueness_of(:membership_id).scoped_to(:project_id) }
 
-  # it { should validate_uniqueness_of(:membership_id).scoped_to(:project_id) }
-
-  # describe '#user_id' do
-  #   it 'is required' do
-  #     permission = Fabricate.build(:permission, membership: nil)
-  #     expect(permission).not_to be_valid
-  #     expect(permission).to have(1).error_on(:user_id)
-  #   end
-  # end
-
-  # let(:permission) { Fabricate(:permission) }
-
-  # it "doesn't allow the same member to be added to a project twice" do
-  #   another_permission = Fabricate.build(:permission, membership: permission.membership, project: permission.project)
-  #   expect(another_permission).not_to be_valid
-  #   expect(another_permission).to have(1).error_on(:membership_id)
-  # end
-
-  # it "allows different members to be added to a project" do
-  #   another_permission = Fabricate(:permission, project: permission.project)
-  #   expect(another_permission).to be_valid
-  # end
-
-  # it "caches the user from the account membership" do
-  #   membership = Fabricate(:membership)
-  #   permission = Fabricate(:permission, membership: membership)
-  #   expect(permission.user_id).to eq(membership.user_id)
-  # end
-
-  # it "doesn't allow the user to be assigned" do
-  #   expect { subject.user = Fabricate(:user) }.to raise_error(NotImplementedError)
-  # end
+  it "doesn't allow the same member to be added to a project twice" do
+    another_permission = Fabricate.build(:permission, membership: permission.membership, project: permission.project)
+    expect(another_permission).not_to be_valid
+    expect(another_permission).to have(1).error_on(:membership_id)
+  end
 end
+
+describe Permission, 'valid account membership' do
+  let!(:user) { Fabricate(:user) }
+  let!(:account) { Fabricate(:account) }
+  let!(:membership) { Fabricate(:membership, account: account, user: user) }
+  let!(:project) { Fabricate(:project, account: account) }
+
+  let(:permission_with_membership) { Fabricate.build(:permission, user: nil, membership: membership, project: project)  }
+  let(:permission_with_user) { Fabricate.build(:permission, membership: nil, user: user, project: project)  }
+
+  it "sets user from membership" do
+    permission_with_membership.valid?
+    expect(permission_with_membership.user).to be_present
+    expect(permission_with_membership.user).to eq(user)
+  end
+
+  it "sets membership from user" do
+    permission_with_user.valid?
+    expect(permission_with_user.membership).to be_present
+    expect(permission_with_user.membership).to eq(membership)
+  end
+end
+
