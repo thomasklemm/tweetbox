@@ -36,24 +36,24 @@ class Invitation < ActiveRecord::Base
             :code, presence: true
   validates :code, uniqueness: true
 
-  scope :by_created_at_desc, -> { order('invitations.created_at DESC') }
-
   after_initialize :generate_code
-  before_create :set_expiration_date
+  before_create :set_expires_at
 
   def active?
     !used? && !expired?
   end
 
   def expired?
-    expires_at < Time.current
+    expires_at && expires_at < Time.current
   end
 
   def used?
-    used_at.present? || invitee.present?
+    (used_at || invitee).present?
   end
 
   def use!(invitee)
+    raise "An invitation can only be used once" if used?
+
     self.invitee = invitee
     self.used_at = Time.current
     self.save!
@@ -85,9 +85,9 @@ class Invitation < ActiveRecord::Base
     self.code ||= RandomCode.new.code(32)
   end
 
-  def set_expiration_date
+  def set_expires_at
     self.expires_at = ACTIVE_INVITATION_PERIOD.from_now
   end
 
-  ACTIVE_INVITATION_PERIOD = 7.days
+  ACTIVE_INVITATION_PERIOD = 1.week
 end

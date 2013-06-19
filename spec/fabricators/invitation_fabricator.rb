@@ -27,5 +27,5 @@ Fabricator(:invitation) do
   name      "Invitee name"
   email     { sequence(:email) { |i| "invitation#{ i }@example.com" } }
 
-  project_ids { |attrs| [Fabricate(:project, account: attrs[:account]), Fabricate(:project, account: attrs[:account])].map(&:id) }
+  projects { |attrs| [Fabricate(:project, account: attrs[:account]), Fabricate(:project, account: attrs[:account])] }
 end
