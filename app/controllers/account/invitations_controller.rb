@@ -68,6 +68,10 @@ class Account::InvitationsController < AccountController
   end
 
   def invitation_params
-    params.require(:invitation).permit(:name, :email, { project_ids: [] }).merge(issuer: current_user)
+    permitted_invitation_params.merge(issuer: current_user)
+  end
+
+  def permitted_invitation_params
+    params.require(:invitation).permit(:name, :email, { project_ids: [] })
   end
 end

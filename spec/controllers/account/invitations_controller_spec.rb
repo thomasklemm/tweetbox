@@ -8,10 +8,11 @@ describe Account::InvitationsController do
   let(:valid_invitation_attributes)   { Fabricate.attributes_for(:invitation) }
   let(:invalid_invitation_attributes) { Fabricate.attributes_for(:invitation, email: "") }
 
-  describe "#invitation_params" do
+  describe "#permitted_invitation_params" do
     it "permits only name, email and project_ids parameters" do
+      valid_invitation_attributes.merge!(project_ids: valid_invitation_attributes[:projects].map(&:id))
       post :create, account_id: account, invitation: valid_invitation_attributes
-      expect(subject.send(:invitation_params).keys).to eq(%w(email admin project_ids))
+      expect(subject.send(:permitted_invitation_params).keys).to eq(%w(name email project_ids))
     end
   end
 
@@ -41,16 +42,14 @@ describe Account::InvitationsController do
       context "with valid attributes" do
         before { post :create, account_id: account, invitation: valid_invitation_attributes }
         it { should authorize_resource }
-        it { should redirect_to(account_invitations_path(account)) }
+        it { should redirect_to(account_invitations_path) }
         it { should set_the_flash }
 
         it "persists the new invitation in the database" do
           expect(assigns(:invitation)).to be_persisted
         end
 
-        it "sends an invitation email" do
-          expect(assigns(:sent_mail)).to be_true
-        end
+        it "sends an invitation email"
       end
 
       context "with invalid attributes" do
@@ -69,26 +68,29 @@ describe Account::InvitationsController do
       end
     end
 
-    describe "DELETE #destroy" do
-      before { delete :destroy, account_id: account, id: invitation }
-      it { should authorize_resource }
-      it { should redirect_to(account_invitations_path(account)) }
-      it { should set_the_flash }
-
-      it "destroys the invitation" do
-        expect(assigns(:invitation)).to be_destroyed
-      end
+    describe "#edit" do
+      pending
     end
 
-    describe "PUT #send_mail" do
-      before { put :send_mail, account_id: account, id: invitation }
+    describe "#update" do
+      pending
+    end
+
+    describe "#deactivate" do
+      pending
+    end
+
+    describe "#reactivate" do
+      pending
+    end
+
+    describe "POST #deliver_mail" do
+      before { post :deliver_mail, account_id: account, id: invitation }
       it { should authorize_resource }
-      it { should redirect_to(account_invitations_path(account)) }
+      it { should redirect_to(account_invitations_path) }
       it { should set_the_flash }
 
-      it "sends an invitation email" do
-        expect(assigns(:sent_mail)).to be_true
-      end
+      it "sends an invitation email"
     end
   end
 end
