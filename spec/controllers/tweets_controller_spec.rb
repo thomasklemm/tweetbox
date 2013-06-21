@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TweetsController do
-  it { should be_a_kind_of(ProjectController) }
+  it { should be_a ProjectController }
 
   context "project member access" do
     let!(:user)    { Fabricate(:user) }

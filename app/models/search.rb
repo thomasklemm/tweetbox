@@ -30,6 +30,7 @@ class Search < ActiveRecord::Base
     raise NotImplementedError, "Use Search#twitter_account= instead"
   end
 
+  # TODO: Specs
   def update_max_twitter_id(twitter_id)
     update_attributes(max_twitter_id: twitter_id) if twitter_id.to_i > max_twitter_id.to_i
   end
