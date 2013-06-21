@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # TODO: Cache projects_count on users
   def after_sign_in_path_for(resource)
     # TODO: Extract user_projects_path somewhere else
-    if current_user.projects.count == 1
+    if current_user.projects.size == 1
       project_path(current_user.projects.first)
     else
       projects_path
