@@ -39,6 +39,8 @@ class Invitation < ActiveRecord::Base
   after_initialize :generate_code
   before_create :set_expires_at
 
+  scope :by_date, -> { order('invitations.created_at asc') }
+
   def active?
     !used? && !expired?
   end

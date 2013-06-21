@@ -3,7 +3,7 @@ class Account::InvitationsController < AccountController
   before_filter :ensure_invitation_is_active, only: [:edit, :update]
 
   def index
-    @invitations = account_invitations.by_created_at_desc.decorate
+    @invitations = account_invitations.by_date.decorate
   end
 
   def new

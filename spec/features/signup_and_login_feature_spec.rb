@@ -17,13 +17,13 @@ describe 'Signup and login' do
 
     # Fill in valid details and submit signup form
     fill_in 'Your name',  with: 'Thomas Klemm'
-    fill_in 'Company',    with: '37signals'
-    fill_in 'Your email', with: 'thomas@example.com'
-    fill_in 'password',   with: '123123123'
+    fill_in 'Company',    with: 'Rainmakers'
+    fill_in 'Your email', with: 'thomas@rainmakers.com'
+    fill_in 'password',   with: 'rainmaking123'
     click_button 'Sign up'
 
     # Instant sign in
-    expect(current_path).to match(incoming_project_tweets_path(Project.first))
+    expect(current_path).to match(project_tweets_path(Project.first))
 
     # Logout
     click_on 'Logout'
@@ -34,16 +34,16 @@ describe 'Signup and login' do
     click_on 'Login'
     expect(current_path).to eq(login_path)
 
-    fill_in 'Email', with: 'thomas@example.com'
-    fill_in 'Password', with: '123123123'
+    fill_in 'Email', with: 'thomas@rainmakers.com'
+    fill_in 'Password', with: 'rainmaking123'
     click_button 'Login'
 
     # expect(page).to have_content('Signed in successfully.')
-    expect(current_path).to match(incoming_project_tweets_path(Project.first))
+    expect(current_path).to match(project_tweets_path(Project.first))
 
     # Account
     click_on 'Account'
     expect(current_path).to eq(account_projects_path)
-    expect(page).to have_content('37signals')
+    expect(page).to have_content('Rainmakers')
   end
 end
