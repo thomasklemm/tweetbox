@@ -47,4 +47,12 @@ describe Membership, 'persisted' do
       expect(membership.user).to be_admin_of(membership.account)
     end
   end
+
+  describe "#admin!" do
+    it "sets the admin flag to true and saves the membership record" do
+      expect(membership).to_not be_admin
+      membership.admin!
+      expect(membership.reload).to be_admin
+    end
+  end
 end

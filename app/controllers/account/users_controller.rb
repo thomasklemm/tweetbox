@@ -2,7 +2,7 @@ class Account::UsersController < AccountController
   before_filter :load_user, only: [:show, :edit, :update, :upgrade_to_admin]
 
   def index
-    @users = account_users
+    @users = account_users.by_date.decorate
   end
 
   def edit
@@ -17,14 +17,14 @@ class Account::UsersController < AccountController
   end
 
   def upgrade_to_admin
-    @account.make_admin!(@user)
-    redirect_to account_users_path, notice: "#{ @user.try(:name) } has become an admin of your account."
+    @account.grant_admin_membership!(@user)
+    redirect_to account_users_path, notice: "#{ @user.try(:name) } has become an account admin."
   end
 
   private
 
   def account_users
-    user_account.users.decorate
+    user_account.users
   end
 
   def account_user
@@ -32,7 +32,7 @@ class Account::UsersController < AccountController
   end
 
   def load_user
-    @user = account_user
+    @user = account_user.decorate
   end
 
   def user_params

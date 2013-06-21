@@ -78,9 +78,9 @@ describe Account, 'persisted' do
     end
 
     it "sets the admin flag on the account membership" do
-      expect(membership).to_not be_admin
+      expect(user).to_not be_admin_of(account)
       account.grant_admin_membership!(user)
-      expect(membership).to_not be_admin
+      expect(user.reload).to be_admin_of(account)
     end
 
     it "creates permissions for all projects on the account" do

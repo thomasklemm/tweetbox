@@ -48,6 +48,8 @@ class User < ActiveRecord::Base
   # Devise validates password on presence, confirmation, and length
   validates :name, presence: true
 
+  scope :by_date, -> { order('users.created_at asc') }
+
   def admin_of?(account)
     return false unless account.persisted? && account == membership.try(:account)
     membership.admin?

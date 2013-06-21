@@ -31,6 +31,7 @@ class Account < ActiveRecord::Base
   # Grant the given user an admin membership of the account
   # Creates permissions for each project on the account, too
   def grant_admin_membership!(user)
+    raise Pundit::NotAuthorizedError unless has_member?(user)
     upgrade_membership_to_admin_membership(user)
     create_project_permissions(user)
   end
@@ -39,13 +40,12 @@ class Account < ActiveRecord::Base
 
   # Grant the given user an admin membership of the account
   def upgrade_membership_to_admin_membership(user)
-    raise Pundit::NotAuthorizedError unless has_member?(user)
-    membership = user.membership
-    membership.admin = true && membership.save!
+    membership = memberships.where(user_id: user.id).first!
+    membership.admin!
   end
 
   # Create permissions for all projects on the account for the given user
   def create_project_permissions(user)
-    projects.each { |project| user.projects << project }
+    projects.select {|project| !user.projects.include?(project) }.each { |project| user.projects << project }
   end
 end
