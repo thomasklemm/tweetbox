@@ -13,7 +13,7 @@ class InvitationMailer < ActionMailer::Base
   private
 
   def mail_subject
-    "#{ @invitation.issuer_name } invites you to join Tweetbox."
+    "Join Tweetbox - Here's your invitation."
   end
 
   def mail_from
