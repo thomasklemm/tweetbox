@@ -12,6 +12,6 @@ class ProjectsController < ProjectController
   end
 
   def show
-    redirect_to incoming_project_tweets_path(@project)
+    redirect_to project_tweets_path(@project)
   end
 end
