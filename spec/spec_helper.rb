@@ -8,7 +8,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
 # Custom pundit matchers from the gem
-require 'pundit/rspec'
+# require 'pundit/rspec'
 
 # Requires namespaced models and controllers
 Dir[Rails.root.join("app/controllers/**/*.rb")].each {|f| require f}

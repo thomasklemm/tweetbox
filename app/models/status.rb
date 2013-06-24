@@ -23,8 +23,12 @@ class Status
     @reply_to_tweet = project.tweets.where(twitter_id: twitter_id).first! if twitter_id.present?
   end
 
+  def in_reply_to_status_id
+    super || @reply_to_tweet.try(:twitter_id)
+  end
+
   def reply?
-    !!in_reply_to_status_id
+    !!(@reply_to_tweet || in_reply_to_status_id)
   end
 
   def twitter_account
@@ -66,10 +70,10 @@ class Status
     return text if tweet_length(text) <= 140
 
     virtual_text = text.slice(0, 225)
-    parts = [virtual_text, ellipsis_and_public_url]
+    parts = [virtual_text, ellipsis_and_public_status_url]
 
     while tweet_length(parts.join) > 140
-      parts = [virtual_text.slice(0, -2), ellipsis_and_public_url]
+      parts = [virtual_text.slice(0, -2), ellipsis_and_public_status_url]
     end
 
     parts.join
@@ -80,7 +84,7 @@ class Status
   end
 
   def ellipsis_and_public_status_url
-    "...\n#{ public_url }"
+    "...\n#{ public_status_url }"
   end
 
   def public_status_url

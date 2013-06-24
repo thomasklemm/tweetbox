@@ -59,8 +59,8 @@ class Author < ActiveRecord::Base
     self.name              = user.name
     self.screen_name       = user.screen_name
     self.location          = user.location
-    self.description       = 'test' # Twitter::Urls.expand(user.description, user.urls)
-    self.url               = 'test' # Twitter::Urls.expand(user.url, user.urls)
+    self.description       = user.description # Twitter::Urls.expand(user.description, user.urls)
+    self.url               = user.url # Twitter::Urls.expand(user.url, user.urls)
     self.verified          = user.verified
     self.created_at        = user.created_at
     self.followers_count   = user.followers_count

@@ -27,9 +27,9 @@ class StatusesController < ProjectController
   end
 
   def status_params
-    params[:status]
-      .slice(:text, :twitter_account_id, :in_reply_to_status_id)
-      .reverse_merge({
+    params[:status].
+      slice(:text, :twitter_account_id, :in_reply_to_status_id).
+      reverse_merge({
         project: @project,
         user: current_user
       })

@@ -31,7 +31,7 @@ gem 'devise', '>= 3.0.0.rc'
 gem 'omniauth-twitter'
 
 # Pundit (Authorization)
-gem 'pundit'
+gem 'pundit', github: 'thomasklemm/pundit', branch: 'rspec'
 
 # Strong parameters (Mass assignment protection)
 gem 'strong_parameters'
@@ -40,7 +40,7 @@ gem 'strong_parameters'
 gem 'virtus'
 
 # Transitions (State machine)
-gem 'transitions', :require => ['transitions', 'active_model/transitions']
+gem 'transitions', require: ['transitions', 'active_model/transitions'], github: 'troessner/transitions'
 
 # Twitter (Twitter REST API client)
 gem 'twitter'

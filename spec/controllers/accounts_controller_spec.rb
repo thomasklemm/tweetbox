@@ -27,7 +27,7 @@ describe AccountsController do
     describe "GET #edit" do
       before { get :edit, id: account }
       it { should respond_with(:success) }
-      it { should authorize_resource }
+      it { should authorize(account, :manage?) }
       it { should render_template(:edit) }
       it { should_not set_the_flash }
     end
@@ -38,7 +38,7 @@ describe AccountsController do
           put :update, id: account, account: valid_account_attributes
         end
 
-        it { should authorize_resource }
+        it { should authorize(account, :manage?) }
         it { should redirect_to(account_path) }
         it { should set_the_flash }
 
@@ -52,7 +52,7 @@ describe AccountsController do
           put :update, id: account, account: invalid_account_attributes
         end
 
-        it { should authorize_resource }
+        it { should authorize(account, :manage?)  }
         it { should render_template(:edit) }
         it { should_not set_the_flash }
 
