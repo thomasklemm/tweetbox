@@ -37,39 +37,53 @@ describe TwitterAccount do
   it { should be_valid }
 
   it { should belong_to(:project) }
+  it { should have_many(:searches).dependent(:restrict) }
+  it { should have_many(:tweets).dependent(:nullify) }
+
   it { should validate_presence_of(:project) }
-
-  it { should have_many(:searches).dependent(:destroy) }
-
   it { should validate_presence_of(:twitter_id) }
-  it { should validate_uniqueness_of(:twitter_id) }
 
   it { should validate_presence_of(:uid) }
   it { should validate_presence_of(:token) }
   it { should validate_presence_of(:token_secret) }
 
-  it { should ensure_inclusion_of(:auth_scope).in_array(%w(read write messages)) }
+  it { should ensure_inclusion_of(:access_scope).in_array(%w(read write)) }
 
-  describe "#twitter_client" do
-    let(:twitter_account) { Fabricate.build(:twitter_account, token: 'my_token', token_secret: 'my_token_secret') }
-    let(:client) { twitter_account.twitter_client }
-
-    it "returns a Twitter::Client instance" do
-      expect(client).to be_a(Twitter::Client)
-    end
-
-    it "sets the twitter account's credentials" do
-      expect(client.instance_values['oauth_token']).to eq('my_token')
-      expect(client.instance_values['oauth_token_secret']).to eq('my_token_secret')
-    end
-
-    it "sets the consumer credentials" do
-      expect(client.instance_values['consumer_key']).to eq('my_consumer_key')
-      expect(client.instance_values['consumer_secret']).to eq('my_consumer_secret')
+  describe "#at_screen_name" do
+    it "returns '@screenname'" do
+      twitter_account.screen_name = 'thomasjklemm'
+      expect(twitter_account.at_screen_name).to eq '@thomasjklemm'
     end
   end
 
-  it { should respond_to(:client) }
+  describe "#client" do
+    it "returns a Twitter::Client instance" do
+      expect(twitter_account.client).to be_a Twitter::Client
+    end
 
-  pending ".from_omniauth"
+    it "instantiates the Twitter::Client with the twitter account's credentials" do
+      token = twitter_account.client.instance_variable_get("@oauth_token")
+      token_secret = twitter_account.client.instance_variable_get("@oauth_token_secret")
+
+      expect(token).to be_present
+      expect(token).to eq(twitter_account.token)
+
+      expect(token_secret).to be_present
+      expect(token_secret).to eq(twitter_account.token_secret)
+    end
+  end
+end
+
+describe TwitterAccount, 'persisted' do
+  subject(:twitter_account) { Fabricate(:twitter_account) }
+  it { should be_valid }
+
+  it { should validate_uniqueness_of(:twitter_id) }
+
+  describe "callbacks" do
+    it "ensures that the first connected twitter account will be made the project's default twitter account" do
+      twitter_account.send(:ensure_project_default_is_set) # after_commit callback
+      expect(twitter_account).to be_project_default
+    end
+  end
 end

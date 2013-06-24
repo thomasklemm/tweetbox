@@ -52,32 +52,20 @@ class TwitterAccount < ActiveRecord::Base
   validates :uid, :token, :token_secret, presence: true
 
   # Access scope
+  # #access_scope.read? and #access_scope.write?
+  # TwitterAccount.with_access_scope(:read) and TwitterAccount.with_access_scope(:read, :write)
   enumerize :access_scope, in: ACCESS_SCOPES
-  # #access_scope.read?
-  # #access_scope.write?
-  # TwitterAccount.with_access_scope(:read)
-  # TwitterAccount.with_access_scope(:read, :write)
-
-  # Callbacks
-  before_save :set_first_authorized_twitter_account_to_be_project_default
 
   def at_screen_name
     "@#{ screen_name }"
   end
 
-  def destroyable?
-    project.default_twitter_account_id != id && searches.empty?
-  end
-
-  # Returns a Twitter::Client instance for the twitter account
-  def twitter_client
+  def client
     Twitter::Client.new(
       oauth_token: token,
       oauth_token_secret: token_secret
     )
   end
-
-  alias_method :client, :twitter_client
 
   # Create or update existing Twitter account
   # Returns twitter account record
@@ -109,17 +97,11 @@ class TwitterAccount < ActiveRecord::Base
     update_attributes(max_user_timeline_twitter_id: twitter_id) if twitter_id.to_i > max_user_timeline_twitter_id.to_i
   end
 
-  # Set the current twitter account to be the project's default twitter account
-  def default!
-    project.default_twitter_account = self
-    project.save!
+  def can_be_removed?
+    searches.empty? && !is_project_default?
   end
 
   private
-
-  def set_first_authorized_twitter_account_to_be_project_default
-    default! unless project.default_twitter_account.present?
-  end
 
   # Assign user infos for authenticating twitter account
   # from omniauth auth hash
@@ -137,9 +119,17 @@ class TwitterAccount < ActiveRecord::Base
 
   # Assign the access scope for the credentials
   def assign_access_scope(scope)
-    ACCESS_SCOPES.include?(scope.to_s) or
-      raise StandardError, "TwitterAccount#assign_access_scope: '#{ scope }' is not a valid scope."
-
+    ACCESS_SCOPES.include?(scope.to_s) or raise "'#{ scope }' is not a valid scope."
     self.access_scope = scope.to_s
+  end
+
+  def project_default?
+    project.default_twitter_account_id == id
+  end
+
+  after_commit :ensure_project_default_is_set
+
+  def ensure_project_default_is_set
+    project.set_default_twitter_account(self) unless project.default_twitter_account.present?
   end
 end

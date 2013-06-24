@@ -25,6 +25,13 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/thoughtbot/shoulda-matchers.git
+  revision: 3f7c440851fabb7d258b817b638fe4b8cd0ceed5
+  specs:
+    shoulda-matchers (2.2.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: git://github.com/troessner/transitions.git
   revision: 80cfde60b9a71dfa8b41613819be58cbe0845538
   specs:
@@ -268,8 +275,6 @@ GEM
     select2-rails (3.4.2)
       sass-rails
       thor (~> 0.14)
-    shoulda-matchers (2.2.0)
-      activesupport (>= 3.0.0)
     sidekiq (2.12.4)
       celluloid (>= 0.14.1)
       connection_pool (>= 1.0.0)
@@ -385,7 +390,7 @@ DEPENDENCIES
   sass-rails
   select2-rails
   sentry-raven!
-  shoulda-matchers
+  shoulda-matchers!
   sidekiq
   simplecov
   sinatra

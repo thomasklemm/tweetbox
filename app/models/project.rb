@@ -33,6 +33,7 @@ class Project < ActiveRecord::Base
 
   scope :visible_to, ->(user) { where(id: user.project_ids) }
   scope :by_name, -> { order('projects.name desc') }
+
   def has_member?(user)
     permissions.
       joins(:membership).
@@ -67,6 +68,10 @@ class Project < ActiveRecord::Base
 
   def to_param
     "#{ id }-#{ name.parameterize }"
+  end
+
+  def set_default_twitter_account(twitter_account)
+    self.default_twitter_account = twitter_account and self.save!
   end
 
   private

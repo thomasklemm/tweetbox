@@ -20,7 +20,7 @@ describe Project do
   subject(:project) { Fabricate.build(:project) }
   it { should be_valid }
 
-  it { should belong_to(:account) }
+  it { should belong_to(:account).counter_cache }
 
   it { should have_many(:permissions) }
   it { should have_many(:memberships).through(:permissions) }
