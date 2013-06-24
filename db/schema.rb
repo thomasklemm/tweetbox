@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130617032705) do
+ActiveRecord::Schema.define(:version => 20130624191322) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",           :null => false
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(:version => 20130617032705) do
 
   add_index "authors", ["project_id", "twitter_id"], :name => "index_authors_on_project_id_and_twitter_id", :unique => true
   add_index "authors", ["project_id"], :name => "index_authors_on_project_id"
+
+  create_table "codes", :force => true do |t|
+    t.integer  "tweet_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "codes", ["tweet_id"], :name => "index_codes_on_tweet_id"
 
   create_table "events", :force => true do |t|
     t.integer  "tweet_id",   :null => false

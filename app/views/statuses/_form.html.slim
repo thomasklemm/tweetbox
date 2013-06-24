@@ -1,4 +1,4 @@
-
+/ new status form
 .new-status-wrapper ng-controller='StatusController'
   div ng-init="statusText = '#{ @status.initial_text }'"
   div ng-init="previewText = statusText"
@@ -8,11 +8,11 @@
   = form_for [@project, @status] do |f|
     = render 'shared/form_errors', target: @status
 
-    .field
-      = f.text_area :text, autofocus: true, ng_model: 'statusText', ng_change: 'updatePreview()', class: 'input-xlarge', rows: 4
+    .field class='input-xxlarge'
+      = f.text_area :full_text, autofocus: true, ng_model: 'statusText', ng_change: 'updatePreview()', rows: 5, style: 'width: 405px'
 
     .field
-      select ng-model='selectedTwitterAccount' ng-options="t as t.screen_name for t in twitterAccounts"
+      select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts" style='width: 420px'
 
       input type='text' ng-model='selectedTwitterAccount.id' name="status[twitter_account_id]" style='display: none'
 

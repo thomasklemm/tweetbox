@@ -2,15 +2,15 @@ class StatusDecorator < Draper::Decorator
   delegate_all
 
   def project_twitter_accounts
-    project.twitter_accounts.select([:id, :screen_name, :name, :profile_image_url])
+    project.twitter_accounts
   end
 
   def project_twitter_accounts_in_json
-    project_twitter_accounts.to_json
+    project_twitter_accounts.map(&:serialized_hash).to_json
   end
 
   def selected_twitter_account
-    twitter_account || project.default_twitter_account
+    twitter_account || reply_to_tweet.try(:twitter_account) || project.default_twitter_account
   end
 
   def selected_twitter_account_position

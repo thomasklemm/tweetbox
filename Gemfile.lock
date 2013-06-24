@@ -18,8 +18,8 @@ GIT
 
 GIT
   remote: git://github.com/thomasklemm/pundit.git
-  revision: b32fbd1af11b6c7ebaf2c7a4d100d7b868090c5a
-  branch: rspec
+  revision: 4edae1c909cb1514e53fb52eaa8c2ab921299663
+  branch: master
   specs:
     pundit (0.2.1)
       activesupport (>= 3.0.0)

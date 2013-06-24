@@ -1,7 +1,7 @@
 class StatusesController < ProjectController
   def new
     @status = Status.new(reply_params).decorate
-    @event = @status.reply_to_tweet.try(:create_event, :start_reply, current_user)
+    @event = @status.create_start_reply_event
   end
 
   def create
@@ -17,9 +17,9 @@ class StatusesController < ProjectController
   private
 
   def reply_params
-    { project: @project,
-      user: current_user,
-      in_reply_to_status_id: params[:tweet_id] }
+    options = { project: @project, user: current_user }
+    options[:in_reply_to_status_id] = params[:tweet_id] if params[:tweet_id].present?
+    options
   end
 
   def reply_to_tweet
@@ -28,7 +28,7 @@ class StatusesController < ProjectController
 
   def status_params
     params[:status].
-      slice(:text, :twitter_account_id, :in_reply_to_status_id).
+      slice(:full_text, :twitter_account_id, :in_reply_to_status_id).
       reverse_merge({
         project: @project,
         user: current_user

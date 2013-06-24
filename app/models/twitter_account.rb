@@ -101,6 +101,10 @@ class TwitterAccount < ActiveRecord::Base
     searches.empty? && !is_project_default?
   end
 
+  def serialized_hash
+    { id: id, screen_name: screen_name, name: name, profile_image_url: profile_image_url, at_screen_name: at_screen_name }
+  end
+
   private
 
   # Assign user infos for authenticating twitter account

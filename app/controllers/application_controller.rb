@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   # detected by pundit
   def user_not_authorized
     flash[:error] = "You are not authorized to perform this action."
-    redirect_to :back
+    redirect_to request.headers["Referer"] || root_path
   end
 
   helper_method :user_account, :user_projects, :user_project

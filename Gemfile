@@ -31,7 +31,7 @@ gem 'devise', '>= 3.0.0.rc'
 gem 'omniauth-twitter'
 
 # Pundit (Authorization)
-gem 'pundit', github: 'thomasklemm/pundit', branch: 'rspec'
+gem 'pundit', github: 'thomasklemm/pundit', branch: 'master'
 
 # Strong parameters (Mass assignment protection)
 gem 'strong_parameters'

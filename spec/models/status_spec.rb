@@ -1,4 +1,16 @@
-# require 'spec_helper'
+require 'spec_helper'
+
+describe Status do
+  subject(:status) { Fabricate.build(:status) } # Form object
+  it { should be_valid }
+
+  it { should validate_presence_of(:project) }
+  it { should validate_presence_of(:user) }
+  it { should validate_presence_of(:twitter_account) }
+  it { should validate_presence_of(:full_text) }
+  it { should validate_presence_of(:posted_text) }
+  it { should validate_presence_of(:code) }
+end
 
 # describe Status do
 #   subject(:status) { Fabricate.build(:status) }
