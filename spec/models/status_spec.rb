@@ -8,8 +8,18 @@ describe Status do
   it { should validate_presence_of(:user) }
   it { should validate_presence_of(:twitter_account) }
   it { should validate_presence_of(:full_text) }
+end
+
+describe Status, 'posted' do
+  subject(:status) { Fabricate.build(:status) } # Form object
+  it "should save" do
+    VCR.use_cassette('post_status', record: :once) do
+      status.save
+    end
+  end
+
+  it { should be_valid }
   it { should validate_presence_of(:posted_text) }
-  it { should validate_presence_of(:code) }
 end
 
 # describe Status do

@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/oauth/request_token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - OAuth gem v0.4.7
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Authorization:
+      - OAuth oauth_callback="http%3A%2F%2Fwww.example.com%2Fauth%2Ftwitter%2Fcallback%3Fuse_authorize%3Dtrue%26force_login%3Dtrue",
+        oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="0QxkO44L9n4qNn0qR4D3J5fsN7PW77xyhJYSiBhE",
+        oauth_signature="lBDwN1qVowkJZ1K8mE0EQyHMKS4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1372109590", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '146'
+      Content-Type:
+      - text/html; charset=utf-8
+      Date:
+      - Mon, 24 Jun 2013 21:33:12 GMT
+      Etag:
+      - ! '"20d131abf6e45ab002ca7f18bb795d2e"'
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 24 Jun 2013 21:33:12 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - _twitter_sess=BAh7BzoPY3JlYXRlZF9hdGwrCOPVGng%252FAToHaWQiJWViOGUxMzViNjY4MGE4%250ANjYzMDE2ZjAxZjlhODliOWUy--f5a4f5bdf8bec6e35ffa71443b707a8ea525a910;
+        domain=.twitter.com; path=/; HttpOnly
+      - guest_id=v1%3A137210959188821215; Domain=.twitter.com; Path=/; Expires=Wed,
+        24-Jun-2015 21:33:12 UTC
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Mid:
+      - 02cd299020ab1b653cf334d7fdde848be88fe9c3
+      X-Runtime:
+      - '0.01902'
+      X-Transaction:
+      - 6ea58f8ecdb57c50
+      X-Ua-Compatible:
+      - IE=10,chrome=1
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: US-ASCII
+      string: oauth_token=eqvScSdnAZRc7kASovFmSlyNFPXmNaoGjt9wR2ZIc&oauth_token_secret=otHXkHagfeWcoIo5EmxmYlnaV4GVJdReA6gD6QpawwY&oauth_callback_confirmed=true
+    http_version: 
+  recorded_at: Mon, 24 Jun 2013 21:33:12 GMT
+recorded_with: VCR 2.5.0

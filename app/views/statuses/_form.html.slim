@@ -14,7 +14,7 @@
     .field
       select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts" style='width: 420px'
 
-      input type='text' ng-model='selectedTwitterAccount.id' name="status[twitter_account_id]" style='display: none'
+      input type='text' ng-model='selectedTwitterAccount.id' id='status_twitter_account_id' name="status[twitter_account_id]" style="#{ 'display: none' unless Rails.env.test? }"
 
     .field
       = f.hidden_field :in_reply_to_status_id

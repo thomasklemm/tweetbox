@@ -75,7 +75,6 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def update_from_omniauth(auth, access_scope)
-    # Store credentials
     self.token        = auth.credentials.token   # can change, e.g. by changing access level...
     self.token_secret = auth.credentials.secret  #  ...or by revoking and reauthorizing access
 

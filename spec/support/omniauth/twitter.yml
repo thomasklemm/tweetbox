@@ -1,0 +1,207 @@
+--- !ruby/hash:OmniAuth::AuthHash
+provider: twitter
+uid: '1444843380'
+info: !ruby/hash:OmniAuth::AuthHash::InfoHash
+  nickname: tweetbox101
+  name: Tweetbox 101
+  location:
+  image: http://a0.twimg.com/sticky/default_profile_images/default_profile_1_normal.png
+  description:
+  urls: !ruby/hash:OmniAuth::AuthHash
+    Website:
+    Twitter: https://twitter.com/tweetbox101
+credentials: !ruby/hash:OmniAuth::AuthHash
+  token: 1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR
+  secret: vpm0nXOzlhnc2BIQJdkUXAsVmsBmzOdPOqQ7pAPzbcg
+extra: !ruby/hash:OmniAuth::AuthHash
+  access_token: !ruby/object:OAuth::AccessToken
+    token: 1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR
+    secret: vpm0nXOzlhnc2BIQJdkUXAsVmsBmzOdPOqQ7pAPzbcg
+    consumer: !ruby/object:OAuth::Consumer
+      key: QE65AxE8FIQeluIKG7TrBw
+      secret: yB1IO6bbsJXI28emcQEvBFwFw3pKAkn2uNZte1wMw8
+      options:
+        :signature_method: HMAC-SHA1
+        :request_token_path: /oauth/request_token
+        :authorize_path: /oauth/authenticate
+        :access_token_path: /oauth/access_token
+        :proxy:
+        :scheme: :header
+        :http_method: :post
+        :oauth_version: '1.0'
+        :site: https://api.twitter.com
+      http: !ruby/object:Net::HTTP
+        address: api.twitter.com
+        port: 443
+        curr_http_version: '1.1'
+        no_keepalive_server: false
+        close_on_empty_response: false
+        socket:
+        started: false
+        open_timeout: 30
+        read_timeout: 30
+        continue_timeout:
+        debug_output:
+        use_ssl: true
+        ssl_context: !ruby/object:OpenSSL::SSL::SSLContext
+          cert:
+          key:
+          client_ca:
+          ca_file:
+          ca_path:
+          timeout:
+          verify_mode: 0
+          verify_depth:
+          verify_callback:
+          options: 4095
+          cert_store:
+          extra_chain_cert:
+          client_cert_cb:
+          tmp_dh_callback:
+          session_id_context:
+          session_get_cb:
+          session_new_cb:
+          session_remove_cb:
+          servername_cb:
+        enable_post_connection_check: true
+        compression:
+        sspi_enabled: false
+        ssl_version:
+        key:
+        cert:
+        ca_file:
+        ca_path:
+        cert_store:
+        ciphers:
+        verify_mode: 0
+        verify_callback:
+        verify_depth:
+        ssl_timeout:
+      http_method: :post
+      uri: !ruby/object:URI::HTTPS
+        scheme: https
+        user:
+        password:
+        host: api.twitter.com
+        port: 443
+        path: ''
+        query:
+        opaque:
+        registry:
+        fragment:
+        parser:
+    params:
+      :oauth_token: 1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR
+      oauth_token: 1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR
+      :oauth_token_secret: vpm0nXOzlhnc2BIQJdkUXAsVmsBmzOdPOqQ7pAPzbcg
+      oauth_token_secret: vpm0nXOzlhnc2BIQJdkUXAsVmsBmzOdPOqQ7pAPzbcg
+      :user_id: '1444843380'
+      user_id: '1444843380'
+      :screen_name: tweetbox101
+      screen_name: tweetbox101
+    response: !ruby/object:Net::HTTPOK
+      http_version: '1.1'
+      code: '200'
+      message: OK
+      header:
+        cache-control:
+        - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+        content-length:
+        - '1249'
+        content-type:
+        - application/json; charset=utf-8
+        date:
+        - Mon, 24 Jun 2013 21:23:44 GMT
+        etag:
+        - ! '\"b91da6e6f2cca53d6807187f3fea55e7\"'
+        expires:
+        - Tue, 31 Mar 1981 05:00:00 GMT
+        last-modified:
+        - Mon, 24 Jun 2013 21:23:44 GMT
+        pragma:
+        - no-cache
+        server:
+        - tfe
+        set-cookie:
+        - dnt=; domain=.twitter.com; path=/; expires=Thu, 01-Jan-1970 00:00:00 GMT
+        - lang=de; path=/
+        - lang=de; path=/
+        - lang=de; path=/
+        - twid=u%3D1444843380%7CUvbNsE3vhGYq1CjlC4LiOTkiDpA%3D; domain=.twitter.com;
+          path=/; secure
+        - _twitter_sess=BAh7CDoMY3NyZl9pZCIlZDJmZDQwYjdlODIyZTBjYTFlNTgzNTM4ZGU0YTky%250AYzc6D2NyZWF0ZWRfYXRsKwjoLBJ4PwE6B2lkIiU0MzdhYjFiODZjZWNkZThi%250AZTQ5MjAwYjIyYzUyYzUwNA%253D%253D--7142940c7cfaa018079fbf3cba679cd9dc424314;
+          domain=.twitter.com; path=/; HttpOnly
+        - guest_id=v1%3A137210902436465309; Domain=.twitter.com; Path=/; Expires=Wed,
+          24-Jun-2015 21:23:44 UTC
+        status:
+        - 200 OK
+        strict-transport-security:
+        - max-age=631138519
+        vary:
+        - Accept-Encoding
+        x-access-level:
+        - read-write-directmessages
+        x-frame-options:
+        - SAMEORIGIN
+        x-mid:
+        - 3f7aea217a297e4bec26c709035e11b3c6ab21d5
+        x-rate-limit-limit:
+        - '15'
+        x-rate-limit-remaining:
+        - '14'
+        x-rate-limit-reset:
+        - '1372109924'
+        x-runtime:
+        - '0.05210'
+        x-transaction:
+        - fe662d6cdde42b41
+        x-transaction-mask:
+        - a6183ffa5f8ca943ff1b53b5644ef114d684c69b
+        connection:
+        - close
+      body: ! '{\"name\":\"Tweetbox 101\",\"profile_background_color\":\"C0DEED\",\"lang\":\"de\",\"friends_count\":0,\"screen_name\":\"tweetbox101\",\"default_profile_image\":true,\"id\":1444843380,\"profile_background_image_url\":\"http:\\/\\/a0.twimg.com\\/images\\/themes\\/theme1\\/bg.png\",\"verified\":false,\"notifications\":false,\"profile_link_color\":\"0084B4\",\"favourites_count\":0,\"contributors_enabled\":false,\"id_str\":\"1444843380\",\"profile_use_background_image\":true,\"following\":false,\"utc_offset\":null,\"profile_text_color\":\"333333\",\"created_at\":\"Mon
+        May 20 21:52:39 +0000 2013\",\"profile_image_url\":\"http:\\/\\/a0.twimg.com\\/sticky\\/default_profile_images\\/default_profile_1_normal.png\",\"is_translator\":false,\"default_profile\":true,\"time_zone\":null,\"follow_request_sent\":false,\"protected\":false,\"profile_sidebar_border_color\":\"C0DEED\",\"description\":null,\"statuses_count\":43,\"followers_count\":0,\"profile_background_tile\":false,\"profile_image_url_https\":\"https:\\/\\/twimg0-a.akamaihd.net\\/sticky\\/default_profile_images\\/default_profile_1_normal.png\",\"profile_sidebar_fill_color\":\"DDEEF6\",\"listed_count\":0,\"url\":null,\"entities\":{\"description\":{\"urls\":[]}},\"profile_background_image_url_https\":\"https:\\/\\/twimg0-a.akamaihd.net\\/images\\/themes\\/theme1\\/bg.png\",\"geo_enabled\":false,\"location\":null}'
+      read: true
+      socket:
+      body_exist: true
+  raw_info: !ruby/hash:OmniAuth::AuthHash
+    name: Tweetbox 101
+    profile_background_color: C0DEED
+    lang: de
+    friends_count: 0
+    screen_name: tweetbox101
+    default_profile_image: true
+    id: 1444843380
+    profile_background_image_url: http://a0.twimg.com/images/themes/theme1/bg.png
+    verified: false
+    notifications: false
+    profile_link_color: 0084B4
+    favourites_count: 0
+    contributors_enabled: false
+    id_str: '1444843380'
+    profile_use_background_image: true
+    following: false
+    utc_offset:
+    profile_text_color: '333333'
+    created_at: Mon May 20 21:52:39 +0000 2013
+    profile_image_url: http://a0.twimg.com/sticky/default_profile_images/default_profile_1_normal.png
+    is_translator: false
+    default_profile: true
+    time_zone:
+    follow_request_sent: false
+    protected: false
+    profile_sidebar_border_color: C0DEED
+    description:
+    statuses_count: 43
+    followers_count: 0
+    profile_background_tile: false
+    profile_image_url_https: https://twimg0-a.akamaihd.net/sticky/default_profile_images/default_profile_1_normal.png
+    profile_sidebar_fill_color: DDEEF6
+    listed_count: 0
+    url:
+    entities: !ruby/hash:OmniAuth::AuthHash
+      description: !ruby/hash:OmniAuth::AuthHash
+        urls: []
+    profile_background_image_url_https: https://twimg0-a.akamaihd.net/images/themes/theme1/bg.png
+    geo_enabled: false
+    location:
