@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 
 Tweetbox::Application.routes.draw do
+  get "tweets/show"
+
   # User authentication
   devise_for :users,
     path_names: { sign_in: 'login', sign_out: 'logout' }
@@ -69,6 +71,10 @@ Tweetbox::Application.routes.draw do
 
     resources :searches, except: :show
   end
+
+  # Public view
+  get 't/:code_id' => 'public/codes#redirect', as: :public_code
+  get 'tweets/:screen_name/:twitter_id' => 'public/tweets#show', as: :public_tweet
 
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to

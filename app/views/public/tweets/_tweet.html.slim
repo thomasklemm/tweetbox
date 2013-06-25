@@ -1,0 +1,20 @@
+.tweet-wrapper
+  = div_for tweet, class: "#{ tweet == main_tweet ? '' : 'conversation-tweet' }" do
+
+    / author
+    = link_to tweet.author_intent_url, class: 'author' do
+      = tweet.author_profile
+
+    / timestamp
+    span.timestamp
+      i.icon-time
+      '
+      abbr.timeago title=tweet.created_at.iso8601
+
+    / text
+    .text = tweet.linked_text
+
+    / actions
+    .actions
+      = link_to icon_tag(:reply, 'Reply'), tweet.reply_intent_url, class: "#{'btn' if tweet == main_tweet }"
+      = tweet.open_in_twitter_link('On Twitter', :twitter)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624191322) do
+ActiveRecord::Schema.define(:version => 20130625102932) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",           :null => false
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20130624191322) do
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.integer  "previous_tweet_ids",    :limit => 8,                 :array => true
+    t.text     "full_text"
   end
 
   add_index "tweets", ["previous_tweet_ids"], :name => "index_tweets_on_previous_tweet_ids", :using => :gin

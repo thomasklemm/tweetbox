@@ -5,10 +5,15 @@ class TweetDecorator < Draper::Decorator
   decorates_association :conversation
   # decorates_association :events
 
-  USER_INTENT_BASE_URL = "https://twitter.com/intent/user?screen_name="
+  USER_INTENT_BASE_URL  = "https://twitter.com/intent/user?screen_name="
+  REPLY_INTENT_BASE_URL = "https://twitter.com/intent/tweet?in_reply_to="
 
   def author_intent_url
     "#{ USER_INTENT_BASE_URL }#{ author.screen_name }"
+  end
+
+  def reply_intent_url
+    "#{ REPLY_INTENT_BASE_URL }#{ twitter_id }"
   end
 
   def author_profile
@@ -19,14 +24,14 @@ class TweetDecorator < Draper::Decorator
 
   # Returns the autolinked tweet text
   def linked_text
-    lt = Twitter::Autolink.auto_link_urls(text, url_target: :blank)
+    lt = Twitter::Autolink.auto_link_urls(full_text || text, url_target: :blank)
 
     options = {
       username_base_url: USER_INTENT_BASE_URL,
       username_include_symbol: true
     }
     lt = Twitter::Autolink.auto_link_usernames_or_lists(lt, options)
-    lt.html_safe
+    simple_format(lt)
   end
 
   def resolve_button(text, icon, opts={})
@@ -40,22 +45,6 @@ class TweetDecorator < Draper::Decorator
   def activate_button(text, icon, opts={})
     link_to icon_tag(icon, text), activate_project_tweet_path(project, self), opts.merge(method: :post)
   end
-
-  # def open_case_button(text, icon, opts={})
-  #   link_to icon_tag(icon, text), open_case_project_tweet_path(project, self), opts.merge(method: :put)
-  # end
-
-  # def appreciate_tweet_button(text, icon, opts={})
-  #   link_to icon_tag(icon, text), appreciate_project_tweet_path(project, self), opts.merge(method: :put)
-  # end
-
-  # def new_reply_button(text, icon, opts={})
-  #   link_to icon_tag(icon, text), new_project_tweet_reply_path(project, self), opts
-  # end
-
-  # def resolve_case_button(text, icon, opts={})
-  #   link_to icon_tag(icon, text), resolve_project_tweet_path(project, self), opts.merge(method: :put)
-  # end
 
   def retweet_button(text, icon, opts={})
     link_to icon_tag(icon, text), new_project_tweet_retweet_path(project, self), opts

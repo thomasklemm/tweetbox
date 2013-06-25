@@ -30,15 +30,15 @@ describe 'Connect a Twitter account' do
 
     # Post a status
     click_on 'Post a Tweet'
-
-    VCR.use_cassette('post_long_tweet') do
-      within '#new_status' do
-        fill_in 'status_full_text', with: "Aenean eu leo quam. Pellentesque ornare sem lacinia
+    full_text = "Aenean eu leo quam. Pellentesque ornare sem lacinia
         quam venenatis vestibulum. Nulla vitae elit libero, a pharetra augue. Cum sociis natoque
         penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada
         magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Sed posuere consectetur
         est at lobortis."
 
+    VCR.use_cassette('post_long_tweet') do
+      within '#new_status' do
+        fill_in 'status_full_text', with: full_text
         fill_in 'status_twitter_account_id', with: TwitterAccount.first.id
         click_on 'Post'
       end
@@ -46,8 +46,18 @@ describe 'Connect a Twitter account' do
 
     expect(page).to have_content("Status has been posted.")
     expect(current_path).to eq(project_tweet_path(Project.first, Tweet.posted.first))
-    expect(page).to have_content("Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nulla vitae elit libero, a ... http://lvh.me:7000/tweets/tweetbox101/1")
+    expect(page).to have_content(full_text)
     expect(page).to have_content("Thomas Klemm posted this tweet.")
+
+    code = Code.first
+    tweet = code.tweet
+
+    expect(tweet.text).to eq("Aenean eu leo quam. Pellentesque ornare sem lacinia\n        quam venenatis vestibulum. Nulla vitae elit libero, a ... http://lvh.me:7000/t/1")
+    expect(tweet.full_text).to eq full_text
+
+    # NOTE: New code generated each time, even when Twitter response in static in VCR
+    visit "/t/#{ code.id }"
+    expect(current_path).to eq public_tweet_path('tweetbox101', tweet)
 
     # Get mentions timeline
     # VCR.use_cassette('mentions_timeline') do

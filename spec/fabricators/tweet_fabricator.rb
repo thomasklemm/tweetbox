@@ -4,6 +4,7 @@
 #
 #  author_id             :integer          not null
 #  created_at            :datetime         not null
+#  full_text             :text
 #  id                    :integer          not null, primary key
 #  in_reply_to_status_id :integer
 #  in_reply_to_user_id   :integer

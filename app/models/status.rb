@@ -79,7 +79,7 @@ class Status
   end
 
   def public_url
-    "http://lvh.me:7000/tweets/#{ twitter_account.screen_name }/#{ code.id }"
+    "http://lvh.me:7000/t/#{ code.id }"
   end
 
   def ellipsis_and_public_url
@@ -115,6 +115,7 @@ class Status
     status = post_status
     self.posted_tweet = create_posted_tweet(status)
 
+    persist_full_text_on_posted_tweet
     link_code_with_posted_tweet
     build_conversation_history_on_posted_tweet
     create_events_on_tweets
@@ -135,6 +136,10 @@ class Status
 
   def create_posted_tweet(status)
     project.create_tweet_from_twitter(status, twitter_account: twitter_account, state: :posted)
+  end
+
+  def persist_full_text_on_posted_tweet
+    (posted_tweet.full_text = full_text and posted_tweet.save!) if posted_text != full_text
   end
 
   def link_code_with_posted_tweet

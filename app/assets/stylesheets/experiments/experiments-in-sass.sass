@@ -183,12 +183,13 @@ $navigation-spacing: 0.75rem
         @extend .muted
 
     .timestamp
-      margin-left: 10px
+      float: right
       @extend .muted
       font-size: 12px
 
     .text
-      height: (2 * $baseLineHeight) + 3px
+      min-height: (2 * $baseLineHeight) + 3px
+      padding-bottom: 6px
 
     .main-actions
       float: right
@@ -285,3 +286,12 @@ abbr.timeago
   .preview-status
     .text
       min-height: (4 * $baseLineHeight)
+
+
+.public-tweets-wrapper
+  .tweet-wrapper
+    width: 438px
+    &:not(:last-of-type)
+      padding-bottom: 1rem
+      border-bottom: 1px solid #ddd
+      margin-bottom: 1rem

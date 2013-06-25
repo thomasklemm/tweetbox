@@ -1,0 +1,4 @@
+h3 Tweetbox
+
+.public-tweets-wrapper
+  = render partial: 'tweet', collection: @tweet.conversation, locals: { main_tweet: @tweet }
