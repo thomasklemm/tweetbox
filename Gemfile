@@ -130,7 +130,7 @@ group :test do
   gem 'vcr'
 end
 
-group :staging, :production do
+group :production do
   # Memcached using Memcachier on Heroku
   gem 'memcachier'
   gem 'dalli'
