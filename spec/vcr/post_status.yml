@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: US-ASCII
+      string: status=status+posted+text
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="4a1d1daae163b3690607625a52ba4f67",
+        oauth_signature="%2Bh0T9uWVjfuR8ajHdhX8TH1YCr8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1372257543", oauth_token="token_string", oauth_version="1.0"
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Content-Length:
+      - '61'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 26 Jun 2013 14:39:04 UTC
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137225754479739259; Domain=.twitter.com; Path=/; Expires=Fri,
+        26-Jun-2015 14:39:04 UTC
+      Strict-Transport-Security:
+      - max-age=631138519
+    body:
+      encoding: US-ASCII
+      string: ! '{"errors":[{"message":"Invalid or expired token","code":89}]}'
+    http_version: 
+  recorded_at: Wed, 26 Jun 2013 14:39:04 GMT
+recorded_with: VCR 2.5.0
