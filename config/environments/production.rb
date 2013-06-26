@@ -21,7 +21,13 @@ Tweetbox::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  # Force SSL
+  config.force_ssl = true
+
+  # Devise SSL
+  config.to_prepare { Devise::SessionsController.force_ssl }
+  config.to_prepare { Devise::RegistrationsController.force_ssl }
+  config.to_prepare { Devise::PasswordsController.force_ssl }
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
@@ -37,10 +43,6 @@ Tweetbox::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w()
-
-  # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => 'example.com' }
 
   # Enable threaded mode
   config.threadsafe!
@@ -59,6 +61,15 @@ Tweetbox::Application.configure do
   # Enable lograge shorter logs
   config.lograge.enabled = true
 
+  ##
+  # Email
+
+  # ActionMailer default url options
+  config.action_mailer.default_url_options = { :host => 'tweetbox.co' }
+
+  # Disable delivery errors, bad email addresses will be ignored
+  # config.action_mailer.raise_delivery_errors = false
+
   # Mandrill SMTP settings
   ActionMailer::Base.smtp_settings = {
     :port =>           '587',
@@ -72,8 +83,7 @@ Tweetbox::Application.configure do
 
   ##
   # Caching
-  #
-  # Explicit Requires
+
   require 'memcachier'
   require 'dalli'
   require 'rack/cache'

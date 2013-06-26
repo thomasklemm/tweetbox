@@ -4,7 +4,7 @@
 = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js'
 
 / angular
-= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js'
+= javascript_include_tag '//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js'
 
 / twitter web intents
 = javascript_include_tag '//platform.twitter.com/widgets.js'
@@ -17,25 +17,16 @@
   javascript:
     = yield :javascript
 
-/ google analytics in production
-- if Rails.env.production?
-  javascript:
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '...........']);
-    _gaq.push(['_trackPageview']);
+/ additional stuff per environment
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-/ LiveReload in development
+/ development
 - if Rails.env.development?
+  / livereload
   javascript:
     document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
 
-/ test settings
+/ test
 - if Rails.env.test?
+  / ajax setup
   javascript:
     $.ajaxSetup({ async: false })

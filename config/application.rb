@@ -32,6 +32,9 @@ module Tweetbox
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
+    # Default timezone
+    config.active_record.default_timezone = :utc
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
@@ -60,11 +63,6 @@ module Tweetbox
     # Enable the asset pipeline
     config.assets.enabled = true
 
-    # Serve fonts via Asset Pipeline
-    config.assets.paths << Rails.root.join("app", "assets", "fonts")
-    config.assets.precompile += %w( .svg .eot .woff .ttf )
-    #   Source: http://stackoverflow.com/questions/11261805/rails-3-font-face-failing-in-production-with-firefox
-
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
@@ -82,8 +80,5 @@ module Tweetbox
       g.javascript_engine false
       g.view_specs false
     end
-
-    # Default timezone
-    config.active_record.default_timezone = :utc
   end
 end
