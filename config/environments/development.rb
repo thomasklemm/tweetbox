@@ -42,6 +42,8 @@ Tweetbox::Application.configure do
   # required by devise
   config.action_mailer.default_url_options = { host: 'tweetbox.dev' }
 
+  Rails.application.routes.default_url_options[:host] = 'tweetbox.dev'
+
   # Quiet Assets
   config.quiet_assets = true
 

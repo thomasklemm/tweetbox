@@ -56,7 +56,7 @@ describe 'Connect a Twitter account' do
     expect(tweet.full_text).to eq full_text
 
     # NOTE: New code generated each time, even when Twitter response in static in VCR
-    visit "/t/#{ code.id }"
+    visit public_code_path(code)
     expect(current_path).to eq public_tweet_path('tweetbox101', tweet)
 
     # Get mentions timeline
@@ -76,6 +76,6 @@ describe 'Connect a Twitter account' do
     # end
 
 
-    save_and_open_page
+    # save_and_open_page
   end
 end

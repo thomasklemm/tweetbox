@@ -34,6 +34,7 @@ Tweetbox::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  config.action_mailer.default_url_options = { :host => 'lvh.me:7000' }
 
-  config.action_mailer.default_url_options = { :host => 'example.com' }
+  Rails.application.routes.default_url_options[:host] = 'lvh.me:7000'
 end

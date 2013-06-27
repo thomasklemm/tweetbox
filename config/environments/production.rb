@@ -68,7 +68,9 @@ Tweetbox::Application.configure do
   # Email
 
   # ActionMailer default url options
-  config.action_mailer.default_url_options = { :host => 'tweetbox.co' }
+  config.action_mailer.default_url_options = { :host => 'www.tweetbox.co' }
+
+  Rails.application.routes.default_url_options[:host] = 'www.tweetbox.co'
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

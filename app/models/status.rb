@@ -79,7 +79,7 @@ class Status
   end
 
   def public_url
-    "http://lvh.me:7000/t/#{ code.id }"
+    Rails.application.routes.url_helpers.public_code_url(code)
   end
 
   def ellipsis_and_public_url
