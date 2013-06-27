@@ -5,7 +5,7 @@ $tweet.find('.new-status-wrapper').remove();
 // Reply form
 $tweet.find('.forms').append('<%= j render("form") %>')
 // Bootstrap angular app
-angular.bootstrap('html');
+angular.bootstrap($('html'));
 
 // Event
 $event = $('<%= j render(@event.decorate) %>');

@@ -5,17 +5,17 @@ class TweetsController < TweetController
   # Collection actions
 
   def incoming
-    @tweets = project_tweets.incoming.decorate
+    @tweets = project_tweets.incoming.limit(100).decorate
   end
 
   alias_method :index, :incoming
 
   def resolved
-    @tweets = project_tweets.resolved.decorate
+    @tweets = project_tweets.resolved.limit(100).decorate
   end
 
   def posted
-    @tweets = project_tweets.posted.decorate
+    @tweets = project_tweets.posted.limit(100).decorate
   end
 
   ##

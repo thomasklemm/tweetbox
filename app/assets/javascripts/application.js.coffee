@@ -9,7 +9,6 @@
 //= require twitter-text
 //= require jquery.timeago
 
-# Tweetbox
 //= require statuses
 
 # Tweetbox
