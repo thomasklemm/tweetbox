@@ -13,6 +13,9 @@ Tweetbox::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  # Via RailsCasts (http://railscasts.com/episodes/405-angularjs)
+  config.assets.js_compressor = Sprockets::LazyCompressor.new { Uglifier.new(mangle: false) }
+
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
 
