@@ -1,3 +1,3 @@
-web: bundle exec puma -p $PORT -e $RACK_ENV -t 10:20
-worker: bundle exec sidekiq -e production -c 7
+web: bundle exec puma -p $PORT -e $RACK_ENV -t 3:10
+worker: bundle exec sidekiq -e production -c 5
 clock: bundle exec clockwork lib/clock.rb
