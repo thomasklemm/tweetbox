@@ -10,7 +10,7 @@ class Scheduler
     end
 
     Search.find_each do |search|
-      [1 3 5 7 9].each { |i| TwitterWorker.perform_in(i.minutes, :search, search.id) }
+      (1..10).each { |i| TwitterWorker.perform_in(i.minutes, :search, search.id) if i.odd? }
     end
   end
 end
