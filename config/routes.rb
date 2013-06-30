@@ -1,8 +1,6 @@
 require 'sidekiq/web'
 
 Tweetbox::Application.routes.draw do
-  get "tweets/show"
-
   # User authentication
   devise_for :users,
     path_names: { sign_in: 'login', sign_out: 'logout' }
