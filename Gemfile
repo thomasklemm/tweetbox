@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 # Ruby version on Heroku
-ruby '1.9.3'
+ruby '2.0.0'
 
 # Puma (App server)
-gem 'puma', '>= 2.0.0'
+gem 'puma'
 
 # Rails
 gem 'rails', '3.2.13'
@@ -25,7 +25,7 @@ gem 'slim-rails'
 gem 'figaro'
 
 # Devise (User authentication)
-gem 'devise', '>= 3.0.0.rc'
+gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
 
 # Omniauth for Twitter (Authenticating Twitter accounts)
 gem 'omniauth-twitter'
@@ -82,21 +82,14 @@ group :assets do
   gem 'uglifier'
 
   # Packaged plugins
-  gem 'bootstrap-sass', '~> 2.3.1.0'
+  gem 'bootstrap-sass', '~> 2.3.2.0'
   gem 'select2-rails'
 end
 
 group :development do
-  # Annotate Models (Adds schema info for models to matching files)
-  #  Note: master is currently 2.6.0.beta1; gem has not received updates in a while
-  gem 'annotate', github: 'ctran/annotate_models'
-
   # Pry (A great console, replacement for IRB in development)
   gem 'pry'
   gem 'pry-rails'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'pry-debugger'
 
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'

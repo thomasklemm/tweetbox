@@ -35,3 +35,6 @@ vendor/bundler_gems
 
 # Ignore application configuration
 /config/application.yml
+
+# Rbenv local Ruby version
+.ruby-version
