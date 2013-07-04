@@ -83,6 +83,9 @@ Tweetbox::Application.routes.draw do
   # Sidekiq Web interface
   mount Sidekiq::Web => '/sidekiq'
 
+  # Marketing pages
+  get ':id' => 'high_voltage/pages#show', as: :static
+
   # Root
   root to: 'high_voltage/pages#show', id: 'landing'
 end
