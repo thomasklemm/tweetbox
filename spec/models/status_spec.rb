@@ -1,26 +1,28 @@
 require 'spec_helper'
 
-describe Status do
-  subject(:status) { Fabricate.build(:status) } # Form object
-  it { should be_valid }
+# FIXME: OUTDATED!
 
-  it { should validate_presence_of(:project) }
-  it { should validate_presence_of(:user) }
-  it { should validate_presence_of(:twitter_account) }
-  it { should validate_presence_of(:full_text) }
-end
+# describe Status do
+#   subject(:status) { Fabricate.build(:status) } # Form object
+#   it { should be_valid }
 
-describe Status, 'posted' do
-  subject(:status) { Fabricate.build(:status) } # Form object
-  it "should save" do
-    VCR.use_cassette('post_status', record: :once) do
-      status.save
-    end
-  end
+#   it { should validate_presence_of(:project) }
+#   it { should validate_presence_of(:user) }
+#   it { should validate_presence_of(:twitter_account) }
+#   it { should validate_presence_of(:full_text) }
+# end
 
-  it { should be_valid }
-  it { should validate_presence_of(:posted_text) }
-end
+# describe Status, 'posted' do
+#   subject(:status) { Fabricate.build(:status) } # Form object
+#   it "should save" do
+#     VCR.use_cassette('post_status', record: :once) do
+#       status.save
+#     end
+#   end
+
+#   it { should be_valid }
+#   it { should validate_presence_of(:posted_text) }
+# end
 
 # describe Status do
 #   subject(:status) { Fabricate.build(:status) }

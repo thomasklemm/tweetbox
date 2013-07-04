@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'Signup and login' do
   it 'creates user, account, membership and permission records' do
     # Open signup page
-    visit new_signup_path
+    visit root_path
+    click_on 'Signup'
     expect(current_path).to eq(new_signup_path)
 
     # Submit invalid details

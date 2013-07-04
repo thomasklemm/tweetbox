@@ -46,14 +46,6 @@ class TwitterAccountsController < ProjectController
     redirect_to project_twitter_accounts_path(@project), notice: "Twitter account has been set as the project's default Twitter account."
   end
 
-  # Instruct Tweetbox to import the past mentions
-  def get_import
-    render 'import'
-  end
-
-  def post_import
-  end
-
   private
 
   def project_twitter_accounts
