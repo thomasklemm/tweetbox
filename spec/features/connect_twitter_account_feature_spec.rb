@@ -28,6 +28,8 @@ describe 'Connect a Twitter account' do
     expect(current_path).to eq(project_twitter_accounts_path(Project.first))
     expect(page).to have_content("Twitter account @tweetbox101 has been successfully authorized.")
 
+    raise TwitterAccount.first.to_yaml
+
     # Post a status
     click_on 'Post a Tweet'
     full_text = "Aenean eu leo quam. Pellentesque ornare sem lacinia

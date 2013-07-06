@@ -69,6 +69,6 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: oauth_token=eqvScSdnAZRc7kASovFmSlyNFPXmNaoGjt9wR2ZIc&oauth_token_secret=otHXkHagfeWcoIo5EmxmYlnaV4GVJdReA6gD6QpawwY&oauth_callback_confirmed=true
-    http_version: 
+    http_version:
   recorded_at: Mon, 24 Jun 2013 21:33:12 GMT
 recorded_with: VCR 2.5.0

@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: US-ASCII
+      string: status=Here%E2%80%99s+to+the+crazy+ones.+The+misfits.+The+rebels.+The+troublemakers.+The+round+pegs+in+the+square+holes.+The+ones...+http%3A%2F%2Flvh.me%3A7000%2Ft%2F23
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="81d9e5850a3214a165a2ad9e0d16a6f9",
+        oauth_signature="%2BlTkxYKMllXxILbVgezXRh7HOYg%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373100799", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '894'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 06 Jul 2013 08:53:20 GMT
+      Etag:
+      - '"754371a28290cbc77b1b6315f644025c"'
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Sat, 06 Jul 2013 08:53:20 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - _twitter_sess=BAh7CDoMY3NyZl9pZCIlZGY1YmQ4Zjc4OTEyYTA4MmRmYjI4OWEzOTgyZTZh%250AYWQ6B2lkIiVlNGU5MDM1MTkwYzdiZTExOTE4NGJjY2IwNGVlNGMyNzoPY3Jl%250AYXRlZF9hdGwrCAN6L7M%252FAQ%253D%253D--b6e5e68ce3f8ee66bba1b94c89021f706c9cf546;
+        domain=.twitter.com; path=/; HttpOnly
+      - dnt=; domain=.twitter.com; path=/; expires=Thu, 01-Jan-1970 00:00:00 GMT
+      - guest_id=v1%3A137310080043615934; Domain=.twitter.com; Path=/; Expires=Mon,
+        06-Jul-2015 08:53:20 UTC
+      - lang=de; path=/
+      - lang=de; path=/
+      - lang=de; path=/
+      - twid=u%3D1444843380%7CUvbNsE3vhGYq1CjlC4LiOTkiDpA%3D; domain=.twitter.com;
+        path=/; secure
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      Vary:
+      - Accept-Encoding
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Mid:
+      - 810403a93c7c65269428c62c69e2830bbd4afb68
+      X-Runtime:
+      - '0.24152'
+      X-Transaction:
+      - 00fbe806ee7e1229
+      X-Transaction-Mask:
+      - a6183ffa5f8ca943ff1b53b5644ef114df016f9a
+    body:
+      encoding: UTF-8
+      string: '{"retweet_count":0,"user":{"is_translator":false,"name":"Tweetbox 101","profile_sidebar_border_color":"C0DEED","url":null,"lang":"de","profile_image_url":"http:\/\/a0.twimg.com\/sticky\/default_profile_images\/default_profile_1_normal.png","default_profile_image":true,"location":null,"time_zone":null,"follow_request_sent":false,"id":1444843380,"favourites_count":0,"profile_background_tile":false,"friends_count":0,"profile_sidebar_fill_color":"DDEEF6","followers_count":0,"screen_name":"tweetbox101","following":false,"utc_offset":null,"verified":false,"profile_background_color":"C0DEED","notifications":false,"geo_enabled":false,"default_profile":true,"profile_image_url_https":"https:\/\/twimg0-a.akamaihd.net\/sticky\/default_profile_images\/default_profile_1_normal.png","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme1\/bg.png","protected":false,"description":null,"profile_link_color":"0084B4","created_at":"Mon
+        May 20 21:52:39 +0000 2013","id_str":"1444843380","listed_count":0,"profile_use_background_image":true,"statuses_count":53,"entities":{"description":{"urls":[]}},"profile_text_color":"333333","profile_background_image_url_https":"https:\/\/twimg0-a.akamaihd.net\/images\/themes\/theme1\/bg.png","contributors_enabled":false},"in_reply_to_status_id_str":null,"retweeted":false,"truncated":false,"source":"\u003Ca
+        href=\"http:\/\/birdview.dev\" rel=\"nofollow\"\u003ETweetbox Ascending\u003C\/a\u003E","in_reply_to_user_id_str":null,"entities":{"user_mentions":[],"hashtags":[],"urls":[{"display_url":"lvh.me:7000\/t\/1","expanded_url":"http:\/\/lvh.me:7000\/t\/1","indices":[118,140],"url":"http:\/\/t.co\/HFlUnURL5r"}]},"in_reply_to_status_id":null,"id_str":"353436490669375489","place":null,"in_reply_to_screen_name":null,"id":353436490669375489,"geo":null,"created_at":"Sat
+        Jul 06 08:53:20 +0000 2013","favorited":false,"text":"Here\u2019s to the crazy
+        ones. The misfits. The rebels. The troublemakers. The round pegs in the square
+        holes. The ones... http:\/\/t.co\/HFlUnURL5r","possibly_sensitive":false,"contributors":null,"coordinates":null,"in_reply_to_user_id":null}'
+    http_version:
+  recorded_at: Sat, 06 Jul 2013 08:53:20 GMT
+recorded_with: VCR 2.5.0

@@ -2,7 +2,7 @@ development: &default
   adapter: postgresql
   database: tweetbox_development
   host: localhost
-  username: phthiel
+  username: <%= ENV['DATABASE_USERNAME'] %>
   password: development
   min_messages: warning
   pool: 20
@@ -20,7 +20,3 @@ development: &default
 test:
   <<: *default
   database: tweetbox_test
-
-production:
-  <<: *default
-  database: tweetbox_production
