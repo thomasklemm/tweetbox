@@ -1,21 +1,20 @@
-#root
-  / interim navigation
-  = render 'navigation'
+/ interim navigation
+= render 'navigation'
 
+.container
   / main content
-  .container
-    .row
-      .span12
-        / render flashes unless they are embedded in a special layout
-        - unless content_for?(:content)
-          = render 'flashes'
+  .row
+    .span12
+      / render flashes unless they are embedded in a special layout
+      - unless content_for?(:content)
+        = render 'flashes'
 
-        = content_for?(:content) ? yield(:content) : yield
+      = content_for?(:content) ? yield(:content) : yield
 
-    / sticky footer that stays at the bottom of the page
-    #root_footer
+  / sticky footer that stays at the bottom of the page
+  #root_footer
 
-#footer
-  = render 'footer'
+  #footer
+    = render 'footer'
 
 
