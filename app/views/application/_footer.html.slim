@@ -3,12 +3,12 @@
   ul class='inline left'
     = active_link_to 'Email newsletter', 'javascript:;'
     = active_link_to 'Help', static_path(:help)
-    = active_link_to 'Mobile', 'javascript:;'
-    = active_link_to 'Integrations', 'javascript:;'
-    = active_link_to 'Security', 'javascript:;'
-    = active_link_to 'Privacy', 'javascript:;'
-    = active_link_to 'Terms', 'javascript:;'
-    = active_link_to 'Contact', 'javascript:;'
+    = active_link_to 'Mobile', static_path(:mobile)
+    = active_link_to 'Integrations', static_path(:integrations)
+    = active_link_to 'Security', static_path(:security)
+    = active_link_to 'Privacy', static_path(:privacy)
+    = active_link_to 'Terms', static_path(:terms)
+    = active_link_to 'Contact', static_path(:contact)
 
   ul class='inline right'
     li Made with &hearts; by Rainmakers in 2013

@@ -31,9 +31,13 @@ i
   height: 3rem
 
 // footer
+@import "compass/layout/sticky-footer"
+@include sticky-footer(81px, "#root", "#root-footer", "#footer")
+
 .footer
   border-top: 1px solid #D4CDC1
-  padding: 10px 0
+  margin: 30px auto
+  padding: 10px
   font-size: 13px
 
 // navbar
