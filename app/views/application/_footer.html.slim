@@ -1,15 +1,14 @@
 / footer
 .footer
-  ul.links
-    li = link_to 'About & Score', 'javascript:'
-    li = link_to 'Explore & Newsletter', 'javascript:'
-    li = link_to 'Suggest Projects', 'javascript:'
-    li = link_to 'Privacy & Terms', 'javascript:'
+  ul class='inline left'
+    = active_link_to 'Email newsletter', 'javascript:;'
+    = active_link_to 'Help', static_path(:help)
+    = active_link_to 'Mobile', 'javascript:;'
+    = active_link_to 'Integrations', 'javascript:;'
+    = active_link_to 'Security', 'javascript:;'
+    = active_link_to 'Privacy', 'javascript:;'
+    = active_link_to 'Terms', 'javascript:;'
+    = active_link_to 'Contact', 'javascript:;'
 
-  span.greeting
-    span
-      ' &copy; 2013
-      = link_to 'Thomas Klemm', 'https://twitter.com/thomasjklemm'
-      = dns_prefetch('https://twitter.com/thomasjklemm')
-
-    span = link_to 'Made with &hearts; in Germany'.html_safe, 'https://twitter.com/thomasjklemm'
+  ul class='inline right'
+    li Made with &hearts; by Rainmakers in 2013

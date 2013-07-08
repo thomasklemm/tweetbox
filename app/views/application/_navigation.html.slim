@@ -19,7 +19,7 @@ div class='navbar navbar-static-top'
         - unless user_signed_in?
           ul class='nav'
             li = active_link_to 'Pricing', static_path(:pricing)
-            li = active_link_to 'Features', static_path(:features)
+            li = active_link_to 'Signup', new_signup_path
 
           / login
           ul class='nav pull-right'
