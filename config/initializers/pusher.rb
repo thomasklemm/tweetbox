@@ -1,7 +1,6 @@
+# Pusher sends live updates to the browser
 require 'pusher'
 
-Pusher.app_id = ENV['PUSHER_APP_ID']
-Pusher.key    = ENV['PUSHER_KEY']
-Pusher.secret = ENV['PUSHER_SECRET']
-
+Pusher.url = ENV['PUSHER_URL']
 Pusher.logger = Rails.logger
+# Pusher.encrypted = true
