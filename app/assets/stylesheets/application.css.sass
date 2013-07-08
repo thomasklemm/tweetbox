@@ -4,20 +4,21 @@
 $sansFontFamily: 'proxima-nova', 'Helvetica Neue', Helvetica, Arial, sans-serif
 $iconSpritePath: ''
 $iconWhiteSpritePath: ''
-
-// responsive bootstrap variables
 $navbarCollapseWidth: 480px
 
 // libraries
+// include external libraries before own ones,
+// so that you can override their settings in your stylesheets
 @import 'bootstrap'
 @import 'bootstrap-responsive'
 @import 'select2'
 @import 'functions'
 
 // tweetbox
-@import 'experiments/experiments-in-css'
-@import 'experiments/experiments-in-scss'
-@import 'experiments/experiments-in-sass'
+@import 'basics'
+@import 'marketing'
+@import 'app'
 
-// library twitter responsive nachgelagert so dass keine Konflikte mit experiments entstehen
-
+@import 'experiments-css'
+@import 'experiments-scss'
+@import 'experiments-sass'

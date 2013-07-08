@@ -1,0 +1,55 @@
+// basics shared by both marketing and app
+
+// icons
+i
+  padding-top: 1px
+
+// floats
+.left
+  float: left
+.right
+  float: right
+
+// links
+// a:hover
+//   text-decoration: none
+
+// spaces
+.space-quarter
+  height: 0.25rem
+.space-half
+  height: 0.5rem
+.space-one
+  height: 1rem
+.space-one-and-a-half
+  height: 1.5rem
+.space-two
+  height: 2rem
+.space-two-and-a-half
+  height: 2.5rem
+.space-three
+  height: 3rem
+
+// footer
+@import "compass/layout/sticky-footer"
+@include sticky-footer(81px, "#root", "#root-footer", "#footer")
+
+.footer
+  border-top: 1px solid #D4CDC1
+  margin: 30px auto
+  padding: 10px
+  font-size: 13px
+
+// navbar
+.navbar
+  margin-bottom: 0.5rem
+
+  .user-details
+    img.gravatar
+      display: inline
+      margin: -8px 4px -8px 0
+      vertical-align: middle
+      border-radius: 3px
+
+    .name
+      margin-left: 4px
