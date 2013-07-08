@@ -50,6 +50,13 @@ Tweetbox::Application.configure do
   # Strong Parameters
   config.action_controller.action_on_unpermitted_parameters = :raise
 
+  # LiveReload
+  config.middleware.insert_before(
+    ActionDispatch::Static, Rack::LiveReload,
+    host: 'tweetbox.dev',
+    apply_css_live: true
+  )
+
   # Bullet
   # update to the latest bullet config options when enabling
   # config.after_initialize do

@@ -30,13 +30,7 @@ i
 .space-three
   height: 3rem
 
-body
-  padding-top: 48px
-
 // footer
-@import "compass/layout/sticky-footer"
-@include sticky-footer(248px, "#root", "#root_footer", "#footer")
-
 $footer-spacing: 8px
 $footer-borders: 1px dashed #bbb
 
@@ -68,36 +62,19 @@ $footer-borders: 1px dashed #bbb
       &:first-of-type
         border-left: none
 
-// experiments in SASS
-//$navigation-spacing: 0.75rem
-
-// .navigation
-//   margin-bottom: 1rem
-//   &.outer-container
-//     height: 42px
-//     line-height: 42px
-//     background: #f33
-//     a
-//       color: #e9e9e9
-
-  .brand
-    font-weight: bold
-
-  .project-link, .account-link
-    margin-right: $navigation-spacing
-
+// navbar
+.navbar
+  margin-bottom: 0.5rem
+  
   .user-details
     img.gravatar
       display: inline
+      margin: -8px 4px -8px 0
       vertical-align: middle
       border-radius: 3px
 
     .name
       margin-left: 4px
-
-  .login, .logout
-    margin-left: $navigation-spacing
-
 
 .twitter-accounts-wrapper
   .twitter-account
@@ -122,40 +99,6 @@ $footer-borders: 1px dashed #bbb
     .screen-name
       font-weight: bold
     .name
-
-// .tweets-table
-//   .tweet
-//     padding: 1rem
-//     .author
-//       color: $textColor
-//       .name
-//         font-weight: bold
-//       .screen-name
-//         margin-left: 5px
-//     .text
-//       height: 2 * $baseLineHeight
-
-// .tweets-wrapper
-//   .tweet
-//     .avatar
-//     .author
-//       &:hover
-//         text-decoration: none !important
-//       .name
-//         font-weight: bold
-//         &:hover
-//           text-decoration: underline !important
-//       .screen-name
-//         padding-left: 5px
-
-//     &:not(:last-of-type)
-//       padding-bottom: 1rem
-//       border-bottom: 1px solid #ddd
-//       margin-bottom: 1rem
-
-//     .text
-//       white-space: pre-wrap
-//       // margin-left: 58px
 
 .tweets-wrapper .tweet-wrapper
   &:not(:last-of-type)
@@ -249,7 +192,6 @@ abbr.timeago
   background-color: $dropdownBackground
 
 // New status
-
 .new-status-wrapper
   .actions
     width: 285px
