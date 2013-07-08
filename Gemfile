@@ -69,6 +69,9 @@ gem 'postgres_ext'
 # Enumerated attributes
 gem 'enumerize'
 
+# Pusher (Live updates)
+gem 'pusher'
+
 # Gems used only for assets and not required
 #   in production environments by default.
 group :assets do
