@@ -1,10 +1,13 @@
-h3 New Tweets
-
 / incoming tweets
 - if @tweets.any?
+  h3 New Tweets
+
   .tweets-wrapper
     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
 
 / inbox zero
 - if @tweets.empty?
-  p.well <strong>Inbox Zero</strong> <br /> No new tweets.
+  .space-two-and-a-half
+  = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
+  h3 Inbox Zero
+  p All clear, time for a Moment of Zen.

@@ -1,4 +1,9 @@
 // Link to tweet
 <% string = "You resolved this tweet a few seconds ago. #{ link_to 'See it again', [@project, @tweet] }.".html_safe %>
+
+// Slide up previous undo links
+$('.undo-link').slideUp(50)
+
 var tweet_wrapper = $('#<%= dom_id(@tweet) %>_wrapper')
-tweet_wrapper.html('<%= string %>').delay(10000).slideUp(250)
+tweet_wrapper.html('<%= string %>').addClass('undo-link')
+

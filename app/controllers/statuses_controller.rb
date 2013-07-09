@@ -6,7 +6,7 @@ class StatusesController < ProjectController
 
   def create
     @status = Status.new(status_params).decorate
-
+    raise @status.to_yaml
     if @status.save
       redirect_to project_tweet_path(@project, @status.redirect_target_tweet), notice: "#{ @status.reply? ? 'Reply' : 'Status' } has been posted."
     else
