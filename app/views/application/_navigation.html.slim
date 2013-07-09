@@ -1,5 +1,5 @@
 / application/_navigation
-div class='navbar navbar-static-top' 
+div class='navbar navbar-static-top'
   div class='navbar-inner'
     div class='container'
 
@@ -10,7 +10,8 @@ div class='navbar navbar-static-top'
         .icon-bar
 
       / tweetbox brand
-      = link_to 'TweetBox', root_path, class: 'brand'
+      ul class='nav'
+        = active_link_to (image_tag 'Tweetbox-Logo-und-Schriftzug.png', style: 'height: 24px; margin: -6px 0;'), root_path, exact: true
 
       / everything below is hidden when width is less than $navbarCollapseWidth
       div class='nav-collapse collapse'
@@ -35,8 +36,8 @@ div class='navbar navbar-static-top'
             - if current_user.projects.size <= 3
               - current_user.projects.by_name.each do |project|
                 = active_link_to project.name, project
-            
-            / for many projects  
+
+            / for many projects
             - else
               li class='dropdown'
                 a href='javascript:;' class='dropdown-toggle' data-toggle='dropdown'
@@ -67,8 +68,6 @@ div class='navbar navbar-static-top'
                 / account link
                 - if policy(current_user.account).manage?
                   = active_link_to 'Account', account_path
-                
+
                 / logout
                 li = link_to 'Logout', logout_path, method: :delete
-
-/ Notes: href javascript:; vs #

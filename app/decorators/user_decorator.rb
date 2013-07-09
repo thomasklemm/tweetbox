@@ -7,4 +7,11 @@ class UserDecorator < Draper::Decorator
     hash = Digest::MD5.hexdigest(email.strip.downcase)
     "https://secure.gravatar.com/avatar/#{ hash }?s=#{ size_in_pixels.to_i }&d=retro"
   end
+
+  def main_project_path
+    if projects.one?
+      project_path(projects.first)
+    else
+    end
+  end
 end
