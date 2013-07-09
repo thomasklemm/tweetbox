@@ -32,3 +32,7 @@ jQuery ->
   ##
   # Timeago
   $("abbr.timeago").timeago()
+
+  ##
+  # Project navbar
+  # $('#project-navbar').affix()
