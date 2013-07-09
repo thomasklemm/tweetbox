@@ -6,9 +6,6 @@ class ProjectsController < ProjectController
 
   def index
     @projects = user_projects
-
-    # Open project if there is only one?
-    @projects.size == 1 and return redirect_to @projects.first
   end
 
   def show
