@@ -1,7 +1,6 @@
 / new status
 - if @project.twitter_accounts.any?
-  h3 Tweet
-
+  = logo_header 'Tweet'
   = render 'form'
 
 - else

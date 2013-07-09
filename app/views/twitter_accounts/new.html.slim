@@ -1,11 +1,27 @@
+/ new twitter account
+.space-two-and-a-half
+= image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
 h3 Connect a Twitter account
-
 p
-  | Tweetbox will help you handle your incoming tweets for as many accounts as you like in a quick and fun way. Connecting your Twitter account will allow you to fetch tweets and mentions from Twitter, and reply to tweets as they come in.
+  ' Once you
+  = link_to 'connect a Twitter account', authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post
+  '  we'll fetch <br />
+  ' your @mentions and
+  = link_to 'search results', project_searches_path(@project)
+  '  so you'll <br />
+  ' be able to resolve them with the help of Tweetbox.
 
-= link_to 'Connect a Twitter account', authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'
-'  or
-= link_to 'cancel', project_twitter_accounts_path(@project)
+.space-half
+= link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn'
+
+/ h3 Connect a Twitter account
+
+/ p
+/   | Tweetbox will help you handle your incoming tweets for as many accounts as you like in a quick and fun way. Connecting your Twitter account will allow you to fetch tweets and mentions from Twitter, and reply to tweets as they come in.
+
+/ = link_to 'Connect a Twitter account', authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'
+/ '  or
+/ = link_to 'cancel', project_twitter_accounts_path(@project)
 
 / / .space-two
 

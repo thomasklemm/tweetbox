@@ -1,53 +1,63 @@
-h3 Twitter accounts
-
-p
-  | Tweetbox will pull in @mentions for the Twitter accounts you connect with us automatically. We'll also fetch the tweets you are sending out in regular intervals in order to show you conversations as they really happen on Twitter.
-
+/ twitter_accounts
 - if @twitter_accounts.any?
+  = logo_header 'Twitter accounts'
 
-  .space-half
   p
-    ' You've successfully connected
-    b #{ pluralize(@twitter_accounts.size, 'Twitter account') }.
+    ' Once you
+    = link_to 'connect a Twitter account', new_project_twitter_account_path
+    '  we'll fetch <br />
+    ' your @mentions and
+    = link_to 'search results', project_searches_path(@project)
+    '  so you'll <br />
+    ' be able to resolve them with the help of Tweetbox.
 
-  table class='table twitter-accounts-table'
+  table class='twitter-accounts-table table table-hover'
     thead
       tr
-        th #
-        th Avatar
-        th Twitter account
-        th
+        th Image
+        th Name
+        th Actions
 
     tbody
-      - @twitter_accounts.each_with_index do |twitter_account, i|
+      - @twitter_accounts.each do |twitter_account|
         tr.twitter-account
-          td = i+1
-
           / avatar
           td = link_to twitter_account.user_intent_url do
             = image_tag(twitter_account.profile_image_url, class: 'avatar img-polaroid')
 
           / name
           td = link_to twitter_account.user_intent_url do
+            .name = twitter_account.name
             .screen-name = twitter_account.at_screen_name
-            .name = "(#{ twitter_account.name })"
 
           / actions
           td
-            / = link_to 'Import tweets', import_project_twitter_account_path(@project, twitter_account), class: 'btn'
+            ul
+              li
+                - if @project.default_twitter_account == twitter_account
+                  ' Is the project's default Twitter account
+                - else
+                  / TODO: Make work
+                  = link_to 'Make default'
 
-            / / - if twitter_account.destroyable?
-            / = link_to 'Remove', project_twitter_account_path(@project, twitter_account), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
-            / / - else
-            /   em Please move or remove all associated searches before removing the Twitter account.
+              li = link_to 'Import @mentions'
+              li = link_to 'Remove'
 
-- else
+  = link_to 'Connect a new Twitter account', new_project_twitter_account_path, class: 'btn'
+
+/ blank slate
+- if @twitter_accounts.empty?
+  .space-two-and-a-half
+  = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
+  h3 Twitter accounts
   p
-    ' Please proceed by
-    b = link_to 'adding a new Twitter account', new_project_twitter_account_path
-    '  to Tweetbox.
+    ' Once you
+    = link_to 'connect a Twitter account', authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post
+    '  we'll fetch <br />
+    ' your @mentions and
+    = link_to 'search results', project_searches_path(@project)
+    '  so you'll <br />
+    ' be able to resolve them with the help of Tweetbox.
 
-
-= link_to 'Connect a Twitter account', new_project_twitter_account_path, class: 'btn btn-primary'
-'  or
-= link_to 'show searches', project_searches_path(@project)
+  .space-half
+  = link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn'

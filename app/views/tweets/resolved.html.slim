@@ -1,6 +1,6 @@
 / resolved tweets
 - if @tweets.any?
-  h3 Resolved Tweets
+  = logo_header 'Resolved Tweets'
   .tweets-wrapper
     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
 

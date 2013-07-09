@@ -1,6 +1,6 @@
 / posted tweets
 - if @tweets.any?
-  h3 Posted Tweets
+  = logo_header 'Posted Tweets'
   .tweets-wrapper
     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
 

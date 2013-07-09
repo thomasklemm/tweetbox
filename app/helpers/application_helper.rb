@@ -47,6 +47,10 @@ module ApplicationHelper
     current_path == project_tweet_path(@project, tweet)
   end
 
+  def logo_header(text)
+    "<h3>#{ image_tag 'Tweetbox-Logo.png', width: 42, style: 'margin-right: 8px' }#{ text }</h3>".html_safe
+  end
+
   private
 
   def current_path

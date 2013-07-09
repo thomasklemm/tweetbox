@@ -1,6 +1,6 @@
 / incoming tweets
 - if @tweets.any?
-  h3 New Tweets
+  = logo_header 'Incoming Tweets'
 
   .tweets-wrapper
     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet

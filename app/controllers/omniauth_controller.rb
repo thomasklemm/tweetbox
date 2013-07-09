@@ -9,7 +9,7 @@ class OmniauthController < ProjectController
     twitter_account = TwitterAccount.from_omniauth(@project, auth, access_scope)
 
     redirect_to project_twitter_accounts_path(@project),
-      notice: "Twitter account #{ twitter_account.at_screen_name } has been successfully authorized."
+      notice: "Your Twitter account #{ twitter_account.at_screen_name } has been connected."
   end
 
   # Handle failed omniauth authorization requests
@@ -18,6 +18,6 @@ class OmniauthController < ProjectController
     user_session.delete(:project_id)
 
     redirect_to project_twitter_accounts_path(@project),
-      alert: "Failed to authorize Twitter account."
+      alert: "Your Twitter account could not be connected."
   end
 end
