@@ -27,13 +27,13 @@
 .tweets-wrapper .tweet-wrapper
   &:not(:last-of-type)
     padding-bottom: 1rem
-    border-bottom: 1px solid #ddd
+    border-bottom: 1px solid #D4CDC1
     margin-bottom: 1rem
 
 .tweet-wrapper
   .tweet
-    padding: 12px
-    padding-left: 72px
+    margin-top: 0.6rem
+    padding-left: 58px
 
     .avatar
       float: left
@@ -50,59 +50,72 @@
         @extend .muted
 
     .timestamp
-      margin-left: 6px
+      margin-left: 8px
       @extend .muted
       font-size: 12px
 
     .text
-      min-height: (2 * $baseLineHeight) + 3px
-      padding-bottom: 6px
+      margin-bottom: 2px
+      p
+        margin: 0
 
     .main-actions
       float: right
 
       a
         display: inline-block
-        background: $blue
-        color: $white
-        padding: 1rem 0.5rem
-
+        border: 2px solid $blue
+        background: $white
+        color: $blue
+        padding: 1rem 0.33rem
+        margin-left: 2px
         &:hover
-          background: darken($blue, 8%)
-
-        &:not(:first-of-type)
-          margin-left: 4px
-
-        &.open
-          background: $green
-
-    &.main-tweet
-      background: #eee
+          background: $blue
+          color: $white
+        &:first-of-type
+          margin-left: 1rem
 
     .actions a:not(:first-of-type), .dropdown-link
       margin-left: 8px
       border-left: 1px solid #ccc
       padding-left: 8px
 
+    &.main-tweet
+      // .text
+      //   min-height: (2 * $baseLineHeight) + 3px
+
     &.conversation-tweet
+      font-size: 13px
+
+      .avatar
+        width: 32px
+        height: 32px
+        // margin-left: -42px
+
+      .actions a
+        @extend .muted
+
       .actions
         visibility: hidden
       &:hover .actions
         visibility: visible
 
-    .events
-      margin-top: 6px
-      .event
-        font-size: 13px
-        .user-name
-          font-weight: bold
+    .forms form
+      padding: 8px 0
 
-        .timestamp
-          @extend .muted
-          float: right
-          visibility: hidden
-        &:hover .timestamp
-          visibility: visible
+    .events
+      font-size: 12px
+      @extend .muted
+
+    .event
+      .user-name
+        // font-weight: bold
+      .timestamp
+        @extend .muted
+        float: right
+        visibility: hidden
+      &:hover .timestamp
+        visibility: visible
 
 abbr.timeago
   border-bottom: none

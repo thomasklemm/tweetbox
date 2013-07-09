@@ -4,10 +4,11 @@
   - resolve_opts = { title: 'Resolve' }
   - resolve_opts[:remote] = true unless show_tweet?(tweet)
 
-  .main-actions
-    - if tweet.incoming?
-      = tweet.reply_button(nil, :reply, title: 'Reply', remote: true)
-      = tweet.resolve_button(nil, :ok, resolve_opts)
+  - if tweet == main_tweet
+    .main-actions
+      - if tweet.incoming?
+        = tweet.reply_button(nil, :reply, title: 'Reply', remote: true, style: 'padding-left: 0.6rem; padding-right: 0.6rem')
+        = tweet.resolve_button(nil, :ok, resolve_opts)
 
   / author
   = link_to tweet.author_intent_url, class: 'author' do
@@ -20,6 +21,10 @@
     abbr.timeago title=tweet.created_at.iso8601
 
   .text = tweet.linked_text
+
+  - if tweet != main_tweet
+    .events
+      = render tweet.events.decorate
 
   .actions
     - if tweet.incoming?
@@ -60,5 +65,6 @@
   / placeholder to append forms to
   .forms
 
-  .events
-    = render tweet.events.decorate
+  - if tweet == main_tweet
+    .events
+      = render tweet.events.decorate
