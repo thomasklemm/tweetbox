@@ -1,3 +1,16 @@
-h3 Post a Tweet
+/ new status
+- if @project.twitter_accounts.any?
+  h3 Tweet
 
-= render 'form'
+  = render 'form'
+
+- else
+  / blank slate
+  .space-two-and-a-half
+  = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
+  h3 Tweet
+  p
+    ' Once you
+    = link_to 'connect a Twitter account', new_project_twitter_account_path(@project)
+    '  to Tweetbox, <br />
+    ' you'll be able to tweet and reply to incoming tweets from here.

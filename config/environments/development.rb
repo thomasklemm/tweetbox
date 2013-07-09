@@ -53,8 +53,7 @@ Tweetbox::Application.configure do
   # LiveReload
   config.middleware.insert_before(
     ActionDispatch::Static, Rack::LiveReload,
-    host: 'tweetbox.dev',
-    apply_css_live: true
+    host: 'tweetbox.dev'
   )
 
   # Bullet

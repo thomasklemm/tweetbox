@@ -5,9 +5,23 @@
   .tweets-wrapper
     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
 
-/ inbox zero
 - if @tweets.empty?
-  .space-two-and-a-half
-  = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
-  h3 Inbox Zero
-  p All clear, time for a Moment of Zen.
+  - if @project.twitter_accounts.any?
+    / inbox zero
+    .space-two-and-a-half
+    = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
+    h3 Inbox Zero
+    p All clear, time for a Moment of Zen.
+
+  - else
+    / blank slate
+    .space-two-and-a-half
+    = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
+    h3 Incoming Tweets
+    p
+      ' Once you
+      = link_to 'connect a Twitter account', new_project_twitter_account_path(@project)
+      '  to Tweetbox, <br />
+      ' your @mentions and
+      = link_to 'search results', project_searches_path(@project)
+      '  will start to show up here.

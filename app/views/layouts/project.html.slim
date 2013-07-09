@@ -3,14 +3,14 @@
   div class='row'
 
     / main content
-    div class='span10'
+    div class='span9'
       / any flash messages
       = render 'flashes'
 
       = content_for?(:project_content) ? yield(:project_content) : yield
 
     / project navigation
-    div id='project-navbar' class='span2'
+    div id='project-navbar' class='span3'
       div class='well' style='padding: 8px 0'
         ul class='nav nav-list'
           li.nav-header Tweets

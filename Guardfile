@@ -1,7 +1,7 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard 'livereload', host: 'tweetbox.dev', apply_css_live: true do
+guard 'livereload', host: 'tweetbox.dev' do
   watch(%r{app/views/.+\.(erb|haml|slim)})
   watch(%r{app/helpers/.+\.rb})
   watch(%r{public/.+\.(css|js|html)})
