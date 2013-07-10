@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625102932) do
+ActiveRecord::Schema.define(:version => 20130710170902) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",           :null => false
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(:version => 20130625102932) do
 
   create_table "tweets", :force => true do |t|
     t.integer  "project_id",                         :null => false
-    t.integer  "twitter_account_id",                 :null => false
+    t.integer  "twitter_account_id"
     t.integer  "author_id",                          :null => false
     t.integer  "twitter_id",            :limit => 8, :null => false
     t.text     "text"
