@@ -77,9 +77,8 @@
 
   = link_to 'Create a new Search', new_project_search_path(@project), class: 'btn'
 
-
+/ blank slate
 - if @project.twitter_accounts.empty?
-  / blank slate
   .space-two-and-a-half
   = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
   h3 Searches
@@ -92,16 +91,3 @@
     ' The results of those searches will be streamed to your
     = link_to 'Incoming Tweets', incoming_project_tweets_path(@project)
     '  inbox, where you'll also find your @mentions.
-
-  / / blank slate addition when at least one twitter account is connected
-  / - if @project.twitter_accounts.any?
-  /   p
-  /     ' Twitter allows you to perform complex searches. Here's a great
-  /     b = link_to 'Cheatsheet on Operators', 'https://support.twitter.com/articles/71577-how-to-use-advanced-twitter-search'
-  /     '  supported by Twitter Search. You can see what results your query terms will
-  /     ' produce when
-  /     b = link_to 'testing and refining your searches on Twitter', 'https://twitter.com/search-home'
-  /     ' .
-
-  /   .space-half
-  /   = link_to 'Create a new Search', new_project_search_path(@project), class: 'btn'
