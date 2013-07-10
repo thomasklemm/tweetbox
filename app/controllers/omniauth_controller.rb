@@ -1,7 +1,4 @@
 class OmniauthController < ProjectController
-  skip_before_filter :load_and_authorize_project
-  before_filter :load_project
-
   # Handle the omniauth callback from Twitter
   def twitter
     auth = request.env['omniauth.auth']
@@ -20,10 +17,9 @@ class OmniauthController < ProjectController
 
   private
 
-  # FIXME: Matching name
-  def load_project
-    @project_id = user_session.delete(:project_id)
-    @project ||= user_project.find(@project_id)
+  # Filter defined in ProjectController
+  def load_and_authorize_project
+    @project ||= user_projects.find(user_session.delete(:project_id))
     authorize @project, :access?
 
     @access_scope = user_session.delete(:access_scope)

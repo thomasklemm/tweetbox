@@ -63,8 +63,8 @@ Tweetbox::Application.routes.draw do
     resources :authors, only: :show
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do
-      post 'auth', as: :authorize, on: :collection
-      post 'default', on: :member
+      post :auth, as: :authorize, on: :collection
+      put :set_default, on: :member
     end
 
     resources :searches, except: :show

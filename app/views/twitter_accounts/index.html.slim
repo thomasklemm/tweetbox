@@ -11,7 +11,7 @@
     '  so you'll <br />
     ' be able to resolve them with the help of Tweetbox.
 
-  table class='twitter-accounts-table table table-hover'
+  table class='table table-hover'
     thead
       tr
         th Image
@@ -20,15 +20,15 @@
 
     tbody
       - @twitter_accounts.each do |twitter_account|
-        tr.twitter-account
+        tr
           / avatar
           td = link_to twitter_account.user_intent_url do
-            = image_tag(twitter_account.profile_image_url, class: 'avatar img-polaroid')
+            = image_tag(twitter_account.profile_image_url, class: 'img-polaroid')
 
           / name
           td = link_to twitter_account.user_intent_url do
-            .name = twitter_account.name
-            .screen-name = twitter_account.at_screen_name
+            div = twitter_account.name
+            div = twitter_account.at_screen_name
 
           / actions
           td
@@ -37,11 +37,10 @@
                 - if @project.default_twitter_account == twitter_account
                   ' Is the project's default Twitter account
                 - else
-                  / TODO: Make work
-                  = link_to 'Make default'
+                  = link_to 'Make default', set_default_project_twitter_account_path(@project, twitter_account), method: :put
 
               li = link_to 'Import @mentions'
-              li = link_to 'Remove'
+              li = link_to 'Remove', [@project, twitter_account], method: :delete, confirm: "Are you sure you want to remove the #{ twitter_account.at_screen_name } Twitter account from Tweetbox."
 
   = link_to 'Connect a new Twitter account', new_project_twitter_account_path, class: 'btn'
 

@@ -1,24 +1,57 @@
-h3 Searches
+/ searches
+- if @searches.any?
+  = logo_header 'Searches'
 
-table class='table table-hover'
-  thead
-    tr
-      th #
-      th Query
-      th Twitter account
-      th Actions
-  tbody
-    - @searches.each_with_index do |search, i|
+  table class='table table-hover'
+    thead
       tr
-        td = i+1
-        td = search.query
-        td = search.twitter_account.at_screen_name
-        td
-          = link_to 'Edit', edit_project_search_path(@project, search), class: 'btn'
-          ' &nbsp;
-          = link_to 'Remove', project_search_path(@project, search), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
+        th Query
+        th Twitter account
+        th Actions
+    tbody
+      - @searches.each do |search|
+        tr
+          / query
+          td = search.query
 
-= link_to 'New search', new_project_search_path(@project), class: 'btn btn-primary'
-'  or
-= link_to 'show incoming tweets', incoming_project_tweets_path(@project)
+          / twitter account
+          td = search.twitter_account.at_screen_name
 
+          / actions
+          td
+            ul
+              li = link_to 'Edit', edit_project_search_path(@project, search)
+              li = link_to 'Remove', project_search_path(@project, search), method: :delete, confirm: "Are you sure you don't want to search for '#{ search.query }' any longer? Instead of removing a search, you can also edit it to change and improve it's query term."
+
+  = link_to 'New search', new_project_search_path(@project), class: 'btn btn-primary'
+  '  or
+  = link_to 'show incoming tweets', incoming_project_tweets_path(@project)
+
+
+- if @searches.empty?
+  / blank slate
+  .space-two-and-a-half
+  = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
+  h3 Searches
+  p
+    ' When you
+    = link_to 'connect a Twitter account', project_twitter_accounts_path(@project)
+    '  to Tweetbox, we'll automatically
+    ' and recurringly fetch your @mentions and the tweets you send out.
+    ' In addition, you can create search queries (e.g. for your brand or product name).
+    ' The results of those searches will be streamed to your
+    = link_to 'Incoming Tweets', incoming_project_tweets_path(@project)
+    '  inbox, where you'll also find your @mentions.
+
+  p
+    ' Twitter allows you to perform complex searches. Here's a great
+    b = link_to 'Cheatsheet on Operators', 'https://support.twitter.com/articles/71577-how-to-use-advanced-twitter-search'
+    '  supported by Twitter Search. You can see what results your query terms will
+    ' produce when
+    b = link_to 'testing and refining your searches on Twitter', 'https://twitter.com/search-home'
+    ' .
+
+  / blank slate addition when at least one twitter account is connected
+  - if @project.twitter_accounts.any?
+    .space-half
+    = link_to 'Create a new Search', new_project_search_path(@project), class: 'btn'

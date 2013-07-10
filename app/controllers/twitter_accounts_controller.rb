@@ -2,25 +2,16 @@ class TwitterAccountsController < ProjectController
   ACCESS_SCOPE_WRITE_PATH = '/auth/twitter?use_authorize=true&force_login=true'
   ACCESS_SCOPE_READ_PATH  = '/auth/twitter?use_authorize=true&x_auth_access_type=read&force_login=true'
 
-  before_filter :load_twitter_account, only: [:show, :destroy, :default, :get_import, :post_import]
+  before_filter :load_twitter_account, only: [:set_default, :destroy]
+
+  ##
+  # Collection actions
 
   def index
     @twitter_accounts = project_twitter_accounts.decorate
   end
 
-  def show
-  end
-
   def new
-  end
-
-  def destroy
-    @twitter_account.destroyable? or return redirect_to :back,
-      alert: "Twitter account could not be removed due to restrictions."
-
-    @twitter_account.destroy
-    redirect_to project_twitter_accounts_path(@project),
-      notice: "Twitter account has been removed."
   end
 
   # Redirect to twitter authorization path
@@ -40,10 +31,29 @@ class TwitterAccountsController < ProjectController
     end
   end
 
+  ##
+  # Member actions
+
   # Set the project's default twitter account
-  def default
-    @twitter_account.default!
-    redirect_to project_twitter_accounts_path(@project), notice: "Twitter account has been set as the project's default Twitter account."
+  def set_default
+    @project.set_default_twitter_account(@twitter_account)
+    redirect_to project_twitter_accounts_path(@project),
+      notice: "#{ @twitter_account.at_screen_name } is now the project's default Twitter account."
+  end
+
+  def destroy
+    @twitter_account.searches.any? and return redirect_to project_twitter_accounts_path(@project),
+      alert: "#{ @twitter_account.at_screen_name } could not be removed. There are searches that
+      depend on being performed through the #{ @twitter_account.at_screen_name } Twitter account.
+      Please remove these search queries first or update them to use another Twitter account."
+
+    flash.notice = if @twitter_account.destroy
+      "Twitter account #{ @twitter_account.at_screen_name } has been removed from Tweetbox."
+    else
+      "#{ @twitter_account.at_screen_name } could not be removed."
+    end
+
+    redirect_to project_twitter_accounts_path(@project)
   end
 
   private

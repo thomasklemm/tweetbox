@@ -24,7 +24,7 @@ class Project < ActiveRecord::Base
   has_many :twitter_accounts, dependent: :destroy
   belongs_to :default_twitter_account, class_name: 'TwitterAccount'
 
-  has_many :searches, readonly: true
+  has_many :searches, dependent: :destroy
 
   has_many :tweets, dependent: :destroy
   has_many :authors, dependent: :destroy
@@ -68,6 +68,10 @@ class Project < ActiveRecord::Base
 
   def to_param
     "#{ id }-#{ name.parameterize }"
+  end
+
+  def has_default_twitter_account?
+    default_twitter_account.present?
   end
 
   def set_default_twitter_account(twitter_account)

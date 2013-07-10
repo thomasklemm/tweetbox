@@ -60,6 +60,16 @@ class TwitterAccount < ActiveRecord::Base
     "@#{ screen_name }"
   end
 
+  def default?
+    project.default_twitter_account_id == self.id
+  end
+
+  def serialized_hash
+    { id: id, screen_name: screen_name, name: name, profile_image_url: profile_image_url, at_screen_name: at_screen_name }
+  end
+
+  # Returns a Twitter::Client instance
+  # with the credentials of the current twitter account
   def client
     Twitter::Client.new(
       oauth_token: token,
@@ -96,14 +106,6 @@ class TwitterAccount < ActiveRecord::Base
     update_attributes(max_user_timeline_twitter_id: twitter_id) if twitter_id.to_i > max_user_timeline_twitter_id.to_i
   end
 
-  def can_be_removed?
-    searches.empty? && !is_project_default?
-  end
-
-  def serialized_hash
-    { id: id, screen_name: screen_name, name: name, profile_image_url: profile_image_url, at_screen_name: at_screen_name }
-  end
-
   private
 
   # Assign user infos for authenticating twitter account
@@ -126,13 +128,11 @@ class TwitterAccount < ActiveRecord::Base
     self.access_scope = scope.to_s
   end
 
-  def project_default?
-    project.default_twitter_account_id == id
-  end
+  ##
+  # Default twitter account on project
+  after_create :set_first_twitter_account_on_project_to_be_default_twitter_account
 
-  after_commit :ensure_project_default_is_set
-
-  def ensure_project_default_is_set
-    project.set_default_twitter_account(self) unless project.default_twitter_account.present?
+  def set_first_twitter_account_on_project_to_be_default_twitter_account
+    project.set_default_twitter_account(self) unless project.has_default_twitter_account?
   end
 end
