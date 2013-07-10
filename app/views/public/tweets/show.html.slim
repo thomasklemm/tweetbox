@@ -1,4 +1,15 @@
-h3 Tweetbox
+/ public tweet
+.space-two
 
-.public-tweets-wrapper
+
+.public-tweet-wrapper
   = render partial: 'tweet', collection: @tweet.conversation, locals: { main_tweet: @tweet }
+
+/ ad block
+hr
+
+p style='color: #999; font-size: 12px; text-align: center'
+  ' Care for more than 140 characters? <br />
+  = link_to root_path, style: 'color: #999' do
+    ' This Long Tweet has been posted with Tweetbox.<br />
+    = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 100, style: 'padding-top: 8px'

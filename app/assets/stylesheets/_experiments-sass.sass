@@ -143,10 +143,52 @@ abbr.timeago
       min-height: (4 * $baseLineHeight)
 
 
-.public-tweets-wrapper
-  .tweet-wrapper
-    width: 438px
-    &:not(:last-of-type)
-      padding-bottom: 1rem
-      border-bottom: 1px solid #ddd
-      margin-bottom: 1rem
+// Public tweets
+.public-tweet-wrapper
+  .tweet
+    margin-bottom: 2rem
+    padding-left: 58px
+    max-width: 440px
+
+    .avatar
+      float: left
+      margin-top: 4px
+      margin-left: -58px
+      border-radius: 2px
+
+    .author
+      .name
+        font-weight: bold
+        color: $textColor
+      .screen-name
+        margin-left: 5px
+        @extend .muted
+
+    .timestamp
+      margin-left: 8px
+      @extend .muted
+      font-size: 12px
+
+    .text
+      margin-bottom: 2px
+      p
+        margin: 0
+
+    .actions
+      margin-top: 2px
+      font-size: 13px
+
+      a:not(:first-of-type)
+        margin-left: 8px
+        border-left: 1px solid #ddd
+        padding-left: 8px
+
+    &.main-tweet
+
+    &.conversation-tweet
+      .actions a
+        @extend .muted
+
+    &.reply
+      position: relative
+      left: 40px
