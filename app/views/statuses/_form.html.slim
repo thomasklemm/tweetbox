@@ -32,7 +32,7 @@
       = f.hidden_field :in_reply_to_status_id
 
     .actions
-      = f.submit "Post {{ reply() && 'reply' || 'status' }}", class: 'btn btn-primary'
+      = f.submit "Post {{ reply() && 'Reply' || 'Tweet' }}", class: 'btn btn-primary'
       span.character-counter = "{{ statusCharCount() }} characters"
 
 

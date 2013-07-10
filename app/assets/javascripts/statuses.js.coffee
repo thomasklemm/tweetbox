@@ -20,7 +20,7 @@
       while @virtualCharCount() > 114
         @virtualText = @virtualText.substr(0, @virtualText.length - 1)
 
-      @previewText = @virtualText + "...\nhttp://tweetbox.com/read-more"
+      @previewText = @virtualText + "... http://tweetbox.com/read-more"
 
   $scope.reply = ->
     @statusText[0] == '@'

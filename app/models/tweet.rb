@@ -45,6 +45,8 @@ class Tweet < ActiveRecord::Base
   scope :resolved, -> { where(state: :resolved) }
   scope :posted,   -> { where(state: :posted) }
 
+  scope :by_date, -> { order('created_at desc') }
+
   # States and transitions
   # - :conversation marks tweets that have been pulled in to build up conversations
   # - :incoming marks incoming tweets that require a decision
