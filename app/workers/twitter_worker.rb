@@ -92,6 +92,7 @@ class TwitterWorker
     since_id = @search.max_twitter_id
 
     options = { count: 100 } # Max is 100
+    options[:result_type] = :recent # Fetch recent tweets
     options[:since_id] = since_id if since_id.present?
     options
   end
