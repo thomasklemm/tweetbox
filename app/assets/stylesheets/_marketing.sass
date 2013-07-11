@@ -1,1 +1,77 @@
 // marketing
+
+// Top Section Showcase
+.showcase
+	position: relative
+	z-index: -1
+	background: transparent url(/assets/main.png) center top fixed
+		-webkit-background-size: 100%
+		-moz-background-size: 100%
+		-o-background-size: 100%
+		background-size: 100%
+		-webkit-background-size: cover
+		-moz-background-size: cover
+		-o-background-size: cover
+		background-size: cover
+	h1
+		font-family: 'Patua One', cursive
+		font-size: 90px
+		margin-top: 20px
+		line-height: 1.25
+		color: #fff
+		text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5)
+
+header
+	padding: 60px 10px 100px
+	text-align: center
+
+.description
+	font-family: "Times New Roman", Times, serif
+	font-size: 30px
+	margin: 0
+	line-height: 1.25
+	color: #fff
+	text-shadow: 0 0 3px rgba(0, 0, 0, 1)
+
+// Strip (Call to action)
+.strip
+	width: auto
+	padding: 20px
+	text-align: center
+	background: #232323 url(/assets/texture-1.png)
+	margin-bottom: 50px
+
+.strip h3
+	color: #FFF
+
+.strip .btn
+	margin-bottom: 3px
+
+// Responsive
+@media (max-width: 1200px)
+	h1
+		font-weight: normal
+
+@media (max-width: 979px)
+	h1
+		font-size: 50px
+
+@media (max-width: 768px)
+	.showcase,
+	.strip,
+		footer
+			margin-left: -20px
+			margin-right: -20px
+
+// Extra queries are for Apple devices
+@media (max-width: 768px), only screen and (min-device-width: 768px) and (max-device-width: 1024px), (min-device-width: 320px) and (max-device-width: 480px)
+	.showcase
+		background: transparent url(/assets/main-mobile.png) center top scroll
+		-webkit-background-size: 100%
+		-moz-background-size: 100%
+		-o-background-size: 100%
+		background-size: 100%
+		-webkit-background-size: cover
+		-moz-background-size: cover
+		-o-background-size: cover
+		background-size: cover
