@@ -13,19 +13,17 @@ class Author < ActiveRecord::Base
     "@#{ screen_name }"
   end
 
-  # Assigns the author's fields from a Twitter status object
-  # Persists the changes to the database by saving the record
-  # Returns the author record
-  def update_fields_from_status(status)
-    assign_fields(status.user)
-    save && self
+  def self.from_twitter(user, opts={})
+    project = opts.fetch(:project) { raise 'Requires a :project' }
+
+    author = project.authors.where(twitter_id: user.id).first_or_initialize
+    author.assign_fields(user)
+
+    author.save! and author
+  rescue ActiveRecord::RecordNotUnique
+    retry
   end
 
-  private
-
-  # Assigns the author's fields from a Twitter status object
-  # Returns the author record without saving it and persisting
-  # the changes to the database
   def assign_fields(user)
     self.screen_name = user.screen_name
     self.name = user.name
