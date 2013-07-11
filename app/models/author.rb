@@ -2,11 +2,10 @@ class Author < ActiveRecord::Base
   include UrlExpander
 
   belongs_to :project
-  validates :project, presence: true
-
   has_many :tweets
 
   # Ensure that only one author record is created for each project
+  validates :project, :twitter_id, :screen_name, presence: true
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   def at_screen_name

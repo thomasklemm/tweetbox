@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/351779153646858241.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="5835768d1c87a0ea7e20e5ce373cdc8c",
+        oauth_signature="7YmF6%2FsPjDLC3dRxgTkP9aimkgE%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373574878", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1142'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 11 Jul 2013 20:34:39 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Thu, 11 Jul 2013 20:34:39 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137357487934823395; Domain=.twitter.com; Path=/; Expires=Sat,
+        11-Jul-2015 20:34:39 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1373575779'
+      X-Transaction:
+      - d3c7e12111ca5459
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Mon Jul 01 19:07:40 +0000 2013","id":351779153646858241,"id_str":"351779153646858241","text":"@MGadvertising
+        It should only take a min. Clear cache and cookies http:\/\/t.co\/PJQzdmaqQR
+        then email us for help http:\/\/t.co\/gtHo1eRbtr","source":"\u003ca href=\"https:\/\/dash.37signals.com\"
+        rel=\"nofollow\"\u003e37signals\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":351777754364129280,"in_reply_to_status_id_str":"351777754364129280","in_reply_to_user_id":36397199,"in_reply_to_user_id_str":"36397199","in_reply_to_screen_name":"MGadvertising","user":{"id":11132462,"id_str":"11132462","name":"37signals","screen_name":"37signals","location":"Chicago,
+        IL","description":"News on 37signals products and more. We''re here to answer
+        your questions Mon-Fri 9am-6pm CT!","url":"http:\/\/t.co\/ETXlEIHMMA","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/ETXlEIHMMA","expanded_url":"http:\/\/37signals.com","display_url":"37signals.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":96343,"friends_count":37,"listed_count":6172,"created_at":"Thu
+        Dec 13 16:27:41 +0000 2007","favourites_count":38,"utc_offset":-21600,"time_zone":"Central
+        Time (US & Canada)","geo_enabled":false,"verified":false,"statuses_count":22008,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"FFFFFF","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/646827914\/ej1jsntvrgl3djfh2isb.gif","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/646827914\/ej1jsntvrgl3djfh2isb.gif","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/52399095\/37_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/52399095\/37_normal.png","profile_link_color":"40C4F3","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"FFFFFF","profile_text_color":"000000","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[{"url":"http:\/\/t.co\/PJQzdmaqQR","expanded_url":"http:\/\/37signals.com\/troubleshooting","display_url":"37signals.com\/troubleshooting","indices":[66,88]},{"url":"http:\/\/t.co\/gtHo1eRbtr","expanded_url":"http:\/\/help.37signals.com\/bcx\/tickets\/new?source=twitter","display_url":"help.37signals.com\/bcx\/tickets\/ne\u2026","indices":[112,134]}],"user_mentions":[{"screen_name":"MGadvertising","name":"McFadden\/Gavender","id":36397199,"id_str":"36397199","indices":[0,14]}]},"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Thu, 11 Jul 2013 20:34:39 GMT
+recorded_with: VCR 2.5.0

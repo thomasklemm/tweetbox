@@ -10,6 +10,9 @@ require 'rspec/rails'
 # Custom pundit matchers from the gem
 require 'pundit/rspec'
 
+# Sidekiq
+require 'sidekiq/testing'
+
 # Requires namespaced models and controllers
 Dir[Rails.root.join("app/controllers/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("app/models/**/*.rb")].each {|f| require f}

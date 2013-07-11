@@ -104,6 +104,59 @@ describe Tweet, 'persisted' do
   end
 end
 
+describe Tweet, 'class methods' do
+  include_context 'signup and twitter account'
+
+  describe ".many_from_twitter" do
+    it "requires a :project" do
+      expect{ Tweet.many_from_twitter([Object.new]) }.to raise_error(RuntimeError, 'Requires a :project')
+    end
+
+    it "requires a :state" do
+      expect{ Tweet.many_from_twitter([Object.new], project: Object.new) }.to raise_error(RuntimeError, 'Requires a :state')
+    end
+
+    it "returns an array of tweet records"
+  end
+
+  describe ".from_twitter" do
+    it "creates the given tweet and assigns fields and returns a tweet record" do
+      VCR.use_cassette('statuses/351779153646858241') do
+        # Tweet
+        status = twitter_account.client.status('351779153646858241')
+        tweet = Tweet.from_twitter(status, project: project, twitter_account: twitter_account, state: :incoming)
+
+        expect(tweet).to be_a Tweet
+        expect(tweet).to be_persisted
+
+        expect(tweet.twitter_id).to eq(status.id)
+        expect(tweet.text).to_not eq(status.text) # has expanded urls
+        expect(tweet.text).to eq(Tweet.new.expand_urls(status.text, status.urls))
+        expect(tweet.in_reply_to_user_id).to eq(status.in_reply_to_user_id)
+        expect(tweet.in_reply_to_status_id).to eq(status.in_reply_to_status_id)
+        expect(tweet.source).to eq(status.source)
+        expect(tweet.lang).to eq(status.lang)
+        expect(tweet.retweet_count).to eq(status.retweet_count)
+        expect(tweet.favorite_count).to eq(status.favorite_count)
+        expect(tweet.created_at).to eq(status.created_at)
+
+        expect{ Tweet.from_twitter(status, project: project, state: :incoming) }.to_not raise_error
+
+        # Author
+        user = status.user
+        author = tweet.author
+
+        expect(author).to be_an Author
+        expect(author).to be_persisted
+
+        expect(author.twitter_id).to eq(user.id)
+        expect(author.screen_name).to eq(user.screen_name)
+
+        expect{ Author.from_twitter(user, project: project) }.to_not raise_error
+      end
+    end
+  end
+end
 
   # let(:project)  { Fabricate(:project) }
   # let(:status)   { Fabricate.build(:twitter_status) }

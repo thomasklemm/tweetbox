@@ -27,13 +27,5 @@
 Fabricator(:author) do
   project
   twitter_id        { sequence(:twitter_id, 111111111111111111) }
-  name              "author_name"
   screen_name       "author_screen_name"
-  location          "author_location"
-  description       "author_description"
-  url               "author_url"
-  verified          false
-  followers_count   1
-  friends_count     1
-  profile_image_url "author_profile_image_url"
 end
