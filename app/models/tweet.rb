@@ -1,6 +1,6 @@
 class Tweet < ActiveRecord::Base
   include ActiveModel::Transitions
-  include URLExpander
+  include UrlExpander
 
   belongs_to :project
   belongs_to :author
@@ -107,7 +107,7 @@ class Tweet < ActiveRecord::Base
   # Persists the changes to the database by saving the record
   # Returns the saved tweet record
   def update_fields_from_status(status)
-    assign_fields_from_status(status)
+    assign_fields(status)
     save && self
   end
 
@@ -124,12 +124,17 @@ class Tweet < ActiveRecord::Base
   # Assigns the tweet's fields from a Twitter status object
   # Returns the tweet record without saving it and persisting
   # the changes to the database
-  def assign_fields_from_status(status)
+  def assign_fields(status)
     self.twitter_id = status.id
-    self.text       = expand_urls(status.text, status.urls)
-    self.created_at = status.created_at
+    self.text = expand_urls(status.text, status.urls)
+    self.in_reply_to_user_id = status.in_reply_to_user_id
     self.in_reply_to_status_id = status.in_reply_to_status_id
-    self.in_reply_to_user_id   = status.in_reply_to_user_id
+    self.source = status.source
+    self.lang = status.lang
+    self.retweet_count = status.retweet_count
+    self.favorite_count = status.favorite_count
+    self.created_at = status.created_at
+    self
   end
 
   # Loads the previous tweets from the database

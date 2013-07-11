@@ -54,6 +54,10 @@ class Project < ActiveRecord::Base
     "#{ id }-#{ name.parameterize }"
   end
 
+  def default_twitter_account_with_fallback
+    default_twitter_account || twitter_accounts.sample
+  end
+
   def has_default_twitter_account?
     default_twitter_account.present?
   end
@@ -89,7 +93,7 @@ class Project < ActiveRecord::Base
   # Fetches the given twitter_id from Twitter
   # Returns a tweet record or nil when it could not be found
   def fetch_tweet(twitter_id)
-    status = default_twitter_account.client.status(twitter_id)
+    status = default_twitter_account_with_fallback.client.status(twitter_id)
     create_tweet_from_twitter(status, state: :none, twitter_account: twitter_accounts.first )
   rescue Twitter::Error::NotFound
     nil

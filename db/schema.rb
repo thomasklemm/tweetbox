@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130710170902) do
+ActiveRecord::Schema.define(:version => 20130711154404) do
 
   create_table "accounts", :force => true do |t|
     t.text     "name",           :null => false
@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(:version => 20130710170902) do
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
     t.integer  "statuses_count",                 :default => 0
+    t.datetime "joined_twitter_at"
+    t.text     "lang"
+    t.text     "time_zone"
   end
 
   add_index "authors", ["project_id", "twitter_id"], :name => "index_authors_on_project_id_and_twitter_id", :unique => true
@@ -131,18 +134,22 @@ ActiveRecord::Schema.define(:version => 20130710170902) do
   add_index "searches", ["twitter_account_id"], :name => "index_searches_on_twitter_account_id"
 
   create_table "tweets", :force => true do |t|
-    t.integer  "project_id",                         :null => false
+    t.integer  "project_id",                                        :null => false
     t.integer  "twitter_account_id"
-    t.integer  "author_id",                          :null => false
-    t.integer  "twitter_id",            :limit => 8, :null => false
+    t.integer  "author_id",                                         :null => false
+    t.integer  "twitter_id",            :limit => 8,                :null => false
     t.text     "text"
     t.integer  "in_reply_to_status_id", :limit => 8
     t.integer  "in_reply_to_user_id",   :limit => 8
     t.text     "state"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.integer  "previous_tweet_ids",    :limit => 8,                 :array => true
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+    t.integer  "previous_tweet_ids",    :limit => 8,                                :array => true
     t.text     "full_text"
+    t.text     "source"
+    t.text     "lang"
+    t.integer  "retweet_count",                      :default => 0
+    t.integer  "favorite_count",                     :default => 0
   end
 
   add_index "tweets", ["previous_tweet_ids"], :name => "index_tweets_on_previous_tweet_ids", :using => :gin
