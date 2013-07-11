@@ -16,7 +16,7 @@ gem 'pg'
 gem 'jquery-rails'
 
 # High Voltage (Static pages in Rails)
-gem 'high_voltage'
+# gem 'high_voltage'
 
 # Slim (Great templating engine)
 gem 'slim-rails'

@@ -161,7 +161,6 @@ GEM
       guard (>= 1.8.0)
       multi_json (~> 1.7)
     hashie (2.0.5)
-    high_voltage (1.2.3)
     hike (1.2.3)
     http_parser.rb (0.5.3)
     i18n (0.6.1)
@@ -379,7 +378,6 @@ DEPENDENCIES
   fabrication
   figaro
   guard-livereload
-  high_voltage
   jquery-rails
   launchy
   letter_opener

@@ -1,0 +1,21 @@
+/ layouts/_body
+/ #root is named for compass sticky footer
+div id='root'
+  = render 'navigation'
+
+  div class='container' id='content'
+    / render flashes unless they are embedded in a special layout
+    - unless content_for?(:content)
+      = render 'flashes'
+
+    / render special layout or yield
+    = content_for?(:content) ? yield(:content) : yield
+
+  div id='root-footer'
+
+/ sticky footer with compass
+div id='footer'
+  div class='container'
+    = render 'footer'
+
+
