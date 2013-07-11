@@ -18,8 +18,8 @@ describe MentionsTimelineWorker do
     end
 
     it "fetches the mentions timeline for the given twitter account and creates tweets for the associated project" do
-      expect(Author.count).to eq(2)
-      expect(Tweet.count).to eq(20)
+      expect(project.authors.count).to eq(2)
+      expect(project.tweets.count).to eq(20)
     end
 
     it "sets max twitter id for mentions timeline" do
