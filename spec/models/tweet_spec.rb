@@ -11,6 +11,7 @@ describe Tweet do
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:author) }
   it { should validate_presence_of(:twitter_id) }
+  it { should validate_presence_of(:state) }
 
   it { should have_many(:events).dependent(:destroy) }
 
