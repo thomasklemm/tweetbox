@@ -2,30 +2,27 @@ class Author < ActiveRecord::Base
   include UrlExpander
 
   belongs_to :project
-  validates :project, presence: true
-
   has_many :tweets
 
   # Ensure that only one author record is created for each project
+  validates :project, :twitter_id, :screen_name, presence: true
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   def at_screen_name
     "@#{ screen_name }"
   end
 
-  # Assigns the author's fields from a Twitter status object
-  # Persists the changes to the database by saving the record
-  # Returns the author record
-  def update_fields_from_status(status)
-    assign_fields(status.user)
-    save && self
+  def self.from_twitter(user, opts={})
+    project = opts.fetch(:project) { raise 'Requires a :project' }
+
+    author = project.authors.where(twitter_id: user.id).first_or_initialize
+    author.assign_fields(user)
+
+    author.save! and author
+  rescue ActiveRecord::RecordNotUnique
+    retry
   end
 
-  private
-
-  # Assigns the author's fields from a Twitter status object
-  # Returns the author record without saving it and persisting
-  # the changes to the database
   def assign_fields(user)
     self.screen_name = user.screen_name
     self.name = user.name

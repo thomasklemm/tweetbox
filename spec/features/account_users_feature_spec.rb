@@ -1,21 +1,9 @@
 require 'spec_helper'
 
 describe 'Account users' do
+  include_context 'signup feature'
+
   before do
-    # Open signup page
-    visit new_signup_path
-    expect(current_path).to eq(new_signup_path)
-
-    # Fill in valid details and submit signup form
-    fill_in 'Your name',  with: 'Thomas Klemm'
-    fill_in 'Company',    with: 'Rainmakers'
-    fill_in 'Your email', with: 'thomas@rainmakers.com'
-    fill_in 'password',   with: 'rainmaking123'
-    click_button 'Sign up'
-
-    # Instant sign in
-    expect(current_path).to match(project_tweets_path(Project.first))
-
     # Invitation
     click_on 'Account'
     click_on 'Invitation'
@@ -42,7 +30,7 @@ describe 'Account users' do
     end
 
     click_on 'Register'
-    expect(current_path).to eq(project_tweets_path(Project.first))
+    expect(current_path).to eq(projects_path)
 
     # Login as base user
     click_on 'Logout'

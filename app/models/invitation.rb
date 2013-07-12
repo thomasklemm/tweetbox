@@ -1,4 +1,6 @@
 class Invitation < ActiveRecord::Base
+  include Randomizer
+
   belongs_to :account
   belongs_to :issuer, class_name: 'User'
 
@@ -62,7 +64,7 @@ class Invitation < ActiveRecord::Base
 
   # Generates a random and unique invitation code
   def generate_code
-    self.code ||= RandomCode.new.code(32)
+    self.code ||= random_code(32)
   end
 
   def set_expires_at

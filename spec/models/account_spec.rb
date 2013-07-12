@@ -1,14 +1,3 @@
-# == Schema Information
-#
-# Table name: accounts
-#
-#  created_at     :datetime         not null
-#  id             :integer          not null, primary key
-#  name           :text             not null
-#  projects_count :integer
-#  updated_at     :datetime         not null
-#
-
 require 'spec_helper'
 
 describe Account do
