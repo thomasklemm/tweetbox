@@ -1,37 +1,47 @@
-# A simple Scheduler,
-# called every 10 minutes by the Heroku scheduling addon
+# A Scheduler
+# Call `Scheduler.perform` every ten minutes
 class Scheduler
-  def self.schedule_queries_for_ten_minutes
+  def perform
+    schedule_timeline_queries
+    schedule_search_queries
+  end
+
+  private
+
+  def schedule_timeline_queries
     TwitterAccount.find_each do |twitter_account|
-      (1..10).each do |i|
-        TwitterWorker.perform_in(i.minutes, :mentions_timeline, twitter_account.id)
-        TwitterWorker.perform_in(i.minutes, :user_timeline, twitter_account.id)
+      # Perform the first timeline query 20 minutes after the Twitter account
+      # has been connected. Before that, schedule queries in an Importer.
+      if twitter_account.created_at < 20.minutes.ago
+        start_time = twitter_account.created_at + 20.minutes
+        end_time = 10.minutes.from_now
+
+        # Don't schedule if start_time is later than end_time
+        return if start_time > end_time
+
+        # Query once a minute for the remaining timeframe
+        # in the first and second scheduler run after
+        # the Twitter account has been connected.
+        (start_time.to_i..end_time.to_i).step(60) do |t|
+          time = Time.at(t)
+
+          MentionsTimelineWorker.perform_at(time, twitter_account.id)
+          UserTimelineWorker.perform_at(time, twitter_account.id)
+        end
+
+      # Standard operation
+      else
+        (0..10).each do |n|
+          MentionsTimelineWorker.perform_in(n.minutes, twitter_account.id)
+          UserTimelineWorker.perform_in(n.minutes, twitter_account.id)
+        end
       end
     end
+  end
 
+  def schedule_search_queries
     Search.find_each do |search|
-      (1..10).each { |i| TwitterWorker.perform_in(i.minutes, :search, search.id) if i.odd? }
+      (0..10).each { |n| SearchWorker.perform_in(n.minutes, search.id) }
     end
   end
 end
-
-# # Schedule mentions timeline queries for all twitter accounts to be performed asynchronously
-# def self.schedule_mention_timelines
-#   TwitterAccount.find_each do |twitter_account|
-#     TwitterWorker.perform_async(:mentions_timeline, twitter_account.id)
-#   end
-# end
-
-# # Schedule user timeline queries for all twitter accounts to be performed asynchronously
-# def self.schedule_user_timelines
-#   TwitterAccount.find_each do |twitter_account|
-#     TwitterWorker.perform_async(:user_timeline, twitter_account.id)
-#   end
-# end
-
-# # Schedule searches for specific terms to be performed asynchronously
-# def self.schedule_searches
-#   Search.find_each do |search|
-#     TwitterWorker.perform_async(:search, search.id)
-#   end
-# end

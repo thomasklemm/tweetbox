@@ -10,7 +10,7 @@ class Tweet < ActiveRecord::Base
   has_many :events, dependent: :destroy
 
   # Validations
-  validates :project, :author, :twitter_id, presence: true
+  validates :project, :author, :twitter_id, :state, presence: true
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # States

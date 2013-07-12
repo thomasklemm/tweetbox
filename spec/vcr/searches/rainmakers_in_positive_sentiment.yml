@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=Rainmakers%20:)&result_type=recent
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="4087ac799f24659096f523792037c4f6",
+        oauth_signature="MGr6U9C56yJNQFxbhPr%2BKizdlXQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373622112", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Fri, 12 Jul 2013 09:41:53 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Fri, 12 Jul 2013 09:41:53 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137362211360565312; Domain=.twitter.com; Path=/; Expires=Sun,
+        12-Jul-2015 09:41:53 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1373623013'
+      X-Transaction:
+      - 658defbec456de47
+      X-Xss-Protection:
+      - 1; mode=block
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[{"metadata":{"result_type":"recent","iso_language_code":"en"},"created_at":"Wed
+        Jul 10 04:12:33 +0000 2013","id":354815379941498880,"id_str":"354815379941498880","text":"The
+        Rainmakers: How Human Beings Control the Weather http:\/\/t.co\/J8DlGb17gY
+        | inget State of Fear-nya Michael Crichton jadinya.. :))","source":"\u003ca
+        href=\"http:\/\/twitter.com\/tweetbutton\" rel=\"nofollow\"\u003eTweet Button\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":44521307,"id_str":"44521307","name":"Tia","screen_name":"adit_adit","location":"Persimpangan
+        Westeros-Arda","description":"Aku ngetweet apa yang kusuka dan kubaca. Tentang
+        film, buku, Cumberbatch, Middle-earth,  dll. | fangirl | Segera terbit Juli
+        2013: novelku: #Reasons","url":"http:\/\/t.co\/EuFqRJRtHg","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/EuFqRJRtHg","expanded_url":"http:\/\/aditiayudis.wordpress.com\/","display_url":"aditiayudis.wordpress.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":1704,"friends_count":309,"listed_count":25,"created_at":"Thu
+        Jun 04 02:15:10 +0000 2009","favourites_count":555,"utc_offset":25200,"time_zone":"Jakarta","geo_enabled":false,"verified":false,"statuses_count":84684,"lang":"id","contributors_enabled":false,"is_translator":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/378800000009764019\/04849a0de547a8b1e50fb8897670c582.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/378800000009764019\/04849a0de547a8b1e50fb8897670c582.jpeg","profile_background_tile":true,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/378800000082455141\/f8e8c0ef5eade5927a876f6466439c48_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/378800000082455141\/f8e8c0ef5eade5927a876f6466439c48_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/44521307\/1372044195","profile_link_color":"0084B4","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"DDFFCC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[{"url":"http:\/\/t.co\/J8DlGb17gY","expanded_url":"http:\/\/gizmodo.com\/the-rainmakers-how-human-beings-control-the-weather-707081383","display_url":"gizmodo.com\/the-rainmakers\u2026","indices":[53,75]}],"user_mentions":[]},"favorited":false,"retweeted":false,"possibly_sensitive":true,"lang":"en"},{"metadata":{"result_type":"recent","iso_language_code":"en"},"created_at":"Mon
+        Jul 08 18:15:02 +0000 2013","id":354302622808817664,"id_str":"354302622808817664","text":"\u201c@Yumi_Pie:
+        @malika_walele I played with no rails and I got 2 strikes :D Rainmakers back
+        in action!\u201d Haha you''re a champ:)","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\"
+        rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":354298071728918528,"in_reply_to_status_id_str":"354298071728918528","in_reply_to_user_id":21305603,"in_reply_to_user_id_str":"21305603","in_reply_to_screen_name":"Yumi_Pie","user":{"id":150689987,"id_str":"150689987","name":"Malika","screen_name":"malika_walele","location":"Johannesburg,
+        South Africa","description":"Penguins. Architect. Photographer. Artist. \u2764\nInstagram:
+        @malika_walele","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":217,"friends_count":217,"listed_count":0,"created_at":"Tue
+        Jun 01 15:29:56 +0000 2010","favourites_count":61,"utc_offset":null,"time_zone":null,"geo_enabled":true,"verified":false,"statuses_count":4153,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"642D8B","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme10\/bg.gif","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme10\/bg.gif","profile_background_tile":true,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/378800000115519583\/d06f338738fdcdc2f75be5bef1d25c16_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/378800000115519583\/d06f338738fdcdc2f75be5bef1d25c16_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/150689987\/1373028196","profile_link_color":"FF0000","profile_sidebar_border_color":"65B0DA","profile_sidebar_fill_color":"7AC3EE","profile_text_color":"3D1957","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"Yumi_Pie","name":"it''s
+        the rainmaker","id":21305603,"id_str":"21305603","indices":[1,10]},{"screen_name":"malika_walele","name":"Malika","id":150689987,"id_str":"150689987","indices":[12,26]}]},"favorited":false,"retweeted":false,"lang":"en"},{"metadata":{"result_type":"recent","iso_language_code":"en"},"created_at":"Mon
+        Jul 08 17:56:57 +0000 2013","id":354298071728918528,"id_str":"354298071728918528","text":"@malika_walele
+        I played with no rails and I got 2 strikes :D Rainmakers back in action!","source":"\u003ca
+        href=\"http:\/\/blackberry.com\/twitter\" rel=\"nofollow\"\u003eTwitter for
+        BlackBerry\u00ae\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":354280617594204162,"in_reply_to_status_id_str":"354280617594204162","in_reply_to_user_id":150689987,"in_reply_to_user_id_str":"150689987","in_reply_to_screen_name":"malika_walele","user":{"id":21305603,"id_str":"21305603","name":"it''s
+        the rainmaker","screen_name":"Yumi_Pie","location":"Candy Land \u2600","description":"bigger
+        bums , bolder lashes","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":208,"friends_count":322,"listed_count":0,"created_at":"Thu
+        Feb 19 15:07:59 +0000 2009","favourites_count":55,"utc_offset":7200,"time_zone":"Pretoria","geo_enabled":false,"verified":false,"statuses_count":3005,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/378800000107148660\/d4ec7cfecd756aa990e756497f2d7d96_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/378800000107148660\/d4ec7cfecd756aa990e756497f2d7d96_normal.jpeg","profile_link_color":"0084B4","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"malika_walele","name":"Malika","id":150689987,"id_str":"150689987","indices":[0,14]}]},"favorited":false,"retweeted":false,"lang":"en"},{"metadata":{"result_type":"recent","iso_language_code":"en"},"created_at":"Mon
+        Jul 08 11:08:17 +0000 2013","id":354195228237889537,"id_str":"354195228237889537","text":"TY
+        @jwhittalTWN :) I think I will sit today out &amp; wait for more upper-level
+        support for Tuesday into Wednesday. Today looks like #rainmakers","source":"web","truncated":false,"in_reply_to_status_id":354193789839081472,"in_reply_to_status_id_str":"354193789839081472","in_reply_to_user_id":199072462,"in_reply_to_user_id_str":"199072462","in_reply_to_screen_name":"jwhittalTWN","user":{"id":190450243,"id_str":"190450243","name":"David
+        T. Chapman","screen_name":"DTChapmanPics","location":"Niagara Falls, ON, Canada","description":"Professional
+        Photographer, Professional Speaker, Aurora Borealis Forecaster, Adventurer,
+        Storm Chaser, Fitness, Sports, Photography Lessons","url":"http:\/\/t.co\/gZdn2EJ30O","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/gZdn2EJ30O","expanded_url":"http:\/\/www.naturebirdsandweather.com","display_url":"naturebirdsandweather.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":2285,"friends_count":2245,"listed_count":61,"created_at":"Tue
+        Sep 14 00:02:54 +0000 2010","favourites_count":1783,"utc_offset":-18000,"time_zone":"Eastern
+        Time (US & Canada)","geo_enabled":false,"verified":false,"statuses_count":6626,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"1A1B1F","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/647957366\/dhqc6mh8382t7dcioqny.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/647957366\/dhqc6mh8382t7dcioqny.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/2646765348\/0adc730914221a35e6e3eac5f13393b8_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/2646765348\/0adc730914221a35e6e3eac5f13393b8_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/190450243\/1362557317","profile_link_color":"2FC2EF","profile_sidebar_border_color":"181A1E","profile_sidebar_fill_color":"252429","profile_text_color":"666666","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[{"text":"rainmakers","indices":[133,144]}],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"jwhittalTWN","name":"Jaclyn
+        Whittal","id":199072462,"id_str":"199072462","indices":[3,15]}]},"favorited":false,"retweeted":false,"lang":"en"}],"search_metadata":{"completed_in":0.028,"max_id":354815379941498880,"max_id_str":"354815379941498880","query":"Rainmakers+%3A%29","refresh_url":"?since_id=354815379941498880&q=Rainmakers%20%3A%29&result_type=recent&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+    http_version: 
+  recorded_at: Fri, 12 Jul 2013 09:41:53 GMT
+recorded_with: VCR 2.5.0
