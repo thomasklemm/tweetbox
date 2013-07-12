@@ -1,6 +1,6 @@
 class Tweet < ActiveRecord::Base
   include ActiveModel::Transitions
-  include URLExpander
+  include UrlExpander
 
   belongs_to :project
   belongs_to :author
@@ -30,6 +30,7 @@ class Tweet < ActiveRecord::Base
     state :incoming
     state :resolved
     state :posted
+    state :posted_outside
 
     event :activate do
       transitions to: :incoming, from: [:conversation, :incoming, :resolved]
@@ -95,22 +96,6 @@ class Tweet < ActiveRecord::Base
     @conversation = (previous_tweets.to_a + [self] + future_tweets.to_a).flatten.sort_by(&:created_at).uniq
   end
 
-  # Assigns a certain workflow state given a symbol or string
-  # Knows about a whitelist of valid states
-  def assign_state(state)
-    state &&= state.try(:to_sym)
-    return unless Tweet.available_states.include?(state)
-    state == :conversation ? self.state ||= state : self.state = state
-  end
-
-  # Assigns the tweet's fields from a Twitter status object
-  # Persists the changes to the database by saving the record
-  # Returns the saved tweet record
-  def update_fields_from_status(status)
-    assign_fields_from_status(status)
-    save && self
-  end
-
   def create_event(kind, user)
     events.create!(kind: kind, user: user)
   end
@@ -119,18 +104,51 @@ class Tweet < ActiveRecord::Base
     twitter_id
   end
 
-  private
+  # Returns an array of the persisted tweet records
+  def self.many_from_twitter(statuses, opts={})
+    statuses.map { |status| from_twitter(status, opts) }
+  end
+
+  # Returns the persisted tweet record
+  def self.from_twitter(status, opts={})
+    project = opts.fetch(:project) { raise 'Requires a :project' }
+    twitter_account = opts.fetch(:twitter_account, nil)
+    state = opts.fetch(:state) { raise 'Requires a :state' }
+
+    tweet = project.tweets.where(twitter_id: status.id).first_or_initialize
+    tweet.assign_fields(status)
+    tweet.author ||= Author.from_twitter(status.user, project: project)
+    tweet.assign_state(state)
+
+    tweet.save! and tweet
+  rescue ActiveRecord::RecordNotUnique
+    retry
+  end
+
+  # Assigns a certain workflow state given a symbol or string
+  # Knows about a whitelist of valid states
+  def assign_state(state)
+    state &&= state.try(:to_sym)
+    raise "Unknown state: #{ state }" unless Tweet.available_states.include?(state)
+    state == :conversation ? self.state ||= state : self.state = state
+  end
 
   # Assigns the tweet's fields from a Twitter status object
   # Returns the tweet record without saving it and persisting
   # the changes to the database
-  def assign_fields_from_status(status)
-    self.twitter_id = status.id
-    self.text       = expand_urls(status.text, status.urls)
-    self.created_at = status.created_at
+  def assign_fields(status)
+    self.text = expand_urls(status.text, status.urls)
+    self.in_reply_to_user_id = status.in_reply_to_user_id
     self.in_reply_to_status_id = status.in_reply_to_status_id
-    self.in_reply_to_user_id   = status.in_reply_to_user_id
+    self.source = status.source
+    self.lang = status.lang
+    self.retweet_count = status.retweet_count
+    self.favorite_count = status.favorite_count
+    self.created_at = status.created_at
+    self
   end
+
+  private
 
   # Loads the previous tweets from the database
   def previous_tweets!

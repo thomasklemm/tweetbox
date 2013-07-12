@@ -52,51 +52,6 @@ describe Status, 'posted' do
   end
 end
 
-# FIXME: OUTDATED!
-
-# describe Status, 'posted' do
-#   subject(:status) { Fabricate.build(:status) } # Form object
-#   it "should save" do
-#     VCR.use_cassette('post_status', record: :once) do
-#       status.save
-#     end
-#   end
-
-#   it { should be_valid }
-#   it { should validate_presence_of(:posted_text) }
-# end
-
-# describe Status do
-#   subject(:status) { Fabricate.build(:status) }
-#   it { should be_valid }
-
-#   it { should belong_to(:project) }
-#   it { should belong_to(:user) }
-#   it { should belong_to(:twitter_account) }
-
-#   it { should validate_presence_of(:project) }
-#   it { should validate_presence_of(:user) }
-#   it { should validate_presence_of(:twitter_account) }
-#   it { should validate_presence_of(:text) }
-
-#   describe "#code" do
-#     subject(:status) { Fabricate(:status) }
-
-#     it { should validate_presence_of(:code) }
-#     it { should validate_uniqueness_of(:code) }
-#   end
-
-#   describe "#posted?" do
-#     it "is not posted on creation" do
-#       expect(status).to_not be_posted
-#     end
-
-#     it "is posted when posted_at timestamp is set" do
-#       status.posted_at = Time.current
-#       expect(status).to be_posted
-#     end
-#   end
-
 #   describe "#length" do
 #     it "returns the length of the posted text as seen by Twitter" do
 #       status.posted_text = '0123456789'

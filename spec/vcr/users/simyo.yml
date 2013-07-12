@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/users/show.json?screen_name=simyo
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="d4876b0b301794b97ef1e41711c9226d",
+        oauth_signature="K1j2B6fgbmqIju9XTEmCnrNEd00%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373575682", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1200'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 11 Jul 2013 20:48:03 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Thu, 11 Jul 2013 20:48:03 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137357568299475186; Domain=.twitter.com; Path=/; Expires=Sat,
+        11-Jul-2015 20:48:03 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1373576583'
+      X-Transaction:
+      - b6eeb1ed6f8f1777
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"id":33878217,"id_str":"33878217","name":"simyo Deutschland","screen_name":"simyo","location":"D\u00fcsseldorf","description":"Der
+        offizielle simyo Deutschland Twitter-Account. http:\/\/t.co\/8wpTA0iKgd","url":"http:\/\/t.co\/LR5S23ZT1i","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/LR5S23ZT1i","expanded_url":"http:\/\/www.simyo.de\/","display_url":"simyo.de","indices":[0,22]}]},"description":{"urls":[{"url":"http:\/\/t.co\/8wpTA0iKgd","expanded_url":"http:\/\/www.simyo.de\/de\/unternehmen\/impressum.html","display_url":"simyo.de\/de\/unternehmen\u2026","indices":[50,72]}]}},"protected":false,"followers_count":3759,"friends_count":1112,"listed_count":142,"created_at":"Tue
+        Apr 21 11:39:55 +0000 2009","favourites_count":248,"utc_offset":3600,"time_zone":"Berlin","geo_enabled":true,"verified":false,"statuses_count":3342,"lang":"de","status":{"created_at":"Thu
+        Jul 11 13:38:06 +0000 2013","id":355320091832893441,"id_str":"355320091832893441","text":"RT
+        @areamobile: Perfekt f\u00fcr Smartphone-Einsteiger in St\u00e4dten: Samsung
+        Galaxy S3 Mini f\u00fcr 1 Euro mit Allnet-Flat http:\/\/t.co\/LvwXwatRih...","source":"\u003ca
+        href=\"http:\/\/www.hootsuite.com\" rel=\"nofollow\"\u003eHootSuite\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[{"url":"http:\/\/t.co\/LvwXwatRih","expanded_url":"http:\/\/www.areamobile.de\/handys\/3364-samsung-galaxy-s3-mini\/samsung-galaxy-s3-mini-fuer-1-euro-mit-all-net-flat-von-simyo","display_url":"areamobile.de\/handys\/3364-sa\u2026","indices":[112,134]}],"user_mentions":[{"screen_name":"areamobile","name":"areamobile","id":23621108,"id_str":"23621108","indices":[3,14]}]},"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"de"},"contributors_enabled":false,"is_translator":false,"profile_background_color":"E0E3E3","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/33878217\/1367598366","profile_link_color":"DB5C07","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"F2EFEA","profile_text_color":"3C3940","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false}'
+    http_version: 
+  recorded_at: Thu, 11 Jul 2013 20:48:03 GMT
+recorded_with: VCR 2.5.0

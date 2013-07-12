@@ -24,25 +24,6 @@ class Project < ActiveRecord::Base
       exists?(memberships: { user_id: user.id })
   end
 
-  # Create one or many tweet records
-  # from Twitter status objects
-  # Returns an array of tweet records
-  def create_tweets_from_twitter(statuses, options={})
-    statuses &&= [statuses].flatten.reverse
-    statuses.map { |status| create_tweet_from_twitter(status, options) }
-  end
-
-  # Creates a tweet record from a Twitter status object
-  # Returns a tweet record
-  def create_tweet_from_twitter(status, options={})
-    twitter_account = options.fetch(:twitter_account) { raise "Passing a :twitter_account is required" }
-    state = options.fetch(:state, :none)
-
-    author = find_or_create_author(status)
-    tweet = find_or_create_tweet(status, author, twitter_account, state)
-    tweet
-  end
-
   # Finds the tweet record with the twitter_id among the project tweets
   # If it could not be found, it will be retrieved from twitter
   # Returns a tweet record or nil if the tweet could not be found on Twitter
@@ -52,6 +33,10 @@ class Project < ActiveRecord::Base
 
   def to_param
     "#{ id }-#{ name.parameterize }"
+  end
+
+  def default_twitter_account_with_fallback
+    default_twitter_account || twitter_accounts.sample
   end
 
   def has_default_twitter_account?
@@ -89,7 +74,7 @@ class Project < ActiveRecord::Base
   # Fetches the given twitter_id from Twitter
   # Returns a tweet record or nil when it could not be found
   def fetch_tweet(twitter_id)
-    status = default_twitter_account.client.status(twitter_id)
+    status = default_twitter_account_with_fallback.client.status(twitter_id)
     create_tweet_from_twitter(status, state: :none, twitter_account: twitter_accounts.first )
   rescue Twitter::Error::NotFound
     nil

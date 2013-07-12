@@ -1,30 +1,3 @@
-# == Schema Information
-#
-# Table name: tweets
-#
-#  author_id             :integer          not null
-#  created_at            :datetime         not null
-#  full_text             :text
-#  id                    :integer          not null, primary key
-#  in_reply_to_status_id :integer
-#  in_reply_to_user_id   :integer
-#  previous_tweet_ids    :integer
-#  project_id            :integer          not null
-#  state                 :text
-#  text                  :text
-#  twitter_account_id    :integer          not null
-#  twitter_id            :integer          not null
-#  updated_at            :datetime         not null
-#
-# Indexes
-#
-#  index_tweets_on_previous_tweet_ids         (previous_tweet_ids)
-#  index_tweets_on_project_id                 (project_id)
-#  index_tweets_on_project_id_and_author_id   (project_id,author_id)
-#  index_tweets_on_project_id_and_state       (project_id,state)
-#  index_tweets_on_project_id_and_twitter_id  (project_id,twitter_id) UNIQUE
-#
-
 require 'spec_helper'
 
 describe Tweet do
@@ -56,7 +29,7 @@ describe Tweet do
     let(:posted_tweet) { Fabricate.build(:tweet, state: :posted) }
 
     it "recognizes :conversation, :incoming, :resolved and :posted states" do
-      expect(Tweet.available_states).to match_array([:conversation, :incoming, :resolved, :posted])
+      expect(Tweet.available_states).to match_array([:conversation, :incoming, :resolved, :posted, :posted_outside])
     end
 
     it "is initialized in :conversation state unless otherwise instructed" do
@@ -104,80 +77,103 @@ describe Tweet, 'persisted' do
   end
 end
 
+describe Tweet, 'class methods' do
+  include_context 'signup and twitter account'
 
-  # let(:project)  { Fabricate(:project) }
-  # let(:status)   { Fabricate.build(:twitter_status) }
-  # let(:statuses) { [Fabricate.build(:twitter_status), Fabricate.build(:twitter_status)] }
+  describe ".many_from_twitter" do
+    it "requires a :project" do
+      expect{ Tweet.many_from_twitter([Object.new]) }.to raise_error(RuntimeError, 'Requires a :project')
+    end
 
-  # describe ".from_twitter(statuses, options={})" do
-  #   it "requires a project" do
-  #     expect { Tweet.from_twitter([], source: :mentions) }.to raise_error(KeyError)
-  #   end
+    it "requires a :state" do
+      expect{ Tweet.many_from_twitter([Object.new], project: Object.new) }.to raise_error(RuntimeError, 'Requires a :state')
+    end
 
-  #   it "requires a source" do
-  #     expect { Tweet.from_twitter([], project: project) }.to raise_error(KeyError)
-  #   end
+    it "creates the given tweets and returns an array of tweet records" do
+      VCR.use_cassette('user_timelines/simyo') do
+        statuses = twitter_account.client.user_timeline('simyo', count: 5)
+        tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: twitter_account, state: :incoming)
 
-  #   context "with one status and valid params" do
-  #     subject(:tweets) { Tweet.from_twitter(statuses, project: project, source: :mentions) }
+        status = statuses.first
+        tweet = tweets.first
 
-  #     it "returns an array of tweets" do
-  #       expect(tweets).to be_an(Array)
-  #       expect(tweets.first).to be_a(Tweet)
-  #     end
+        # Return value
+        expect(tweets).to be_an Array
 
-  #     it "reverses the statuses before processing" do
-  #       expect(tweets.first.twitter_id).to eq(statuses.last.id)
-  #     end
-  #   end
-  # end
+        expect(tweet).to be_a Tweet
+        expect(tweet).to be_persisted
 
-  # describe ".create_tweet_from_twitter(project, status, source)" do
-  #   subject(:tweet) { Tweet.create_tweet_from_twitter(project, status, source) }
+        # Associations
+        expect(tweet.project).to eq project
+        expect(tweet.twitter_account).to eq twitter_account
+        expect(tweet.state).to eq :incoming
 
-  #   it "returns the tweet" do
-  #     expect(tweet).to be_a(Tweet)
-  #   end
-  # end
+        # Fields
+        expect(tweet.twitter_id).to eq(status.id)
+        expect(tweet.text).to_not eq(status.text) # has expanded urls
+        expect(tweet.text).to eq(Tweet.new.expand_urls(status.text, status.urls))
+        expect(tweet.in_reply_to_user_id).to eq(status.in_reply_to_user_id)
+        expect(tweet.in_reply_to_status_id).to eq(status.in_reply_to_status_id)
+        expect(tweet.source).to eq(status.source)
+        expect(tweet.lang).to eq(status.lang)
+        expect(tweet.retweet_count).to eq(status.retweet_count)
+        expect(tweet.favorite_count).to eq(status.favorite_count)
+        expect(tweet.created_at).to eq(status.created_at)
 
-  # let(:author) { Author.find_or_create_author(project, status) }
-  # let(:source) { :mentions }
+        expect{ Tweet.many_from_twitter(statuses, project: project, state: :incoming) }.to_not raise_error
+      end
+    end
+  end
 
-  # describe ".find_or_create_tweet(project, status, author, source)" do
-  #   subject(:tweet) { Tweet.find_or_create_tweet(project, status, author, source) }
+  describe ".from_twitter" do
+    it "requires a :project" do
+      expect{ Tweet.from_twitter(Object.new) }.to raise_error(RuntimeError, 'Requires a :project')
+    end
 
-  #   it "returns the tweet" do
-  #     expect(tweet).to be_a(Tweet)
-  #     expect(tweet).to be_persisted
-  #     expect(tweet.twitter_id).to eq(status.id)
-  #     expect(tweet.text).to eq(status.text)
-  #     expect(tweet.author).to eq(author)
-  #     expect(tweet.project).to eq(project)
-  #     expect(tweet.current_state).to eq(:new) # REVIEW: SPECIFY CONVERSATION STATE
-  #   end
-  # end
+    it "requires a :state" do
+      expect{ Tweet.from_twitter(Object.new, project: Object.new) }.to raise_error(RuntimeError, 'Requires a :state')
+    end
 
-  # describe "#assign_fields_from_status(status)" do
-  #   let(:status) { Fabricate.build(:twitter_status) }
-  #   before { tweet.assign_fields_from_status(status) }
+    it "creates the given tweet and returns a tweet record" do
+      VCR.use_cassette('statuses/351779153646858241') do
+        status = twitter_account.client.status('351779153646858241')
+        tweet = Tweet.from_twitter(status, project: project, twitter_account: twitter_account, state: :incoming)
 
-  #   it "assigns the tweet's fields" do
-  #     expect(tweet.twitter_id).to eq(status.id)
-  #     expect(tweet.text).to eq(status.text)
-  #     expect(tweet.created_at).to eq(status.created_at)
-  #     expect(tweet.in_reply_to_status_id).to eq(status.in_reply_to_status_id)
-  #     expect(tweet.in_reply_to_user_id).to eq(status.in_reply_to_user_id)
-  #   end
-  # end
+        # Return value
+        expect(tweet).to be_a Tweet
+        expect(tweet).to be_persisted
 
-  # describe "#assign_workflow_state(source)" do
-  #   it "assigns :conversation state if source is :building_conversations" do
-  #     tweet.assign_workflow_state(:building_conversations)
-  #     expect(tweet.current_state).to eq(:conversation)
-  #   end
+        # Associations
+        expect(tweet.project).to eq project
+        expect(tweet.twitter_account).to eq twitter_account
+        expect(tweet.state).to eq :incoming
 
-  #   it "doesn't assign :conversation state unless source is :building_conversations" do
-  #     tweet.assign_workflow_state(:mentions_timeline)
-  #     expect(tweet.current_state).to_not eq(:conversation)
-  #   end
-  # end
+        # Fields
+        expect(tweet.twitter_id).to eq(status.id)
+        expect(tweet.text).to_not eq(status.text) # has expanded urls
+        expect(tweet.text).to eq(Tweet.new.expand_urls(status.text, status.urls))
+        expect(tweet.in_reply_to_user_id).to eq(status.in_reply_to_user_id)
+        expect(tweet.in_reply_to_status_id).to eq(status.in_reply_to_status_id)
+        expect(tweet.source).to eq(status.source)
+        expect(tweet.lang).to eq(status.lang)
+        expect(tweet.retweet_count).to eq(status.retweet_count)
+        expect(tweet.favorite_count).to eq(status.favorite_count)
+        expect(tweet.created_at).to eq(status.created_at)
+
+        expect{ Tweet.from_twitter(status, project: project, state: :incoming) }.to_not raise_error
+
+        # Author
+        user = status.user
+        author = tweet.author
+
+        expect(author).to be_an Author
+        expect(author).to be_persisted
+
+        expect(author.twitter_id).to eq(user.id)
+        expect(author.screen_name).to eq(user.screen_name)
+
+        expect{ Author.from_twitter(user, project: project) }.to_not raise_error
+      end
+    end
+  end
+end

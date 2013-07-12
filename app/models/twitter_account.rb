@@ -2,7 +2,6 @@ class TwitterAccount < ActiveRecord::Base
   extend Enumerize
 
   ACCESS_SCOPES = %w(read write)
-  QUERIES = %w(mentions_timeline user_time direct_messages_received direct_messages_sent)
 
   belongs_to :project
   validates :project, presence: true
@@ -66,6 +65,46 @@ class TwitterAccount < ActiveRecord::Base
     self.save! && self
   end
 
+  # Fetches the mentions timeline from twitter
+  # while only fetching records that we have not already downloaded
+  # Returns the fetched, persisted tweet records
+  def fetch_mentions_timeline
+    statuses = client.mentions_timeline(mentions_timeline_options)
+    tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :incoming)
+    update_max_mentions_timeline_twitter_id(tweets.map(&:twitter_id).max)
+    tweets
+  # If there's an error, just skip execution
+  rescue Twitter::Error
+    false
+  end
+
+  # Fetches the user timeline from twitter
+  # while only fetching records that we have not already downloaded
+  # Returns the fetched, persisted tweet records
+  def fetch_user_timeline
+    statuses = client.user_timeline(user_timeline_options)
+    tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :posted_outside)
+    update_max_user_timeline_twitter_id(tweets.map(&:twitter_id).max)
+    tweets
+  # If there's an error, just skip execution
+  rescue Twitter::Error
+    false
+  end
+
+  private
+
+  def mentions_timeline_options
+    options = { count: 200 } # Max is 200
+    options[:since_id] = max_mentions_timeline_twitter_id if max_mentions_timeline_twitter_id.present?
+    options
+  end
+
+  def user_timeline_options
+    options = { count: 200 } # Max is 200
+    options[:since_id] = max_user_timeline_twitter_id if max_user_timeline_twitter_id.present?
+    options
+  end
+
   def update_max_mentions_timeline_twitter_id(twitter_id)
     update_attributes(max_mentions_timeline_twitter_id: twitter_id) if twitter_id.to_i > max_mentions_timeline_twitter_id.to_i
   end
@@ -73,8 +112,6 @@ class TwitterAccount < ActiveRecord::Base
   def update_max_user_timeline_twitter_id(twitter_id)
     update_attributes(max_user_timeline_twitter_id: twitter_id) if twitter_id.to_i > max_user_timeline_twitter_id.to_i
   end
-
-  private
 
   # Assign user infos for authenticating twitter account
   # from omniauth auth hash

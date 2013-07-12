@@ -24,7 +24,7 @@ describe 'Signup and login' do
     click_button 'Sign up'
 
     # Instant sign in
-    expect(current_path).to match(project_tweets_path(Project.first))
+    expect(current_path).to match(projects_path)
 
     # Logout
     click_on 'Logout'
@@ -40,7 +40,7 @@ describe 'Signup and login' do
     click_button 'Login'
 
     # expect(page).to have_content('Signed in successfully.')
-    expect(current_path).to match(project_tweets_path(Project.first))
+    expect(current_path).to match(projects_path)
 
     # Account
     click_on 'Account'
