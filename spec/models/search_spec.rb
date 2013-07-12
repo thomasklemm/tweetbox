@@ -23,11 +23,11 @@ describe Search do
   describe "#update_max_twitter_id" do
     it "updates the max twitter id only when given a higher max_twitter_id than the current one" do
       search.max_twitter_id = nil
-      search.update_max_twitter_id(2)
+      search.send(:update_max_twitter_id, 2)
       expect(search.max_twitter_id).to eq(2)
 
       # Only upgrade
-      search.update_max_twitter_id(1)
+      search.send(:update_max_twitter_id, 1)
       expect(search.max_twitter_id).to eq(2)
     end
   end
