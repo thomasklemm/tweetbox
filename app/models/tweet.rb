@@ -30,6 +30,7 @@ class Tweet < ActiveRecord::Base
     state :incoming
     state :resolved
     state :posted
+    state :posted_outside
 
     event :activate do
       transitions to: :incoming, from: [:conversation, :incoming, :resolved]
