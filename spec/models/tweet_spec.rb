@@ -29,7 +29,7 @@ describe Tweet do
     let(:posted_tweet) { Fabricate.build(:tweet, state: :posted) }
 
     it "recognizes :conversation, :incoming, :resolved and :posted states" do
-      expect(Tweet.available_states).to match_array([:conversation, :incoming, :resolved, :posted])
+      expect(Tweet.available_states).to match_array([:conversation, :incoming, :resolved, :posted, :posted_outside])
     end
 
     it "is initialized in :conversation state unless otherwise instructed" do
@@ -177,80 +177,3 @@ describe Tweet, 'class methods' do
     end
   end
 end
-
-  # let(:project)  { Fabricate(:project) }
-  # let(:status)   { Fabricate.build(:twitter_status) }
-  # let(:statuses) { [Fabricate.build(:twitter_status), Fabricate.build(:twitter_status)] }
-
-  # describe ".from_twitter(statuses, options={})" do
-  #   it "requires a project" do
-  #     expect { Tweet.from_twitter([], source: :mentions) }.to raise_error(KeyError)
-  #   end
-
-  #   it "requires a source" do
-  #     expect { Tweet.from_twitter([], project: project) }.to raise_error(KeyError)
-  #   end
-
-  #   context "with one status and valid params" do
-  #     subject(:tweets) { Tweet.from_twitter(statuses, project: project, source: :mentions) }
-
-  #     it "returns an array of tweets" do
-  #       expect(tweets).to be_an(Array)
-  #       expect(tweets.first).to be_a(Tweet)
-  #     end
-
-  #     it "reverses the statuses before processing" do
-  #       expect(tweets.first.twitter_id).to eq(statuses.last.id)
-  #     end
-  #   end
-  # end
-
-  # describe ".create_tweet_from_twitter(project, status, source)" do
-  #   subject(:tweet) { Tweet.create_tweet_from_twitter(project, status, source) }
-
-  #   it "returns the tweet" do
-  #     expect(tweet).to be_a(Tweet)
-  #   end
-  # end
-
-  # let(:author) { Author.find_or_create_author(project, status) }
-  # let(:source) { :mentions }
-
-  # describe ".find_or_create_tweet(project, status, author, source)" do
-  #   subject(:tweet) { Tweet.find_or_create_tweet(project, status, author, source) }
-
-  #   it "returns the tweet" do
-  #     expect(tweet).to be_a(Tweet)
-  #     expect(tweet).to be_persisted
-  #     expect(tweet.twitter_id).to eq(status.id)
-  #     expect(tweet.text).to eq(status.text)
-  #     expect(tweet.author).to eq(author)
-  #     expect(tweet.project).to eq(project)
-  #     expect(tweet.current_state).to eq(:new) # REVIEW: SPECIFY CONVERSATION STATE
-  #   end
-  # end
-
-  # describe "#assign_fields_from_status(status)" do
-  #   let(:status) { Fabricate.build(:twitter_status) }
-  #   before { tweet.assign_fields_from_status(status) }
-
-  #   it "assigns the tweet's fields" do
-  #     expect(tweet.twitter_id).to eq(status.id)
-  #     expect(tweet.text).to eq(status.text)
-  #     expect(tweet.created_at).to eq(status.created_at)
-  #     expect(tweet.in_reply_to_status_id).to eq(status.in_reply_to_status_id)
-  #     expect(tweet.in_reply_to_user_id).to eq(status.in_reply_to_user_id)
-  #   end
-  # end
-
-  # describe "#assign_workflow_state(source)" do
-  #   it "assigns :conversation state if source is :building_conversations" do
-  #     tweet.assign_workflow_state(:building_conversations)
-  #     expect(tweet.current_state).to eq(:conversation)
-  #   end
-
-  #   it "doesn't assign :conversation state unless source is :building_conversations" do
-  #     tweet.assign_workflow_state(:mentions_timeline)
-  #     expect(tweet.current_state).to_not eq(:conversation)
-  #   end
-  # end

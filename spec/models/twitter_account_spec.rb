@@ -47,11 +47,4 @@ describe TwitterAccount, 'persisted' do
   it { should be_valid }
 
   it { should validate_uniqueness_of(:twitter_id) }
-
-  describe "callbacks" do
-    it "ensures that the first connected twitter account will be made the project's default twitter account" do
-      twitter_account.send(:ensure_project_default_is_set) # after_commit callback
-      expect(twitter_account).to be_project_default
-    end
-  end
 end

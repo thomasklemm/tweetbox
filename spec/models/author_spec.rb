@@ -32,7 +32,6 @@ describe Author, 'class methods' do
   describe ".from_twitter" do
     it "creates the given author and assigns fields and returns the author" do
       VCR.use_cassette('users/simyo') do
-        # Author
         user = twitter_account.client.user('simyo')
         author = Author.from_twitter(user, project: project)
 
