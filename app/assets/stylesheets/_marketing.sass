@@ -1,10 +1,15 @@
 // marketing
+.container
+	max-width: 900px
+
+hr
+
 
 // Top Section Showcase
 .showcase
 	position: relative
 	z-index: -1
-	background: transparent url(/assets/main.png) center top fixed
+	background: transparent url(image_path('main.jpg')) center top fixed
 		-webkit-background-size: 100%
 		-moz-background-size: 100%
 		-o-background-size: 100%
@@ -40,12 +45,49 @@ header
 	text-align: center
 	background: #232323 url(/assets/texture-1.png)
 	margin-bottom: 50px
+	color: white
 
-.strip h3
-	color: #FFF
+	.call-to-action-button
+		margin-bottom: 3px
 
-.strip .btn
-	margin-bottom: 3px
+.bubble
+	position: relative
+	width: auto
+	height: 100%
+	padding: 20px 20px 10px
+	margin-bottom: 30px
+	color: #49535F
+	background: #ECEFF2
+	border: #7F7F7F solid 0px
+	-webkit-border-radius: 4px
+	-moz-border-radius: 4px
+	border-radius: 4px
+
+.bubble:after
+	content: ""
+	position: absolute
+	bottom: -10px
+	left: 20px
+	border-style: solid
+	border-width: 10px 10px 0
+	border-color: #ECEFF2 transparent
+	display: block
+	width: 0
+	z-index: 1
+
+.user-avatar
+	float: left
+	margin: 0 10px 10px 0
+	-webkit-border-radius: 6px
+	-moz-border-radius: 6px
+	border-radius: 6px
+	-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8)
+	-moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8)
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8)
+
+.customer-logo
+	padding-right: 38px
+	padding-bottom: 20px
 
 // Responsive
 @media (max-width: 1200px)
@@ -66,7 +108,7 @@ header
 // Extra queries are for Apple devices
 @media (max-width: 768px), only screen and (min-device-width: 768px) and (max-device-width: 1024px), (min-device-width: 320px) and (max-device-width: 480px)
 	.showcase
-		background: transparent url(/assets/main-mobile.png) center top scroll
+		background: transparent url(/assets/main-mobile.jpg) center top scroll
 		-webkit-background-size: 100%
 		-moz-background-size: 100%
 		-o-background-size: 100%
@@ -75,3 +117,5 @@ header
 		-moz-background-size: cover
 		-o-background-size: cover
 		background-size: cover
+		h1
+			font-size: 80px
