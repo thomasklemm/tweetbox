@@ -13,6 +13,5 @@
 #
 
 Fabricator(:code) do
-  code  "MyText"
-  tweet nil
+  tweet
 end
