@@ -65,9 +65,9 @@ class TwitterAccount < ActiveRecord::Base
     self.save! && self
   end
 
-  # Fetches the mentions timeline from twitter
-  # while only fetching records that we have not already downloaded
-  # Returns the fetched, persisted tweet records
+  # Fetches the mentions timeline from Twitter
+  # while only fetching statuses that we have not already downloaded
+  # Returns the persisted tweet records
   def fetch_mentions_timeline
     statuses = client.mentions_timeline(mentions_timeline_options)
     tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :incoming)
@@ -78,9 +78,9 @@ class TwitterAccount < ActiveRecord::Base
     false
   end
 
-  # Fetches the user timeline from twitter
-  # while only fetching records that we have not already downloaded
-  # Returns the fetched, persisted tweet records
+  # Fetches the user timeline from Twitter
+  # while only fetching statuses that we have not already downloaded
+  # Returns the persisted tweet records
   def fetch_user_timeline
     statuses = client.user_timeline(user_timeline_options)
     tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :posted_outside)
