@@ -9,12 +9,8 @@ describe MentionsTimelineWorker do
       expect(Tweet.count).to eq 0
 
       VCR.use_cassette('mention_timelines/tweetbox101') do
-        @result = MentionsTimelineWorker.new.perform(twitter_account.id)
+        MentionsTimelineWorker.new.perform(twitter_account.id)
       end
-    end
-
-    it "returns true" do
-      expect(@result).to be_true
     end
 
     it "creates tweets and authors for the associated project" do

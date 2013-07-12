@@ -1,35 +1,25 @@
 require 'spec_helper'
 
 describe 'Connect a Twitter account' do
-  before do
-    # Open signup page
-    visit new_signup_path
-    expect(current_path).to eq(new_signup_path)
-
-    # Fill in valid details and submit signup form
-    fill_in 'Your name',  with: 'Thomas Klemm'
-    fill_in 'Company',    with: 'Rainmakers'
-    fill_in 'Your email', with: 'thomas@rainmakers.com'
-    fill_in 'password',   with: 'rainmaking123'
-    click_button 'Sign up'
-
-    # Instant sign in
-    expect(current_path).to match(project_tweets_path(Project.first))
-  end
+  include_context 'signup feature'
 
   it "connects a Twitter account" do
-    click_on "Twitter accounts"
+    # Open project
+    click_on "Rainmakers", match: :first
+
+    click_on "Accounts"
     click_on "Connect a Twitter account"
+    click_on "Connect a new Twitter account"
 
     VCR.use_cassette('twitter_accounts/connect') do
       click_on "Connect a Twitter account"
     end
 
     expect(current_path).to eq(project_twitter_accounts_path(Project.first))
-    expect(page).to have_content("Twitter account @tweetbox101 has been successfully authorized.")
+    expect(page).to have_content("Your Twitter account @tweetbox101 has been connected.")
 
-    # Post a status
-    click_on 'Post a Tweet'
+    # Post a tweet
+    click_on 'Tweet'
     full_text = "Aenean eu leo quam. Pellentesque ornare sem lacinia
         quam venenatis vestibulum. Nulla vitae elit libero, a pharetra augue. Cum sociis natoque
         penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada
@@ -58,24 +48,5 @@ describe 'Connect a Twitter account' do
     # NOTE: New code generated each time, even when Twitter response in static in VCR
     visit public_code_path(code)
     expect(current_path).to eq public_tweet_path('tweetbox101', tweet)
-
-    # Get mentions timeline
-    # VCR.use_cassette('mentions_timeline') do
-    #   TwitterWorker.new.perform(:mentions_timeline, TwitterAccount.first)
-    # end
-
-    # click_on 'Incoming'
-
-    # within("#tweet_#{ Tweet.incoming.first.id }") do
-    #   within('.actions') do
-    #     click_on 'Reply'
-    #   end
-
-    #   expect(page).to have_content("123123")
-    #   click_on 'Post'
-    # end
-
-
-    # save_and_open_page
   end
 end

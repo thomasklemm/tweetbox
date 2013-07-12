@@ -65,7 +65,6 @@ class TwitterAccount < ActiveRecord::Base
     self.save! && self
   end
 
-
   # Fetches the mentions timeline from twitter
   # while only fetching records that we have not already downloaded
   # Returns the fetched, persisted tweet records
@@ -74,6 +73,7 @@ class TwitterAccount < ActiveRecord::Base
     tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :incoming)
     update_max_mentions_timeline_twitter_id(tweets.map(&:twitter_id).max)
     tweets
+  # If there's an error, just skip execution
   rescue Twitter::Error
     false
   end
@@ -86,6 +86,7 @@ class TwitterAccount < ActiveRecord::Base
     tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :posted_outside)
     update_max_user_timeline_twitter_id(tweets.map(&:twitter_id).max)
     tweets
+  # If there's an error, just skip execution
   rescue Twitter::Error
     false
   end

@@ -10,12 +10,7 @@ class ApplicationController < ActionController::Base
   # if there is only one
   # TODO: Cache projects_count on users
   def after_sign_in_path_for(resource)
-    # TODO: Extract user_projects_path somewhere else
-    if current_user.projects.size == 1
-      project_path(current_user.projects.first)
-    else
-      projects_path
-    end
+    projects_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
