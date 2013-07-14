@@ -1,7 +1,10 @@
+# TwitterAccountImporter
+#
 # Imports that most recent 100 mentions
 # and the entire user timeline
 # to build up initial data for the project
 # and a history of conversations with customers
+#
 class TwitterAccountImporter
   include Sidekiq::Worker
 
@@ -11,6 +14,7 @@ class TwitterAccountImporter
     fetch_mentions_timeline
     fetch_user_timeline
 
+    # Set timestamp
     @twitter_account.touch(:import_finished_at)
   end
 
@@ -63,14 +67,8 @@ class TwitterAccountImporter
   # though random failures should be more of an issue here
   # than rate limiting
   rescue Twitter::Error => e
-    @attempts ||= 0
-    @attempts += 1
-
-    if @attempts > 5
-      raise e
-    else
-      sleep 30
-      retry
-    end
+    @runs ||= 0 and @runs += 1
+    raise e if @runs > 5
+    sleep 30 and retry
   end
 end

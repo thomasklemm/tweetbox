@@ -16,10 +16,6 @@ class TweetDecorator < Draper::Decorator
     "#{ REPLY_INTENT_BASE_URL }#{ twitter_id }"
   end
 
-  def reply?
-    in_reply_to_status_id.present?
-  end
-
   def author_profile
     "<img src='#{ author.profile_image_url }' class='avatar'></img>
     <span class='name'>#{ author.name }</span>

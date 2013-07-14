@@ -4,30 +4,61 @@ class Tweet < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :author
-  # Allows us to fetch previous tweets through the same twitter account
-  belongs_to :twitter_account
+  belongs_to :twitter_account # used to fetch the tweet
 
+  # Events
   has_many :events, dependent: :destroy
 
   # Validations
   validates :project, :author, :twitter_id, :state, presence: true
   validates_uniqueness_of :twitter_id, scope: :project_id
 
-  # States
+  # Scopes
   scope :incoming, -> { where(state: :incoming) }
   scope :resolved, -> { where(state: :resolved) }
   scope :posted,   -> { where(state: :posted) }
 
   scope :by_date, -> { order('created_at desc') }
 
-  # States and transitions
+
+  ##
+  # Tweet creation
+
+  # Returns an array of the persisted tweet records
+  def self.many_from_twitter(statuses, opts={})
+    statuses.map { |status| from_twitter(status, opts) }
+  end
+
+  # Returns the persisted tweet record
+  def self.from_twitter(status, opts={})
+    project = opts.fetch(:project) { raise 'Requires a :project' }
+    # Keep Twitter account if already present when building conversation
+    twitter_account ||= opts.fetch(:twitter_account, nil)
+    state = opts.fetch(:state) { raise 'Requires a :state' }
+
+    tweet = project.tweets.where(twitter_id: status.id).first_or_initialize
+    tweet.author ||= Author.from_twitter(status.user, project: project)
+    tweet.assign_fields_and_state(status, state)
+
+    tweet.save! and tweet
+  rescue ActiveRecord::RecordNotUnique
+    retry
+  end
+
+  def assign_fields_and_state(status, state)
+    assign_fields(status)
+    assign_state(state)
+  end
+
+  ##
+  # States, events and transitions
+  #
+  # Defined states (initial state: :conversation)
   # - :conversation marks tweets that have been pulled in to build up conversations
   # - :incoming marks incoming tweets that require a decision
   # - :resolved marks tweets that have received the required actions
   # - :posted marks tweet posted through Tweetbox, those are quite awesome!
 
-  # FIXME: TWEET STATES
-  # :resolved_on_import and :conversation are low priority states that should only be assigned if no other is assigned, and should not override a higher priority state
   state_machine initial: :conversation do
     state :conversation
     state :incoming
@@ -43,97 +74,86 @@ class Tweet < ActiveRecord::Base
     end
   end
 
-  def resolve_and_record!(user)
-    resolve!
-    create_event(:resolve, user)
-  end
-
-  # Use default account if the one used to retrieve the tweet is no longer present
-  def twitter_account
-    super.presence || project.default_twitter_account
-  end
-
-  # Loads and memoizes the tweet's previous tweets
-  # from the array of cached previous tweet ids
-  def previous_tweets(reload=false)
-    reload ? previous_tweets! : @previous_tweets ||= previous_tweets!
-  end
-
-  # Returns the previous tweet from the database
-  # or instructs the ConversationWorker to fetch it from Twitter
-  def previous_tweet
-    return unless in_reply_to_status_id.present?
-
-    previous_tweet = project.tweets.where(twitter_id: in_reply_to_status_id).first
-
-    # Fetch previous tweet and whole conversation if tweets are not in the database already
-    ConversationWorker.perform_async(self.id) if previous_tweet.blank?
-
-    previous_tweet
-  end
-
-  # Loads and memoizes the tweet's future tweets
-  def future_tweets(reload=false)
-    reload ? future_tweets! : @future_tweets ||= future_tweets!
-  end
-
-  def conversation_with_author
-    author_id = author.twitter_id
-    recipient_id = in_reply_to_user_id
-
-    return unless author_id && recipient_id
-
-    (conversation_tweets(author_id, recipient_id) + conversation_tweets(recipient_id, author_id)).uniq.sort_by(&:created_at)
-  end
-
-  def conversation_tweets(first_user_id, second_user_id)
-    project.tweets.where(in_reply_to_user_id: first_user_id).joins(:author).where(authors: {twitter_id: second_user_id}).to_a
-  end
-
-  def conversation(reload=false)
-    reload ? conversation! : @conversation ||= conversation!
-  end
-
-  def conversation!
-    @conversation = (previous_tweets.to_a + [self] + future_tweets.to_a).flatten.sort_by(&:created_at).uniq
+  def resolve!(user)
+    super and create_event(:resolve, user)
   end
 
   def create_event(kind, user)
     events.create!(kind: kind, user: user)
   end
 
+
+  ##
+  # Reply and previous tweet
+
+  def reply?
+    !!in_reply_to_status_id
+  end
+
+  def previous_tweet_id
+    in_reply_to_status_id
+  end
+
+  def previous_tweet
+    find_or_fetch_previous_tweet if reply?
+  end
+
+
+  ##
+  # Background jobs
+
+  # Fetch conversation from Twitter after tweet creation
+  after_commit :lets_converse_async, on: :create
+
+  def lets_converse_async
+    Conversationalist.perform_async(self.id) if reply?
+  end
+
+  # Fetches the previous tweets from Twitter
+  # and caches their ids in previous_tweet_ids
+  def fetch_previous_tweets_and_cache_ids
+    assign_previous_tweet_ids and self.save!
+  end
+
+
+  ##
+  # Cached conversation
+
+  def cached_conversation
+    @conversation ||= begin
+      tweets = cached_previous_tweets.to_a + [ self ] + cached_future_tweets.to_a
+      tweets.flatten.sort_by(&:created_at).uniq
+    end
+  end
+
+  def cached_previous_tweets
+    @previous_tweets ||= begin
+      tweets = project.tweets.where(twitter_id: previous_tweet_ids)
+      tweets.sort_by(&:created_at)
+    end
+  end
+
+  def cached_future_tweets
+    @future_tweets ||= begin
+      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id)
+      tweets.sort_by(&:created_at)
+    end
+  end
+
+
+  ##
+  # Misc
+
+  # Url parameter
   def to_param
     twitter_id
   end
 
-  # Returns an array of the persisted tweet records
-  def self.many_from_twitter(statuses, opts={})
-    statuses.map { |status| from_twitter(status, opts) }
-  end
 
-  # Returns the persisted tweet record
-  def self.from_twitter(status, opts={})
-    project = opts.fetch(:project) { raise 'Requires a :project' }
-    twitter_account = opts.fetch(:twitter_account, nil)
-    state = opts.fetch(:state) { raise 'Requires a :state' }
+  private
 
-    tweet = project.tweets.where(twitter_id: status.id).first_or_initialize
-    tweet.assign_fields(status)
-    tweet.author ||= Author.from_twitter(status.user, project: project)
-    tweet.assign_state(state)
-
-    tweet.save! and tweet
-  rescue ActiveRecord::RecordNotUnique
-    retry
-  end
-
-  # Assigns a certain workflow state given a symbol or string
-  # Knows about a whitelist of valid states
-  def assign_state(state)
-    state &&= state.try(:to_sym)
-    raise "Unknown state: #{ state }" unless Tweet.available_states.include?(state)
-    state == :conversation ? self.state ||= state : self.state = state
-  end
+  ##
+  # Field assigments
 
   # Assigns the tweet's fields from a Twitter status object
   # Returns the tweet record without saving it and persisting
@@ -150,23 +170,76 @@ class Tweet < ActiveRecord::Base
     self
   end
 
-  private
+  # Assigns a certain workflow state given a symbol or string
+  # Knows about a whitelist of valid states
+  def assign_state(state)
+    state &&= state.try(:to_sym)
+    raise "Unknown state: #{ state }" unless Tweet.available_states.include?(state)
 
-  # Loads the previous tweets from the database
-  def previous_tweets!
-    @previous_tweets = self.class.where(twitter_id: previous_tweet_ids).sort_by(&:created_at) if previous_tweet_ids.present?
+    case state
+    when :conversation then self.state ||= state # do not override existing states with :conversation state
+    else self.state = state
+    end
   end
 
-  # Loads the future tweets from the database
-  def future_tweets!
-    @future_tweets = self.class.where('previous_tweet_ids && ARRAY[?]', self.twitter_id).sort_by(&:created_at)
+  ##
+  # Previous tweet
+
+  def find_or_fetch_previous_tweet
+    find_or_fetch_tweet(previous_tweet_id) if reply?
   end
 
-  # Callbacks
-  after_commit :build_conversation, on: :create
+  # Returns a tweet record
+  def find_or_fetch_tweet(twitter_id)
+    find_tweet(twitter_id) || fetch_tweet(twitter_id)
+  end
 
-  # Fetch previous tweets and cache previous tweet ids in the background
-  def build_conversation
-    ConversationWorker.perform_async(id)
+  # Returns the tweet record from the database if present
+  def find_tweet(twitter_id)
+    project.tweets.where(twitter_id: twitter_id).first
+  end
+
+  # Fetches the given status from Twitter
+  # Returns the persisted tweet record
+  def fetch_tweet(twitter_id)
+    status = TwitterAccount.random.client.status(twitter_id)
+
+    # Avoid referencing random twitter account
+    tweet = Tweet.from_twitter(status, project: project, state: :conversation)
+
+  rescue Twitter::Error => e
+    @runs ||= 0 and @runs += 1
+
+    # Statuses may be deleted voluntarily by the author
+    if e.is_a? Twitter::Error::NotFound
+      return nil if @runs > 2
+    else
+      raise e if @runs > 3
+    end
+
+    # Retry using a different random Twitter account
+    sleep 1 and retry
+  end
+
+
+  ##
+  # Previous tweets
+
+  def assign_previous_tweet_ids
+    self.previous_tweet_ids = fetch_previous_tweets.map(&:twitter_id)
+  end
+
+  def fetch_previous_tweets
+    return unless reply?
+
+    tweet = self
+    tweets = []
+
+    while tweet.previous_tweet
+      tweets << tweet.previous_tweet
+      tweet = tweet.previous_tweet
+    end
+
+    tweets.compact.sort_by(&:created_at)
   end
 end
