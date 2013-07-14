@@ -83,7 +83,7 @@ class TwitterAccount < ActiveRecord::Base
   # Returns the persisted tweet records
   def fetch_user_timeline
     statuses = client.user_timeline(user_timeline_options)
-    tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :posted_outside)
+    tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :posted)
     update_max_user_timeline_twitter_id(tweets.map(&:twitter_id).max)
     tweets
   # If there's an error, just skip execution

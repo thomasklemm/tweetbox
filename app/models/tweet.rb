@@ -25,12 +25,14 @@ class Tweet < ActiveRecord::Base
   # - :incoming marks incoming tweets that require a decision
   # - :resolved marks tweets that have received the required actions
   # - :posted marks tweet posted through Tweetbox, those are quite awesome!
+
+  # FIXME: TWEET STATES
+  # :resolved_on_import and :conversation are low priority states that should only be assigned if no other is assigned, and should not override a higher priority state
   state_machine initial: :conversation do
     state :conversation
     state :incoming
     state :resolved
     state :posted
-    state :posted_outside
 
     event :activate do
       transitions to: :incoming, from: [:conversation, :incoming, :resolved]

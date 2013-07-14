@@ -30,7 +30,7 @@ describe Tweet do
     let(:posted_tweet) { Fabricate.build(:tweet, state: :posted) }
 
     it "recognizes :conversation, :incoming, :resolved and :posted states" do
-      expect(Tweet.available_states).to match_array([:conversation, :incoming, :resolved, :posted, :posted_outside])
+      expect(Tweet.available_states).to match_array([:conversation, :incoming, :resolved, :posted])
     end
 
     it "is initialized in :conversation state unless otherwise instructed" do
