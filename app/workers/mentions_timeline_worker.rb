@@ -1,8 +1,8 @@
 class MentionsTimelineWorker
   include Sidekiq::Worker
 
-  def perform(twitter_account_id, scheduled_for)
-    return if expired?(scheduled_for)
+  def perform(twitter_account_id, perform_at)
+    return if expired?(perform_at)
 
     @twitter_account = TwitterAccount.find(twitter_account_id)
     @twitter_account.fetch_mentions_timeline
@@ -14,8 +14,7 @@ class MentionsTimelineWorker
 
   private
 
-  # Expire jobs 90 seconds after their scheduled_for timestamp
-  def expired?(scheduled_for)
-    scheduled_for < 90.seconds.ago
+  def expired?(perform_at)
+    perform_at < 90.seconds.ago
   end
 end

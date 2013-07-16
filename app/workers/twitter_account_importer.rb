@@ -11,11 +11,14 @@ class TwitterAccountImporter
   def perform(twitter_account_id)
     @twitter_account = TwitterAccount.find(twitter_account_id)
 
+    # Schedule queries for the first twenty minutes after connecting a Twitter account
+    Scheduler.schedule_initial_timeline_queries(@twitter_account)
+
     fetch_mentions_timeline
     fetch_user_timeline
 
     # Set timestamp
-    @twitter_account.touch(:import_finished_at)
+    @twitter_account.touch(:imported_at)
   end
 
   private
@@ -68,7 +71,8 @@ class TwitterAccountImporter
   # than rate limiting
   rescue Twitter::Error => e
     @runs ||= 0 and @runs += 1
-    raise e if @runs > 5
+    raise e if @runs > 3
     sleep 30 and retry
   end
+
 end
