@@ -1,17 +1,17 @@
 / application/_navigation
-div class='navbar navbar-static-top'
+div class='navbar navbar-fixed-top'
   div class='navbar-inner'
     div class='container'
 
       / .btn-navbar is used as the toggle for collapsed navbar content
-      a class='btn btn-navbar' data-toggle='collapse' data-target='.nav-collapse'
-        .icon-bar
-        .icon-bar
-        .icon-bar
+      button type="button" class='btn btn-navbar' data-toggle='collapse' data-target='.nav-collapse'
+        span class="icon-bar"
+        span class="icon-bar"
+        span class="icon-bar"
 
       / tweetbox brand
       ul class='nav'
-        = active_link_to (image_tag 'Tweetbox-Logo-und-Schriftzug.png', style: 'height: 24px; margin: -6px 0;'), root_path, exact: true
+        = active_link_to (image_tag 'logo_plus_tagline.png', style: 'height: 24px; margin: -6px 0;'), root_path, exact: true
 
       / everything below is hidden when width is less than $navbarCollapseWidth
       div class='nav-collapse collapse'
