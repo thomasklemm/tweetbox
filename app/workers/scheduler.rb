@@ -24,16 +24,24 @@ class Scheduler
         # the Twitter account has been connected.
         (start_time.to_i..end_time.to_i).step(60) do |t|
           time = Time.at(t)
+          MentionsTimelineWorker.perform_at(time, twitter_account.id, expires_at(time))
+        end
 
-          MentionsTimelineWorker.perform_at(time, twitter_account.id)
-          UserTimelineWorker.perform_at(time, twitter_account.id)
+        (start_time.to_i..end_time.to_i).step(30) do |t|
+          time = Time.at(t)
+          UserTimelineWorker.perform_at(time, twitter_account.id, expires_at(time))
         end
 
       # Standard operation
       else
-        (0..10).each do |n|
-          MentionsTimelineWorker.perform_in(n.minutes, twitter_account.id)
-          UserTimelineWorker.perform_in(n.minutes, twitter_account.id)
+        (0..9).each do |n|
+          time = n.minutes.from_now
+          MentionsTimelineWorker.perform_at(time, twitter_account.id, expires_at(time))
+        end
+
+        (0..570).step(30) do |n|
+          time = n.seconds.from_now
+          UserTimelineWorker.perform_at(time, twitter_account.id, expires_at(time))
         end
       end
     end
@@ -41,7 +49,16 @@ class Scheduler
 
   def schedule_search_queries
     Search.find_each do |search|
-      (0..10).each { |n| SearchWorker.perform_in(n.minutes, search.id) }
+      (0..9).each do |n|
+        time = n.minutes.from_now
+        SearchWorker.perform_at(time, search.id, expires_at(time))
+      end
     end
+  end
+
+  private
+
+  def expires_at(time)
+    time + 90.seconds
   end
 end

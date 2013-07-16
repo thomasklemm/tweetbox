@@ -135,7 +135,7 @@ class Status
   end
 
   def create_posted_tweet(status)
-    Tweet.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)
+    TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)
   end
 
   def persist_full_text_on_posted_tweet
@@ -150,7 +150,7 @@ class Status
 
   # Build conversation history at this very moment from the database
   def build_conversation_history_on_posted_tweet
-    ConversationWorker.new.perform(posted_tweet.id)
+    Conversationalist.new.perform(posted_tweet.id)
   end
 
   # Create :post and :post_reply events

@@ -1,0 +1,450 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355671909280653315.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="83a1a13c67461dd730331988711316d6",
+        oauth_signature="6p1wc0vvM8QOTcmFBE4l7rzUVXs%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373873596", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1054'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 15 Jul 2013 07:33:17 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 15 Jul 2013 07:33:17 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137387359706941874; Domain=.twitter.com; Path=/; Expires=Wed,
+        15-Jul-2015 07:33:17 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '178'
+      X-Rate-Limit-Reset:
+      - '1373874496'
+      X-Transaction:
+      - 1189b05f977e7911
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Jul 12 12:56:05 +0000 2013","id":355671909280653315,"id_str":"355671909280653315","text":"@steveklabnik
+        @erniemiller Aw, thanks for your support ;)","source":"\u003ca href=\"http:\/\/twitter.com\/#!\/download\/ipad\"
+        rel=\"nofollow\"\u003eTwitter for iPad\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":355671803944898560,"in_reply_to_status_id_str":"355671803944898560","in_reply_to_user_id":22386062,"in_reply_to_user_id_str":"22386062","in_reply_to_screen_name":"steveklabnik","user":{"id":13235612,"id_str":"13235612","name":"Andy
+        Lindeman","screen_name":"alindeman","location":"Atlanta, GA","description":"Software
+        generalist focused on web and mobile. I like open source and work primarily
+        on RSpec.","url":"http:\/\/t.co\/9GoG8LrAc1","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/9GoG8LrAc1","expanded_url":"http:\/\/www.upgradingtorails4.com\/","display_url":"upgradingtorails4.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":1546,"friends_count":1143,"listed_count":88,"created_at":"Fri
+        Feb 08 05:13:54 +0000 2008","favourites_count":627,"utc_offset":-18000,"time_zone":"Eastern
+        Time (US & Canada)","geo_enabled":false,"verified":false,"statuses_count":2554,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"022330","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/1186941823\/legome_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/1186941823\/legome_normal.png","profile_link_color":"0084B4","profile_sidebar_border_color":"A8C7F7","profile_sidebar_fill_color":"C0DFEC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"steveklabnik","name":"Steve
+        Klabnik","id":22386062,"id_str":"22386062","indices":[0,13]},{"screen_name":"erniemiller","name":"Ernie
+        Miller","id":16143891,"id_str":"16143891","indices":[14,26]}]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Mon, 15 Jul 2013 07:33:17 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355671803944898560.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="231b6fa27aa33a218e665c7e17c940b2",
+        oauth_signature="xNnQcc7fGF3DwHwTf2sy8dQhW4M%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373873597", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1123'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 15 Jul 2013 07:33:17 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 15 Jul 2013 07:33:17 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137387359786366158; Domain=.twitter.com; Path=/; Expires=Wed,
+        15-Jul-2015 07:33:17 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '177'
+      X-Rate-Limit-Reset:
+      - '1373874496'
+      X-Transaction:
+      - ac602f61abf9b0d8
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Jul 12 12:55:40 +0000 2013","id":355671803944898560,"id_str":"355671803944898560","text":"@alindeman
+        @erniemiller I''m sure you''ll get it soon","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\"
+        rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":355671255564824577,"in_reply_to_status_id_str":"355671255564824577","in_reply_to_user_id":13235612,"in_reply_to_user_id_str":"13235612","in_reply_to_screen_name":"alindeman","user":{"id":22386062,"id_str":"22386062","name":"Steve
+        Klabnik","screen_name":"steveklabnik","location":"Santa Monica","description":"The
+        nomads are there, wherever there forms a smooth space ... The nomads inhabit
+        these places; they remain in them, and they themselves make them grow.","url":"http:\/\/t.co\/IaxYJQlPR0","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/IaxYJQlPR0","expanded_url":"http:\/\/www.steveklabnik.com","display_url":"steveklabnik.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":9692,"friends_count":657,"listed_count":678,"created_at":"Sun
+        Mar 01 18:00:55 +0000 2009","favourites_count":5244,"utc_offset":-21600,"time_zone":"Central
+        Time (US & Canada)","geo_enabled":true,"verified":false,"statuses_count":68406,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"1A1B1F","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme9\/bg.gif","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme9\/bg.gif","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/3618534654\/13a7a0ab0ac4a621b26162282cafce32_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/3618534654\/13a7a0ab0ac4a621b26162282cafce32_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/22386062\/1355689766","profile_link_color":"2FC2EF","profile_sidebar_border_color":"181A1E","profile_sidebar_fill_color":"252429","profile_text_color":"666666","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"alindeman","name":"Andy
+        Lindeman","id":13235612,"id_str":"13235612","indices":[0,10]},{"screen_name":"erniemiller","name":"Ernie
+        Miller","id":16143891,"id_str":"16143891","indices":[11,23]}]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Mon, 15 Jul 2013 07:33:17 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355671255564824577.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="2e686345ca80adb1d2c39967ef8993c3",
+        oauth_signature="7z6SmdUKSpJ%2Fhe4V59toX1VIYT8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373873597", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1043'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 15 Jul 2013 07:33:18 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 15 Jul 2013 07:33:18 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137387359864061180; Domain=.twitter.com; Path=/; Expires=Wed,
+        15-Jul-2015 07:33:18 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '176'
+      X-Rate-Limit-Reset:
+      - '1373874496'
+      X-Transaction:
+      - 38307e7f4f7d318d
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Jul 12 12:53:30 +0000 2013","id":355671255564824577,"id_str":"355671255564824577","text":"@erniemiller
+        @steveklabnik I feel left out :((((","source":"\u003ca href=\"http:\/\/twitter.com\/#!\/download\/ipad\"
+        rel=\"nofollow\"\u003eTwitter for iPad\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":355670723307646976,"in_reply_to_status_id_str":"355670723307646976","in_reply_to_user_id":16143891,"in_reply_to_user_id_str":"16143891","in_reply_to_screen_name":"erniemiller","user":{"id":13235612,"id_str":"13235612","name":"Andy
+        Lindeman","screen_name":"alindeman","location":"Atlanta, GA","description":"Software
+        generalist focused on web and mobile. I like open source and work primarily
+        on RSpec.","url":"http:\/\/t.co\/9GoG8LrAc1","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/9GoG8LrAc1","expanded_url":"http:\/\/www.upgradingtorails4.com\/","display_url":"upgradingtorails4.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":1546,"friends_count":1143,"listed_count":88,"created_at":"Fri
+        Feb 08 05:13:54 +0000 2008","favourites_count":627,"utc_offset":-18000,"time_zone":"Eastern
+        Time (US & Canada)","geo_enabled":false,"verified":false,"statuses_count":2554,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"022330","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/1186941823\/legome_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/1186941823\/legome_normal.png","profile_link_color":"0084B4","profile_sidebar_border_color":"A8C7F7","profile_sidebar_fill_color":"C0DFEC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"erniemiller","name":"Ernie
+        Miller","id":16143891,"id_str":"16143891","indices":[0,12]},{"screen_name":"steveklabnik","name":"Steve
+        Klabnik","id":22386062,"id_str":"22386062","indices":[13,26]}]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Mon, 15 Jul 2013 07:33:18 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355670723307646976.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="3c8b0a29e03d6f165bec7412f808e25b",
+        oauth_signature="uZBro6mb5PzwVeMGD5QjIbY9bK4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373873598", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1041'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 15 Jul 2013 07:33:19 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 15 Jul 2013 07:33:19 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137387359967354911; Domain=.twitter.com; Path=/; Expires=Wed,
+        15-Jul-2015 07:33:19 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '175'
+      X-Rate-Limit-Reset:
+      - '1373874496'
+      X-Transaction:
+      - deedf58e9ffbe521
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Jul 12 12:51:23 +0000 2013","id":355670723307646976,"id_str":"355670723307646976","text":"@steveklabnik
+        Hahaha","source":"\u003ca href=\"http:\/\/itunes.apple.com\/us\/app\/twitter\/id409789998?mt=12\"
+        rel=\"nofollow\"\u003eTwitter for Mac\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":355670656924389376,"in_reply_to_status_id_str":"355670656924389376","in_reply_to_user_id":22386062,"in_reply_to_user_id_str":"22386062","in_reply_to_screen_name":"steveklabnik","user":{"id":16143891,"id_str":"16143891","name":"Ernie
+        Miller","screen_name":"erniemiller","location":"Louisville, KY","description":"Christian
+        husband and stepdad. Ruby hacker, speaker, and all-around nice guy.","url":"http:\/\/t.co\/SjlS86zKpE","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/SjlS86zKpE","expanded_url":"http:\/\/erniemiller.org","display_url":"erniemiller.org","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":1433,"friends_count":196,"listed_count":97,"created_at":"Fri
+        Sep 05 13:59:44 +0000 2008","favourites_count":158,"utc_offset":-18000,"time_zone":"Eastern
+        Time (US & Canada)","geo_enabled":true,"verified":false,"statuses_count":8299,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"022330","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/3194258599\/6c1f406996fe8f4caa0290063b59e3ef_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/3194258599\/6c1f406996fe8f4caa0290063b59e3ef_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/16143891\/1354027666","profile_link_color":"0084B4","profile_sidebar_border_color":"A8C7F7","profile_sidebar_fill_color":"C0DFEC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"steveklabnik","name":"Steve
+        Klabnik","id":22386062,"id_str":"22386062","indices":[0,13]}]},"favorited":false,"retweeted":false,"lang":"tl"}'
+    http_version: 
+  recorded_at: Mon, 15 Jul 2013 07:33:19 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355670656924389376.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="37535c905c4c34d1de73e85506adad1c",
+        oauth_signature="eno4EwfojEAAmxb1e%2Bz0iC50Ny4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373873599", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1109'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 15 Jul 2013 07:33:20 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 15 Jul 2013 07:33:20 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137387360044022732; Domain=.twitter.com; Path=/; Expires=Wed,
+        15-Jul-2015 07:33:20 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '174'
+      X-Rate-Limit-Reset:
+      - '1373874496'
+      X-Transaction:
+      - 1fc55d313e59264a
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Jul 12 12:51:07 +0000 2013","id":355670656924389376,"id_str":"355670656924389376","text":"@erniemiller
+        sent it to me twice because I didn''t respond in a day. Send to spam now","source":"\u003ca
+        href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter
+        for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":355670264572411904,"in_reply_to_status_id_str":"355670264572411904","in_reply_to_user_id":16143891,"in_reply_to_user_id_str":"16143891","in_reply_to_screen_name":"erniemiller","user":{"id":22386062,"id_str":"22386062","name":"Steve
+        Klabnik","screen_name":"steveklabnik","location":"Santa Monica","description":"The
+        nomads are there, wherever there forms a smooth space ... The nomads inhabit
+        these places; they remain in them, and they themselves make them grow.","url":"http:\/\/t.co\/IaxYJQlPR0","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/IaxYJQlPR0","expanded_url":"http:\/\/www.steveklabnik.com","display_url":"steveklabnik.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":9692,"friends_count":657,"listed_count":678,"created_at":"Sun
+        Mar 01 18:00:55 +0000 2009","favourites_count":5244,"utc_offset":-21600,"time_zone":"Central
+        Time (US & Canada)","geo_enabled":true,"verified":false,"statuses_count":68406,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"1A1B1F","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme9\/bg.gif","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme9\/bg.gif","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/3618534654\/13a7a0ab0ac4a621b26162282cafce32_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/3618534654\/13a7a0ab0ac4a621b26162282cafce32_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/22386062\/1355689766","profile_link_color":"2FC2EF","profile_sidebar_border_color":"181A1E","profile_sidebar_fill_color":"252429","profile_text_color":"666666","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"erniemiller","name":"Ernie
+        Miller","id":16143891,"id_str":"16143891","indices":[0,12]}]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Mon, 15 Jul 2013 07:33:20 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355670264572411904.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="e5e409bacace493e88bfd49651758b51",
+        oauth_signature="6iE0uMp71ZyAG856rOPsfNBn8NQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373873600", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1093'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 15 Jul 2013 07:33:21 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 15 Jul 2013 07:33:21 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137387360127301810; Domain=.twitter.com; Path=/; Expires=Wed,
+        15-Jul-2015 07:33:21 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '173'
+      X-Rate-Limit-Reset:
+      - '1373874496'
+      X-Transaction:
+      - d304e6b2350abf53
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Jul 12 12:49:33 +0000 2013","id":355670264572411904,"id_str":"355670264572411904","text":"OH:
+        \"I found you on GitHub and am simply amazed at how your mind thinks. [...]
+        We are going to disrupt the **** space with software.\" #nope","source":"\u003ca
+        href=\"http:\/\/itunes.apple.com\/us\/app\/twitter\/id409789998?mt=12\" rel=\"nofollow\"\u003eTwitter
+        for Mac\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":16143891,"id_str":"16143891","name":"Ernie
+        Miller","screen_name":"erniemiller","location":"Louisville, KY","description":"Christian
+        husband and stepdad. Ruby hacker, speaker, and all-around nice guy.","url":"http:\/\/t.co\/SjlS86zKpE","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/SjlS86zKpE","expanded_url":"http:\/\/erniemiller.org","display_url":"erniemiller.org","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":1433,"friends_count":196,"listed_count":97,"created_at":"Fri
+        Sep 05 13:59:44 +0000 2008","favourites_count":158,"utc_offset":-18000,"time_zone":"Eastern
+        Time (US & Canada)","geo_enabled":true,"verified":false,"statuses_count":8299,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"022330","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/3194258599\/6c1f406996fe8f4caa0290063b59e3ef_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/3194258599\/6c1f406996fe8f4caa0290063b59e3ef_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/16143891\/1354027666","profile_link_color":"0084B4","profile_sidebar_border_color":"A8C7F7","profile_sidebar_fill_color":"C0DFEC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":2,"favorite_count":0,"entities":{"hashtags":[{"text":"nope","indices":[134,139]}],"symbols":[],"urls":[],"user_mentions":[]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Mon, 15 Jul 2013 07:33:21 GMT
+recorded_with: VCR 2.5.0

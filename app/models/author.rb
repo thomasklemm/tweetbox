@@ -12,16 +12,8 @@ class Author < ActiveRecord::Base
     "@#{ screen_name }"
   end
 
-  def self.from_twitter(user, opts={})
-    project = opts.fetch(:project) { raise 'Requires a :project' }
-
-    author = project.authors.where(twitter_id: user.id).first_or_initialize
-    author.assign_fields(user)
-
-    author.save! and author
-  rescue ActiveRecord::RecordNotUnique
-    retry
-  end
+  ##
+  # Field assignments
 
   def assign_fields(user)
     self.screen_name = user.screen_name

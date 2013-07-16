@@ -44,6 +44,10 @@ class TwitterAccount < ActiveRecord::Base
     )
   end
 
+  def self.random
+    order("RANDOM()").first
+  end
+
   # Create or update existing Twitter account
   # Returns twitter account record
   def self.from_omniauth(project, auth, access_scope)
@@ -70,7 +74,7 @@ class TwitterAccount < ActiveRecord::Base
   # Returns the persisted tweet records
   def fetch_mentions_timeline
     statuses = client.mentions_timeline(mentions_timeline_options)
-    tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :incoming)
+    tweets = TweetMaker.many_from_twitter(statuses, project: project, twitter_account: self, state: :incoming)
     update_max_mentions_timeline_twitter_id(tweets.map(&:twitter_id).max)
     tweets
   # If there's an error, just skip execution
@@ -83,7 +87,7 @@ class TwitterAccount < ActiveRecord::Base
   # Returns the persisted tweet records
   def fetch_user_timeline
     statuses = client.user_timeline(user_timeline_options)
-    tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: self, state: :posted)
+    tweets = TweetMaker.many_from_twitter(statuses, project: project, twitter_account: self, state: :posted)
     update_max_user_timeline_twitter_id(tweets.map(&:twitter_id).max)
     tweets
   # If there's an error, just skip execution

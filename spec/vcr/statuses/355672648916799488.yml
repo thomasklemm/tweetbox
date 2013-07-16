@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355672648916799488.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="ea947a3c8a1513ad0452237f772d1e63",
+        oauth_signature="Zg%2BMG%2BqD%2BQ%2F1cxFAH37VK%2FxCDLg%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1373873595", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1148'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 15 Jul 2013 07:33:16 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 15 Jul 2013 07:33:16 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137387359622902753; Domain=.twitter.com; Path=/; Expires=Wed,
+        15-Jul-2015 07:33:16 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1373874496'
+      X-Transaction:
+      - 434cebfa546ef23a
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Jul 12 12:59:02 +0000 2013","id":355672648916799488,"id_str":"355672648916799488","text":"@alindeman
+        @steveklabnik The thing I find most amusing is that guys like this don''t
+        realize that everyone worth hiring talks to one another.","source":"\u003ca
+        href=\"http:\/\/itunes.apple.com\/us\/app\/twitter\/id409789998?mt=12\" rel=\"nofollow\"\u003eTwitter
+        for Mac\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":355671909280653315,"in_reply_to_status_id_str":"355671909280653315","in_reply_to_user_id":13235612,"in_reply_to_user_id_str":"13235612","in_reply_to_screen_name":"alindeman","user":{"id":16143891,"id_str":"16143891","name":"Ernie
+        Miller","screen_name":"erniemiller","location":"Louisville, KY","description":"Christian
+        husband and stepdad. Ruby hacker, speaker, and all-around nice guy.","url":"http:\/\/t.co\/SjlS86zKpE","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/SjlS86zKpE","expanded_url":"http:\/\/erniemiller.org","display_url":"erniemiller.org","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":1433,"friends_count":196,"listed_count":97,"created_at":"Fri
+        Sep 05 13:59:44 +0000 2008","favourites_count":158,"utc_offset":-18000,"time_zone":"Eastern
+        Time (US & Canada)","geo_enabled":true,"verified":false,"statuses_count":8299,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"022330","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme15\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/3194258599\/6c1f406996fe8f4caa0290063b59e3ef_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/3194258599\/6c1f406996fe8f4caa0290063b59e3ef_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/16143891\/1354027666","profile_link_color":"0084B4","profile_sidebar_border_color":"A8C7F7","profile_sidebar_fill_color":"C0DFEC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":1,"favorite_count":2,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"alindeman","name":"Andy
+        Lindeman","id":13235612,"id_str":"13235612","indices":[0,10]},{"screen_name":"steveklabnik","name":"Steve
+        Klabnik","id":22386062,"id_str":"22386062","indices":[11,24]}]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Mon, 15 Jul 2013 07:33:16 GMT
+recorded_with: VCR 2.5.0

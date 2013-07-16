@@ -26,7 +26,7 @@ class TwitterAccountImporter
   # to work with in Tweetbox
   def fetch_mentions_timeline
     statuses = @twitter_account.client.mentions_timeline(count: 100)
-    Tweet.many_from_twitter(statuses,
+    TweetMaker.many_from_twitter(statuses,
       project: @twitter_account.project,
       twitter_account: @twitter_account,
       state: :incoming)
@@ -42,7 +42,7 @@ class TwitterAccountImporter
     options[:max_id] = max_id if max_id.present?
 
     statuses = @twitter_account.client.user_timeline(options)
-    Tweet.many_from_twitter(statuses,
+    TweetMaker.many_from_twitter(statuses,
       project: @twitter_account.project,
       twitter_account: @twitter_account,
       state: :posted)

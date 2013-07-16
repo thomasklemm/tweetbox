@@ -9,6 +9,6 @@ class Conversationalist
 
   def perform(tweet_id)
     @tweet = Tweet.find(tweet_id)
-    @tweet.fetch_previous_tweets_and_cache_ids
+    Conversation.new(@tweet).fetch_and_cache_conversation
   end
 end

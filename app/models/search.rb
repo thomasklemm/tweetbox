@@ -20,7 +20,7 @@ class Search < ActiveRecord::Base
   def fetch_search_results
     response = twitter_account.client.search(query, search_options)
     statuses = response.statuses
-    tweets = Tweet.many_from_twitter(statuses, project: project, twitter_account: twitter_account, state: :incoming)
+    tweets = TweetMaker.many_from_twitter(statuses, project: project, twitter_account: twitter_account, state: :incoming)
     update_max_twitter_id(tweets.map(&:twitter_id).max)
     tweets
   # If there's an error, just skip execution
