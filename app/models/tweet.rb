@@ -33,11 +33,47 @@ class Tweet < ActiveRecord::Base
   end
 
   def previous_tweet
-    Conversation.new(self).previous_tweet if reply?
+    return unless reply?
+    @previous_tweet ||= Conversation.new(self).previous_tweet
+  end
+
+  # Returns an array of tweet records
+  def previous_tweets
+    return unless reply?
+    @previous_tweets ||= if previous_tweet_ids.present?
+      cached_previous_tweets
+    else
+      previous_tweets!
+    end
   end
 
   def previous_tweets!
-    Conversation.new(self).previous_tweets if reply?
+    @previous_tweets = Conversation.new(self).previous_tweets if reply?
+  end
+
+
+  ##
+  # Cached conversation
+
+  def conversation
+    @conversation ||= begin
+      tweets = cached_previous_tweets.to_a + [ self ] + cached_future_tweets.to_a
+      tweets.flatten.sort_by(&:created_at).uniq
+    end
+  end
+
+  def cached_previous_tweets
+    @previous_tweets ||= begin
+      tweets = project.tweets.where(twitter_id: previous_tweet_ids)
+      tweets.sort_by(&:created_at)
+    end
+  end
+
+  def cached_future_tweets
+    @future_tweets ||= begin
+      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id)
+      tweets.sort_by(&:created_at)
+    end
   end
 
 
@@ -82,31 +118,6 @@ class Tweet < ActiveRecord::Base
 
   def fetch_conversation_async
     Conversationalist.perform_async(self.id) if reply?
-  end
-
-
-  ##
-  # Cached conversation
-
-  def conversation
-    @conversation ||= begin
-      tweets = cached_previous_tweets.to_a + [ self ] + cached_future_tweets.to_a
-      tweets.flatten.sort_by(&:created_at).uniq
-    end
-  end
-
-  def cached_previous_tweets
-    @previous_tweets ||= begin
-      tweets = project.tweets.where(twitter_id: previous_tweet_ids)
-      tweets.sort_by(&:created_at)
-    end
-  end
-
-  def cached_future_tweets
-    @future_tweets ||= begin
-      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id)
-      tweets.sort_by(&:created_at)
-    end
   end
 
 

@@ -1,11 +1,11 @@
-# TwitterAccountImporter
+# TwitterAccountImportWorker
 #
 # Imports that most recent 100 mentions
 # and the entire user timeline
 # to build up initial data for the project
 # and a history of conversations with customers
 #
-class TwitterAccountImporter
+class TwitterAccountImportWorker
   include Sidekiq::Worker
 
   def perform(twitter_account_id)

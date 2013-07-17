@@ -12,8 +12,8 @@ class Scheduler
   # Schedules timeline queries for the initial twenty minutes
   # after creation of a given Twitter account
   def self.schedule_initial_timeline_queries(twitter_account)
-    schedule_initial_mentions_timeline_queries
-    schedule_initial_user_timeline_queries
+    schedule_initial_mentions_timeline_queries(twitter_account)
+    schedule_initial_user_timeline_queries(twitter_account)
   end
 
   private
@@ -81,16 +81,16 @@ class Scheduler
   def self.schedule_initial_mentions_timeline_queries(twitter_account)
     [2, 4, 6, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].each do |n|
       perform_at = twitter_account.created_at + n.minutes
-      MentionsTimelineWorker.perform_at(perform_at, twitter_account.id, perform_at) if perform_at > Time.current
+      MentionsTimelineWorker.perform_at(perform_at, twitter_account.id, perform_at)
     end
   end
 
   # Schedule user timeline queries for the first twenty minutes
   # after a Twitter account is created from Omniauth
   def self.schedule_initial_user_timeline_queries(twitter_account)
-    (0..1200).step(30) do |n|
+    (30..1200).step(30) do |n|
       perform_at = twitter_account.created_at + n.seconds
-      UserTimelineWorker.perform_at(perform_at, twitter_account.id, perform_at) if perform_at > Time.current
+      UserTimelineWorker.perform_at(perform_at, twitter_account.id, perform_at)
     end
   end
 

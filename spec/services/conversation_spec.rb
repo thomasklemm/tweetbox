@@ -1,15 +1,13 @@
 describe Conversation do
   include_context 'signup and twitter account'
 
+  # Status ids
   # no_reply: 355002886155018242
   # single_reply: 357166507249250304
   # multiple_replies: 352253750477467648
 
-  let(:reply_status)    { fetch_status(352253750477467648) }
-  let(:no_reply_status) { fetch_status(355002886155018242) }
-
-  let(:reply_tweet)     { make_tweet(reply_status) }
-  let(:no_reply_tweet)  { make_tweet(no_reply_status) }
+  let(:reply_tweet)     { fetch_and_make_tweet(352253750477467648) }
+  let(:no_reply_tweet)  { fetch_and_make_tweet(355002886155018242) }
 
   let(:reply)    { Conversation.new(reply_tweet) }
   let(:no_reply) { Conversation.new(no_reply_tweet) }
@@ -17,14 +15,14 @@ describe Conversation do
   describe "#previous_tweet" do
     context "tweet is a reply" do
       let(:previous_tweet) do
-        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweet") { reply_tweet.previous_tweet }
+        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweet") { reply.previous_tweet }
       end
 
       it "find the previous tweet in the database if present" do
-        # Fetch tweet from Twitter
         previous_tweet
 
-        # Does not trigger another HTTP request
+        # Fetches tweet from the database
+        # VCR would raise an error if an HTTP request would be performed
         expect(reply_tweet.previous_tweet).to eq(previous_tweet)
       end
 

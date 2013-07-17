@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Conversationalist do
+describe ConversationWorker do
   include_context 'signup and twitter account'
   it { should be_a Sidekiq::Worker }
 
@@ -9,12 +9,12 @@ describe Conversationalist do
   describe "#perform" do
     before do
       statuses_cassette('357166507249250304_previous_tweets') do
-        Conversationalist.new.perform(tweet.id)
+        ConversationWorker.new.perform(tweet.id)
       end
     end
 
     it "fetches the conversation for the given tweet" do
-      expect(tweet.previous_tweets!).to have(1).previous_tweets
+      expect(tweet).to have(1).previous_tweets
 
       expect(tweet.previous_tweet).to be_a Tweet
       expect(tweet.previous_tweet).to be_persisted

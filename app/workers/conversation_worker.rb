@@ -1,10 +1,10 @@
-# Conversationalist
+# ConversationWorker
 #
 # Finds or fetches the entire conversation of a tweet from Twitter
 # Saves all previous tweets in the database
 # Caches an array of previous tweet ids on the tweet
 #
-class Conversationalist
+class ConversationWorker
   include Sidekiq::Worker
 
   def perform(tweet_id)
