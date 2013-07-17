@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe SearchWorker do
   include_context 'signup and twitter account'
+
+  # Sidekiq
+  it { should be_a Sidekiq::Worker }
   include_examples 'sidekiq options'
 
   let(:search) { Fabricate(:search, query: 'Rainmakers :)', twitter_account: twitter_account) }

@@ -36,6 +36,10 @@ class Tweet < ActiveRecord::Base
     Conversation.new(self).previous_tweet if reply?
   end
 
+  def previous_tweets!
+    Conversation.new(self).previous_tweets if reply?
+  end
+
 
   ##
   # States, events and transitions

@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/357166507249250304.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="7eb45df3f90621fef5e5c649fc0aca35",
+        oauth_signature="mtVz%2FeCym1mSV7or3ZEbYPrUDzw%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1374059558", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1053'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 17 Jul 2013 11:12:39 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Wed, 17 Jul 2013 11:12:39 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137405955940794769; Domain=.twitter.com; Path=/; Expires=Fri,
+        17-Jul-2015 11:12:39 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1374060459'
+      X-Transaction:
+      - 87d29dd61a5b4568
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Tue Jul 16 15:55:05 +0000 2013","id":357166507249250304,"id_str":"357166507249250304","text":"@rjs
+        I''d love to attend a workshop at 37s with you as the teacher.","source":"web","truncated":false,"in_reply_to_status_id":356990171398414336,"in_reply_to_status_id_str":"356990171398414336","in_reply_to_user_id":10079052,"in_reply_to_user_id_str":"10079052","in_reply_to_screen_name":"rjs","user":{"id":24715391,"id_str":"24715391","name":"Bryan
+        Sebastian","screen_name":"BJSebastian","location":"South Elgin, IL ","description":"I
+        love to build things\u2026 usually with pixels and code, but sometimes with
+        Legos, wood or other stuff. My wife and kids think I''m quirky\u2026 they
+        are probably right!","url":"http:\/\/t.co\/ZkfSYUZARM","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/ZkfSYUZARM","expanded_url":"http:\/\/bryansebastian.com","display_url":"bryansebastian.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":247,"friends_count":133,"listed_count":3,"created_at":"Mon
+        Mar 16 16:05:04 +0000 2009","favourites_count":73,"utc_offset":-21600,"time_zone":"Central
+        Time (US & Canada)","geo_enabled":false,"verified":false,"statuses_count":2178,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"022330","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/657787562\/msw55hjecleg52p1e4gq.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/657787562\/msw55hjecleg52p1e4gq.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/1477820350\/bee_2_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/1477820350\/bee_2_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/24715391\/1349720625","profile_link_color":"0084B4","profile_sidebar_border_color":"A8C7F7","profile_sidebar_fill_color":"C0DFEC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"rjs","name":"Ryan
+        Singer","id":10079052,"id_str":"10079052","indices":[0,4]}]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Wed, 17 Jul 2013 11:12:39 GMT
+recorded_with: VCR 2.5.0

@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/356990171398414336.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="59892fe150e7021a5cfacdcc516cb283",
+        oauth_signature="aXU%2BYjeX9xwntbLbX20pw9IIZ2A%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1374059628", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1014'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 17 Jul 2013 11:13:49 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Wed, 17 Jul 2013 11:13:49 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137405962996025844; Domain=.twitter.com; Path=/; Expires=Fri,
+        17-Jul-2015 11:13:49 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '178'
+      X-Rate-Limit-Reset:
+      - '1374060459'
+      X-Transaction:
+      - 7231eebf415965de
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Tue Jul 16 04:14:24 +0000 2013","id":356990171398414336,"id_str":"356990171398414336","text":"I''m
+        getting somewhere on this how-to-teach-design business. I think it''s time
+        to do a day-long workshop in Chicago to test the material.","source":"\u003ca
+        href=\"http:\/\/twitter.com\/#!\/download\/ipad\" rel=\"nofollow\"\u003eTwitter
+        for iPad\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":10079052,"id_str":"10079052","name":"Ryan
+        Singer","screen_name":"rjs","location":"Chicago, IL","description":"Getting
+        to the bottom of things at 37signals since 2003.","url":"http:\/\/t.co\/hkiCV6Yfvb","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/hkiCV6Yfvb","expanded_url":"http:\/\/feltpresence.com","display_url":"feltpresence.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":17470,"friends_count":31,"listed_count":1138,"created_at":"Thu
+        Nov 08 21:19:00 +0000 2007","favourites_count":0,"utc_offset":-21600,"time_zone":"Central
+        Time (US & Canada)","geo_enabled":false,"verified":false,"statuses_count":4879,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"EEEEEE","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/2933276\/colored.gif","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/2933276\/colored.gif","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/344513261570361150\/270b788a60e0adb5def646e27814f2e3_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/344513261570361150\/270b788a60e0adb5def646e27814f2e3_normal.jpeg","profile_link_color":"5DACE8","profile_sidebar_border_color":"DDDDDD","profile_sidebar_fill_color":"EDF3FE","profile_text_color":"000000","profile_use_background_image":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":1,"favorite_count":4,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Wed, 17 Jul 2013 11:13:50 GMT
+recorded_with: VCR 2.5.0

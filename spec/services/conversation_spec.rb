@@ -105,47 +105,4 @@ describe Conversation do
       expect(@conversation).to eq(true)
     end
   end
-
-  private
-
-  def fetch_status(twitter_id)
-    statuses_cassette(twitter_id) { twitter_account.client.status(twitter_id) }
-  end
-
-  def statuses_cassette(twitter_id)
-    VCR.use_cassette("statuses/#{ twitter_id }") { yield }
-  end
-
-  def make_tweet(status)
-    TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :incoming)
-  end
 end
-
-
-
-# subject(:tweet) do
-#   TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :incoming)
-# end
-
-# describe "#fetch_and_cache_conversation" do
-#   it "fetches the previous tweets" do
-#     VCR.use_cassette('conversations/355672648916799488') do
-#       tweet.fetch_previous_tweets_and_cache_ids
-
-#       # Saves the previous tweet ids
-#       expect(tweet.reload.previous_tweet_ids).to eq(
-#         [355670264572411904, 355670656924389376, 355670723307646976,
-#          355671255564824577, 355671803944898560, 355671909280653315]
-#       )
-
-#       # Does not trigger a second fetch
-#       previous_tweet = tweet.previous_tweet
-
-#       # No twitter account assigned
-#       expect(previous_tweet.twitter_account).to be_blank
-
-#       # Conversation state is assigned
-#       expect(previous_tweet.current_state).to eq :conversation
-#     end
-#   end
-# end
