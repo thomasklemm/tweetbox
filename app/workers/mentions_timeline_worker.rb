@@ -1,5 +1,6 @@
 class MentionsTimelineWorker
   include Sidekiq::Worker
+  sidekiq_options retry: false
 
   def perform(twitter_account_id, perform_at)
     return if expired?(perform_at)

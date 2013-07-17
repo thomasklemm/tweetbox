@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe UserTimelineWorker do
   include_context 'signup and twitter account'
+  include_examples 'sidekiq options'
 
   describe "#perform" do
     context "active job" do

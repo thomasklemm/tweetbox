@@ -22,7 +22,7 @@ class Scheduler
     TwitterAccount.find_each do |twitter_account|
       # Perform the first timeline query 20 minutes after the Twitter account
       # has been connected. Before that, schedule queries in an Importer.
-      if twitter_account.created_at < 20.minutes.ago
+      if twitter_account.created_at > 20.minutes.ago
         start_time = twitter_account.created_at + 20.minutes
         end_time = 10.minutes.from_now
 
