@@ -12,7 +12,7 @@ Sidekiq.configure_server do |config|
   end
 
   # Poll interval for scheduled jobs in seconds
-  config.poll_interval = 10
+  config.poll_interval = 5
 end
 
 # HTTP Basic authentication for the Sidekiq Web Interface

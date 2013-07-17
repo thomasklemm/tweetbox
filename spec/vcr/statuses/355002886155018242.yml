@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/355002886155018242.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="0fd94c2a86152f9f6ca5079538d6c0d2",
+        oauth_signature="irXI2N3JVcn202tYEP8PEnWTub8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1374049868", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1001'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 17 Jul 2013 08:30:59 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Wed, 17 Jul 2013 08:30:59 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137404985908219005; Domain=.twitter.com; Path=/; Expires=Fri,
+        17-Jul-2015 08:30:59 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '178'
+      X-Rate-Limit-Reset:
+      - '1374050600'
+      X-Transaction:
+      - fcca907c603cae65
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Jul 10 16:37:38 +0000 2013","id":355002886155018242,"id_str":"355002886155018242","text":"Happy
+        birthday to Nikola Tesla! http:\/\/t.co\/EtOvVn4GVd","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\"
+        rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":44196397,"id_str":"44196397","name":"Elon
+        Musk","screen_name":"elonmusk","location":"1 AU","description":"Tesla, SpaceX,
+        SolarCity & PayPal","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":263589,"friends_count":38,"listed_count":4977,"created_at":"Tue
+        Jun 02 20:12:29 +0000 2009","favourites_count":33,"utc_offset":-28800,"time_zone":"Pacific
+        Time (US & Canada)","geo_enabled":false,"verified":true,"statuses_count":739,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/399721902\/fusion.jpg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/399721902\/fusion.jpg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/3467595996\/f82c4a3235eb180360d9ff670e092e02_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/3467595996\/f82c4a3235eb180360d9ff670e092e02_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/44196397\/1354486475","profile_link_color":"0084B4","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":1072,"favorite_count":378,"entities":{"hashtags":[],"symbols":[],"urls":[{"url":"http:\/\/t.co\/EtOvVn4GVd","expanded_url":"http:\/\/en.m.wikipedia.org\/wiki\/Nikola_Tesla","display_url":"en.m.wikipedia.org\/wiki\/Nikola_Te\u2026","indices":[32,54]}],"user_mentions":[]},"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Wed, 17 Jul 2013 08:31:09 GMT
+recorded_with: VCR 2.5.0

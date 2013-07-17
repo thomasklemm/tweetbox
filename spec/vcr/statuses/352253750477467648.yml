@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/352253750477467648.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="9964c828028ff54d130239aa88a2006a",
+        oauth_signature="%2FxwlnNuPsTM684EvQp0k54tDUWg%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1374049709", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1099'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 17 Jul 2013 08:28:20 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Wed, 17 Jul 2013 08:28:20 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137404970031646343; Domain=.twitter.com; Path=/; Expires=Fri,
+        17-Jul-2015 08:28:20 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1374050600'
+      X-Transaction:
+      - 2494ce999997c33d
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Jul 03 02:33:33 +0000 2013","id":352253750477467648,"id_str":"352253750477467648","text":"@BrianWestbrook
+        Ha!","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter
+        for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":352250501267587072,"in_reply_to_status_id_str":"352250501267587072","in_reply_to_user_id":1234941,"in_reply_to_user_id_str":"1234941","in_reply_to_screen_name":"BrianWestbrook","user":{"id":15160233,"id_str":"15160233","name":"Aris
+        Kyriakopoulos","screen_name":"DistrictOfAris","location":"Washington, DC","description":"#cmgr
+        @learningatcisco. @smcdc digital. @GWalumni. Democrat. Gay. #atheist.  DC
+        native+nomad. I like coffee, cheese, and beer. Opinions=own","url":"http:\/\/t.co\/IC8cjZeSKF","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/IC8cjZeSKF","expanded_url":"http:\/\/ariskyriakopoulos.com\/","display_url":"ariskyriakopoulos.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":1764,"friends_count":1589,"listed_count":161,"created_at":"Wed
+        Jun 18 17:32:15 +0000 2008","favourites_count":1464,"utc_offset":-18000,"time_zone":"Eastern
+        Time (US & Canada)","geo_enabled":true,"verified":false,"statuses_count":74239,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"9AE4E8","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/4281762\/0628081826.jpg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/4281762\/0628081826.jpg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/3442605982\/3f68a62b02b06f517c78f663e6a95ae5_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/3442605982\/3f68a62b02b06f517c78f663e6a95ae5_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/15160233\/1361426404","profile_link_color":"0084B4","profile_sidebar_border_color":"BDDCAD","profile_sidebar_fill_color":"DDFFCC","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":1,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"BrianWestbrook","name":"Brian
+        M. Westbrook","id":1234941,"id_str":"1234941","indices":[0,15]}]},"favorited":false,"retweeted":false,"lang":"und"}'
+    http_version: 
+  recorded_at: Wed, 17 Jul 2013 08:28:30 GMT
+recorded_with: VCR 2.5.0

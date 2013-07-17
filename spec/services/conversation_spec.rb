@@ -1,43 +1,127 @@
 describe Conversation do
   include_context 'signup and twitter account'
 
+  # no_reply: 355002886155018242
+  # single_reply: 357166507249250304
+  # multiple_replies: 352253750477467648
+
+  let(:reply_status)    { fetch_status(352253750477467648) }
+  let(:no_reply_status) { fetch_status(355002886155018242) }
+
+  let(:reply_tweet)     { make_tweet(reply_status) }
+  let(:no_reply_tweet)  { make_tweet(no_reply_status) }
+
+  let(:reply)    { Conversation.new(reply_tweet) }
+  let(:no_reply) { Conversation.new(no_reply_tweet) }
+
   describe "#previous_tweet" do
     context "tweet is a reply" do
-      it "find the previous tweet in the database if present"
-      it "fetches the previous tweet from Twitter if it is not already persisted in the database"
-      it "returns a tweet"
+      let(:previous_tweet) do
+        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweet") { reply_tweet.previous_tweet }
+      end
+
+      it "find the previous tweet in the database if present" do
+        # Fetch tweet from Twitter
+        previous_tweet
+
+        # Does not trigger another HTTP request
+        expect(reply_tweet.previous_tweet).to eq(previous_tweet)
+      end
+
+
+      it "fetches the previous tweet from Twitter if it is not already persisted in the database" do
+        expect(previous_tweet).to be_persisted
+        expect(previous_tweet.current_state).to eq :conversation
+        expect(previous_tweet.twitter_account).to be_nil
+      end
+
+      it "returns a tweet" do
+        expect(previous_tweet).to be_a Tweet
+      end
     end
 
     context "tweet is not a reply" do
-      it "returns nil"
+      let(:previous_tweet) { no_reply.previous_tweet }
+
+      it "returns nil" do
+        expect(previous_tweet).to be_nil
+      end
     end
   end
 
   describe "#previous_tweets" do
     context "tweet is a reply" do
-      it "fetches the previous tweets from Twitter"
-      it "persists all previous tweets in the database"
-      it "returns an array of all previous tweets"
+      let(:previous_tweets) do
+        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweets") { reply.previous_tweets }
+      end
+
+      it "fetches the previous tweets from Twitter" do
+        # Fetch tweets from Twitter
+        previous_tweets
+
+        # Does not trigger another HTTP request
+        expect(reply.previous_tweets).to eq(previous_tweets)
+      end
+
+      it "persists all previous tweets in the database" do
+        expect(previous_tweets.first).to be_a Tweet
+        expect(previous_tweets.first).to be_persisted
+      end
+
+      it "returns an array of all previous tweets" do
+        expect(previous_tweets).to be_an Array
+        expect(previous_tweets.first).to be_a Tweet
+      end
     end
 
     context "tweet is not a reply" do
-      it "returns nil"
+      let(:previous_tweets) { no_reply.previous_tweets }
+
+      it "returns nil" do
+        expect(previous_tweets).to be_nil
+      end
     end
   end
 
   describe "#fetch_and_cache_conversation" do
-    it "fetches the conversation from Twitter"
-    it "persists all tweets in the database"
-    it "saves an array of previous tweet ids for instant conversations"
-    it "returns true"
+    before do
+      @conversation = statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweets") { reply.fetch_and_cache_conversation }
+    end
+
+    it "fetches the conversation from Twitter" do
+      expect(reply).to have(8).previous_tweets
+    end
+
+    it "persists all tweets in the database" do
+      expect(reply.previous_tweet).to be_a Tweet
+      expect(reply.previous_tweet).to be_persisted
+    end
+
+    it "saves an array of previous tweet ids for instant conversations" do
+      expect(reply_tweet).to have(8).previous_tweet_ids
+    end
+
+    it "returns true" do
+      expect(@conversation).to eq(true)
+    end
+  end
+
+  private
+
+  def fetch_status(twitter_id)
+    statuses_cassette(twitter_id) { twitter_account.client.status(twitter_id) }
+  end
+
+  def statuses_cassette(twitter_id)
+    VCR.use_cassette("statuses/#{ twitter_id }") { yield }
+  end
+
+  def make_tweet(status)
+    TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :incoming)
   end
 end
 
-# let(:status) do
-#   VCR.use_cassette('statuses/355672648916799488') do
-#     twitter_account.client.status('355672648916799488')
-#   end
-# end
+
 
 # subject(:tweet) do
 #   TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :incoming)

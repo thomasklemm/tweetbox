@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=Rainmakers%20:)&result_type=recent
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="5beb4f7a26327e4429d7af4a3fd030d7",
+        oauth_signature="agpsdNT63ee8a%2FHmwPwhPt%2Bcci8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1374047578", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 17 Jul 2013 07:52:48 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Wed, 17 Jul 2013 07:52:48 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137404756848255731; Domain=.twitter.com; Path=/; Expires=Fri,
+        17-Jul-2015 07:52:48 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1374048468'
+      X-Transaction:
+      - 905ef900f21d2eea
+      X-Xss-Protection:
+      - 1; mode=block
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[{"metadata":{"result_type":"recent","iso_language_code":"en"},"created_at":"Tue
+        Jul 16 14:05:04 +0000 2013","id":357138819960676352,"id_str":"357138819960676352","text":"Best
+        things that happened to me today: Seeing Helrius close to full strength and
+        intern with @GabUlmann at Rainmakers Lab Pte Ltd. :)","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\"
+        rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":223491585,"id_str":"223491585","name":"Brian
+        Tan","screen_name":"Briantbt","location":"Insta: @briantbt","description":"Give
+        your best, live with no regrets.","url":"https:\/\/t.co\/Qs9GHYM3J0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/Qs9GHYM3J0","expanded_url":"https:\/\/www.facebook.com\/%23!\/profile.php?id=829867231#!\/BrianTannnn","display_url":"facebook.com\/%23!\/profile.p\u2026","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":436,"friends_count":427,"listed_count":1,"created_at":"Mon
+        Dec 06 14:59:28 +0000 2010","favourites_count":506,"utc_offset":28800,"time_zone":"Singapore","geo_enabled":false,"verified":false,"statuses_count":5032,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/794273652\/871823579a288a932306a60d850535ec.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/794273652\/871823579a288a932306a60d850535ec.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/378800000078075752\/f36a2fcd51c61d4d7a3f18955b93aa4a_normal.jpeg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/378800000078075752\/f36a2fcd51c61d4d7a3f18955b93aa4a_normal.jpeg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/223491585\/1360931301","profile_link_color":"1444A3","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"000000","profile_text_color":"E4D498","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":1,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"GabUlmann","name":"gab.U
+        \\(\u2022o\u2022)\/","id":225452956,"id_str":"225452956","indices":[93,103]}]},"favorited":false,"retweeted":false,"lang":"en"}],"search_metadata":{"completed_in":0.01,"max_id":357138819960676352,"max_id_str":"357138819960676352","query":"Rainmakers+%3A%29","refresh_url":"?since_id=357138819960676352&q=Rainmakers%20%3A%29&result_type=recent&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+    http_version: 
+  recorded_at: Wed, 17 Jul 2013 07:52:58 GMT
+recorded_with: VCR 2.5.0

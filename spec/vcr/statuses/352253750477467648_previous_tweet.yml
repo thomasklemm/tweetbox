@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/352250501267587072.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="da111495d0e66511ad76313ddf5a376a",
+        oauth_signature="A2OafmsgKSsGSOV3AbmCtCxxk6U%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1374050612", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1303'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 17 Jul 2013 08:43:23 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Wed, 17 Jul 2013 08:43:23 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137405060369568421; Domain=.twitter.com; Path=/; Expires=Fri,
+        17-Jul-2015 08:43:23 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1374051503'
+      X-Transaction:
+      - 971572089439471b
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Jul 03 02:20:38 +0000 2013","id":352250501267587072,"id_str":"352250501267587072","text":"@DistrictOfAris
+        just so he doesn''t cook with it!! ;)","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\"
+        rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":352250387861995520,"in_reply_to_status_id_str":"352250387861995520","in_reply_to_user_id":15160233,"in_reply_to_user_id_str":"15160233","in_reply_to_screen_name":"DistrictOfAris","user":{"id":1234941,"id_str":"1234941","name":"Brian
+        M. Westbrook","screen_name":"BrianWestbrook","location":"Seattle, WA & Portland,
+        OR","description":"Broadcast Tech Reporter (@KXLNews @KGWNews @KING5NewDayNW
+        @LarsLarsonShow) || Board Member\/Event Host (@SMCSeattle) || Owner\/GM (@ClosetBar)","url":"http:\/\/t.co\/pz24elu73t","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/pz24elu73t","expanded_url":"http:\/\/tech.brianwestbrook.com","display_url":"tech.brianwestbrook.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":9625,"friends_count":4795,"listed_count":501,"created_at":"Thu
+        Mar 15 17:13:24 +0000 2007","favourites_count":110,"utc_offset":-28800,"time_zone":"Pacific
+        Time (US & Canada)","geo_enabled":true,"verified":false,"statuses_count":21482,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"131516","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme14\/bg.gif","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme14\/bg.gif","profile_background_tile":true,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/1186077047\/image_normal.jpg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/1186077047\/image_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1234941\/1361340568","profile_link_color":"009999","profile_sidebar_border_color":"EEEEEE","profile_sidebar_fill_color":"EFEFEF","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":{"type":"Point","coordinates":[47.62344535,-122.32958554]},"coordinates":{"type":"Point","coordinates":[-122.32958554,47.62344535]},"place":{"id":"f42a863798156617","url":"https:\/\/api.twitter.com\/1.1\/geo\/id\/f42a863798156617.json","place_type":"city","name":"Seattle","full_name":"Seattle,
+        WA","country_code":"US","country":"United States","bounding_box":{"type":"Polygon","coordinates":[[[-122.459696,47.491912],[-122.224433,47.491912],[-122.224433,47.734145],[-122.459696,47.734145]]]},"attributes":{}},"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"DistrictOfAris","name":"Aris
+        Kyriakopoulos","id":15160233,"id_str":"15160233","indices":[0,15]}]},"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Wed, 17 Jul 2013 08:43:34 GMT
+recorded_with: VCR 2.5.0
