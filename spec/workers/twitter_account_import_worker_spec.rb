@@ -9,6 +9,10 @@ describe TwitterAccountImportWorker do
     Timecop.freeze
     example.run
     Timecop.return
+
+     # Clear job queues
+    MentionsTimelineWorker.jobs.clear
+    UserTimelineWorker.jobs.clear
   end
 
   describe "#perform" do

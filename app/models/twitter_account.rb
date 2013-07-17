@@ -144,4 +144,15 @@ class TwitterAccount < ActiveRecord::Base
   def set_first_twitter_account_on_project_to_be_default_twitter_account
     project.set_default_twitter_account(self) unless project.has_default_twitter_account?
   end
+
+  ##
+  # Background jobs
+
+  # Fetch conversation history from Twitter
+  after_commit :import_timelines_async, on: :create
+
+  def import_timelines_async
+    TwitterAccountImportWorker.perform_async(self.id)
+  end
+
 end

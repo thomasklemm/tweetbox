@@ -117,7 +117,7 @@ class Tweet < ActiveRecord::Base
   after_commit :fetch_conversation_async, on: :create
 
   def fetch_conversation_async
-    Conversationalist.perform_async(self.id) if reply?
+    ConversationWorker.perform_async(self.id) if reply?
   end
 
 

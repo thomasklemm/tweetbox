@@ -150,7 +150,7 @@ class Status
 
   # Build conversation history at this very moment from the database
   def build_conversation_history_on_posted_tweet
-    Conversationalist.new.perform(posted_tweet.id)
+    ConversationWorker.new.perform(posted_tweet.id)
   end
 
   # Create :post and :post_reply events
