@@ -7,6 +7,7 @@
 #
 class TwitterAccountImportWorker
   include Sidekiq::Worker
+  sidekiq_options backtrace: true
 
   def perform(twitter_account_id)
     @twitter_account = TwitterAccount.find(twitter_account_id)

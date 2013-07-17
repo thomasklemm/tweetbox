@@ -6,6 +6,7 @@
 #
 class ConversationWorker
   include Sidekiq::Worker
+  sidekiq_options backtrace: true
 
   def perform(tweet_id)
     @tweet = Tweet.find(tweet_id)

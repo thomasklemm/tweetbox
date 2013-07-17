@@ -1,6 +1,6 @@
 class UserTimelineWorker
   include Sidekiq::Worker
-  sidekiq_options retry: false
+  sidekiq_options retry: false, backtrace: true
 
   def perform(twitter_account_id, perform_at)
     return if expired?(perform_at)
