@@ -1,26 +1,56 @@
-h3 Sign up
+div class="container"
+  div class="row-fluid"
+    div class="span12 center pricing"
+      h1 We made the decision easy for you.
+      h2 Just one plan - combined with all the freedom you need.
 
-.row
-  .span4
-    = form_for @signup do |f|
-      = render 'shared/form_errors', target: @signup
+  hr
 
-      .field
-        = f.label :name, 'Your name'
-        = f.text_field :name, autofocus: true
+  div class="row-fluid"
+    div class="span4 offset1"
+      div class="pricing_table"
+        div class="pricing header center" Customer-Hero Plan
+        ul class="icons-ul"
+          li
+            i class="icon-li icon-ok"
+            | <b>As much as you need</b> team members
+          li
+            i class="icon-li icon-ok"
+            | <b>As much as you need</b> twitter accounts
+          li
+            i class="icon-li icon-ok"
+            | <b>As much as you need</b> projects
+          li
+            i class="icon-li icon-ok"
+            | <b>Long Tweets:</b> 140+ characters
+          li
+            i class="icon-li icon-ok"
+            | <b>SSL</b> secured account
+        div class="pricing value center" 99$/month
+    div class="span1"
+    div class="span4"
+      div
+        h3 Sign up
+        = form_for @signup do |f|
+          = render 'shared/form_errors', target: @signup
 
-      .field
-        = f.label :company_name, 'Company or organization'
-        = f.text_field :company_name
+          .field
+            = f.label :name, 'Your name'
+            = f.text_field :name, autofocus: true
 
-      .field
-        = f.label :email, 'Your email'
-        = f.text_field :email
+          .field
+            = f.label :company_name, 'Company or organization'
+            = f.text_field :company_name
 
-      .field
-        = f.label :password, 'Pick a password'
-        = f.password_field :password, autocomplete: 'off'
+          .field
+            = f.label :email, 'Your email'
+            = f.text_field :email
 
-      .actions
-        = f.submit 'Sign up', class: 'btn btn-primary'
+          .field
+            = f.label :password, 'Pick a password'
+            = f.password_field :password, autocomplete: 'off'
 
+          .actions
+            = f.submit 'Start your free 30 day trial now', class: 'btn btn-large btn-success'
+
+        h5 Upgrade, Change or Cancel Anytime!
