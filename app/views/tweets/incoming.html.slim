@@ -1,6 +1,6 @@
 / incoming tweets
 - if @tweets.any?
-  = logo_header 'Incoming Tweets'
+  h3 Incoming Tweets
 
   .tweets-wrapper
     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
@@ -8,15 +8,11 @@
 - if @tweets.empty?
   - if @project.twitter_accounts.any?
     / inbox zero
-    .space-two-and-a-half
-    = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
     h3 Inbox Zero
     p All clear, time for a Moment of Zen.
 
   - else
     / blank slate
-    .space-two-and-a-half
-    = image_tag 'Tweetbox-Logo-und-Schriftzug.png', width: 200
     h3 Incoming Tweets
     p
       ' Once you
