@@ -7,7 +7,7 @@ ruby '2.0.0'
 gem 'puma'
 
 # Rails
-gem 'rails', '3.2.14'
+gem 'rails', '4.0.0'
 
 # Postgres database connector
 gem 'pg'
@@ -34,7 +34,7 @@ gem 'omniauth-twitter'
 gem 'pundit'
 
 # Strong parameters (Mass assignment protection)
-gem 'strong_parameters'
+# gem 'strong_parameters'
 
 # Virtus (Attributes on steroids)
 gem 'virtus'
@@ -64,7 +64,8 @@ gem 'oj'
 gem 'twitter-text'
 
 # Use arrays and more in Postgres
-gem 'postgres_ext'
+# REVIEW: DEPENDS ON RAILS 3.2
+# gem 'postgres_ext'
 
 # Enumerated attributes
 gem 'enumerize'
@@ -96,12 +97,6 @@ group :development do
 
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'
-
-  # Quiet Assets (Mutes asset pipeline logs in development)
-  gem 'quiet_assets'
-
-  # Bullet (Finds N+1 queries and more in development)
-  gem 'bullet'
 
   # Better Errors (Debug pages in development)
   gem 'better_errors'
