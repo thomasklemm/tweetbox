@@ -7,7 +7,7 @@ ruby '2.0.0'
 gem 'puma'
 
 # Rails
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.14'
 
 # Postgres database connector
 gem 'pg'
@@ -25,13 +25,13 @@ gem 'slim-rails'
 gem 'figaro'
 
 # Devise (User authentication)
-gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
+gem 'devise', '>= 3.0.0'
 
 # Omniauth for Twitter (Authenticating Twitter accounts)
 gem 'omniauth-twitter'
 
 # Pundit (Authorization)
-gem 'pundit', github: 'thomasklemm/pundit', branch: 'master'
+gem 'pundit'
 
 # Strong parameters (Mass assignment protection)
 gem 'strong_parameters'
@@ -117,7 +117,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
+  gem 'shoulda-matchers'
   gem 'fabrication'
   gem 'database_cleaner'
   gem 'mocha'
