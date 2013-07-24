@@ -33,9 +33,6 @@ module Tweetbox
     # Default timezone
     config.active_record.default_timezone = :utc
 
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-
     # Use Pry console
     console do
       require "pry"

@@ -8,9 +8,9 @@ Tweetbox::Application.routes.draw do
   # Special naming of user authentication routes
   devise_scope :user do
     get 'login',     to: 'devise/sessions#new',      as: :login
-    get 'login',     to: 'devise/sessions#new',      as: :new_user_session
+    # get 'login',     to: 'devise/sessions#new',      as: :new_user_session
     delete 'logout', to: 'devise/sessions#destroy',  as: :logout
-    delete 'logout', to: 'devise/sessions#destroy',  as: :destroy_user_session
+    # delete 'logout', to: 'devise/sessions#destroy',  as: :destroy_user_session
   end
 
   # Signups
@@ -77,8 +77,8 @@ Tweetbox::Application.routes.draw do
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to
   #  when trying to authorize a Twitter account with this application
-  match 'auth/twitter/callback' => 'omniauth#twitter'
-  match 'auth/failure'          => 'omniauth#failure'
+  match 'auth/twitter/callback' => 'omniauth#twitter', via: [:get, :post]
+  match 'auth/failure'          => 'omniauth#failure', via: [:get, :post]
 
   # Sidekiq Web interface
   mount Sidekiq::Web => '/sidekiq'
@@ -89,7 +89,7 @@ Tweetbox::Application.routes.draw do
   # Root
   root 'pages#show', id: 'landing'
 
-    # The priority is based upon order of creation: first created -> highest priority.
+  # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
