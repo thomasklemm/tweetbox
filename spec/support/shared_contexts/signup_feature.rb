@@ -9,7 +9,7 @@ shared_context "signup feature" do
     fill_in 'Company',    with: 'Rainmakers'
     fill_in 'Your email', with: 'thomas@rainmakers.com'
     fill_in 'password',   with: 'rainmaking123'
-    click_button 'Sign up'
+    click_button 'Start'
 
     # Instant sign in
     expect(current_path).to match(projects_path)
