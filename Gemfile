@@ -6,14 +6,34 @@ ruby '2.0.0'
 # Puma (App server)
 gem 'puma'
 
-# Rails
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
 # Postgres database connector
 gem 'pg'
 
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.0'
+
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+
+# Compass
+# TODO: Remove
+# gem 'compass-rails'
+
 # jQuery Rails (jQuery adapter for Rails)
 gem 'jquery-rails'
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
+
+# Packaged plugins
+gem 'bootstrap-sass', '~> 2.3.2.0'
+gem 'select2-rails'
 
 # High Voltage (Static pages in Rails)
 gem 'high_voltage'
@@ -73,28 +93,11 @@ gem 'enumerize'
 # Pusher (Live updates)
 gem 'pusher'
 
-# Gems used only for assets and not required
-#   in production environments by default.
-group :assets do
-  # Stylesheets
-  # Sass and Compass
-  gem 'sass-rails'
-  gem 'compass-rails'
-
-  # Javascripts
-  gem 'coffee-rails'
-  gem 'uglifier'
-
-  # Packaged plugins
-  gem 'bootstrap-sass', '~> 2.3.2.0'
-  gem 'select2-rails'
-end
+# Pry Console
+gem 'pry'
+gem 'pry-rails', group: :development
 
 group :development do
-  # Pry (A great console, replacement for IRB in development)
-  gem 'pry'
-  gem 'pry-rails'
-
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'
 
@@ -126,6 +129,9 @@ group :test do
 end
 
 group :production do
+  # Heroku 12factor gem
+  gem 'rails_12factor'
+
   # Memcached using Memcachier on Heroku
   gem 'memcachier'
   gem 'dalli'
@@ -142,3 +148,6 @@ group :production do
   # Rack Timeout
   gem 'rack-timeout'
 end
+
+# Use debugger
+# gem 'debugger', group: [:development, :test]

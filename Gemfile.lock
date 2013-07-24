@@ -64,7 +64,6 @@ GEM
       json
     celluloid (0.14.1)
       timers (>= 1.0.0)
-    chunky_png (1.2.8)
     clockwork (0.5.4)
       activesupport
       tzinfo (~> 0.3.35)
@@ -77,12 +76,6 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     colorize (0.5.8)
-    compass (0.12.2)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
-    compass-rails (1.0.3)
-      compass (>= 0.12.2, < 0.14)
     connection_pool (1.1.0)
     coveralls (0.6.7)
       colorize
@@ -123,7 +116,6 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     formatador (0.2.4)
-    fssm (0.2.10)
     guard (1.8.1)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -214,6 +206,11 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.0)
       sprockets-rails (~> 2.0.0)
+    rails_12factor (0.0.2)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.1)
+    rails_stdout_logging (0.0.1)
     railties (4.0.0)
       actionpack (= 4.0.0)
       activesupport (= 4.0.0)
@@ -297,6 +294,8 @@ GEM
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
+    turbolinks (1.3.0)
+      coffee-rails
     twitter (4.8.1)
       faraday (~> 0.8, < 0.10)
       multi_json (~> 1.0)
@@ -332,8 +331,7 @@ DEPENDENCIES
   bootstrap-sass (~> 2.3.2.0)
   capybara-webkit
   clockwork
-  coffee-rails
-  compass-rails
+  coffee-rails (~> 4.0.0)
   coveralls
   dalli
   database_cleaner
@@ -362,8 +360,9 @@ DEPENDENCIES
   rack-livereload
   rack-timeout
   rails (= 4.0.0)
+  rails_12factor
   rspec-rails
-  sass-rails
+  sass-rails (~> 4.0.0)
   select2-rails
   sentry-raven!
   shoulda-matchers
@@ -373,9 +372,10 @@ DEPENDENCIES
   slim-rails
   timecop
   transitions!
+  turbolinks
   twitter
   twitter-text
-  uglifier
+  uglifier (>= 1.3.0)
   vcr
   virtus
   webmock
