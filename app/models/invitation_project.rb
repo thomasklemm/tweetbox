@@ -2,5 +2,7 @@ class InvitationProject < ActiveRecord::Base
   belongs_to :invitation
   belongs_to :project
 
-  validates :invitation, :project, presence: true
+  # REVIEW: Fails in Rails 4
+  # validates :invitation, :project, presence: true
+  validates :project, presence: true
 end

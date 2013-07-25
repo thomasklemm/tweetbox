@@ -20,8 +20,7 @@ describe User do
   describe "#password" do
     it "ensures password length" do
       user = Fabricate.build(:user, password: '0' * 7)
-      expect(user).to have(2).errors_on(:password)
-      expect(user.errors_on(:password).uniq.length).to eq(1)
+      expect(user).to have(1).errors_on(:password)
       expect(user.errors_on(:password)).to include("is too short (minimum is 8 characters)")
 
       user = Fabricate.build(:user, password: '0' * 8)
@@ -31,8 +30,7 @@ describe User do
       expect(user).to be_valid
 
       user = Fabricate.build(:user, password: '0' * 129)
-      expect(user).to have(2).errors_on(:password)
-      expect(user.errors_on(:password).uniq.length).to eq(1)
+      expect(user).to have(1).errors_on(:password)
       expect(user.errors_on(:password)).to include("is too long (maximum is 128 characters)")
     end
   end

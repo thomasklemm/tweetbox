@@ -7,7 +7,7 @@ class TwitterAccount < ActiveRecord::Base
   validates :project, presence: true
 
   # Only destroy a twitter account if no search is associated
-  has_many :searches, dependent: :restrict
+  has_many :searches, dependent: :restrict_with_exception
 
   # Tweets retrieved with current twitter account
   has_many :tweets, dependent: :nullify

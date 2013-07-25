@@ -40,7 +40,7 @@
                   = link_to 'Make default', set_default_project_twitter_account_path(@project, twitter_account), method: :put
 
               li = link_to 'Import @mentions'
-              li = link_to 'Remove', [@project, twitter_account], method: :delete, confirm: "Are you sure you want to remove the #{ twitter_account.at_screen_name } Twitter account from Tweetbox."
+              li = link_to 'Remove', [@project, twitter_account], method: :delete, data: { confirm: "Are you sure you want to remove the #{ twitter_account.at_screen_name } Twitter account from Tweetbox." }
 
   = link_to 'Connect a new Twitter account', new_project_twitter_account_path, class: 'btn'
 

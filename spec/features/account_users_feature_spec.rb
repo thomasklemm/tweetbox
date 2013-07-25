@@ -42,7 +42,7 @@ describe 'Account users' do
 
   it "lists users, grants admin membership" do
     click_on 'Account'
-    click_on 'Team'
+    click_on 'Team', match: :first
     expect(current_path).to eq(account_users_path)
 
     within('.users-table') do

@@ -7,8 +7,10 @@ class Permission < ActiveRecord::Base
   before_validation :set_membership_from_user, if: :user_id_changed?
   before_validation :ensure_user_is_membership_user
 
-  validates :project, :membership, :user, presence: true
-  validate :membership_and_user_must_be_associated_with_project_account
+  # REVIEW: Fails in Rails 4
+  # validates :project, :membership, :user, presence: true
+  validates :membership, :user, presence: true
+  # validate :membership_and_user_must_be_associated_with_project_account
   validates_uniqueness_of :membership_id, scope: :project_id
 
   private

@@ -1,3 +1,4 @@
+# TODO: REWORK AFTER RAILS4 UPGRADE
 # TODO: Remove on upgrading to Rails 4
 require 'active_record/associations/association_scope'
 require 'sidekiq/web'

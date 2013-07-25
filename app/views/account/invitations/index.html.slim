@@ -29,11 +29,11 @@ h3 Invitations
             - if invitation.active?
               = invitation.copy_registration_url('Copy registration url')
               | &nbsp;
-              = link_to 'Resend invitation email', deliver_mail_account_invitation_path(invitation), method: :post, class: 'btn', confirm: 'Do you want to send out the invitation email once again?'
+              = link_to 'Resend invitation email', deliver_mail_account_invitation_path(invitation), method: :post, class: 'btn', data: { confirm: 'Do you want to send out the invitation email once again?' }
               | &nbsp;
               = link_to 'Edit invitation', edit_account_invitation_path(invitation), class: 'btn'
               | &nbsp;
-              = link_to 'Expire and deactivate', deactivate_account_invitation_path(invitation), method: :put, class: 'btn btn-danger', confirm: 'Are you sure you want to deactivate this invitation? You can also edit it to point to be sent to another email, copy the registration link, or assign different project permissions.'
+              = link_to 'Expire and deactivate', deactivate_account_invitation_path(invitation), method: :put, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to deactivate this invitation? You can also edit it to point to be sent to another email, copy the registration link, or assign different project permissions.' }
 
             - if invitation.expired?
               = link_to 'Extend expiration date and reactivate', reactivate_account_invitation_path(invitation), method: :put, class: 'btn btn-primary'

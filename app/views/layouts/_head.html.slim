@@ -1,37 +1,47 @@
 / layouts/_head
 meta charset='utf-8'
-meta name='ROBOTS' content='NOODP'
 
-title TweetBox - Professionalized Twitter-Customer-Support
-meta name='description' content=''
+title Tweetbox - Twitter for Business
+meta name='description' content='Deliver Exceptional Customer Support on Twitter - Your Twitter Inbox for Teams and Businesses'
 
 meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
 meta name='viewport' content='width=device-width, initial-scale=1.0'
 
-/ dns prefetch
-= dns_prefetch('//ajax.googleapis.com')
-= dns_prefetch('//www.google-analytics.com')
-= dns_prefetch('//google-analytics.com')
+/ display a snippet of the website in google
+/ instead of using a description from the open directory project
+meta name='robots' content='noodp'
 
 / fonts
-= javascript_include_tag '//use.typekit.net/wdr6eav.js'
+= javascript_include_tag 'https://use.typekit.net/wdr6eav.js'
 javascript:
   try{Typekit.load();}catch(e){}
 
 / stylesheets
-= stylesheet_link_tag 'application'
-= stylesheet_link_tag '//netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.min.css'
+= stylesheet_link_tag 'https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css'
+= stylesheet_link_tag :application
 
 / javascripts
-= render 'javascripts'
+/ angular
+/ jquery
+/ twitter web intents
+= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js'
+= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js'
+= javascript_include_tag 'https://platform.twitter.com/widgets.js'
+= javascript_include_tag :application
 
-/ csrf meta tags
+/ secure headers
 = csrf_meta_tags unless publicly_cached?
 
 / favicon
 / IE uses favicon.ico in root
 / Browsers use favicon.png
 / iOS and Android look for filenames
-/ link rel='icon' href=image_path('favicon.ico') type='image/x-icon'
+/ link rel='icon' href=image_path('favicon/favicon.png') type='image/png'
+/ TODO: Use image_path or some favicon tag provided by Rails (e.g. for caching to be enabled)
 link rel="shortcut icon" href="/assets/favicon.ico"
-link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Patua+One"
+
+/ setup for test environment
+- if Rails.env.test?
+  / ajax setup
+  javascript:
+    $.ajaxSetup({ async: false })

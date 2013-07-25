@@ -5,7 +5,7 @@ describe TwitterAccount do
   it { should be_valid }
 
   it { should belong_to(:project) }
-  it { should have_many(:searches).dependent(:restrict) }
+  it { should have_many(:searches).dependent(:restrict_with_exception) }
   it { should have_many(:tweets).dependent(:nullify) }
 
   it { should validate_presence_of(:project) }
