@@ -73,7 +73,7 @@
               ul
                 li = link_to icon_tag(:twitter, 'Show latest results'), search.twitter_url
                 li = link_to 'Edit', edit_project_search_path(@project, search)
-                li = link_to 'Remove', project_search_path(@project, search), method: :delete, confirm: "Are you sure you don't want to search for '#{ search.query }' any longer? Instead of removing a search, you can also edit it to change and improve it's query term."
+                li = link_to 'Remove', project_search_path(@project, search), method: :delete, data: { confirm: "Are you sure you don't want to search for '#{ search.query }' any longer? Instead of removing a search, you can also edit it to change and improve it's query term." }
 
   = link_to 'Create a new Search', new_project_search_path(@project), class: 'btn'
 

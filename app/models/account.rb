@@ -1,14 +1,14 @@
 class Account < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
-  has_many :admins, through: :memberships,
-                    source: :user,
-                    conditions: { 'memberships.admin' => true }
-  has_many :non_admins, through: :memberships,
-                        source: :user,
-                        conditions: { 'memberships.admin' => false }
+  has_many :admins, -> { where(memberships: { admin: true }) },
+                    through: :memberships,
+                    source: :user
+  has_many :non_admins, -> { where(memberships: { admin: false }) },
+                        through: :memberships,
+                        source: :user
 
-  has_many :projects, dependent: :restrict
+  has_many :projects, dependent: :restrict_with_exception
   has_many :invitations, dependent: :destroy
 
   validates :name, presence: true

@@ -9,7 +9,7 @@ describe Account do
   it { should have_many(:admins).through(:memberships) }
   it { should have_many(:non_admins).through(:memberships) }
 
-  it { should have_many(:projects).dependent(:restrict) }
+  it { should have_many(:projects).dependent(:restrict_with_exception) }
   it { should have_many(:invitations).dependent(:destroy) }
 
   it { should validate_presence_of(:name) }

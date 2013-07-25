@@ -6,14 +6,34 @@ ruby '2.0.0'
 # Puma (App server)
 gem 'puma'
 
-# Rails
-gem 'rails', '3.2.13'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.0.0'
 
 # Postgres database connector
 gem 'pg'
 
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.0'
+
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+
+# Compass
+# TODO: Remove
+gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
+
 # jQuery Rails (jQuery adapter for Rails)
 gem 'jquery-rails'
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
+
+# Packaged plugins
+gem 'bootstrap-sass', '~> 2.3.2.0'
+gem 'select2-rails'
 
 # High Voltage (Static pages in Rails)
 gem 'high_voltage'
@@ -25,16 +45,16 @@ gem 'slim-rails'
 gem 'figaro'
 
 # Devise (User authentication)
-gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
+gem 'devise', '>= 3.0.0'
 
 # Omniauth for Twitter (Authenticating Twitter accounts)
 gem 'omniauth-twitter'
 
 # Pundit (Authorization)
-gem 'pundit', github: 'thomasklemm/pundit', branch: 'master'
+gem 'pundit'
 
 # Strong parameters (Mass assignment protection)
-gem 'strong_parameters'
+# gem 'strong_parameters'
 
 # Virtus (Attributes on steroids)
 gem 'virtus'
@@ -64,7 +84,8 @@ gem 'oj'
 gem 'twitter-text'
 
 # Use arrays and more in Postgres
-gem 'postgres_ext'
+# REVIEW: DEPENDS ON RAILS 3.2
+# gem 'postgres_ext'
 
 # Enumerated attributes
 gem 'enumerize'
@@ -72,36 +93,13 @@ gem 'enumerize'
 # Pusher (Live updates)
 gem 'pusher'
 
-# Gems used only for assets and not required
-#   in production environments by default.
-group :assets do
-  # Stylesheets
-  # Sass and Compass
-  gem 'sass-rails'
-  gem 'compass-rails'
-
-  # Javascripts
-  gem 'coffee-rails'
-  gem 'uglifier'
-
-  # Packaged plugins
-  gem 'bootstrap-sass', '~> 2.3.2.0'
-  gem 'select2-rails'
-end
+# Pry Console
+gem 'pry'
+gem 'pry-rails', group: :development
 
 group :development do
-  # Pry (A great console, replacement for IRB in development)
-  gem 'pry'
-  gem 'pry-rails'
-
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'
-
-  # Quiet Assets (Mutes asset pipeline logs in development)
-  gem 'quiet_assets'
-
-  # Bullet (Finds N+1 queries and more in development)
-  gem 'bullet'
 
   # Better Errors (Debug pages in development)
   gem 'better_errors'
@@ -117,7 +115,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', branch: 'dp-rails-four'
   gem 'fabrication'
   gem 'database_cleaner'
   gem 'mocha'
@@ -131,6 +129,9 @@ group :test do
 end
 
 group :production do
+  # Heroku 12factor gem
+  gem 'rails_12factor'
+
   # Memcached using Memcachier on Heroku
   gem 'memcachier'
   gem 'dalli'
@@ -147,3 +148,6 @@ group :production do
   # Rack Timeout
   gem 'rack-timeout'
 end
+
+# Use debugger
+# gem 'debugger', group: [:development, :test]
