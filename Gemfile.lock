@@ -17,7 +17,8 @@ GIT
 
 GIT
   remote: git://github.com/thoughtbot/shoulda-matchers.git
-  revision: fce5ee6777a6ba02ee9dc4627d3458f1b578657c
+  revision: 1af8cfc4e86c03ab48978699828adaa3a487e2f3
+  branch: dp-rails-four
   specs:
     shoulda-matchers (2.2.0)
       activesupport (>= 3.0.0)

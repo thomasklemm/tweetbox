@@ -115,7 +115,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', branch: 'dp-rails-four'
   gem 'fabrication'
   gem 'database_cleaner'
   gem 'mocha'
