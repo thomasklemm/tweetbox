@@ -8,14 +8,6 @@ GIT
       uuidtools
 
 GIT
-  remote: git://github.com/milgner/compass-rails.git
-  revision: c86e7fd9c2605c80816a2f64a3fb8b7c3a09e494
-  branch: rails4
-  specs:
-    compass-rails (1.0.3)
-      compass (>= 0.12.2, < 0.14)
-
-GIT
   remote: git://github.com/thoughtbot/shoulda-matchers.git
   revision: 1af8cfc4e86c03ab48978699828adaa3a487e2f3
   branch: dp-rails-four
@@ -80,7 +72,6 @@ GEM
       json
     celluloid (0.14.1)
       timers (>= 1.0.0)
-    chunky_png (1.2.8)
     clockwork (0.5.4)
       activesupport
       tzinfo (~> 0.3.35)
@@ -93,10 +84,6 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     colorize (0.5.8)
-    compass (0.12.2)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
     connection_pool (1.1.0)
     coveralls (0.6.7)
       colorize
@@ -137,7 +124,6 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     formatador (0.2.4)
-    fssm (0.2.10)
     guard (1.8.1)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -352,7 +338,6 @@ DEPENDENCIES
   capybara-webkit
   clockwork
   coffee-rails (~> 4.0.0)
-  compass-rails!
   coveralls
   dalli
   database_cleaner

@@ -23,7 +23,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Compass
 # TODO: Remove
-gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
+# gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
 
 # jQuery Rails (jQuery adapter for Rails)
 gem 'jquery-rails'
