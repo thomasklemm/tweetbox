@@ -11,7 +11,7 @@ describe ProjectController do
   describe "redirects guest user to login" do
     before { get :show, id: 1 }
 
-    it { should redirect_to(login_path) }
+    it { should redirect_to(new_user_session_path) }
     it { should set_the_flash.to("You need to sign in or sign up before continuing.") }
   end
 

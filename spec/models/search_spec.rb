@@ -12,8 +12,8 @@ describe Search do
 
   it "requires a project" do
     search = Fabricate.build(:search, twitter_account: nil)
-    expect(search).to have(2).error_on(:project)
-    expect(search.errors_on(:project).uniq).to eq(["can't be blank"])
+    expect(search).to have(1).error_on(:project)
+    expect(search.error_on(:project)).to eq(["can't be blank"])
   end
 
   it "assigns the project from the twitter_account" do

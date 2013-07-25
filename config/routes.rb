@@ -8,8 +8,8 @@ Tweetbox::Application.routes.draw do
   # Special naming of user authentication routes
   devise_scope :user do
     get 'login',     to: 'devise/sessions#new',      as: :login
-    # get 'login',     to: 'devise/sessions#new',      as: :new_user_session
     delete 'logout', to: 'devise/sessions#destroy',  as: :logout
+    # get 'login',     to: 'devise/sessions#new',      as: :new_user_session
     # delete 'logout', to: 'devise/sessions#destroy',  as: :destroy_user_session
   end
 
