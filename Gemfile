@@ -23,7 +23,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Compass
 # TODO: Remove
-# gem 'compass-rails'
+gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
 
 # jQuery Rails (jQuery adapter for Rails)
 gem 'jquery-rails'
@@ -115,7 +115,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
   gem 'fabrication'
   gem 'database_cleaner'
   gem 'mocha'
