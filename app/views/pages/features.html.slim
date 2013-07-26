@@ -12,13 +12,13 @@ div class="container features"
       h2 Work in Teams
   div class="row-fluid"
     div class="span12 pull-right"
-      = image_tag "app_screenshot_features_teamwork2.gif"
+      = image_tag "app_screenshot_features_teamwork2.gif", :class => "image"
   div class="row-fluid"
     div class="span12"
-      = image_tag "app_screenshot_features_teamwork1.gif"
+      = image_tag "app_screenshot_features_teamwork1.gif", :class => "image"
   div class="row-fluid"
     div class="span12 center"
-      a class="btn btn-large btn-success" href="/signup" Start your free 30 day trial now
+      = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-large btn-success'
 
   section id="long_tweets"
   hr
@@ -27,13 +27,13 @@ div class="container features"
       h2 Long tweets
   div class="row-fluid"
     div class="span12"
-      = image_tag "app_screenshot_features_longtweet1.gif"
+      = image_tag "app_screenshot_features_longtweet1.gif", :class => "image"
   div class="row-fluid"
     div class="span12"
-      = image_tag "app_screenshot_features_longtweet2.gif"
+      = image_tag "app_screenshot_features_longtweet2.gif", :class => "image"
   div class="row-fluid"
     div class="span12 center"
-      a class="btn btn-large btn-success" href="/signup" Start your free 30 day trial now
+      = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-large btn-success'
 
   section id="multi_twitter_accounts"
   hr
@@ -42,22 +42,23 @@ div class="container features"
       h2 Multi twitter accounts
   div class="row-fluid"
     div class="span12"
-      = image_tag "app_screenshot_features_twitter_accounts1.gif"
+      = image_tag "app_screenshot_features_twitter_accounts1.gif", :class => "image"
   div class="row-fluid"
     div class="span12 center"
-      a class="btn btn-large btn-success" href="/signup" Start your free 30 day trial now
+      = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-large btn-success'
 
   section id="manage_projects"
+  section id="manage-projects"
   hr
   div class="row-fluid"
     div class="span12"
       h2 Manage projects
   div class="row-fluid"
     div class="span12"
-      = image_tag "app_screenshot_features_projects1.gif"
+      = image_tag "app_screenshot_features_projects1.gif", :class => "image"
   div class="row-fluid"
     div class="span12"
-      = image_tag "app_screenshot_features_projects2.gif"
+      = image_tag "app_screenshot_features_projects2.gif", :class => "image"
   div class="row-fluid"
     div class="span12 center"
-      a class="btn btn-large btn-success" href="/signup" Start your free 30 day trial now
+      = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-large btn-success'
