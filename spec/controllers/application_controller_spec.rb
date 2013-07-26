@@ -65,5 +65,4 @@ describe ApplicationController do
       expect(controller.current_user).to be_decorated
     end
   end
-
 end

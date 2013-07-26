@@ -47,6 +47,11 @@ module Tweetbox
       g.stylesheets false
       g.javascript_engine false
       g.view_specs false
+      g.assets false # Rails 4
     end
+
+    # Insert Rack::Deflater as the first middleware
+    # to gzip all responses, including assets
+    config.middleware.insert 0, Rack::Deflater
   end
 end

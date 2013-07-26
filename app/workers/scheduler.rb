@@ -1,5 +1,5 @@
 # A Scheduler
-# Call `Scheduler.perform` every ten minutes
+# Call `rails runner "Scheduler.perform"` every ten minutes
 class Scheduler
 
   # Schedules all queries for the following ten minutes
