@@ -1,0 +1,23 @@
+/ score leads
+
+= logo_header @score_name
+
+/ search form
+= form_tag({ controller: 'leads', action: 'search' }, method: :get, class: 'form-search') do
+  fieldset
+    .well
+      = text_field_tag :query, @search.query, placeholder: 'Search', class: 'input-large search-query', autofocus: true, autocomplete: 'off'
+      | &nbsp;
+      = submit_tag 'Search', class: 'btn', name: nil
+
+= page_entries_info @leads, entry_name: @score_name.downcase
+
+hr
+
+.leads-wrapper
+  = render partial: 'lead', collection: @leads
+
+hr
+
+= paginate @leads, window: 2
+= page_entries_info @leads

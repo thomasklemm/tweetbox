@@ -80,6 +80,24 @@ Tweetbox::Application.routes.draw do
   match 'auth/twitter/callback' => 'omniauth#twitter', via: [:get, :post]
   match 'auth/failure'          => 'omniauth#failure', via: [:get, :post]
 
+  # Dash
+  namespace :dash do
+    resources :leads, only: [:show, :update, :destroy] do
+      collection do
+        get :search
+        post :remember
+        get 'score', to: redirect('/leads/score/unscored'), as: :unscored
+        get 'score/:score', to: :score, as: :score
+      end
+
+      member do
+        post :refresh
+      end
+    end
+
+    root 'leads#search'
+  end
+
   # Sidekiq Web interface
   mount Sidekiq::Web => '/sidekiq'
 

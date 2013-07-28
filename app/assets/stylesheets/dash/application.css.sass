@@ -1,0 +1,99 @@
+// Application stylesheet
+@import "bootstrap"
+
+body
+  padding-top: 54px
+
+p, form
+  padding: 0
+  margin: 0
+
+// Floats
+.left
+  float: left
+.right
+  float: right
+
+// spaces
+.space-quarter
+  height: 0.25rem
+.space-half
+  height: 0.5rem
+.space-one
+  height: 1rem
+.space-one-and-a-half
+  height: 1.5rem
+.space-two
+  height: 2rem
+.space-two-and-a-half
+  height: 2.5rem
+.space-three
+  height: 3rem
+
+// logo header
+.logo-header
+  img
+    width: 42px
+    height: 42px
+    margin-right: 6px
+
+// lead in collection
+// and twitter user in search results
+.edit_lead, .twitter-user
+  padding: 1.2rem 0 1.2rem 72px
+
+  .avatar
+    float: left
+    margin-left: -64px
+    margin-top: 4px
+    height: 48px
+    width: 48px
+    border-radius: 2px
+
+  .twitter-url
+    margin-right: 2px
+    font-size: 15px
+
+  .name
+    font-weight: bold
+  .screen-name
+    margin: 0 6px
+  .location
+
+  .refresh-link
+    margin: 0 6px
+  .destroy-link
+
+  .description-wrapper
+    margin-top: 0.2rem
+  .description
+  .url
+    margin-left: 0.5rem
+    border-left: 1px solid #ddd
+    padding-left: 0.5rem
+
+  .statistics
+    &.vertical .stat
+      display: block
+
+    margin: 0.2rem 0 0.4rem
+    .stat
+      margin-right: 0.5rem
+      .key
+        @extend .muted
+      .value
+        font-weight: bold
+        margin-left: 3px
+
+  .sources-wrapper
+    margin: 1rem 0
+
+  .tweets-wrapper
+
+  .tweets-table
+    .tweet
+      font-size: 13px
+      .text
+      .source
+      .created-at
+        min-width: 72px

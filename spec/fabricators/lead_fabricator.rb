@@ -1,0 +1,2 @@
+Fabricator(:lead) do
+end

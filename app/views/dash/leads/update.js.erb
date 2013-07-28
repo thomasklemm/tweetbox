@@ -1,0 +1,7 @@
+// Update lead
+var $currentLead = $('#<%= dom_id(@lead, :edit) %>');
+var $lead = $('<%= j render @lead %>');
+
+// Replace current lead with freshly rendered lead
+$currentLead.replaceWith($lead);
+$lead.submitOnCheck();

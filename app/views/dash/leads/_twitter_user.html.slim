@@ -1,0 +1,38 @@
+/ twitter user
+- twitter_user &&= TwitterUserDecorator.new(twitter_user)
+
+/ if the twitter user is already present as a lead in the database
+/ then render the lead partial
+- if lead = twitter_user.lead
+  = render lead
+
+- else
+  .twitter-user id="twitter_user_#{ twitter_user.twitter_id }"
+    / avatar
+    = image_tag(twitter_user.profile_image_url, class: 'avatar')
+
+    / twitter url
+    = link_to icon_tag(:twitter), twitter_user.twitter_url, class: 'twitter-url'
+
+    / name
+    = link_to twitter_user.lead_path do
+      span.name = twitter_user.name
+      span.screen-name = twitter_user.at_screen_name
+
+    / location
+    span.location = twitter_user.location
+
+    / description
+    / url
+    div.description-wrapper
+      span.description == twitter_user.description
+      span.url == twitter_user.url
+
+    / stats
+    .statistics
+      = stat('Followers:', twitter_user.followers_count)
+      = stat('Tweets:', twitter_user.statuses_count)
+      = stat('Client:', twitter_user.source) if twitter_user.source
+
+    / remember
+    = link_to "Remember #{ twitter_user.at_screen_name }", remember_dash_leads_path(screen_name: twitter_user.screen_name), method: :post, remote: true, class: 'btn'

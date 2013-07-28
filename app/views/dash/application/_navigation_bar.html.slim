@@ -1,0 +1,32 @@
+/ navigation bar
+.navbar class='navbar-fixed-top'
+  .navbar-inner
+    .container
+      = link_to 'Tweetbox Dash', root_path, class: 'brand'
+
+      ul.nav
+        li = link_to 'Leads', search_dash_leads_path
+
+      / Twitter user search
+      / = form_tag({ controller: 'authors', action: 'search' }, method: :get, class: 'navbar-form pull-left') do
+      /   = text_field_tag :q, '', placeholder: 'Search', class: 'input-large search-query', autofocus: true, autocomplete: 'off'
+      /   | &nbsp;
+      /   = button_tag 'Search', class: 'btn', name: nil
+
+      .right
+        ul.nav
+          - leads_count = Lead.count
+          li = link_to "#{ leads_count } Leads", 'javascript:;'
+          li = link_to 'Open @user in Dash', "javascript:var screen_name = document.location.href.split('/')[3]; document.location='https://tweetbox-dash.herokuapp.com/leads/'+screen_name;".html_safe
+
+      / ul.nav
+      /   li = link_to 'Leads', leads_authors_path
+      /   li = link_to 'Leads', authors_path
+
+      / .right
+      /   ul.nav
+      /     - if user_signed_in?
+      /       li = link_to 'Logout', destroy_user_session_path, method: :delete
+      /     - else
+      /       li = link_to 'Sign up', new_user_registration_path
+      /       li = link_to 'Login', new_user_session_path
