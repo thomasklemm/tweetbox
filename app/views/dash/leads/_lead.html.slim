@@ -2,7 +2,7 @@
 - lead &&= lead.decorate
 - tweets = lead.ordered_tweets
 
-= form_for lead, remote: true do |f|
+= form_for [:dash, lead], remote: true do |f|
   / avatar
   = image_tag(lead.profile_image_url, class: 'avatar')
 

@@ -54,7 +54,7 @@ module DashHelper
     return unless current_path == dash_lead_path(lead)
 
     if params[:action] == 'update'
-      request.referer == lead_url(lead)
+      request.referer == dash_lead_url(lead)
     else
       true
     end

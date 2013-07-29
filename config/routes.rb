@@ -84,9 +84,10 @@ Tweetbox::Application.routes.draw do
   namespace :dash do
     resources :leads, only: [:show, :update, :destroy] do
       collection do
+        get '/', to: redirect('/dash/leads/search')
         get :search
         post :remember
-        get 'score', to: redirect('/leads/score/unscored'), as: :unscored
+        get 'score', to: redirect('/dash/leads/score/unscored'), as: :unscored
         get 'score/:score', to: :score, as: :score
       end
 
@@ -95,7 +96,7 @@ Tweetbox::Application.routes.draw do
       end
     end
 
-    root 'leads#search'
+    root to: redirect('/dash/leads/search')
   end
 
   # Sidekiq Web interface

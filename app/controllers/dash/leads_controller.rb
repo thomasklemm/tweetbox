@@ -6,7 +6,7 @@ class Dash::LeadsController < Dash::ApplicationController
 
   # Search leads on Twitter
   def search
-    @search = ::TwitterUserSearch.new(params[:query], params[:page])
+    @search = TwitterUserSearch.new(params[:query], params[:page])
   end
 
   # Remember leads
