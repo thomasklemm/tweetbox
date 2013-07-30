@@ -1,0 +1,14 @@
+/ navigation bar
+.navbar class='navbar-fixed-top'
+  .navbar-inner
+    .container
+      = link_to 'Tweetbox Dash', dash_root_path, class: 'brand'
+
+      ul.nav
+        li = link_to 'Leads', search_dash_leads_path
+
+      ul.nav.pull-right
+        - leads_count = Lead.count
+        li = link_to "#{ leads_count } Leads", 'javascript:;'
+
+        li = link_to 'Open @user in Dash', "javascript:var screen_name = document.location.href.split('/')[3]; document.location='https://www.tweetbox.co/dash/leads/'+screen_name;".html_safe

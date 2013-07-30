@@ -93,6 +93,12 @@ gem 'pusher'
 gem 'pry'
 gem 'pry-rails', group: :development
 
+# Chartkick for Charts
+gem 'chartkick'
+
+# Pagination
+gem 'kaminari'
+
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'

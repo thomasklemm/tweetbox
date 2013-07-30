@@ -1,0 +1,22 @@
+/ authors/search
+
+/ search form
+= form_tag({ controller: 'dash/leads', action: 'search' }, method: :get, class: 'form-search') do
+  fieldset
+    = logo_header 'Find Leads'
+    .well
+      = text_field_tag :query, @search.query, placeholder: 'Search', class: 'input-large search-query', autofocus: true, autocomplete: 'off'
+      | &nbsp;
+      = submit_tag 'Search', class: 'btn', name: nil
+
+/ results
+- if @search.results
+  .users-wrapper
+    = render partial: 'twitter_user', collection: @search.results
+
+  / pagination
+  ul class="pager"
+    li class="previous #{ 'disabled' unless @search.previous_page }"
+      = link_to '&larr; Previous page'.html_safe, @search.previous_page
+    li class="next"
+      = link_to 'Next page &rarr;'.html_safe, @search.next_page

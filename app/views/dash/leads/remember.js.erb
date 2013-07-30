@@ -1,0 +1,7 @@
+// Twitter user and lead
+var $twitterUser = $('#twitter_user_<%= @lead.twitter_id %>');
+var $lead = $('<%= j render @lead %>');
+
+// Replace twitter user with lead
+$twitterUser.replaceWith($lead);
+$lead.submitOnCheck();

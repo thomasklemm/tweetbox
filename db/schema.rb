@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130716213840) do
+ActiveRecord::Schema.define(version: 20130728171802) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -87,6 +87,49 @@ ActiveRecord::Schema.define(version: 20130716213840) do
 
   add_index "invitations", ["account_id"], name: "index_invitations_on_account_id", using: :btree
   add_index "invitations", ["code"], name: "index_invitations_on_code", unique: true, using: :btree
+
+  create_table "lead_tweets", force: true do |t|
+    t.integer  "twitter_id",            limit: 8
+    t.text     "text"
+    t.integer  "in_reply_to_user_id",   limit: 8
+    t.integer  "in_reply_to_status_id", limit: 8
+    t.text     "source"
+    t.text     "lang"
+    t.integer  "favorite_count",                  default: 0
+    t.integer  "retweet_count",                   default: 0
+    t.integer  "lead_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lead_tweets", ["lead_id"], name: "index_lead_tweets_on_lead_id", using: :btree
+  add_index "lead_tweets", ["twitter_id"], name: "index_lead_tweets_on_twitter_id", unique: true, using: :btree
+
+  create_table "leads", force: true do |t|
+    t.integer  "twitter_id",        limit: 8
+    t.text     "screen_name"
+    t.text     "name"
+    t.text     "description"
+    t.text     "location"
+    t.text     "profile_image_url"
+    t.text     "url"
+    t.integer  "followers_count",             default: 0
+    t.integer  "statuses_count",              default: 0
+    t.integer  "friends_count",               default: 0
+    t.datetime "joined_twitter_at"
+    t.text     "lang"
+    t.text     "time_zone"
+    t.boolean  "verified"
+    t.boolean  "following"
+    t.text     "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "leads", ["followers_count"], name: "index_leads_on_followers_count", using: :btree
+  add_index "leads", ["score"], name: "index_leads_on_score", using: :btree
+  add_index "leads", ["screen_name"], name: "index_leads_on_screen_name", using: :btree
+  add_index "leads", ["twitter_id"], name: "index_leads_on_twitter_id", unique: true, using: :btree
 
   create_table "memberships", force: true do |t|
     t.integer  "user_id",                    null: false

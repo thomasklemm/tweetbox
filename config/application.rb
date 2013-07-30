@@ -28,7 +28,12 @@ module Tweetbox
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     # TODO: Some paths can be removed here
-    config.autoload_paths += Dir["#{config.root}/app/models/**/", "#{config.root}/lib", "#{config.root}/lib/**/"]
+    config.autoload_paths += Dir["#{config.root}/app/models/**/",
+                                 "#{config.root}/app/decorators/",
+                                 "#{config.root}/app/decorators/**/",
+                                 "#{config.root}/app/facades/",
+                                 "#{config.root}/lib",
+                                 "#{config.root}/lib/**/"]
 
     # Default timezone
     config.active_record.default_timezone = :utc

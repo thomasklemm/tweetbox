@@ -1,0 +1,84 @@
+/ lead
+- lead &&= lead.decorate
+- tweets = lead.ordered_tweets
+
+= form_for [:dash, lead], remote: true do |f|
+  / avatar
+  = image_tag(lead.profile_image_url, class: 'avatar')
+
+  / twitter url
+  = link_to icon_tag(:twitter), lead.twitter_url, class: 'twitter-url'
+
+  / name
+  = link_to lead.lead_path do
+    span.name = lead.name
+    span.screen-name = lead.at_screen_name
+
+  / location
+  span.location = lead.location
+
+  / refresh link
+  / destroy link
+  - if extended_view?(lead)
+    = link_to icon_tag(:leaf, 'Refresh'), refresh_dash_lead_path(lead), method: :post, class: 'refresh-link'
+
+    = link_to icon_tag(:remove, 'Remove'), [:dash, lead], method: :delete, class: 'destroy-link'
+
+  / description
+  / url
+  div.description-wrapper
+    span.description == lead.description
+    span.url == lead.url
+
+  / stats
+  .statistics class="#{ 'vertical' if extended_view?(lead) }"
+    = stat('Followers:', lead.followers_count)
+    = stat('Tweets:', lead.statuses_count)
+    = stat('Client(s):', lead.sources) if lead.sources
+
+    - if extended_view?(lead)
+      = stat('Verified Account:', true) if lead.verified?
+      = stat("Response Rate in #{ tweets.size } Tweets :", lead.response_rate) if tweets.size > 1
+      = stat('Joined Twitter:', lead.joined_twitter_on)
+      / = stat('Friends:', lead.friends_count)
+      = stat('Profile Lang:', lead.lang)
+      / = stat('Time Zone:', lead.time_zone)
+
+  / score
+  .score
+    ' Score:
+    span class="btn-group" data-toggle="buttons-radio"
+      - %w(high medium secondary).each do |score|
+        - score_id = "lead_#{ lead.twitter_id }_score_#{ score }"
+        = f.label "#{ lead.twitter_id }_score_#{ score }", class: "btn #{'active btn-success' if lead.score.to_s == score.to_s}"
+          = f.radio_button :score, score, id: score_id
+          = score_icon_tag(score)
+
+  / extended view / show view
+  - if extended_view?(lead)
+
+    / sources
+    .sources-wrapper
+      h5
+        ' Sources
+        small from #{ pluralize lead.tweets.size, 'tweet' }
+
+      .sources = lead.weighted_sources
+
+      = pie_chart lead.grouped_sources_for_chart, id: 'sources-chart'
+
+    / tweets
+    .tweets-wrapper
+      h5
+        ' Most recent tweets
+        small #{ pluralize tweets.size, 'tweet' }
+
+      table class='tweets-table table'
+        tbody
+        - tweets.each do |tweet|
+          - tweet &&= tweet.decorate
+          tr.tweet
+            td = link_to icon_tag(:twitter), tweet.twitter_url, class: 'twitter-url'
+            td.text == tweet.text
+            td.source == tweet.source
+            td.created-at = tweet.created_at

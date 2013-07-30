@@ -108,7 +108,7 @@ Tweetbox::Application.configure do
 
   # Via RailsCasts (http://railscasts.com/episodes/405-angularjs)
   # TODO: Maybe activate
-  # config.assets.js_compressor = Sprockets::LazyCompressor.new { Uglifier.new(mangle: false) }
+  config.assets.js_compressor = Sprockets::LazyCompressor.new { Uglifier.new(mangle: false) }
 
   # Devise SSL
   # TODO: Still nescessary?
