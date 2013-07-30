@@ -32,25 +32,8 @@ div class='navbar navbar-fixed-top'
           ul class='nav project-links'
 
             / project links
-            / for a small number of projects
-            - if current_user.projects.size <= 3
-              - current_user.projects.by_name.each do |project|
-                = active_link_to project.name, project
-
-            / for many projects
-            - else
-              li class='dropdown'
-                a href='javascript:;' class='dropdown-toggle' data-toggle='dropdown'
-                  - if @project.present?
-                    b = @project.name
-                  - else
-                    span Projects&nbsp;
-                  b class='caret'
-
-                / dropdown
-                ul class='dropdown-menu'
-                  - current_user.projects.by_name.each do |project|
-                    = active_link_to project.name, project
+            - current_user.projects.by_name.each do |project|
+              = active_link_to project.name, project
 
           / right side
           ul class='nav pull-right'

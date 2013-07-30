@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   # if there is only one
   # TODO: Cache projects_count on users
   def after_sign_in_path_for(resource)
-    projects_path
+    current_user.after_sign_in_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
@@ -27,12 +27,9 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Handle user access violations
-  # to actions his access level does not permit
-  # detected by pundit
   def user_not_authorized
     flash[:error] = "You are not authorized to perform this action."
-    redirect_to request.headers["Referer"] || root_path
+    redirect_to request.headers["Referer"] || root_url
   end
 
   helper_method :user_account, :user_projects, :user_project
