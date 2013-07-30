@@ -6,7 +6,7 @@ class Dash::LeadsController < Dash::ApplicationController
 
   # Search leads on Twitter
   def search
-    @search = TwitterUserSearch.new(params[:query], params[:page])
+    build_search
   end
 
   # Remember leads
@@ -16,17 +16,10 @@ class Dash::LeadsController < Dash::ApplicationController
 
   # Score leads
   def score
-    search
-
     @leads = Lead.having_score(score_params).
       by_joined_twitter_at.page(params[:page])
 
-    @score_name = case score_params.to_s
-                  when 'high'      then 'High Scoring Leads'
-                  when 'medium'    then 'Medium Scoring Leads'
-                  when 'secondary' then 'Secondary Accounts'
-                  when 'unscored'  then 'Unscored Leads'
-                  end
+    build_search
   end
 
   ##
@@ -58,8 +51,12 @@ class Dash::LeadsController < Dash::ApplicationController
   private
 
   def load_lead
-    @lead = Lead.find_or_fetch_by_screen_name(params[:id] || params[:screen_name])
+    @lead = Lead.find_or_fetch_by screen_name: (params[:id] || params[:screen_name])
     return redirect_to dash_root_path, alert: "@#{ params[:id] } could not be found on Twitter." unless @lead.present?
+  end
+
+  def build_search
+    @search ||= TwitterUserSearch.new(params[:query], params[:page])
   end
 
   def lead_params

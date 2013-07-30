@@ -10,6 +10,15 @@ module DashHelper
     "<i class='icon-#{ type.to_s }'></i> #{ text }".html_safe
   end
 
+  def score_title(score)
+    case score.to_s
+    when 'high'      then 'High Scoring Leads'
+    when 'medium'    then 'Medium Scoring Leads'
+    when 'secondary' then 'Secondary Accounts'
+    when 'unscored'  then 'Unscored Leads'
+    end
+  end
+
   def score_icon_tag(score)
     case score.to_s
     when 'high'      then icon_tag('star', 'High Score')

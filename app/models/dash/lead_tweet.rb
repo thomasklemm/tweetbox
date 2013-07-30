@@ -5,22 +5,23 @@ class LeadTweet < ActiveRecord::Base
 
   validates :twitter_id, presence: true
 
-  # Returns a tweet record
+  # Returns the persisted tweet record given a single Twitter::Tweet instance
+  # or an array of persisted tweet records given an array of Twitter::Tweet instances
   def self.from_twitter(status, lead=nil)
-    return unless status
-
-    tweet = self.find_or_create_by(twitter_id: status.id)
-    tweet.assign_fields(status)
-    tweet.lead = lead || Lead.from_twitter(status.user, skip_status: true)
-    tweet.save! and tweet
+    case status
+    when Array
+      status.map { |s| from_twitter(s, lead) }
+    else
+      tweet = self.find_or_create_by(twitter_id: status.id)
+      tweet.send(:assign_fields, status)
+      tweet.lead = lead || Lead.from_twitter(status.user, skip_status: true)
+      tweet.save! and tweet
+    end
   rescue ActiveRecord::RecordNotUnique
     retry
   end
 
-  # Returns an array of tweet records
-  def self.many_from_twitter(statuses)
-    statuses.map { |status| from_twitter(status) }
-  end
+  private
 
   # Assigns fields from a Twitter::Tweet object
   def assign_fields(status)

@@ -1,6 +1,6 @@
 / score leads
 
-= logo_header @score_name
+= logo_header score_title(params[:score])
 
 / search form
 = form_tag({ controller: 'leads', action: 'search' }, method: :get, class: 'form-search') do

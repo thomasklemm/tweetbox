@@ -21,98 +21,81 @@ class Lead < ActiveRecord::Base
   # Pagination
   paginates_per 30
 
+  # Tweets with eager loaded self
   def ordered_tweets
     tweets.includes(:lead).order(created_at: :desc)
   end
 
-  # Returns an array of persisted lead records
-  def self.many_from_twitter(users, opts={})
-    users.map { |user| from_twitter(user, opts) }
-  end
 
-  # Returns the persisted lead record
-  def self.from_twitter(user, opts={})
-    return unless user
+  ##
+  # Class methods
 
-    lead = self.find_or_create_by(twitter_id: user.id)
-    lead.send(:assign_fields, user)
-    lead.save!
-
-    # Free embeded status
-    LeadTweet.from_twitter(user.status, lead) unless opts[:skip_status]
-
-    lead
-  rescue ActiveRecord::RecordNotUnique
-    retry
-  end
-
-  # Returns a lead record
+  # Returns a lead record given a screen_name or twitter_id
   # or nil if the user cannot be found on Twitter
-  def self.find_or_fetch_by_screen_name(screen_name)
-    lead = find_by(screen_name: screen_name)
-    lead ||= fetch_by_screen_name(screen_name)
+  def self.find_or_fetch_by(opts={})
+    twitter_id = params[:twitter_id]
+    screen_name = params[:screen_name]
+
+    raise "A screen_name or twitter_id option is required" unless screen_name || twitter_id
+    raise "Exclusive options screen_name and twitter_id can not be present at once" if screen_name && twitter_id
+
+    lead = find_by(twitter_id: twitter_id) if twitter_id
+    lead = find_by(screen_name: screen_name) if screen_name
+
+    lead ||= fetch(screen_name || twitter_id)
   end
 
-  # Fetches the lead and the most recent 20 tweets
-  def self.fetch_by_screen_name(screen_name)
-    twitter_user = twitter_client.user(screen_name)
+  # Fetches the lead
+  # Fetches the most recent 50 tweets in the background
+  # Returns the persisted lead
+  def self.fetch(screen_name_or_twitter_id)
+    twitter_user = twitter_client.user(screen_name_or_twitter_id)
     lead = self.from_twitter(twitter_user)
-    lead.delay.fetch_user_timeline(20)
+
+    # Fetch most recent tweets in the background
+    lead.delay.fetch_user_timeline(50)
+
     lead
   rescue Twitter::Error::NotFound
     nil
   end
 
+  # Returns the persisted lead record given a single Twitter::User instance
+  # or an array of the persisted lead records given an array of Twitter::User instances
+  def self.from_twitter(user, opts={})
+    case user
+    when Array
+      user.map { |u| from_twitter(u, opts) }
+    else
+      lead = self.find_or_create_by(twitter_id: user.id)
+      lead.send(:assign_fields, user)
+      lead.save!
+
+      # Free embeded status
+      LeadTweet.from_twitter(user.status, lead) unless opts[:skip_status]
+
+      lead
+    end
+  rescue ActiveRecord::RecordNotUnique
+    retry
+  end
+
+
+  ##
+  # Instance methods
+
   # Fetches and updates the current lead from Twitter
   def fetch_user
-    user = twitter_client.user(screen_name)
-    Lead.from_twitter(user)
+    twitter_user = twitter_client.user(screen_name)
+    Lead.from_twitter(twitter_user)
   end
 
   # Fetches the most recent
   # given number of tweets for the given user
-  # Defaults to 200 tweets
-  def fetch_user_timeline(n=200)
-    tweets.destroy_all if n == 200
+  # Defaults to 100 tweets
+  def fetch_user_timeline(n=100)
     statuses = twitter_client.user_timeline(screen_name, count: n)
-    LeadTweet.many_from_twitter(statuses)
-  end
-
-  # Import leads by twitter_id and score
-  # Given JSON exported by Lead.pluck(:twitter_id, :score).to_json
-  def self.import(json)
-    leads = []
-    lead_ids_and_scores = JSON.parse(json)
-
-    lead_ids_and_scores.each_slice(100) do |lead_ids|
-      twitter_ids = lead_ids.map(&:first)
-      twitter_users = twitter_client.users(twitter_ids)
-      leads << many_from_twitter(twitter_users)
-    end
-
-    puts "Imported #{ leads.flatten.size } leads."
-  end
-
-    # Fetches and updates the current lead from Twitter
-  def self.fetch_user(twitter_id_or_screen_name)
-    user = twitter_client.user(twitter_id_or_screen_name)
-    Lead.from_twitter(user)
-  end
-
-  def self.import_scores(json)
-    lead_ids_and_scores = JSON.parse(json)
-
-    lead_ids_and_scores.map do |lead_id_and_score|
-      twitter_id = lead_id_and_score[0]
-      score = lead_id_and_score[1]
-
-      lead = Lead.find_by(twitter_id: twitter_id)
-      lead ||= fetch_user(twitter_id)
-
-      return unless lead
-      lead.score = score
-      lead.save! and lead
-    end
+    LeadTweet.from_twitter(statuses)
   end
 
   def to_param
@@ -120,6 +103,22 @@ class Lead < ActiveRecord::Base
   end
 
   private
+
+  ##
+  # Class methods
+
+  # Returns a random twitter client
+  def self.twitter_client
+    RandomTwitterClient.new
+  end
+
+  ##
+  # Instance methods
+
+  # Returns a random twitter client
+  def twitter_client
+    RandomTwitterClient.new
+  end
 
   # Assigns fields from a Twitter::User object
   def assign_fields(user)
@@ -140,13 +139,5 @@ class Lead < ActiveRecord::Base
     self.verified = user.verified
     self.following = user.following
     self
-  end
-
-  def self.twitter_client
-    RandomTwitterClient.new
-  end
-
-  def twitter_client
-    RandomTwitterClient.new
   end
 end
