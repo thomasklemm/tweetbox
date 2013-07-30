@@ -57,7 +57,7 @@ class Lead < ActiveRecord::Base
   def self.fetch_by_screen_name(screen_name)
     twitter_user = twitter_client.user(screen_name)
     lead = self.from_twitter(twitter_user)
-    lead.fetch_user_timeline(20)
+    lead.delay.fetch_user_timeline(20)
     lead
   rescue Twitter::Error::NotFound
     nil
