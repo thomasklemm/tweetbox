@@ -45,7 +45,7 @@ class Dash::LeadsController < Dash::ApplicationController
     @lead.fetch_user
     @lead.fetch_user_timeline(200)
 
-    redirect_to @lead,
+    redirect_to dash_lead_path(@lead),
       notice: "Lead @#{ @lead.screen_name } has been updated from Twitter."
   end
 
@@ -59,7 +59,7 @@ class Dash::LeadsController < Dash::ApplicationController
 
   def load_lead
     @lead = Lead.find_or_fetch_by_screen_name(params[:id] || params[:screen_name])
-    return redirect_to root_path, alert: "@#{ params[:id] } could not be found on Twitter." unless @lead.present?
+    return redirect_to dash_root_path, alert: "@#{ params[:id] } could not be found on Twitter." unless @lead.present?
   end
 
   def lead_params

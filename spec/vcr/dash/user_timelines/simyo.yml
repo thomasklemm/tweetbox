@@ -1,0 +1,300 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://<TWITTER_CONSUMER_KEY>:<TWITTER_CONSUMER_SECRET>@api.twitter.com/oauth2/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=client_credentials
+    headers:
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Content-Type:
+      - application/x-www-form-urlencoded; charset=UTF-8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '138'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 29 Jul 2013 21:10:16 GMT
+      Etag:
+      - '"87f5a16a0576dafbb5c8d33eeaabfe1c"'
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 29 Jul 2013 21:10:16 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - _twitter_sess=BAh7CDoMY3NyZl9pZCIlZWZkNWIzZTNlZWM4NGRmYWE4ZDgwMjkzZTI4OTkw%250ANWY6B2lkIiViNGE4ZTY4MWQ1YTQzMjQ3OGI2YmNiMTViNDExNzkyMjoPY3Jl%250AYXRlZF9hdGwrCOJsRCxAAQ%253D%253D--cb04df9476c2c88da716116d724cc43632aaa172;
+        domain=.twitter.com; path=/; HttpOnly
+      - guest_id=v1%3A137513221640716931; Domain=.twitter.com; Path=/; Expires=Wed,
+        29-Jul-2015 21:10:16 UTC
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - DENY
+      X-Mid:
+      - 294ff91e4ae3936d4b8ac6646d1242ba4d686445
+      X-Runtime:
+      - '0.05853'
+      X-Transaction:
+      - 337501314ccc070b
+      X-Ua-Compatible:
+      - IE=10,chrome=1
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"AAAAAAAAAAAAAAAAAAAAAJu4QwAAAAAAVM71GL1x6BF8XECJXnSUUtRr7S8%3D5pHyluqeth6qY61G01U8deQ0F01qBEh320yR0E3Y7M","token_type":"bearer"}'
+    http_version:
+  recorded_at: Mon, 29 Jul 2013 21:10:18 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/users/show.json?screen_name=simyo
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - Bearer AAAAAAAAAAAAAAAAAAAAAJu4QwAAAAAAVM71GL1x6BF8XECJXnSUUtRr7S8%3D5pHyluqeth6qY61G01U8deQ0F01qBEh320yR0E3Y7M
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '1144'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 29 Jul 2013 21:10:17 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 29 Jul 2013 21:10:17 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137513221742166592; Domain=.twitter.com; Path=/; Expires=Wed,
+        29-Jul-2015 21:10:17 UTC
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '178'
+      X-Rate-Limit-Reset:
+      - '1375132736'
+      X-Transaction:
+      - 9aaa57726c730f45
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"id":33878217,"id_str":"33878217","name":"simyo Deutschland","screen_name":"simyo","location":"D\u00fcsseldorf","description":"Der
+        offizielle simyo Deutschland Twitter-Account. http:\/\/t.co\/8wpTA0iKgd","url":"http:\/\/t.co\/LR5S23ZT1i","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/LR5S23ZT1i","expanded_url":"http:\/\/www.simyo.de\/","display_url":"simyo.de","indices":[0,22]}]},"description":{"urls":[{"url":"http:\/\/t.co\/8wpTA0iKgd","expanded_url":"http:\/\/www.simyo.de\/de\/unternehmen\/impressum.html","display_url":"simyo.de\/de\/unternehmen\u2026","indices":[50,72]}]}},"protected":false,"followers_count":3791,"friends_count":1111,"listed_count":143,"created_at":"Tue
+        Apr 21 11:39:55 +0000 2009","favourites_count":251,"utc_offset":7200,"time_zone":"Berlin","geo_enabled":true,"verified":false,"statuses_count":3376,"lang":"de","status":{"created_at":"Mon
+        Jul 29 12:30:08 +0000 2013","id":361825972510662656,"id_str":"361825972510662656","text":"Wir
+        haben f\u00fcr euch die neuesten Informationen zum SIM-Karten-Hack: Ihr als
+        E-Plus-Kunden seid nicht betroffen. http:\/\/t.co\/TtyIdxPhpV \/hg","source":"\u003ca
+        href=\"http:\/\/www.tweetdeck.com\" rel=\"nofollow\"\u003eTweetDeck\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":1,"favorite_count":1,"entities":{"hashtags":[],"symbols":[],"urls":[{"url":"http:\/\/t.co\/TtyIdxPhpV","expanded_url":"http:\/\/eplus-gruppe.de\/sim-karten-im-e-plus-netz-nicht-betroffen\/","display_url":"eplus-gruppe.de\/sim-karten-im-\u2026","indices":[111,133]}],"user_mentions":[]},"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"de"},"contributors_enabled":false,"is_translator":false,"profile_background_color":"E0E3E3","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/33878217\/1367598366","profile_link_color":"DB5C07","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"F2EFEA","profile_text_color":"3C3940","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null}'
+    http_version:
+  recorded_at: Mon, 29 Jul 2013 21:10:19 GMT
+- request:
+    method: post
+    uri: https://<TWITTER_CONSUMER_KEY>:<TWITTER_CONSUMER_SECRET>@api.twitter.com/oauth2/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=client_credentials
+    headers:
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Content-Type:
+      - application/x-www-form-urlencoded; charset=UTF-8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '138'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 29 Jul 2013 21:10:18 GMT
+      Etag:
+      - '"87f5a16a0576dafbb5c8d33eeaabfe1c"'
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 29 Jul 2013 21:10:18 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - _twitter_sess=BAh7CDoMY3NyZl9pZCIlM2JkN2E2MjE1YzNhNmY1MzU1MTJiODMxMmVlNjUx%250AMzc6B2lkIiViNDZiYzE2ZjcxMWViYjk5NzJlNGFjZWIyMzlhYzA2OToPY3Jl%250AYXRlZF9hdGwrCBh1RCxAAQ%253D%253D--a75b0ba90752d8ca565c43693a3d69813028bcf0;
+        domain=.twitter.com; path=/; HttpOnly
+      - guest_id=v1%3A137513221854170703; Domain=.twitter.com; Path=/; Expires=Wed,
+        29-Jul-2015 21:10:18 UTC
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - DENY
+      X-Mid:
+      - f18c62b2c5918eb8d6d17a642ec0bc4908b82499
+      X-Runtime:
+      - '0.06821'
+      X-Transaction:
+      - 78dee6b7ecade225
+      X-Ua-Compatible:
+      - IE=10,chrome=1
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"AAAAAAAAAAAAAAAAAAAAAJu4QwAAAAAAVM71GL1x6BF8XECJXnSUUtRr7S8%3D5pHyluqeth6qY61G01U8deQ0F01qBEh320yR0E3Y7M","token_type":"bearer"}'
+    http_version:
+  recorded_at: Mon, 29 Jul 2013 21:10:20 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&screen_name=simyo
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - Bearer AAAAAAAAAAAAAAAAAAAAAJu4QwAAAAAAVM71GL1x6BF8XECJXnSUUtRr7S8%3D5pHyluqeth6qY61G01U8deQ0F01qBEh320yR0E3Y7M
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '33228'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 29 Jul 2013 21:10:19 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 29 Jul 2013 21:10:19 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137513221949704033; Domain=.twitter.com; Path=/; Expires=Wed,
+        29-Jul-2015 21:10:19 UTC
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '300'
+      X-Rate-Limit-Remaining:
+      - '298'
+      X-Rate-Limit-Reset:
+      - '1375132739'
+      X-Transaction:
+      - 08fad0b6fc9695f3
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '[{"created_at":"Mon Jul 29 12:30:08 +0000 2013","id":361825972510662656,"id_str":"361825972510662656","text":"Wir
+        haben f\u00fcr euch die neuesten Informationen zum SIM-Karten-Hack: Ihr als
+        E-Plus-Kunden seid nicht betroffen. http:\/\/t.co\/TtyIdxPhpV \/hg","source":"\u003ca
+        href=\"http:\/\/www.tweetdeck.com\" rel=\"nofollow\"\u003eTweetDeck\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":33878217,"id_str":"33878217","name":"simyo
+        Deutschland","screen_name":"simyo","location":"D\u00fcsseldorf","description":"Der
+        offizielle simyo Deutschland Twitter-Account. http:\/\/t.co\/8wpTA0iKgd","url":"http:\/\/t.co\/LR5S23ZT1i","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/LR5S23ZT1i","expanded_url":"http:\/\/www.simyo.de\/","display_url":"simyo.de","indices":[0,22]}]},"description":{"urls":[{"url":"http:\/\/t.co\/8wpTA0iKgd","expanded_url":"http:\/\/www.simyo.de\/de\/unternehmen\/impressum.html","display_url":"simyo.de\/de\/unternehmen\u2026","indices":[50,72]}]}},"protected":false,"followers_count":3791,"friends_count":1111,"listed_count":143,"created_at":"Tue
+        Apr 21 11:39:55 +0000 2009","favourites_count":251,"utc_offset":7200,"time_zone":"Berlin","geo_enabled":true,"verified":false,"statuses_count":3376,"lang":"de","contributors_enabled":false,"is_translator":false,"profile_background_color":"E0E3E3","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/33878217\/1367598366","profile_link_color":"DB5C07","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"F2EFEA","profile_text_color":"3C3940","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":1,"favorite_count":1,"entities":{"hashtags":[],"symbols":[],"urls":[{"url":"http:\/\/t.co\/TtyIdxPhpV","expanded_url":"http:\/\/eplus-gruppe.de\/sim-karten-im-e-plus-netz-nicht-betroffen\/","display_url":"eplus-gruppe.de\/sim-karten-im-\u2026","indices":[111,133]}],"user_mentions":[]},"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"de"},{"created_at":"Mon
+        Jul 29 10:17:34 +0000 2013","id":361792607287914496,"id_str":"361792607287914496","text":"@nicht_von_hier
+        Warum? Dort siehst du f\u00fcr jede gebuchte Option die Abrechnungszeitr\u00e4ume
+        und ab da wird jeweils der Verbrauch gez\u00e4hlt. \/hg","source":"\u003ca
+        href=\"http:\/\/www.tweetdeck.com\" rel=\"nofollow\"\u003eTweetDeck\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":361788085291323392,"in_reply_to_status_id_str":"361788085291323392","in_reply_to_user_id":1260683954,"in_reply_to_user_id_str":"1260683954","in_reply_to_screen_name":"nicht_von_hier","user":{"id":33878217,"id_str":"33878217","name":"simyo
+        Deutschland","screen_name":"simyo","location":"D\u00fcsseldorf","description":"Der
+        offizielle simyo Deutschland Twitter-Account. http:\/\/t.co\/8wpTA0iKgd","url":"http:\/\/t.co\/LR5S23ZT1i","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/LR5S23ZT1i","expanded_url":"http:\/\/www.simyo.de\/","display_url":"simyo.de","indices":[0,22]}]},"description":{"urls":[{"url":"http:\/\/t.co\/8wpTA0iKgd","expanded_url":"http:\/\/www.simyo.de\/de\/unternehmen\/impressum.html","display_url":"simyo.de\/de\/unternehmen\u2026","indices":[50,72]}]}},"protected":false,"followers_count":3791,"friends_count":1111,"listed_count":143,"created_at":"Tue
+        Apr 21 11:39:55 +0000 2009","favourites_count":251,"utc_offset":7200,"time_zone":"Berlin","geo_enabled":true,"verified":false,"statuses_count":3376,"lang":"de","contributors_enabled":false,"is_translator":false,"profile_background_color":"E0E3E3","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/33878217\/1367598366","profile_link_color":"DB5C07","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"F2EFEA","profile_text_color":"3C3940","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"nicht_von_hier","name":"ich
+        bin","id":1260683954,"id_str":"1260683954","indices":[0,15]}]},"favorited":false,"retweeted":false,"lang":"de"},{"created_at":"Mon
+        Jul 29 09:37:02 +0000 2013","id":361782410247028737,"id_str":"361782410247028737","text":"@schla
+        Das kannst du in \"Mein simyo\" einsehen, da stehen die Laufzeiten der Optionen
+        aufgelistet. \/hg","source":"\u003ca href=\"http:\/\/www.tweetdeck.com\" rel=\"nofollow\"\u003eTweetDeck\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":360775071620534272,"in_reply_to_status_id_str":"360775071620534272","in_reply_to_user_id":15195589,"in_reply_to_user_id_str":"15195589","in_reply_to_screen_name":"schla","user":{"id":33878217,"id_str":"33878217","name":"simyo
+        Deutschland","screen_name":"simyo","location":"D\u00fcsseldorf","description":"Der
+        offizielle simyo Deutschland Twitter-Account. http:\/\/t.co\/8wpTA0iKgd","url":"http:\/\/t.co\/LR5S23ZT1i","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/LR5S23ZT1i","expanded_url":"http:\/\/www.simyo.de\/","display_url":"simyo.de","indices":[0,22]}]},"description":{"urls":[{"url":"http:\/\/t.co\/8wpTA0iKgd","expanded_url":"http:\/\/www.simyo.de\/de\/unternehmen\/impressum.html","display_url":"simyo.de\/de\/unternehmen\u2026","indices":[50,72]}]}},"protected":false,"followers_count":3791,"friends_count":1111,"listed_count":143,"created_at":"Tue
+        Apr 21 11:39:55 +0000 2009","favourites_count":251,"utc_offset":7200,"time_zone":"Berlin","geo_enabled":true,"verified":false,"statuses_count":3376,"lang":"de","contributors_enabled":false,"is_translator":false,"profile_background_color":"E0E3E3","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/33878217\/1367598366","profile_link_color":"DB5C07","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"F2EFEA","profile_text_color":"3C3940","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"schla","name":"der
+        Schla","id":15195589,"id_str":"15195589","indices":[0,6]}]},"favorited":false,"retweeted":false,"lang":"de"},{"created_at":"Mon
+        Jul 29 09:36:36 +0000 2013","id":361782300779876352,"id_str":"361782300779876352","text":"@lauragoesred
+        Wenn deine Freundin alle Optionen k\u00fcndigt, zahlt sie nur, was sie verbraucht
+        \u2013 also nichts, wenn sie die Karte nicht nutzt \/hg","source":"\u003ca
+        href=\"http:\/\/www.tweetdeck.com\" rel=\"nofollow\"\u003eTweetDeck\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":361092936873676800,"in_reply_to_status_id_str":"361092936873676800","in_reply_to_user_id":29515696,"in_reply_to_user_id_str":"29515696","in_reply_to_screen_name":"lauragoesred","user":{"id":33878217,"id_str":"33878217","name":"simyo
+        Deutschland","screen_name":"simyo","location":"D\u00fcsseldorf","description":"Der
+        offizielle simyo Deutschland Twitter-Account. http:\/\/t.co\/8wpTA0iKgd","url":"http:\/\/t.co\/LR5S23ZT1i","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/LR5S23ZT1i","expanded_url":"http:\/\/www.simyo.de\/","display_url":"simyo.de","indices":[0,22]}]},"description":{"urls":[{"url":"http:\/\/t.co\/8wpTA0iKgd","expanded_url":"http:\/\/www.simyo.de\/de\/unternehmen\/impressum.html","display_url":"simyo.de\/de\/unternehmen\u2026","indices":[50,72]}]}},"protected":false,"followers_count":3791,"friends_count":1111,"listed_count":143,"created_at":"Tue
+        Apr 21 11:39:55 +0000 2009","favourites_count":251,"utc_offset":7200,"time_zone":"Berlin","geo_enabled":true,"verified":false,"statuses_count":3376,"lang":"de","contributors_enabled":false,"is_translator":false,"profile_background_color":"E0E3E3","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/33878217\/1367598366","profile_link_color":"DB5C07","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"F2EFEA","profile_text_color":"3C3940","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"lauragoesred","name":"Laura","id":29515696,"id_str":"29515696","indices":[0,13]}]},"favorited":false,"retweeted":false,"lang":"de"},{"created_at":"Mon
+        Jul 29 09:35:42 +0000 2013","id":361782073033371648,"id_str":"361782073033371648","text":"@foo_mep
+        Den genauen Verbrauch kannst du in deinem Smartphone direkt oder \u00fcber
+        entsprechende Verbrauchs-Apps einsehen. \/hg","source":"\u003ca href=\"http:\/\/www.tweetdeck.com\"
+        rel=\"nofollow\"\u003eTweetDeck\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":361577530152591360,"in_reply_to_status_id_str":"361577530152591360","in_reply_to_user_id":14558217,"in_reply_to_user_id_str":"14558217","in_reply_to_screen_name":"foo_mep","user":{"id":33878217,"id_str":"33878217","name":"simyo
+        Deutschland","screen_name":"simyo","location":"D\u00fcsseldorf","description":"Der
+        offizielle simyo Deutschland Twitter-Account. http:\/\/t.co\/8wpTA0iKgd","url":"http:\/\/t.co\/LR5S23ZT1i","entities":{"url":{"urls":[{"url":"http:\/\/t.co\/LR5S23ZT1i","expanded_url":"http:\/\/www.simyo.de\/","display_url":"simyo.de","indices":[0,22]}]},"description":{"urls":[{"url":"http:\/\/t.co\/8wpTA0iKgd","expanded_url":"http:\/\/www.simyo.de\/de\/unternehmen\/impressum.html","display_url":"simyo.de\/de\/unternehmen\u2026","indices":[50,72]}]}},"protected":false,"followers_count":3791,"friends_count":1111,"listed_count":143,"created_at":"Tue
+        Apr 21 11:39:55 +0000 2009","favourites_count":251,"utc_offset":7200,"time_zone":"Berlin","geo_enabled":true,"verified":false,"statuses_count":3376,"lang":"de","contributors_enabled":false,"is_translator":false,"profile_background_color":"E0E3E3","profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/873901371\/ba4786c3fdb39fcc714c47304548e7bb.jpeg","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/195843444\/simyo_wallpaper_1920x1200_PNG_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/33878217\/1367598366","profile_link_color":"DB5C07","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"F2EFEA","profile_text_color":"3C3940","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[],"user_mentions":[{"screen_name":"foo_mep","name":"foo_mep","id":14558217,"id_str":"14558217","indices":[0,8]}]},"favorited":false,"retweeted":false,"lang":"de"}]'
+    http_version:
+  recorded_at: Mon, 29 Jul 2013 21:10:21 GMT
+recorded_with: VCR 2.5.0

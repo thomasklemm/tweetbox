@@ -23,13 +23,17 @@ class TwitterUserSearch
   def results
     @results ||= begin
       return unless query.present?
-      users = RandomTwitterClient.new.user_search(query, count: 20, page: page)
+      twitter_client.user_search(query, count: 20, page: page)
     end
   end
 
   private
 
   def query_url
-    "/leads/search?query=#{ URI.escape(query) }"
+    "/dash/leads/search?query=#{ URI.escape(query) }"
+  end
+
+  def twitter_client
+    RandomTwitterClient.new
   end
 end

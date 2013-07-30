@@ -12,7 +12,7 @@ module DashHelper
 
   def score_icon_tag(score)
     case score.to_s
-    when 'high'      then icon_tag('star')
+    when 'high'      then icon_tag('star', 'High Score')
     when 'medium'    then icon_tag('star-half-full')
     when 'secondary' then icon_tag('star-empty')
     else                  icon_tag('ok')

@@ -75,5 +75,6 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
 end
 
-# Capybara.default_host = 'lvh.me:7000'
 Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 10
+# Capybara.default_host = 'lvh.me:7000'

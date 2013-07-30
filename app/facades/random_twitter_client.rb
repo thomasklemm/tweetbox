@@ -6,13 +6,15 @@ class RandomTwitterClient
 
   def initialize
     @twitter_account = TwitterAccount.random
-    raise "No TwitterAccount could ne found" unless @twitter_account.present?
+    raise "Could not find a Twitter account" unless @twitter_account.present?
     @twitter_client = @twitter_account.client
   end
 
   # Whitelist read-only Twitter API actions
   # to be performed with the random Twitter account
   delegate :user,
+           :users,
+           :user_timeline,
            :user_search,
            to: :twitter_client
 end

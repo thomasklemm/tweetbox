@@ -25,7 +25,12 @@ class Lead < ActiveRecord::Base
     tweets.includes(:lead).order(created_at: :desc)
   end
 
-  # Returns a lead record
+  # Returns an array of persisted lead records
+  def self.many_from_twitter(users, opts={})
+    users.map { |user| from_twitter(user, opts) }
+  end
+
+  # Returns the persisted lead record
   def self.from_twitter(user, opts={})
     return unless user
 
@@ -50,7 +55,7 @@ class Lead < ActiveRecord::Base
 
   # Fetches the lead and the most recent 20 tweets
   def self.fetch_by_screen_name(screen_name)
-    twitter_user = Twitter.user(screen_name)
+    twitter_user = twitter_client.user(screen_name)
     lead = self.from_twitter(twitter_user)
     lead.fetch_user_timeline(20)
     lead
@@ -60,7 +65,7 @@ class Lead < ActiveRecord::Base
 
   # Fetches and updates the current lead from Twitter
   def fetch_user
-    user = Twitter.user(screen_name)
+    user = twitter_client.user(screen_name)
     Lead.from_twitter(user)
   end
 
@@ -69,8 +74,23 @@ class Lead < ActiveRecord::Base
   # Defaults to 200 tweets
   def fetch_user_timeline(n=200)
     tweets.destroy_all if n == 200
-    statuses = Twitter.user_timeline(screen_name, count: n)
+    statuses = twitter_client.user_timeline(screen_name, count: n)
     LeadTweet.many_from_twitter(statuses)
+  end
+
+  # Import leads by twitter_id and score
+  # Given JSON exported by Lead.pluck(:twitter_id, :score).to_json
+  def self.import(json)
+    leads = []
+    lead_ids_and_scores = JSON.parse(json)
+
+    lead_ids_and_scores.each_slice(100) do |lead_ids|
+      twitter_ids = lead_ids.map(&:first)
+      twitter_users = twitter_client.users(twitter_ids)
+      leads << many_from_twitter(twitter_users)
+    end
+
+    puts "Imported #{ leads.flatten.size } leads."
   end
 
   def to_param
@@ -98,5 +118,13 @@ class Lead < ActiveRecord::Base
     self.verified = user.verified
     self.following = user.following
     self
+  end
+
+  def self.twitter_client
+    RandomTwitterClient.new
+  end
+
+  def twitter_client
+    RandomTwitterClient.new
   end
 end

@@ -4,7 +4,7 @@ class Dash::ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # HTTP Basic authentication
-  http_basic_authenticate_with name: 'tweetbox', password: 'dash'
+  # http_basic_authenticate_with name: 'tweetbox', password: 'dash'
 
   # Dash layout
   layout 'dash/layouts/application'
