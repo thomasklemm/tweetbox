@@ -1,4 +1,10 @@
-// Application stylesheet
+// Dash application stylesheet
+
+// bootstrap variables
+$sansFontFamily: 'proxima-nova', 'Helvetica Neue', Helvetica, Arial, sans-serif
+$iconSpritePath: ''
+$iconWhiteSpritePath: ''
+
 @import "bootstrap"
 
 body
@@ -62,7 +68,8 @@ p, form
 
   .refresh-link
     margin: 0 6px
-  .destroy-link
+  .refresh-link, .destroy-link
+    @extend .muted
 
   .description-wrapper
     margin-top: 0.2rem

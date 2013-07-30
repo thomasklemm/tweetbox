@@ -93,6 +93,28 @@ class Lead < ActiveRecord::Base
     puts "Imported #{ leads.flatten.size } leads."
   end
 
+    # Fetches and updates the current lead from Twitter
+  def self.fetch_user(twitter_id_or_screen_name)
+    user = twitter_client.user(twitter_id_or_screen_name)
+    Lead.from_twitter(user)
+  end
+
+  def self.import_scores(json)
+    lead_ids_and_scores = JSON.parse(json)
+
+    lead_ids_and_scores.map do |lead_id_and_score|
+      twitter_id = lead_id_and_score[0]
+      score = lead_id_and_score[1]
+
+      lead = Lead.find_by(twitter_id: twitter_id)
+      lead ||= fetch_user(twitter_id)
+
+      return unless lead
+      lead.score = score
+      lead.save! and lead
+    end
+  end
+
   def to_param
     screen_name
   end

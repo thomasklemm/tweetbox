@@ -19,10 +19,9 @@
 
   / refresh link
   / destroy link
-  - if extended_view?(lead)
-    = link_to icon_tag(:leaf, 'Refresh'), refresh_dash_lead_path(lead), method: :post, class: 'refresh-link'
+  = link_to icon_tag(:leaf, 'Refresh'), refresh_dash_lead_path(lead), method: :post, class: 'refresh-link'
 
-    = link_to icon_tag(:remove, 'Remove'), [:dash, lead], method: :delete, class: 'destroy-link'
+  = link_to icon_tag(:remove, 'Remove'), [:dash, lead], method: :delete, class: 'destroy-link'
 
   / description
   / url
