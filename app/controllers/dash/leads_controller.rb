@@ -51,7 +51,7 @@ class Dash::LeadsController < Dash::ApplicationController
 
   def destroy
     @lead.destroy
-    redirect_to score_dash_leads_path,
+    redirect_to search_dash_leads_path,
       notice: "Lead @#{ @lead.screen_name } has been removed."
   end
 
