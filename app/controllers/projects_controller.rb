@@ -5,6 +5,7 @@ class ProjectsController < ProjectController
   layout 'projects', only: :index
 
   def index
+    redirect_to current_user.first_project_path if current_user.has_exactly_one_project?
     @projects = user_projects
   end
 

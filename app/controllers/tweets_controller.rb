@@ -25,7 +25,7 @@ class TweetsController < TweetController
   end
 
   def resolve
-    @tweet.resolve_and_record!(current_user)
+    @tweet.resolve!(current_user)
 
     respond_to do |format|
       format.html { redirect_to [@project, :tweets], notice: 'Tweet has been resolved.' }

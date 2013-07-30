@@ -10,7 +10,9 @@
       | &nbsp;
       = submit_tag 'Search', class: 'btn', name: nil
 
-= page_entries_info @leads, entry_name: params[:score].try(:downcase)
+/ page entries
+- page_entries = page_entries_info @leads, entry_name: score_title(params[:score]).try(:downcase)
+= page_entries
 
 hr
 
@@ -20,4 +22,4 @@ hr
 hr
 
 = paginate @leads, window: 2
-= page_entries_info @leads
+= page_entries

@@ -102,7 +102,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def resolve!(user)
-    super and create_event(:resolve, user)
+    resolve and create_event(:resolve, user)
   end
 
   def create_event(kind, user)

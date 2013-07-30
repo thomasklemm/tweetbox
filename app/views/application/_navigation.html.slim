@@ -3,54 +3,48 @@ div class='navbar navbar-fixed-top'
   div class='navbar-inner'
     div class='container'
 
-      / .btn-navbar is used as the toggle for collapsed navbar content
-      button type="button" class='btn btn-navbar' data-toggle='collapse' data-target='.nav-collapse'
-        span class="icon-bar"
-        span class="icon-bar"
-        span class="icon-bar"
+      / tweetbox logo in navbar
+      / (inline styles might help prevent elements jumping around on the page on page load)
+      - tweetbox_navbar_image_tag = image_tag('logo_plus_tagline.png', class: 'navbar-logo', style: 'height: 24px; width: 104px; åmargin: -6px 0')
 
-      / tweetbox brand
-      ul class='nav'
-        = active_link_to (image_tag 'logo_plus_tagline.png', style: 'height: 24px; margin: -6px 0;'), root_path, exact: true
+      / user signed out
+      - unless user_signed_in?
+        ul class='nav'
+          = active_link_to tweetbox_navbar_image_tag, root_path, exact: true
+          = active_link_to "Who isn't it for?", static_path(:features), exact: true
+          = active_link_to 'Pricing and Signup', new_signup_path, exact: true
 
-      / everything below is hidden when width is less than $navbarCollapseWidth
-      div class='nav-collapse collapse'
+        / login
+        ul class='nav pull-right'
+          = active_link_to 'Login', login_path, exact: true
 
-        / user signed out
-        - unless user_signed_in?
-          ul class='nav'
-            li = active_link_to 'Features', static_path(:features)
-            li = active_link_to 'Signup', new_signup_path
+      / user signed in
+      - if user_signed_in?
 
-          / login
-          ul class='nav pull-right'
-            = active_link_to 'Login', login_path, exact: true
+        / left side
+        ul class='nav project-links'
+          li = link_to tweetbox_navbar_image_tag, current_user.first_project_path
 
-        / user signed in
-        - if user_signed_in?
-          / left side
-          ul class='nav project-links'
+          / project links
+          - current_user.projects.by_name.each do |project|
+            = active_link_to project.name, project
 
-            / project links
-            - current_user.projects.by_name.each do |project|
-              = active_link_to project.name, project
+        / right side
+        ul class='nav pull-right'
+          / user details and logout link
+          li class='dropdown'
+            / user details
+            a href='javascript:;' class='user-details dropdown-toggle' data-toggle='dropdown'
+              = image_tag(current_user.gravatar_image_url, class: 'gravatar')
+              span.name = current_user.name
+              | &nbsp;
+              b class='caret'
 
-          / right side
-          ul class='nav pull-right'
-            / user details and logout link
-            li class='dropdown'
-              / user details
-              a href='javascript:;' class='user-details dropdown-toggle' data-toggle='dropdown'
-                = image_tag(current_user.gravatar_image_url, class: 'gravatar')
-                span.name = current_user.name
-                | &nbsp;
-                b class='caret'
+            / dropdown
+            ul class='dropdown-menu'
+              / account link
+              - if policy(current_user.account).manage?
+                = active_link_to 'Account', account_path
 
-              / dropdown
-              ul class='dropdown-menu'
-                / account link
-                - if policy(current_user.account).manage?
-                  = active_link_to 'Account', account_path
-
-                / logout
-                li = link_to 'Logout', logout_path, method: :delete
+              / logout
+              li = link_to 'Logout', logout_path, method: :delete

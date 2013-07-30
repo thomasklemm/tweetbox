@@ -34,10 +34,10 @@
     = stat('Followers:', lead.followers_count)
     = stat('Tweets:', lead.statuses_count)
     = stat('Client(s):', lead.sources) if lead.sources
+    = stat('Responses:', lead.response_rate) if tweets.size > 1
 
     - if extended_view?(lead)
       = stat('Verified Account:', true) if lead.verified?
-      = stat("Response Rate in #{ tweets.size } Tweets :", lead.response_rate) if tweets.size > 1
       = stat('Joined Twitter:', lead.joined_twitter_on)
       / = stat('Friends:', lead.friends_count)
       = stat('Profile Lang:', lead.lang)

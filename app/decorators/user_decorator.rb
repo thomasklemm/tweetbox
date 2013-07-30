@@ -8,8 +8,11 @@ class UserDecorator < Draper::Decorator
     "https://secure.gravatar.com/avatar/#{ email_hash }?s=#{ size_in_pixels.to_i }&d=retro"
   end
 
-  # Path the user is redirected to after sign in
-  def after_sign_in_path
-    projects.size == 1 ? project_path(projects.first) : projects_path
+  def has_exactly_one_project?
+    projects.size == 1
+  end
+
+  def first_project_path
+    project_path(projects.first)
   end
 end
