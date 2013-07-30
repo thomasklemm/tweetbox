@@ -32,11 +32,11 @@ class Dash::LeadsController < Dash::ApplicationController
     @lead.update(lead_params)
   end
 
-  # Updates the lead and fetches the most recent 200 tweets
+  # Updates the lead and fetches the most recent 100 tweets
   # in the user timeline from Twitter
   def refresh
     @lead.fetch_user
-    @lead.fetch_user_timeline(200)
+    @lead.fetch_user_timeline
 
     redirect_to dash_lead_path(@lead),
       notice: "Lead @#{ @lead.screen_name } has been updated from Twitter."

@@ -10,7 +10,7 @@
       | &nbsp;
       = submit_tag 'Search', class: 'btn', name: nil
 
-= page_entries_info @leads, entry_name: @score_name.downcase
+= page_entries_info @leads, entry_name: params[:score].try(:downcase)
 
 hr
 
