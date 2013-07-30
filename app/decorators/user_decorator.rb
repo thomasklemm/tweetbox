@@ -13,6 +13,6 @@ class UserDecorator < Draper::Decorator
   end
 
   def first_project_path
-    project_path(projects.first)
+    projects.first.present? ? project_path(projects.first) : projects_path
   end
 end
