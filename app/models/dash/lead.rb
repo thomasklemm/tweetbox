@@ -33,8 +33,8 @@ class Lead < ActiveRecord::Base
   # Returns a lead record given a screen_name or twitter_id
   # or nil if the user cannot be found on Twitter
   def self.find_or_fetch_by(opts={})
-    twitter_id = params[:twitter_id]
-    screen_name = params[:screen_name]
+    twitter_id = opts[:twitter_id]
+    screen_name = opts[:screen_name]
 
     raise "A screen_name or twitter_id option is required" unless screen_name || twitter_id
     raise "Exclusive options screen_name and twitter_id can not be present at once" if screen_name && twitter_id
