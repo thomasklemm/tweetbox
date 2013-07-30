@@ -338,7 +338,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
-  bootstrap-sass (~> 2.3.2.0)
+  bootstrap-sass (~> 2.3.2.1)
   capybara-webkit
   chartkick
   clockwork
