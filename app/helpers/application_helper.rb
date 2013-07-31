@@ -48,7 +48,10 @@ module ApplicationHelper
   end
 
   def logo_header(text)
-    "<h3>#{ image_tag 'Tweetbox-Logo.png', width: 42, style: 'margin-right: 8px' }#{ text }</h3>".html_safe
+    content_tag :h3, class: 'logo-header' do
+      concat image_tag 'tweetbox/logo.png'
+      concat text
+    end
   end
 
   private

@@ -45,11 +45,9 @@ module DashHelper
 
   def logo_header(text)
     content_tag :h3, class: 'logo-header' do
-      concat image_tag 'Tweetbox-Logo.png'
+      concat image_tag 'tweetbox/logo.png'
       concat text
     end
-
-    # "<h3>#{ image_tag 'Tweetbox-Logo.png', width: 42, style: 'margin-right: 8px' }#{ text }</h3>".html_safe
   end
 
   def stat(key, value)
