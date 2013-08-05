@@ -16,24 +16,12 @@ head
   = csrf_meta_tags
 
 body
-  .container
-    = render 'navigation_bar'
+  = render 'navigation_bar'
 
-    .row
-      .span3
-        .well style="padding: 8px 0;"
+  div class='container' id='content'
+    / render flashes unless they are embedded in a special layout
+    - unless content_for?(:content)
+      = render 'flashes'
 
-          ul class='nav nav-list'
-            li.nav-header Leads
-            = active_list_item_link_to icon_tag(:search, 'Find Leads'), search_dash_leads_path
-
-            = active_list_item_link_to icon_tag(:magic, 'Leads To Score'), score_dash_leads_path(:unscored), exact: true
-
-            ul class='nav nav-list'
-              = active_list_item_link_to icon_tag(:star, 'High Score'), score_dash_leads_path(:high), exact: true
-              = active_list_item_link_to icon_tag('star-half-full', 'Medium Score'), score_dash_leads_path(:medium), exact: true
-              = active_list_item_link_to icon_tag('star-empty', 'Secondary Accounts'), score_dash_leads_path(:secondary), exact: true
-
-      .span9
-        = render 'flash_messages'
-        = yield
+    / render special layout or yield
+    = content_for?(:content) ? yield(:content) : yield

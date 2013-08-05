@@ -1,6 +1,8 @@
 class Dash::LeadsController < Dash::ApplicationController
   before_action :load_lead, only: [:show, :update, :refresh, :destroy]
 
+  layout 'dash/layouts/leads'
+
   ##
   # Collection actions
 

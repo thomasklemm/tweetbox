@@ -1,0 +1,5 @@
+<% if project %>
+  created the <%= project.name %> project on the <%= link_to project.account.name, [:dash, project.account] %> account (<%= pluralize project.account.projects.size, 'project' %>)
+<% else %>
+  created a project which has since been removed
+<% end %>

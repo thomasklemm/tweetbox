@@ -11,6 +11,9 @@ class RegistrationsController < ApplicationController
     @registration = Registration.new(registration_params)
 
     if @registration.save
+      track_activity @registration.user, :register
+      track_activity @registration.account, :join
+
       sign_in @registration.user
       redirect_to projects_path,
         notice: "Welcome to Tweetbox."

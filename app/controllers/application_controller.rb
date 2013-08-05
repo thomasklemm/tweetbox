@@ -43,6 +43,11 @@ class ApplicationController < ActionController::Base
     root_url
   end
 
+  # Activites
+  def track_activity(trackable, action)
+    current_user.activities.create!(action: action, trackable: trackable)
+  end
+
   # Scopes
   helper_method :user_account, :user_projects, :user_project
 

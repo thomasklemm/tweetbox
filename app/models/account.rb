@@ -25,6 +25,10 @@ class Account < ActiveRecord::Base
     create_project_permissions(user)
   end
 
+  def to_param
+    "#{ id }-#{ name.parameterize }"
+  end
+
   private
 
   # Grant the given user an admin membership of the account

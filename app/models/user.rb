@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :projects, through: :permissions
 
+  # Activities (Business events)
+  has_many :activities
+
   # Devise validates email on presence and uniqueness
   #  (also when user changes his email)
   # Devise validates password on presence, confirmation, and length

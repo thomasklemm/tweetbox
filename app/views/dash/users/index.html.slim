@@ -19,7 +19,7 @@ table class="table table-striped"
         / name and avatar
         td
           = image_tag(user.gravatar_image_url, style: 'margin: -3px 0; margin-right: 5px; border-radius: 2px')
-          b = user.name
+          b = link_to user.name, [:dash, user]
 
         / email
         td = user.email

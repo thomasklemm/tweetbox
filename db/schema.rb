@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130805132743) do
+ActiveRecord::Schema.define(version: 20130805210016) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 20130805132743) do
     t.datetime "updated_at",     null: false
     t.integer  "projects_count"
   end
+
+  create_table "activities", force: true do |t|
+    t.integer  "user_id"
+    t.text     "action"
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "authors", force: true do |t|
     t.integer  "project_id",                                  null: false

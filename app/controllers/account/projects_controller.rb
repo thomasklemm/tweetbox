@@ -15,6 +15,7 @@ class Account::ProjectsController < AccountController
     authorize @project, :manage?
 
     if @project.save
+      track_activity @project, :create
       redirect_to account_projects_path, notice: 'Project has been created.'
     else
       render :new

@@ -1,0 +1,22 @@
+/ A custom layout for all views rendered by the leads controller
+- content_for :content do
+  .row
+    .span3
+      .well style="padding: 8px 0;"
+
+        ul class='nav nav-list'
+          li.nav-header Leads
+          = active_list_item_link_to icon_tag(:search, 'Find Leads'), search_dash_leads_path
+
+          = active_list_item_link_to icon_tag(:magic, 'Leads To Score'), score_dash_leads_path(:unscored), exact: true
+
+          ul class='nav nav-list'
+            = active_list_item_link_to icon_tag(:star, 'High Score'), score_dash_leads_path(:high), exact: true
+            = active_list_item_link_to icon_tag('star-half-full', 'Medium Score'), score_dash_leads_path(:medium), exact: true
+            = active_list_item_link_to icon_tag('star-empty', 'Secondary Accounts'), score_dash_leads_path(:secondary), exact: true
+
+    .span9
+      = render 'flashes'
+      = yield
+
+= render template: 'dash/layouts/application'

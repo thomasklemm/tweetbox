@@ -13,6 +13,8 @@ class SearchesController < ProjectController
     @search = project_searches.build(search_params)
 
     if @search.save
+      track_activity @search, :create
+
       redirect_to project_searches_path(@project),
         notice: "Search for '#{ @search.query }' has been created."
     else
