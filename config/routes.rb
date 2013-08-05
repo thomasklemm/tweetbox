@@ -96,6 +96,9 @@ Tweetbox::Application.routes.draw do
       end
     end
 
+    resources :users, only: :index
+    resources :accounts, only: :index
+
     root to: redirect('/dash/leads/search')
   end
 

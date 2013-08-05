@@ -1,0 +1,19 @@
+/ dash accounts
+table class="table table-striped"
+  legend Accounts
+  thead
+    tr
+      th #
+      th Name
+      th Projects
+      th Users
+      th Created
+
+  tbody
+    - @accounts.each do |account|
+      tr
+        td = account.id
+        td: b = account.name
+        td #{ pluralize account.projects.size, 'project'} <br /> (#{ account.projects.map(&:name).to_sentence })
+        td #{ pluralize account.users.size, 'user'}, <i>including #{ pluralize account.admins.size, 'admin'}</i> <br /> (#{ account.users.map{ |user| user.admin_of?(account) ? content_tag(:i, user.name) : user.name }.to_sentence.html_safe })
+        td = timestamp_tag account.created_at

@@ -1,0 +1,25 @@
+/ dash users
+table class="table table-striped"
+  legend Users
+  thead
+    tr
+      th #
+      th Name
+      th Email
+      th Account
+      th Last seen
+
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.id
+        td
+          = image_tag(user.gravatar_image_url, style: 'margin: -3px 0; margin-right: 5px; border-radius: 2px')
+          b = user.name
+        td = user.email
+        td = user.account.name
+        td
+          - if user.last_seen_at
+            = timestamp_tag user.last_seen_at
+          - else
+            ' Not yet seen.

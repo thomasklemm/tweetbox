@@ -5,7 +5,9 @@
       = link_to 'Tweetbox Dash', dash_root_path, class: 'brand'
 
       ul.nav
-        li = link_to 'Leads', search_dash_leads_path
+        li = link_to 'Leads', dash_leads_path
+        li = link_to 'Users', dash_users_path
+        li = link_to 'Accounts', dash_accounts_path
 
       ul.nav.pull-right
         - leads_count = Lead.count

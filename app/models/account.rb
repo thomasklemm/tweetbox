@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
-  has_many :users, through: :memberships
+  has_many :users, -> { order(created_at: :asc) }, through: :memberships
   has_many :admins, -> { where(memberships: { admin: true }) },
                     through: :memberships,
                     source: :user

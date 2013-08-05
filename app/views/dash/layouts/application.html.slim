@@ -6,9 +6,11 @@ head
   = stylesheet_link_tag "dash/application"
 
   / javascripts
-  / chartkick
-  = javascript_include_tag "//www.google.com/jsapi", "chartkick"
-  = javascript_include_tag "dash/application"
+  / jquery, angular, twitter web intents
+  = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js'
+  = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js'
+  = javascript_include_tag :application
+  = javascript_include_tag 'https://platform.twitter.com/widgets.js'
 
   = csrf_meta_tags
 

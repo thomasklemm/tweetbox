@@ -54,6 +54,11 @@ module ApplicationHelper
     end
   end
 
+  def timestamp_tag(time, opts={})
+    opts[:class] ||= "timeago"
+    content_tag(:abbr, time.to_s, opts.merge(:title => time.getutc.iso8601)) if time
+  end
+
   private
 
   def current_path

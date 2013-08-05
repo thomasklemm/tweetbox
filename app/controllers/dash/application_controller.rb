@@ -5,10 +5,10 @@ class Dash::ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  # Ensure that the current user is an admin
+  # Ensure that the current user is a staff member
   # Raise Pundit::NotAuthorizedError otherwise
   before_action :authenticate_user!
-  before_action :ensure_admin!
+  before_action :ensure_staff_member!
 
   # Dash layout
   layout 'dash/layouts/application'
@@ -23,8 +23,8 @@ class Dash::ApplicationController < ActionController::Base
 
   private
 
-  def ensure_admin!
-    raise Pundit::NotAuthorizedError unless current_user.admin?
+  def ensure_staff_member!
+    raise Pundit::NotAuthorizedError unless current_user.staff_member?
   end
 
   def user_not_authorized

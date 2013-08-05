@@ -18,7 +18,7 @@
   span.timestamp
     i.icon-time
     '
-    abbr.timeago title=tweet.created_at.iso8601
+    = timestamp_tag(tweet.created_at)
 
   .text = tweet.linked_text
 

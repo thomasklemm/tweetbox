@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730194248) do
+ActiveRecord::Schema.define(version: 20130805132743) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -246,8 +246,9 @@ ActiveRecord::Schema.define(version: 20130730194248) do
     t.text     "unconfirmed_email"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.boolean  "admin",                  default: false
+    t.boolean  "staff_member",           default: false
     t.integer  "projects_count"
+    t.datetime "last_seen_at"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
