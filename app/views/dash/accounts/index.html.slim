@@ -7,7 +7,7 @@ table class="table table-striped"
       th Name
       th Projects
       th Users
-      th Created
+      th Signed Up
 
   tbody
     - @accounts.each do |account|
@@ -16,4 +16,5 @@ table class="table table-striped"
         td: b = account.name
         td #{ pluralize account.projects.size, 'project'} <br /> (#{ account.projects.map(&:name).to_sentence })
         td #{ pluralize account.users.size, 'user'}, <i>including #{ pluralize account.admins.size, 'admin'}</i> <br /> (#{ account.users.map{ |user| user.admin_of?(account) ? content_tag(:i, user.name) : user.name }.to_sentence.html_safe })
-        td = timestamp_tag account.created_at
+        td = time_ago_in_words account.created_at
+

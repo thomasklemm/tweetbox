@@ -8,18 +8,34 @@ table class="table table-striped"
       th Email
       th Account
       th Last seen
+      th Signed Up
 
   tbody
     - @users.each do |user|
       tr
+        /id
         td = user.id
+
+        / name and avatar
         td
           = image_tag(user.gravatar_image_url, style: 'margin: -3px 0; margin-right: 5px; border-radius: 2px')
           b = user.name
+
+        / email
         td = user.email
-        td = user.account.name
+
+        / account name
+        td
+          = user.account.name
+          - if user.admin_of?(user.account)
+            '  <i>(Admin)</i>
+
+        / last seen at
         td
           - if user.last_seen_at
-            = timestamp_tag user.last_seen_at
+            = time_ago_in_words user.last_seen_at
           - else
-            ' Not yet seen.
+            ' &mdash;
+
+        / created at
+        td = time_ago_in_words user.created_at
