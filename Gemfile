@@ -110,6 +110,9 @@ group :development do
   # LiveReload
   gem 'guard-livereload'
   gem 'rack-livereload'
+
+  # RailsPanel
+  gem 'meta_request'
 end
 
 group :development, :test do
