@@ -1,12 +1,9 @@
 require 'spec_helper'
 
 describe 'Find and remember Twitter users' do
-  include_context 'signup and twitter account'
+  include_context 'staff member signs in'
 
   it "finds and remembers Twitter users", js: true do
-    # Create Twitter account
-    twitter_account
-
     # User search
     VCR.use_cassette('dash/user_searches/mailchimp') do
       visit search_dash_leads_path

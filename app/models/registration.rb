@@ -36,6 +36,8 @@ class Registration
     @invitation.try(:code)
   end
 
+  delegate :account, to: :invitation
+
   def save
     # Validate registration object
     return false unless valid?

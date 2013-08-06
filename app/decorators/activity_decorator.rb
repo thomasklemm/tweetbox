@@ -7,7 +7,7 @@ class ActivityDecorator < Draper::Decorator
 
   def render_activity
     div_for activity do
-      concat timestamp_tag(activity.created_at) + ": "
+      concat time_ago_in_words(activity.created_at) + ": "
       concat link_to(activity.user.name, [:dash, activity.user]) + " "
       concat render_partial
     end

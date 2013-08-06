@@ -14,7 +14,7 @@ class Tweet < ActiveRecord::Base
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # Scopes
-  scope :incoming, -> { where(state: :incoming) }
+  scope :incoming, -> { where(state: :incoming).includes(:author, :events) }
   scope :resolved, -> { where(state: :resolved) }
   scope :posted,   -> { where(state: :posted) }
 
@@ -64,14 +64,14 @@ class Tweet < ActiveRecord::Base
 
   def cached_previous_tweets
     @previous_tweets ||= begin
-      tweets = project.tweets.where(twitter_id: previous_tweet_ids)
+      tweets = project.tweets.where(twitter_id: previous_tweet_ids).includes(:author, :events)
       tweets.sort_by(&:created_at)
     end
   end
 
   def cached_future_tweets
     @future_tweets ||= begin
-      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id)
+      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id).includes(:author, :events)
       tweets.sort_by(&:created_at)
     end
   end

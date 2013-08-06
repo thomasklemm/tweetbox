@@ -81,30 +81,32 @@ Tweetbox::Application.routes.draw do
   match 'auth/failure'          => 'omniauth#failure', via: [:get, :post]
 
   # Dash
-  namespace :dash do
-    resources :leads, only: [:show, :update, :destroy] do
-      collection do
-        get '/', to: redirect('/dash/leads/search')
-        get :search
-        post :remember
-        get 'score', to: redirect('/dash/leads/score/unscored'), as: :unscored
-        get 'score/:score', to: :score, as: :score
+  authenticate :user, lambda { |user| user.staff_member? } do
+    namespace :dash do
+      resources :leads, only: [:show, :update, :destroy] do
+        collection do
+          get '/', to: redirect('/dash/leads/search')
+          get :search
+          post :remember
+          get 'score', to: redirect('/dash/leads/score/unscored'), as: :unscored
+          get 'score/:score', to: :score, as: :score
+        end
+
+        member do
+          post :refresh
+        end
       end
 
-      member do
-        post :refresh
-      end
+      resources :users, only: [:index, :show]
+      resources :accounts, only: [:index, :show]
+      resources :activities, only: :index
+
+      root to: redirect('/dash/leads/search')
     end
 
-    resources :users, only: [:index, :show]
-    resources :accounts, only: [:index, :show]
-    resources :activities, only: :index
-
-    root to: redirect('/dash/leads/search')
+    # Sidekiq Web interface
+    mount Sidekiq::Web => '/sidekiq'
   end
-
-  # Sidekiq Web interface
-  mount Sidekiq::Web => '/sidekiq'
 
   # Marketing pages
   get ':id' => 'pages#show', as: :static

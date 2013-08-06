@@ -7,8 +7,9 @@ class Dash::ApplicationController < ActionController::Base
 
   # Ensure that the current user is a staff member
   # Raise Pundit::NotAuthorizedError otherwise
-  before_action :authenticate_user!
-  before_action :ensure_staff_member!
+  # Additional protection is provided by a StaffMemberConstraint in routes
+  # before_action :authenticate_user!
+  # before_action :ensure_staff_member!
 
   # Dash layout
   layout 'dash/layouts/application'
