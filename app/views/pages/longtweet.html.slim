@@ -1,13 +1,18 @@
 div class="container feature-landing"
 
   div class="row-fluid"
-    div class="span12 center"
-      = image_tag "longtweet_900.jpg"
+    div class="span12"
+      div class="smiling"
+        div class="logo center"
+          = image_tag "tweetbox/logo.png", :size => "180x180"
+          h1 Tweetbox
+          h2 Twitter for business
+          = link_to 'Start giving satisfying responses now', new_signup_path, class: 'btn btn-large btn-success'
 
   div class="row-fluid"
     div class="span12 center"
       h1 Got Customers asking on Twitter?
-      h2 When you cannot answer your customers<br><strong>in 140 characters, your company's reputation suffers.</strong><br>
+      h2 When you cannot answer your customers<br>in 140 characters, your company's reputation suffers.<br>
 
   hr
 
@@ -25,6 +30,7 @@ div class="container feature-landing"
         = image_tag "tw_logo_space_80x80.gif", :class => "img-polaroid"
       div class="span5"
         h4 Space Suits Inc. @spacesuits
+        p @johndoe
         p Hi John,
         p thanks for asking. Our Space Suit will be a good match for your trip to the outer orbit. We protect you from Radiation as much as possible. Here‘s why:
         p * Our Space Suit is made from a custom high tech fabric specially developed in our labs. Its thick fibers include threads of lead and aluminium, which helps you get out of harms way.
@@ -38,11 +44,19 @@ div class="container feature-landing"
 
   div class="row-fluid"
     div class="span12 center"
-      h2
-        strong Respond with more than 140 characters<br>
-        | with Tweetbox whenever you need more words to <br>
-        strong make your company‘s customers happy.
+      h1 Respond with more than 140 characters
+      h2 with Tweetbox whenever you need more words to <br> make your company‘s customers happy.
 
   div class="row-fluid"
     div class="span12 center"
-      = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-large btn-success'
+      = link_to 'Start giving satisfying responses now', new_signup_path, class: 'btn btn-large btn-success'
+      p &nbsp;
+
+  hr
+
+  div class="row-fluid"
+    div class="span4 offset8"
+      = link_to 'See other reasons to use Tweetbox ', static_path(:teamwork)
+      i class="icon-chevron-right"
+
+  hr
