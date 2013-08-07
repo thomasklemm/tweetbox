@@ -7,19 +7,20 @@ class Tweet < ActiveRecord::Base
   belongs_to :twitter_account # used to fetch the tweet
 
   # Events
-  has_many :events, dependent: :destroy
+  has_many :events, -> { order(created_at: :asc) }, dependent: :destroy
 
   # Validations
   validates :project, :author, :twitter_id, :state, presence: true
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # Scopes
-  scope :incoming, -> { where(state: :incoming).includes(:author, :events) }
-  scope :resolved, -> { where(state: :resolved) }
-  scope :posted,   -> { where(state: :posted) }
+  scope :incoming, -> { where(state: :incoming).by_date.include_conversation }
+  scope :resolved, -> { where(state: :resolved).by_date.include_conversation }
+  scope :posted,   -> { where(state: :posted).by_date.include_conversation }
 
-  scope :by_date, -> { order('created_at desc') }
+  scope :by_date, -> { order(created_at: :desc) }
 
+  scope :include_conversation, -> { includes(:author, { events: :user }) }
 
   ##
   # Reply and previous tweet
@@ -64,15 +65,15 @@ class Tweet < ActiveRecord::Base
 
   def cached_previous_tweets
     @previous_tweets ||= begin
-      tweets = project.tweets.where(twitter_id: previous_tweet_ids).includes(:author, :events)
-      tweets.sort_by(&:created_at)
+      tweets = project.tweets.where(twitter_id: previous_tweet_ids).include_conversation
+      tweets.sort_by(&:created_at).uniq
     end
   end
 
   def cached_future_tweets
     @future_tweets ||= begin
-      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id).includes(:author, :events)
-      tweets.sort_by(&:created_at)
+      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id).include_conversation
+      tweets.sort_by(&:created_at).uniq
     end
   end
 

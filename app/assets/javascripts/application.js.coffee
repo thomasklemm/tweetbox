@@ -63,7 +63,7 @@ jQuery ->
   ##
   # Embedly
   $.embedly.defaults.key = '5215692271f6455882608f229709215a'
-  $('.tweet a').embedly
+  $('.public-tweet a').embedly
     query:
       maxwidth: 900,
       maxheight: 600
