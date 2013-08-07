@@ -99,6 +99,12 @@ gem 'chartkick'
 # Pagination
 gem 'kaminari'
 
+# HTML pipeline for rendering user inputs
+gem 'html-pipeline'
+
+# Embedding videos and images
+gem 'auto_html'
+
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'

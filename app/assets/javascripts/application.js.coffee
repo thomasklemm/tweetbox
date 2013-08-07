@@ -61,5 +61,10 @@ jQuery ->
   $("abbr.timeago").timeago()
 
   ##
-  # Project navbar
-  # $('#project-navbar').affix()
+  # Embedly
+  $.embedly.defaults.key = '5215692271f6455882608f229709215a'
+  $('.tweet a').embedly
+    query:
+      maxwidth: 900,
+      maxheight: 600
+

@@ -21,11 +21,12 @@ javascript:
 = stylesheet_link_tag :application
 
 / javascripts
-/ jquery, angular, twitter web intents
+/ jquery, angular, embedly, twitter web intents
 = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js'
 = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js'
-= javascript_include_tag :application
 = javascript_include_tag 'https://platform.twitter.com/widgets.js'
+= javascript_include_tag 'https://cdn.embed.ly/jquery.embedly-3.1.1.min.js'
+= javascript_include_tag :application
 
 / secure headers
 = csrf_meta_tags unless publicly_cached?
