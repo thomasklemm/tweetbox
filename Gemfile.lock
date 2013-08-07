@@ -67,6 +67,8 @@ GEM
     bootstrap-sass (2.3.2.1)
       sass (~> 3.2)
     builder (3.1.4)
+    bullet (4.6.0)
+      uniform_notifier
     callsite (0.0.11)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -348,6 +350,7 @@ GEM
     unf (0.0.5)
       unf_ext
     unf_ext (0.0.6)
+    uniform_notifier (1.2.0)
     uuidtools (2.1.4)
     vcr (2.5.0)
     virtus (0.5.5)
@@ -369,6 +372,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 2.3.2.1)
+  bullet
   capybara-webkit
   chartkick
   clockwork

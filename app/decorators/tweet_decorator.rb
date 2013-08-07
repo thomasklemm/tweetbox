@@ -2,9 +2,6 @@ class TweetDecorator < Draper::Decorator
   include Draper::LazyHelpers
   delegate_all
 
-  decorates_association :conversation
-  # decorates_association :events
-
   USER_INTENT_BASE_URL  = "https://twitter.com/intent/user?screen_name="
   REPLY_INTENT_BASE_URL = "https://twitter.com/intent/tweet?in_reply_to="
 

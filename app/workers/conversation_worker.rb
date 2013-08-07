@@ -10,6 +10,6 @@ class ConversationWorker
 
   def perform(tweet_id)
     @tweet = Tweet.find(tweet_id)
-    Conversation.new(@tweet).fetch_and_cache_conversation
+    ConversationService.new(@tweet).fetch_and_cache_conversation
   end
 end

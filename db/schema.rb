@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130805210016) do
+ActiveRecord::Schema.define(version: 20130807140037) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -62,6 +62,17 @@ ActiveRecord::Schema.define(version: 20130805210016) do
   end
 
   add_index "codes", ["tweet_id"], name: "index_codes_on_tweet_id", using: :btree
+
+  create_table "conversations", force: true do |t|
+    t.integer  "previous_tweet_id"
+    t.integer  "future_tweet_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "conversations", ["future_tweet_id"], name: "index_conversations_on_future_tweet_id", using: :btree
+  add_index "conversations", ["previous_tweet_id", "future_tweet_id"], name: "index_conversations_on_previous_tweet_id_and_future_tweet_id", unique: true, using: :btree
+  add_index "conversations", ["previous_tweet_id"], name: "index_conversations_on_previous_tweet_id", using: :btree
 
   create_table "events", force: true do |t|
     t.integer  "tweet_id",   null: false
@@ -199,15 +210,15 @@ ActiveRecord::Schema.define(version: 20130805210016) do
     t.text     "state"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.integer  "previous_tweet_ids",    limit: 8,                          array: true
     t.text     "full_text"
     t.text     "source"
     t.text     "lang"
     t.integer  "retweet_count",                   default: 0
     t.integer  "favorite_count",                  default: 0
+    t.integer  "previous_tweets_count",           default: 0
+    t.integer  "future_tweets_count",             default: 0
   end
 
-  add_index "tweets", ["previous_tweet_ids"], name: "index_tweets_on_previous_tweet_ids", using: :gin
   add_index "tweets", ["project_id", "author_id"], name: "index_tweets_on_project_id_and_author_id", using: :btree
   add_index "tweets", ["project_id", "state"], name: "index_tweets_on_project_id_and_state", using: :btree
   add_index "tweets", ["project_id", "twitter_id"], name: "index_tweets_on_project_id_and_twitter_id", unique: true, using: :btree

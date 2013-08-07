@@ -119,6 +119,8 @@ group :development do
 
   # RailsPanel
   gem 'meta_request'
+
+  gem 'bullet'
 end
 
 group :development, :test do

@@ -4,23 +4,51 @@ class Tweet < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :author
-  belongs_to :twitter_account # used to fetch the tweet
+
+  # Twitter account
+  # used to fetch the tweet (optional)
+  belongs_to :twitter_account
+
+  # Conversation
+  has_many :previous_conversations,
+            class_name: 'Conversation',
+            foreign_key: :future_tweet_id,
+            dependent: :destroy
+  has_many :previous_tweets,
+             -> { order(created_at: :asc) },
+             through: :previous_conversations,
+             source: :previous_tweet
+
+  has_many :future_conversations,
+            class_name: 'Conversation',
+            foreign_key: :previous_tweet_id,
+            dependent: :destroy
+  has_many :future_tweets,
+             -> { order(created_at: :asc) },
+             through: :future_conversations,
+             source: :future_tweet
 
   # Events
   has_many :events, -> { order(created_at: :asc) }, dependent: :destroy
 
   # Validations
-  validates :project, :author, :twitter_id, :state, presence: true
+  validates :project,
+            :author,
+            :twitter_id,
+            :state,
+            presence: true
+
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # Scopes
-  scope :incoming, -> { where(state: :incoming).by_date.include_conversation }
-  scope :resolved, -> { where(state: :resolved).by_date.include_conversation }
-  scope :posted,   -> { where(state: :posted).by_date.include_conversation }
+  scope :incoming, -> { where(state: :incoming).by_date.includes(:project, :author, {events: :user}, {previous_tweets: [:author, {events: :user}]}, :future_tweets) }
+  scope :resolved, -> { where(state: :resolved).by_date.load_conversation }
+  scope :posted,   -> { where(state: :posted).by_date.load_conversation }
 
   scope :by_date, -> { order(created_at: :desc) }
 
-  scope :include_conversation, -> { includes(:author, { events: :user }) }
+  scope :load_conversation, -> { includes(:author, {events: :user}, {previous_tweets: [:author, events: :user]}, {future_tweets: [:author, events: :user]}) }
+
 
   ##
   # Reply and previous tweet
@@ -35,46 +63,7 @@ class Tweet < ActiveRecord::Base
 
   def previous_tweet
     return unless reply?
-    @previous_tweet ||= Conversation.new(self).previous_tweet
-  end
-
-  # Returns an array of tweet records
-  def previous_tweets
-    return unless reply?
-    @previous_tweets ||= if previous_tweet_ids.present?
-      cached_previous_tweets
-    else
-      previous_tweets!
-    end
-  end
-
-  def previous_tweets!
-    @previous_tweets = Conversation.new(self).previous_tweets if reply?
-  end
-
-
-  ##
-  # Cached conversation
-
-  def conversation
-    @conversation ||= begin
-      tweets = cached_previous_tweets.to_a + [ self ] + cached_future_tweets.to_a
-      tweets.flatten.sort_by(&:created_at).uniq
-    end
-  end
-
-  def cached_previous_tweets
-    @previous_tweets ||= begin
-      tweets = project.tweets.where(twitter_id: previous_tweet_ids).include_conversation
-      tweets.sort_by(&:created_at).uniq
-    end
-  end
-
-  def cached_future_tweets
-    @future_tweets ||= begin
-      tweets = project.tweets.where('previous_tweet_ids && ARRAY[?]', twitter_id).include_conversation
-      tweets.sort_by(&:created_at).uniq
-    end
+    @previous_tweet ||= ConversationService.new(self).previous_tweet
   end
 
 

@@ -1,4 +1,4 @@
-class Conversation
+class ConversationService
   def initialize(tweet)
     @tweet = tweet
   end

@@ -1,4 +1,4 @@
-describe Conversation do
+describe ConversationService do
   include_context 'signup and twitter account'
 
   # Status ids
@@ -9,8 +9,8 @@ describe Conversation do
   let(:reply_tweet)     { fetch_and_make_tweet(352253750477467648) }
   let(:no_reply_tweet)  { fetch_and_make_tweet(355002886155018242) }
 
-  let(:reply)    { Conversation.new(reply_tweet) }
-  let(:no_reply) { Conversation.new(no_reply_tweet) }
+  let(:reply)    { ConversationService.new(reply_tweet) }
+  let(:no_reply) { ConversationService.new(no_reply_tweet) }
 
   describe "#previous_tweet" do
     context "tweet is a reply" do
