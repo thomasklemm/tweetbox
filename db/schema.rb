@@ -13,13 +13,10 @@
 
 ActiveRecord::Schema.define(version: 20130807140037) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "projects_count"
   end
 
@@ -47,8 +44,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.integer  "followers_count",             default: 0
     t.integer  "friends_count",               default: 0
     t.text     "profile_image_url"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "statuses_count",              default: 0
     t.datetime "joined_twitter_at"
     t.text     "lang"
@@ -60,8 +57,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
 
   create_table "codes", force: true do |t|
     t.integer  "tweet_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "codes", ["tweet_id"], name: "index_codes_on_tweet_id", using: :btree
@@ -83,8 +80,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.integer  "project_id", null: false
     t.text     "kind",       null: false
     t.text     "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "events", ["project_id"], name: "index_events_on_project_id", using: :btree
@@ -107,8 +104,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.text     "email"
     t.datetime "used_at"
     t.datetime "expires_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "invitations", ["account_id"], name: "index_invitations_on_account_id", using: :btree
@@ -161,8 +158,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.integer  "user_id",                    null: false
     t.integer  "account_id",                 null: false
     t.boolean  "admin",      default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "memberships", ["user_id", "account_id"], name: "index_memberships_on_user_id_and_account_id", unique: true, using: :btree
@@ -171,8 +168,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.integer  "project_id",    null: false
     t.integer  "membership_id", null: false
     t.integer  "user_id",       null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "permissions", ["membership_id", "project_id"], name: "index_permissions_on_membership_and_project", unique: true, using: :btree
@@ -181,8 +178,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
   create_table "projects", force: true do |t|
     t.integer  "account_id",                 null: false
     t.text     "name",                       null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "default_twitter_account_id"
   end
 
@@ -194,8 +191,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.text     "query",                                       null: false
     t.boolean  "active",                       default: true
     t.integer  "max_twitter_id",     limit: 8
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "searches", ["project_id", "twitter_account_id"], name: "index_searches_on_project_id_and_twitter_account_id", using: :btree
@@ -211,8 +208,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.integer  "in_reply_to_status_id", limit: 8
     t.integer  "in_reply_to_user_id",   limit: 8
     t.text     "state"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "full_text"
     t.text     "source"
     t.text     "lang"
@@ -244,8 +241,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.integer  "max_user_timeline_twitter_id",            limit: 8
     t.integer  "max_direct_messages_sent_twitter_id",     limit: 8
     t.integer  "max_direct_messages_received_twitter_id", limit: 8
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "imported_at"
   end
 
@@ -270,8 +267,8 @@ ActiveRecord::Schema.define(version: 20130807140037) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.text     "unconfirmed_email"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "staff_member",           default: false
     t.integer  "projects_count"
     t.datetime "last_seen_at"
