@@ -86,12 +86,12 @@ Tweetbox::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # URL options
-  config.action_mailer.default_url_options = { :host => 'www.tweetbox.co' }
-  Rails.application.routes.default_url_options[:host] = 'www.tweetbox.co'
+  config.action_mailer.default_url_options = { :host => 'staging.tweetbox.co' }
+  Rails.application.routes.default_url_options[:host] = 'staging.tweetbox.co'
 
   # Capture email from staging in Mailtrap
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
     :user_name => 'tweetbox-04c270e002fd0530',
     :password => '9eba8c8ce5f66c8b',
     :address => 'mailtrap.io',

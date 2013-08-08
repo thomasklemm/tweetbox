@@ -141,7 +141,7 @@ group :test do
   gem 'vcr'
 end
 
-group :production do
+group :staging, :production do
   # Heroku 12factor gem
   gem 'rails_12factor'
 
@@ -154,9 +154,6 @@ group :production do
 
   # Sentry (Error notifications)
   gem 'sentry-raven', github: 'getsentry/raven-ruby'
-
-  # Lograge (Logging)
-  gem 'lograge'
 
   # Rack Timeout
   gem 'rack-timeout'
