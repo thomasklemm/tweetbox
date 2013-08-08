@@ -59,7 +59,7 @@ Tweetbox::Application.routes.draw do
       resources :favorites, only: [:new, :create], on: :member
     end
 
-    resources :statuses, only: [:new, :create] do
+    resources :statuses, only: [:new, :create, :edit, :update] do
       get  :preview, on: :member
       post :publish, on: :member
     end

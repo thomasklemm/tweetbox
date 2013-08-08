@@ -139,7 +139,7 @@ class TwitterAccount < ActiveRecord::Base
 
   ##
   # Default twitter account on project
-  after_create :set_first_twitter_account_on_project_to_be_default_twitter_account
+  after_create  :set_first_twitter_account_on_project_to_be_default_twitter_account
 
   def set_first_twitter_account_on_project_to_be_default_twitter_account
     project.set_default_twitter_account(self) unless project.has_default_twitter_account?
@@ -154,5 +154,4 @@ class TwitterAccount < ActiveRecord::Base
   def import_timelines_async
     TwitterAccountImportWorker.perform_async(self.id)
   end
-
 end

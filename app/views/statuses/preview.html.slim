@@ -1,0 +1,6 @@
+/ preview status
+= debug @status
+
+= link_to 'Publish', [:publish, @project, @status], method: :post, class: 'btn btn-primary'
+' &nbsp;&nbsp;or
+= link_to 'Edit', [:edit, @project, @status]
