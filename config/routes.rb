@@ -59,12 +59,16 @@ Tweetbox::Application.routes.draw do
       resources :favorites, only: [:new, :create], on: :member
     end
 
-    resources :statuses, only: [:new, :create]
+    resources :statuses, only: [:new, :create] do
+      get  :preview, on: :member
+      post :publish, on: :member
+    end
+
     resources :authors, only: :show
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post :auth, as: :authorize, on: :collection
-      put :set_default, on: :member
+      put  :set_default, on: :member
     end
 
     resources :searches, except: :show

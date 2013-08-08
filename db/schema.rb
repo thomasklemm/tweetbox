@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130808074547) do
+ActiveRecord::Schema.define(version: 20130808140711) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -198,6 +198,21 @@ ActiveRecord::Schema.define(version: 20130808074547) do
   add_index "searches", ["project_id", "twitter_account_id"], name: "index_searches_on_project_id_and_twitter_account_id", using: :btree
   add_index "searches", ["project_id"], name: "index_searches_on_project_id", using: :btree
   add_index "searches", ["twitter_account_id"], name: "index_searches_on_twitter_account_id", using: :btree
+
+  create_table "statuses", force: true do |t|
+    t.text     "token"
+    t.text     "text"
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "twitter_account_id"
+    t.boolean  "published",                       default: false
+    t.integer  "in_reply_to_status_id", limit: 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "statuses", ["project_id"], name: "index_statuses_on_project_id", using: :btree
+  add_index "statuses", ["token"], name: "index_statuses_on_token", unique: true, using: :btree
 
   create_table "tweets", force: true do |t|
     t.integer  "project_id",                                  null: false
