@@ -9,18 +9,16 @@ describe ConversationService do
   let(:reply_tweet)     { fetch_and_make_tweet(352253750477467648) }
   let(:no_reply_tweet)  { fetch_and_make_tweet(355002886155018242) }
 
-  let(:reply)    { ConversationService.new(reply_tweet) }
-  let(:no_reply) { ConversationService.new(no_reply_tweet) }
+  let(:reply_conversation)    { ConversationService.new(reply_tweet) }
+  let(:no_reply_conversation) { ConversationService.new(no_reply_tweet) }
 
   describe "#previous_tweet" do
     context "tweet is a reply" do
-      let(:previous_tweet) do
-        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweet") { reply.previous_tweet }
+      let!(:previous_tweet) do
+        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweet") { reply_tweet.previous_tweet }
       end
 
       it "find the previous tweet in the database if present" do
-        previous_tweet
-
         # Fetches tweet from the database
         # VCR would raise an error if an HTTP request would be performed
         expect(reply_tweet.previous_tweet).to eq(previous_tweet)
@@ -39,7 +37,7 @@ describe ConversationService do
     end
 
     context "tweet is not a reply" do
-      let(:previous_tweet) { no_reply.previous_tweet }
+      let(:previous_tweet) { no_reply_tweet.previous_tweet }
 
       it "returns nil" do
         expect(previous_tweet).to be_nil
@@ -49,58 +47,35 @@ describe ConversationService do
 
   describe "#previous_tweets" do
     context "tweet is a reply" do
-      let(:previous_tweets) do
-        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweets") { reply.previous_tweets }
+      let!(:previous_tweets) do
+        statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweets") { reply_conversation.previous_tweets }
       end
 
-      it "fetches the previous tweets from Twitter" do
-        # Fetch tweets from Twitter
-        previous_tweets
+      it "fetches and persists the previous tweets in the database and returns an array of previous tweets" do
+        expect(previous_tweets.to_a).to be_an Array
+        expect(previous_tweets.to_a.length).to eq 8
 
-        # Does not trigger another HTTP request
-        expect(reply.previous_tweets).to eq(previous_tweets)
-      end
-
-      it "persists all previous tweets in the database" do
         expect(previous_tweets.first).to be_a Tweet
         expect(previous_tweets.first).to be_persisted
       end
 
-      it "returns an array of all previous tweets" do
-        expect(previous_tweets).to be_an Array
-        expect(previous_tweets.first).to be_a Tweet
+      it "returns the previous tweets from the database when present" do
+        # Does not trigger another HTTP request
+        expect(reply_conversation.previous_tweets.to_a).to match_array(previous_tweets.to_a)
+
+        # Associations
+        reply_tweet.reload
+        expect(reply_tweet).to have(8).previous_tweets
+        expect(reply_tweet.previous_tweets.to_a).to match_array(previous_tweets.to_a)
       end
     end
 
     context "tweet is not a reply" do
-      let(:previous_tweets) { no_reply.previous_tweets }
+      let(:previous_tweets) { no_reply_conversation.previous_tweets }
 
-      it "returns nil" do
-        expect(previous_tweets).to be_nil
+      it "returns an empty array" do
+        expect(previous_tweets).to eq []
       end
-    end
-  end
-
-  describe "#fetch_and_cache_conversation" do
-    before do
-      @conversation = statuses_cassette("#{ reply_tweet.twitter_id }_previous_tweets") { reply.fetch_and_cache_conversation }
-    end
-
-    it "fetches the conversation from Twitter" do
-      expect(reply).to have(8).previous_tweets
-    end
-
-    it "persists all tweets in the database" do
-      expect(reply.previous_tweet).to be_a Tweet
-      expect(reply.previous_tweet).to be_persisted
-    end
-
-    it "saves an array of previous tweet ids for instant conversations" do
-      expect(reply_tweet).to have(8).previous_tweet_ids
-    end
-
-    it "returns true" do
-      expect(@conversation).to eq(true)
     end
   end
 end

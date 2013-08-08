@@ -2,7 +2,7 @@
 #
 # Finds or fetches the entire conversation of a tweet from Twitter
 # Saves all previous tweets in the database
-# Caches an array of previous tweet ids on the tweet
+# Creates conversation join records for the given tweet
 #
 class ConversationWorker
   include Sidekiq::Worker
@@ -10,6 +10,6 @@ class ConversationWorker
 
   def perform(tweet_id)
     @tweet = Tweet.find(tweet_id)
-    ConversationService.new(@tweet).fetch_and_cache_conversation
+    ConversationService.new(@tweet).previous_tweets
   end
 end
