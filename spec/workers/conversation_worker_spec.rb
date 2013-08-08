@@ -14,6 +14,7 @@ describe ConversationWorker do
     end
 
     it "fetches the conversation for the given tweet" do
+      tweet.reload
       expect(tweet).to have(1).previous_tweets
 
       expect(tweet.previous_tweet).to be_a Tweet

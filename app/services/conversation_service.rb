@@ -1,4 +1,4 @@
-class Conversation
+class ConversationService
   def initialize(tweet)
     @tweet = tweet
   end
@@ -10,34 +10,12 @@ class Conversation
   end
 
   # Finds or fetches the previous tweets from Twitter
-  # Returns an array of tweet records
+  # Returns an array of previous tweets
+  # Returns the cached tweets if already persisted in the database
+  # otherwise fetches the tweets from Twitter
   def previous_tweets
-    @previous_tweets ||= begin
-      return unless @tweet.reply?
-
-      tweet = @tweet
-      tweets = []
-
-      while tweet.previous_tweet
-        tweets << tweet.previous_tweet
-        tweet = tweet.previous_tweet
-      end
-
-      tweets.compact.sort_by(&:created_at)
-    end
-  end
-
-  # Finds or fetches the previous tweets from Twitter
-  # Caches previous tweet ids on the tweet
-  # Returns true
-  def fetch_and_cache_conversation
-    # Find or fetch previous tweets
-    return unless @tweet.reply?
-    return unless previous_tweets
-
-    # Cache previous tweet ids
-    @tweet.previous_tweet_ids = previous_tweets.map(&:twitter_id)
-    @tweet.save!
+    return [] unless @tweet.reply?
+    @tweet.previous_tweets.presence || fetch_previous_tweets
   end
 
   private
@@ -58,7 +36,7 @@ class Conversation
   # Fetches the given status from Twitter
   # Returns the persisted tweet record
   def fetch_tweet(twitter_id)
-    status = TwitterAccount.random.client.status(twitter_id)
+    status = twitter_client.status(twitter_id)
 
     # Avoid referencing random twitter account
     tweet = TweetMaker.from_twitter(status, project: @tweet.project, state: :conversation)
@@ -75,5 +53,26 @@ class Conversation
 
     # Retry using a different random Twitter account
     sleep 1 and retry
+  end
+
+  ##
+  # Find or fetch previous tweets
+
+  # Creates the conversation history for the given tweet
+  # Returns an array of tweet records
+  def fetch_previous_tweets
+    return [] unless @tweet.reply?
+    tweet = @tweet
+
+    while tweet.previous_tweet
+      @tweet.previous_tweets |= [tweet.previous_tweet]
+      tweet = tweet.previous_tweet
+    end
+
+    @tweet.previous_tweets
+  end
+
+  def twitter_client
+    RandomTwitterClient.new
   end
 end

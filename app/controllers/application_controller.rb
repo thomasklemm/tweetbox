@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
 
   # Returns the decorated current_user
   def current_user
-    UserDecorator.decorate(super) unless super.nil?
+    return if super.nil?
+    @decorated_current_user ||= UserDecorator.decorate(super)
   end
 
   private

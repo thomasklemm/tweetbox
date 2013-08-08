@@ -4,16 +4,22 @@ describe Tweet do
   subject(:tweet) { Fabricate.build(:tweet) }
   it { should be_valid }
 
-  it { should belong_to(:project) }
-  it { should belong_to(:author) }
-  it { should belong_to(:twitter_account) }
-
   it { should validate_presence_of(:project) }
   it { should validate_presence_of(:author) }
   it { should validate_presence_of(:twitter_id) }
   it { should validate_presence_of(:state) }
 
+  it { should belong_to(:project) }
+  it { should belong_to(:author) }
+  it { should belong_to(:twitter_account) }
+
   it { should have_many(:events).dependent(:destroy) }
+
+  it { should have_many(:previous_conversations).dependent(:destroy).class_name(Conversation) }
+  it { should have_many(:previous_tweets).through(:previous_conversations) }
+
+  it { should have_many(:future_conversations).dependent(:destroy).class_name(Conversation) }
+  it { should have_many(:future_tweets).through(:future_conversations) }
 end
 
 describe Tweet, 'persisted' do
@@ -65,31 +71,6 @@ describe Tweet, 'persisted' do
     end
   end
 
-  describe "#previous_tweets" do
-    context "if tweet is a reply" do
-      before do
-        statuses_cassette("#{ tweet.twitter_id }_previous_tweet") do
-          @previous_tweets = tweet.previous_tweets
-        end
-      end
-
-      it "fetches and returns the previous tweets from Twitter" do
-        expect(@previous_tweets).to be_an Array
-        expect(@previous_tweets.first).to be_a Tweet
-      end
-
-      it "returns the cached previous tweets from previous_tweets_ids" do
-        # Memoized or cached results
-        tweet.previous_tweets
-      end
-    end
-
-    it "returns nil unless tweet is a reply?" do
-      tweet.in_reply_to_status_id = nil
-      expect(tweet.previous_tweets).to be_nil
-    end
-  end
-
   describe "#to_param" do
     it "returns the twitter_id" do
       expect(tweet.to_param).to eq tweet.twitter_id
@@ -124,4 +105,83 @@ describe Tweet, 'state machine' do
     expect(resolved_tweet.available_transitions).to match_array([:activate, :resolve])
     expect(posted_tweet.available_transitions).to match_array([])
   end
+end
+
+describe Tweet, 'conversation' do
+  let!(:first_tweet)  { Fabricate(:tweet) }
+  let!(:second_tweet) { Fabricate(:tweet) }
+  let!(:third_tweet)  { Fabricate(:tweet) }
+
+  describe "#previous_tweets" do
+    it "sets and lists all previous tweets and updates counter caches" do
+      third_tweet.previous_tweets << first_tweet
+      expect(third_tweet.previous_tweets).to eq [first_tweet]
+      expect(third_tweet.reload.previous_tweets_count).to eq 1
+
+      # Use tweet.previous_tweets |= [future_tweet]
+      third_tweet.previous_tweets |= [first_tweet]
+      expect(third_tweet.previous_tweets).to eq [first_tweet]
+      expect(third_tweet.reload.previous_tweets_count).to eq 1
+
+      # Other side
+      expect(first_tweet.future_tweets).to eq [third_tweet]
+      expect(first_tweet.reload.future_tweets_count).to eq 1
+
+      # Check for side effects
+      expect(third_tweet.future_tweets).to eq []
+      expect(third_tweet.reload.future_tweets_count).to eq 0
+
+      # Check for side effects
+      expect(first_tweet.previous_tweets).to eq []
+      expect(first_tweet.reload.previous_tweets_count).to eq 0
+
+      # More previous tweets
+      third_tweet.previous_tweets |= [second_tweet]
+      expect(third_tweet.previous_tweets).to eq [first_tweet, second_tweet]
+      expect(third_tweet.reload.previous_tweets_count).to eq 2
+
+      # Destroy join records
+      # Use tweet.previous_tweets.delete(another_tweet)
+      # Choose delete over destroy in this case as destroy right now messes with the counter cache
+      third_tweet.previous_tweets.delete second_tweet
+      expect(third_tweet.reload.previous_tweets_count).to eq 1
+      expect(second_tweet.reload.future_tweets_count).to eq 0
+
+      # Uniqueness index on both columns
+      expect{ third_tweet.previous_tweets << first_tweet }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
+
+  describe "#future_tweets" do
+    it "sets and lists all previous tweets and updates counter caches" do
+      third_tweet.future_tweets << first_tweet
+      expect(third_tweet.future_tweets).to eq [first_tweet]
+      expect(third_tweet.reload.future_tweets_count).to eq 1
+
+      third_tweet.future_tweets |= [first_tweet]
+      expect(third_tweet.future_tweets).to eq [first_tweet]
+      expect(third_tweet.reload.future_tweets_count).to eq 1
+
+      # Other side
+      expect(first_tweet.previous_tweets).to eq [third_tweet]
+      expect(first_tweet.reload.previous_tweets_count).to eq 1
+
+      # Check for side effects
+      expect(third_tweet.previous_tweets).to eq []
+      expect(third_tweet.reload.previous_tweets_count).to eq 0
+
+      # Check for side effects
+      expect(first_tweet.future_tweets).to eq []
+      expect(first_tweet.reload.future_tweets_count).to eq 0
+
+      # More previous tweets
+      third_tweet.future_tweets |= [second_tweet]
+      expect(third_tweet.future_tweets).to eq [first_tweet, second_tweet]
+      expect(third_tweet.reload.future_tweets_count).to eq 2
+
+      # Uniqueness index on both columns
+      expect{ third_tweet.future_tweets << first_tweet }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
+
 end
