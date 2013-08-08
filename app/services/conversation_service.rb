@@ -65,7 +65,12 @@ class ConversationService
     tweet = @tweet
 
     while tweet.previous_tweet
-      @tweet.previous_tweets |= [tweet.previous_tweet]
+      begin
+        @tweet.previous_tweets |= [tweet.previous_tweet]
+      rescue ActiveRecord::RecordNotUnique
+        retry
+      end
+
       tweet = tweet.previous_tweet
     end
 
