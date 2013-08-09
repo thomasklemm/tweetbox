@@ -205,14 +205,15 @@ ActiveRecord::Schema.define(version: 20130808140711) do
     t.integer  "project_id"
     t.integer  "user_id"
     t.integer  "twitter_account_id"
-    t.boolean  "published",                       default: false
     t.integer  "in_reply_to_status_id", limit: 8
+    t.integer  "twitter_id",            limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "statuses", ["project_id"], name: "index_statuses_on_project_id", using: :btree
   add_index "statuses", ["token"], name: "index_statuses_on_token", unique: true, using: :btree
+  add_index "statuses", ["twitter_id"], name: "index_statuses_on_twitter_id", using: :btree
 
   create_table "tweets", force: true do |t|
     t.integer  "project_id",                                  null: false

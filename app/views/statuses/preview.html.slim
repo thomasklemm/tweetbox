@@ -29,7 +29,8 @@ div.public-tweet
 
   div.text = @status.text
 
-  = link_to 'Post to Twitter', [:publish, @project, @status], method: :post, class: 'btn btn-primary'
-  ' &nbsp;&nbsp;(or
-  = link_to 'edit', [:edit, @project, @status]
-  '  before posting)
+  .actions
+    = link_to 'Post to Twitter', [:publish, @project, @status], method: :post, class: 'btn btn-primary'
+    ' &nbsp;&nbsp;(or
+    = link_to 'edit', [:edit, @project, @status]
+    '  before posting)

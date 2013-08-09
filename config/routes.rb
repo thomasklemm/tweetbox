@@ -75,8 +75,11 @@ Tweetbox::Application.routes.draw do
   end
 
   # Public view
-  get 't/:code_id' => 'public/codes#redirect', as: :public_code
-  get 'tweets/:screen_name/:twitter_id' => 'public/tweets#show', as: :public_tweet
+  # get 't/:code_id' => 'public/codes#redirect', as: :public_code
+  # get 'tweets/:screen_name/:twitter_id' => 'public/tweets#show', as: :public_tweet
+
+  # use public/statuses controller
+  get 'r/:token' => 'public/tweets#show', as: :public_status
 
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to

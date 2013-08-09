@@ -34,9 +34,9 @@ class StatusesController < ProjectController
 
   # POST statuses/:id/publish
   def publish
-    @status.publish! # won't post twice
-    redirect_to new_project_status_path(@project),
-      notice: "Status has been published."
+    @status.publish! # will only publish status once
+    flash.now[:notice] = "Status has been published."
+    render :published
   end
 
   private

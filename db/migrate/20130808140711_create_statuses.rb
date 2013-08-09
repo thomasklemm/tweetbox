@@ -8,13 +8,13 @@ class CreateStatuses < ActiveRecord::Migration
       t.belongs_to :user
       t.belongs_to :twitter_account
 
-      t.boolean :published, default: false
-
       t.integer :in_reply_to_status_id, limit: 8
+      t.integer :twitter_id, limit: 8
 
       t.timestamps
     end
 
     add_index :statuses, :token, unique: true
+    add_index :statuses, :twitter_id
   end
 end

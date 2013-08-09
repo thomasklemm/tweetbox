@@ -24,14 +24,19 @@ class Status < ActiveRecord::Base
 
   def previous_tweet
     return unless reply?
-    @previous_tweet ||= find_or_fetch_tweet(in_reply_to_status_id)
+    @previous_tweet ||= TweetFinder.new(project, in_reply_to_status_id).find_or_fetch
   end
 
   ##
   # Publishing
 
+  def published?
+    !!twitter_id
+  end
+
   def publish!
-    raise self.to_yaml
+    return true if published?
+    publish_status!
   end
 
   private
@@ -45,44 +50,53 @@ class Status < ActiveRecord::Base
     end while Status.exists?(token: self[:token])
   end
 
-  private
+  ##
+  # Publishing
+
+  def publish_status!
+    status = twitter_account.client.update(short_text, publish_opts)
+
+    # Assign the twitter id of the posted tweet
+    # which also flags the status as published
+    self.twitter_id = status.id
+
+    # Create new posted tweet
+    # and build conversation
+    tweet = TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)
+    ConversationWorker.new.perform(tweet.id)
+
+    # Create :post event on new tweet
+    # and :post_reply event on previous tweet
+    tweet.create_event(:post, user)
+    previous_tweet.try(:create_event, :post_reply, user)
+
+    self.save!
+  end
+
+  # The posted status will be a reply on Twitter
+  # only if :in_reply_to_status_id is present in publish_opts
+  def publish_opts
+    options = {}
+    options[:in_reply_to_status_id] = in_reply_to_status_id if reply?
+    options
+  end
 
   ##
-  # Find or fetch a tweet
+  # Short text
 
-  # Returns a tweet record
-  def find_or_fetch_tweet(twitter_id)
-    find_tweet(twitter_id) || fetch_tweet(twitter_id)
+  def short_text
+    return text if tweet_length(text) <= 140
+
+    parts = [ text[0..200], "... #{ public_status_url }" ]
+    parts[0] = parts[0][0..-2] until tweet_length(parts.join) <= 140
+    parts.join
   end
 
-  # Returns the tweet record from the database if present
-  def find_tweet(twitter_id)
-    project.tweets.where(twitter_id: twitter_id).first
+  def tweet_length(text)
+    Twitter::Validation.tweet_length(text)
   end
 
-  # Fetches the given status from Twitter
-  # Returns the persisted tweet record
-  def fetch_tweet(twitter_id)
-    status = twitter_client.status(twitter_id)
-
-    # Avoid referencing random twitter account
-    tweet = TweetMaker.from_twitter(status, project: project, state: :conversation)
-
-  rescue Twitter::Error => e
-    @runs ||= 0 and @runs += 1
-
-    # Statuses may be deleted voluntarily by the author
-    if e.is_a? Twitter::Error::NotFound
-      return nil if @runs > 2
-    else
-      raise e if @runs > 3
-    end
-
-    # Retry using a different random Twitter account
-    sleep 1 and retry
-  end
-
-  def twitter_client
-    RandomTwitterClient.new
+  def public_status_url
+    Rails.application.routes.url_helpers.public_status_url(token)
   end
 end
