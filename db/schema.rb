@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130808140711) do
+ActiveRecord::Schema.define(version: 20130809144932) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -54,14 +54,6 @@ ActiveRecord::Schema.define(version: 20130808140711) do
 
   add_index "authors", ["project_id", "twitter_id"], name: "index_authors_on_project_id_and_twitter_id", unique: true, using: :btree
   add_index "authors", ["project_id"], name: "index_authors_on_project_id", using: :btree
-
-  create_table "codes", force: true do |t|
-    t.integer  "tweet_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "codes", ["tweet_id"], name: "index_codes_on_tweet_id", using: :btree
 
   create_table "conversations", force: true do |t|
     t.integer  "previous_tweet_id"
