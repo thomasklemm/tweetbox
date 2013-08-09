@@ -41,7 +41,7 @@ class Status < ActiveRecord::Base
     return true unless new_record?
 
     begin
-      self[:token] = Tokenizer.random_token(4)
+      self[:token] = Tokenizer.random_token(6)
     end while Status.exists?(token: self[:token])
   end
 

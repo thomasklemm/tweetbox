@@ -1,10 +1,6 @@
 / new status
 - if @project.twitter_accounts.any?
-  h3 Create a new tweet
-
-  p You can tweet from here. If you care more than 140 characters, we will append a link to the long tweet for you.
-
-  hr
+  = logo_header 'Tweet'
 
   = render 'form'
 

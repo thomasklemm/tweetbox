@@ -144,63 +144,99 @@ abbr.timeago
 
 
 // Public tweets
-.public-tweet-wrapper
-  max-width: 500px
-  margin: 0 auto // center
+// .public-tweet-wrapper
+//   max-width: 500px
+//   margin: 0 auto // center
 
-  .tweet
-    margin-bottom: 2rem
-    padding-left: 58px
+//   .tweet
+//     margin-bottom: 2rem
+//     padding-left: 58px
 
-    .avatar
-      float: left
-      margin-top: 4px
-      margin-left: -58px
-      border-radius: 2px
+//     .avatar
+//       float: left
+//       margin-top: 4px
+//       margin-left: -58px
+//       border-radius: 2px
 
-    .author
-      .name
-        font-weight: bold
-        color: $textColor
-      .screen-name
-        margin-left: 5px
-        @extend .muted
+//     .author
+//       .name
+//         font-weight: bold
+//         color: $textColor
+//       .screen-name
+//         margin-left: 5px
+//         @extend .muted
 
-    .timestamp
-      margin-left: 8px
-      @extend .muted
-      font-size: 12px
+//     .timestamp
+//       margin-left: 8px
+//       @extend .muted
+//       font-size: 12px
 
-    .text
-      margin-bottom: 2px
-      p
-        margin: 0
+//     .text
+//       margin-bottom: 2px
+//       p
+//         margin: 0
 
-    .actions
-      margin-top: 2px
-      font-size: 13px
+//     .actions
+//       margin-top: 2px
+//       font-size: 13px
 
-      a:not(:first-of-type)
-        margin-left: 8px
-        border-left: 1px solid #ddd
-        padding-left: 8px
+//       a:not(:first-of-type)
+//         margin-left: 8px
+//         border-left: 1px solid #ddd
+//         padding-left: 8px
 
-    &.main-tweet
+//     &.main-tweet
 
-    &.conversation-tweet
-      .actions a
-        @extend .muted
+//     &.conversation-tweet
+//       .actions a
+//         @extend .muted
 
-    &.reply
-      position: relative
-      left: 40px
+//     &.reply
+//       position: relative
+//       left: 40px
 
 // spacing below navbar
 #content
   margin-top: 1rem
+
+// logo header
+.logo-header
+  img
+    width: 42px
+    height: 42px
+    margin-right: 6px
 
 // navbar
 img.navbar-logo
   height: 24px
   width: 104px
   margin: -6px 0
+
+// public tweets, also used when publishing statuses
+.public-tweet
+  padding-left: 58px
+  padding-bottom: 0.5rem
+
+  .author-profile
+    img.avatar
+      float: left
+      margin: 4px 0 0 -58px
+      border-radius: 2px
+      width: 48px
+      height: 48px
+
+    .name
+      font-weight: bold
+    .screen-name
+      @extend .muted
+      margin: 0 5px
+
+  .timestamp
+    @extend .muted
+  .text
+    min-height: (2 * $baseLineHeight) + 3px
+
+// new status form
+.new_status, .edit_status
+  @extend .public-tweet
+
