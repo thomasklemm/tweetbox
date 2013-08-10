@@ -1,27 +1,22 @@
 class StatusDecorator < Draper::Decorator
+  include Draper::LazyHelpers
   delegate_all
 
-  def project_twitter_accounts
-    project.twitter_accounts
+  REPLY_INTENT_URL_BASE = "https://twitter.com/intent/tweet?in_reply_to="
+
+  def text
+    TweetPipeline.new(model.text).to_html
   end
 
-  def project_twitter_accounts_in_json
-    project_twitter_accounts.map(&:serialized_hash).to_json
+  def short_text
+    TweetPipeline.new(model.short_text).to_html
   end
 
-  def selected_twitter_account
-    twitter_account || reply_to_tweet.try(:twitter_account) || project.default_twitter_account
+  def reply_intent_url
+    "#{ REPLY_INTENT_URL_BASE }#{ twitter_id }"
   end
 
-  def selected_twitter_account_position
-    project_twitter_accounts.index(selected_twitter_account)
-  end
-
-  def initial_text
-    reply? ? "#{ reply_to_tweet.author.at_screen_name } " : ""
-  end
-
-  def redirect_target_tweet
-    reply_to_tweet || posted_tweet
+  def twitter_url
+    "https://twitter.com/#{ twitter_account.screen_name }/status/#{ twitter_id }" if published?
   end
 end

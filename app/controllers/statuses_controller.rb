@@ -1,5 +1,5 @@
 class StatusesController < ProjectController
-  before_action :load_status, only: [:preview, :edit, :update, :publish]
+  before_action :load_status, only: [:preview, :edit, :update, :publish, :published]
 
   # Pass in_reply_to: twitter_id
   def new
@@ -35,8 +35,14 @@ class StatusesController < ProjectController
   # POST statuses/:id/publish
   def publish
     @status.publish! # will only publish status once
-    flash.now[:notice] = "Status has been published."
-    render :published
+    redirect_to [:published, @project, @status],
+      notice: "Status has been published."
+  end
+
+  # GET statuses/:id/published
+  def published
+    redirect_to [:preview, @project, @status] unless @status.published?
+    render 'public_statuses/show'
   end
 
   private

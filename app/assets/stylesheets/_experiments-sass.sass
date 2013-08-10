@@ -197,7 +197,7 @@ abbr.timeago
 
 // spacing below navbar
 #content
-  margin-top: 1rem
+  margin-top: 1.25rem
 
 // logo header
 .logo-header
@@ -238,7 +238,14 @@ img.navbar-logo
     min-height: (2 * $baseLineHeight)
 
   .actions
-    margin-top: 0.5rem
+    padding-top: 0.5rem
+    a:not(:first-of-type), .dropdown-link
+      margin-left: 8px
+      border-left: 1px solid #ccc
+      padding-left: 8px
+
+  .embed
+    margin: 0.5rem 0
 
 // new status form
 .new_status, .edit_status

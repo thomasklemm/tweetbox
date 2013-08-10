@@ -10,7 +10,7 @@ class Status123
   attribute :posted_text, String
 
   attribute :posted_tweet, Tweet
-  attribute :code, Code
+  # attribute :code, Code
 
   validates :project,
             :user,

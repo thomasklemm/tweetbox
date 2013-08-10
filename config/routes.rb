@@ -60,8 +60,11 @@ Tweetbox::Application.routes.draw do
     end
 
     resources :statuses, only: [:new, :create, :edit, :update] do
-      get  :preview, on: :member
-      post :publish, on: :member
+      member do
+        get  :preview
+        post :publish
+        get  :published
+      end
     end
 
     resources :authors, only: :show
@@ -75,7 +78,7 @@ Tweetbox::Application.routes.draw do
   end
 
   # Public statuses
-  get 'r/:token', to: 'public_status#show', as: :public_status
+  get 'r/:token', to: 'public_statuses#show', as: :public_status
 
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to

@@ -27,6 +27,25 @@ class Status < ActiveRecord::Base
     @previous_tweet ||= TweetFinder.new(project, in_reply_to_status_id).find_or_fetch
   end
 
+
+  # Is a Long Status?
+
+  def long_status?
+    length_on_twitter(text) > 140
+  end
+
+  def short_text
+    @short_text ||= short_text!
+  end
+
+  def short_text_length
+    length_on_twitter(short_text)
+  end
+
+  def text_length
+    length_on_twitter(text)
+  end
+
   ##
   # Publishing
 
@@ -84,15 +103,18 @@ class Status < ActiveRecord::Base
   ##
   # Short text
 
-  def short_text
-    return text if tweet_length(text) <= 140
+  def short_text!
+    return text if length_on_twitter(text) <= 140
+
+    html = TweetPipeline.new(text).to_html
+    text = Sanitize.clean(html)
 
     parts = [ text[0..200], "... #{ public_status_url }" ]
-    parts[0] = parts[0][0..-2] until tweet_length(parts.join) <= 140
+    parts[0] = parts[0][0..-2] until length_on_twitter(parts.join) <= 140
     parts.join
   end
 
-  def tweet_length(text)
+  def length_on_twitter(text)
     Twitter::Validation.tweet_length(text)
   end
 

@@ -34,7 +34,7 @@
     span.screen-name = selected_twitter_account.at_screen_name
 
   .field style='margin-top: 3px'
-    = f.text_area :text, autofocus: true, rows: 8, value: in_reply_to_user
+    = f.text_area :text, autofocus: true, rows: 8, value: in_reply_to_user, class: 'span4'
 
   .field
     = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :at_screen_name, { selected: selected_twitter_account_id }, style: "#{ 'display: none' if @project.twitter_accounts.size == 1 }"
