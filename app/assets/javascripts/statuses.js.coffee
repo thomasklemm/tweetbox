@@ -1,26 +1,32 @@
-# Statuses
+# StatusController for Angular
 
-# Preview new status
 @StatusController = ($scope) ->
-  $scope.statusCharCount = ->
+  # Character counter
+  $scope.characterCount = ->
     twttr.txt.getTweetLength(@statusText)
 
-  $scope.previewCharCount = ->
-    twttr.txt.getTweetLength(@previewText)
 
-  $scope.virtualCharCount = ->
-    twttr.txt.getTweetLength(@virtualText)
+# Preview new status
+# @StatusController = ($scope) ->
+#   $scope.statusCharCount = ->
+#     twttr.txt.getTweetLength(@statusText)
 
-  $scope.updatePreview = ->
-    @virtualText = @statusText
+#   $scope.previewCharCount = ->
+#     twttr.txt.getTweetLength(@previewText)
 
-    if @virtualCharCount() <= 140
-      @previewText = @virtualText
-    else
-      while @virtualCharCount() > 114
-        @virtualText = @virtualText.substr(0, @virtualText.length - 1)
+#   $scope.virtualCharCount = ->
+#     twttr.txt.getTweetLength(@virtualText)
 
-      @previewText = @virtualText + "... http://tweetbox.com/read-more"
+#   $scope.updatePreview = ->
+#     @virtualText = @statusText
 
-  $scope.reply = ->
-    @statusText[0] == '@'
+#     if @virtualCharCount() <= 140
+#       @previewText = @virtualText
+#     else
+#       while @virtualCharCount() > 114
+#         @virtualText = @virtualText.substr(0, @virtualText.length - 1)
+
+#       @previewText = @virtualText + "... http://tweetbox.com/read-more"
+
+#   $scope.reply = ->
+#     @statusText[0] == '@'

@@ -18,6 +18,8 @@ class TwitterAccount < ActiveRecord::Base
   # Credentials used for authenticating with Twitter
   validates :uid, :token, :token_secret, presence: true
 
+  scope :by_date, -> { order(created_at: :asc) }
+
   # Access scope
   # #access_scope.read? and #access_scope.write?
   # TwitterAccount.with_access_scope(:read) and TwitterAccount.with_access_scope(:read, :write)

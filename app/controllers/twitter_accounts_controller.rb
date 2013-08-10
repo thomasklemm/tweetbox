@@ -8,7 +8,7 @@ class TwitterAccountsController < ProjectController
   # Collection actions
 
   def index
-    @twitter_accounts = project_twitter_accounts.decorate
+    @twitter_accounts = project_twitter_accounts.by_date.decorate
   end
 
   def new
