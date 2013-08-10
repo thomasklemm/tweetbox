@@ -1,38 +1,38 @@
 / A custom layout for all views rendered by the project controller and its subcontrollers
 - content_for :content do
-  div class='row-fluid'
+  div.row
+
+    / project navigation
+    div.span2 id='project-navbar'
+      / div class='well' style='padding: 8px 0'
+      ul class='nav nav-list'
+        li.nav-header Tweets
+        / tweet
+        = active_link_to icon_tag(:twitter, 'Tweet'), new_project_status_path(@project)
+
+        / tweets
+        = active_link_to icon_tag(:plus, '&nbsp;Incoming'), incoming_project_tweets_path(@project), exact: true
+        = active_link_to icon_tag(:ok, 'Resolved'), resolved_project_tweets_path(@project), exact: true
+        = active_link_to icon_tag(:reply, 'Posted'), posted_project_tweets_path(@project), exact: true
+
+        li.divider
+
+        li.nav-header Project
+
+        / project
+        = active_link_to icon_tag(:twitter, 'Accounts'), project_twitter_accounts_path(@project)
+        = active_link_to icon_tag(:twitter, 'Searches'), project_searches_path(@project)
+
+        / edit project
+        - if policy(@project).manage?
+          li = link_to icon_tag(:group, 'Team'), edit_account_project_path(@project)
+
 
     / main content
-    div class='span9'
+    div.span10
       / any flash messages
       = render 'flashes'
 
       = content_for?(:project_content) ? yield(:project_content) : yield
-
-    / project navigation
-    div id='project-navbar' class='span3'
-      div class='well' style='padding: 8px 0'
-        ul class='nav nav-list'
-          li.nav-header Tweets
-          / tweet
-          = active_link_to icon_tag(:twitter, 'Tweet'), new_project_status_path(@project)
-
-          / tweets
-          = active_link_to icon_tag(:plus, '&nbsp;Incoming'), incoming_project_tweets_path(@project), exact: true
-          = active_link_to icon_tag(:ok, 'Resolved'), resolved_project_tweets_path(@project), exact: true
-          = active_link_to icon_tag(:reply, 'Posted'), posted_project_tweets_path(@project), exact: true
-
-          li.divider
-
-          li.nav-header Project
-
-          / project
-          = active_link_to icon_tag(:twitter, 'Accounts'), project_twitter_accounts_path(@project)
-          = active_link_to icon_tag(:twitter, 'Searches'), project_searches_path(@project)
-
-          / edit project
-          - if policy(@project).manage?
-            li = link_to icon_tag(:group, 'Team'), edit_account_project_path(@project)
-
 
 = render template: 'layouts/application'

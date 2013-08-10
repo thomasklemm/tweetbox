@@ -1,39 +1,55 @@
-/ new status form
-.new-status-wrapper ng-controller='StatusController'
-  div ng-init="statusText = '#{ @status.initial_text }'"
-  div ng-init="previewText = statusText"
+/ status form
+- @status &&= @status.decorate
+
+/ previous tweet
+- if previous_tweet = @status.previous_tweet
+  - previous_tweet &&= previous_tweet.decorate
+  - author = previous_tweet.author
+
+  div.public-tweet
+    span.author-profile
+      = image_tag(author.profile_image_url, class: 'avatar')
+      span.name = author.name
+      span.screen-name = author.at_screen_name
+
+    / timestamp
+    span.timestamp
+      = icon_tag :time, timestamp_tag(previous_tweet.created_at)
+
+    / text
+    div.text = previous_tweet.text
+
+
+/ status form
+div ng-controller='StatusController'
+  div ng-init="statusText = '#{ @status.initial_reply_to_user_text }'"
   div ng-init="twitterAccounts = #{ @status.project_twitter_accounts_in_json  }"
   div ng-init="selectedTwitterAccount = twitterAccounts[#{ @status.selected_twitter_account_position }]"
 
   = form_for [@project, @status] do |f|
-
-    / preview
-    .preview-status
-      .author
-        img ng-src="{{ selectedTwitterAccount.profile_image_url}}" class='avatar'
-        span.name = "{{ selectedTwitterAccount.name }}"
-        span.screen-name @{{ selectedTwitterAccount.screen_name }}
-
-      .text = "{{ previewText }}"
-
-    .space-half
-
     = render 'shared/form_errors', target: @status
 
-    .field class='input-xxlarge'
-      = f.text_area :full_text, autofocus: true, ng_model: 'statusText', ng_change: 'updatePreview()', rows: 6, style: 'width: 405px'
+    span.author-profile
+      img.avatar ng-src="{{ selectedTwitterAccount.profile_image_url }}"
+      span.name = "{{ selectedTwitterAccount.name }}"
+      span.screen-name = "{{ selectedTwitterAccount.at_screen_name }}"
 
+    / text
+    .field style='margin-top: 3px'
+      = f.text_area :text, autofocus: true, rows: 8, class: 'span6', ng_model: 'statusText'
+
+    / twitter account
     .field
-      select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts" style="width: 420px; #{ 'display: none' if @status.project_twitter_accounts.size == 1 }"
+      select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts" style="#{ 'display: none' if @status.project_twitter_accounts.size == 1 }" class='span6'
 
       input type='text' ng-model='selectedTwitterAccount.id' id='status_twitter_account_id' name="status[twitter_account_id]" style="#{ 'display: none' unless Rails.env.test? }"
+
+      / = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :at_screen_name, { selected: selected_twitter_account_id }, style: "#{ 'display: none' if @project.twitter_accounts.size == 1 }"
 
     .field
       = f.hidden_field :in_reply_to_status_id
 
     .actions
-      = f.submit "Post {{ reply() && 'Reply' || 'Tweet' }}", class: 'btn btn-primary'
-      span.character-counter = "{{ statusCharCount() }} characters"
+      = f.submit "Preview", class: "btn btn-primary"
 
-
-    /  .character-counter style='margin-top: 7px' {{ previewCharCount() }} characters
+      span.character-counter.muted style='margin-left: 1rem' = "{{ characterCount() }} characters"

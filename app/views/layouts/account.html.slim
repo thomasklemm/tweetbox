@@ -1,16 +1,9 @@
 / A custom layout for all views rendered by the account controller and its subcontrollers
 - content_for :content do
-  div class='row-fluid'
-
-    / main content
-    div class='span9'
-      / any flash messages
-      = render 'flashes'
-
-      = content_for?(:account_content) ? yield(:account_content) : yield
+  div.row
 
     / account navigation
-    div id='account-navbar' class='span3'
+    div.span3 id='account-navbar'
       div class='well' style='padding: 8px 0'
         ul class='nav nav-list'
           li.nav-header Account
@@ -21,6 +14,14 @@
           li.divider
 
           = active_link_to icon_tag(:edit, 'Manage account'), edit_account_path
+
+
+    / main content
+    div.span9
+      / any flash messages
+      = render 'flashes'
+
+      = content_for?(:account_content) ? yield(:account_content) : yield
 
 = render template: 'layouts/application'
 

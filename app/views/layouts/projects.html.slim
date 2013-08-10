@@ -1,15 +1,17 @@
 / A custom layout for all views rendered by the project controller and its subcontrollers
 - content_for :content do
-  .row-fluid
+  div.row
+
     / project navigation
-    .span2
+    div.span3
       ul class='nav nav-list'
         li.nav-header Your projects
 
         - @projects.each do |project|
           li = link_to "<b>#{ project.name }</b>".html_safe, project
 
-    .span10
+    / main content
+    div.span9
       / any flash messages
       = render 'flashes'
 

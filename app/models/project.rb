@@ -13,6 +13,9 @@ class Project < ActiveRecord::Base
   has_many :tweets, dependent: :destroy
   has_many :authors, dependent: :destroy
 
+  # Keep statuses (tweets posted through our app) around forever
+  has_many :statuses, dependent: :nullify
+
   validates :account, :name, presence: true
 
   scope :visible_to, ->(user) { where(id: user.project_ids) }

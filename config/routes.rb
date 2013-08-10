@@ -59,20 +59,26 @@ Tweetbox::Application.routes.draw do
       resources :favorites, only: [:new, :create], on: :member
     end
 
-    resources :statuses, only: [:new, :create]
+    resources :statuses, only: [:new, :create, :edit, :update] do
+      member do
+        get  :preview
+        post :publish
+        get  :published
+      end
+    end
+
     resources :authors, only: :show
 
     resources :twitter_accounts, only: [:index, :new, :destroy] do
       post :auth, as: :authorize, on: :collection
-      put :set_default, on: :member
+      put  :set_default, on: :member
     end
 
     resources :searches, except: :show
   end
 
-  # Public view
-  get 't/:code_id' => 'public/codes#redirect', as: :public_code
-  get 'tweets/:screen_name/:twitter_id' => 'public/tweets#show', as: :public_tweet
+  # Public statuses
+  get 'r/:token', to: 'public_statuses#show', as: :public_status
 
   # Omniauth to authorize Twitter accounts
   #  There is a hidden 'auth/twitter' path too that requests can be directed to

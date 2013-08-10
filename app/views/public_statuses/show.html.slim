@@ -1,0 +1,46 @@
+/ show public status
+- @status &&= @status.decorate
+
+/ previous tweet
+- if previous_tweet = @status.previous_tweet
+  - previous_tweet &&= previous_tweet.decorate
+  - author = previous_tweet.author
+
+  div.public-tweet
+    span.author-profile
+      = image_tag(author.profile_image_url, class: 'avatar')
+      span.name = author.name
+      span.screen-name = author.at_screen_name
+
+    / timestamp
+    span.timestamp
+      = icon_tag :time, timestamp_tag(previous_tweet.created_at)
+
+    / text
+    div.text = previous_tweet.text
+
+
+/ public status
+div.public-tweet
+  - twitter_account = @status.twitter_account
+  span.author-profile
+    = image_tag(twitter_account.profile_image_url, class: 'avatar')
+    span.name = twitter_account.name
+    span.screen-name = twitter_account.at_screen_name
+
+  div.text == @status.text
+
+  div.actions
+    = link_to icon_tag(:reply, 'Reply'), @status.reply_intent_url
+    = link_to icon_tag(:twitter, 'On Twitter'), @status.twitter_url if @status.twitter_url
+
+    .right.muted
+      .characters-count #{ @status.text_length } characters
+
+/ who are we?
+hr
+p style='color: #999; font-size: 12px; text-align: center; margin-top: 1rem'
+  ' Care for more than 140 characters? <br />
+  = link_to root_path, style: 'color: #999' do
+    ' This LongReply has been posted with Tweetbox.<br />
+    = image_tag 'tweetbox/logo_and_tagline.png', width: 100, style: 'padding-top: 8px'

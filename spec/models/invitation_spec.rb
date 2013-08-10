@@ -21,7 +21,7 @@ describe Invitation do
     it "generates code on initialization" do
       code = invitation.code
       expect(code).to be_present
-      expect(code).to match(/\w{32}/)
+      expect(code).to match(/\w{16}/)
 
       invitation.save
       expect(invitation.reload.code).to eq(code)

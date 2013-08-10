@@ -1,36 +1,72 @@
 class StatusesController < ProjectController
+  before_action :load_status, only: [:preview, :edit, :update, :publish, :published]
+
+  # Pass in_reply_to: twitter_id
   def new
-    @status = Status.new(reply_params).decorate
-    @event = @status.create_start_reply_event
+    @status = project_statuses.build(reply_params)
   end
 
   def create
-    @status = Status.new(status_params).decorate
+    @status = project_statuses.build(status_params)
+
     if @status.save
-      redirect_to project_tweet_path(@project, @status.redirect_target_tweet), notice: "#{ @status.reply? ? 'Reply' : 'Status' } has been posted."
+      redirect_to [:preview, @project, @status]
     else
       render :new
     end
   end
 
-  private
-
-  def reply_params
-    options = { project: @project, user: current_user }
-    options[:in_reply_to_status_id] = params[:tweet_id] if params[:tweet_id].present?
-    options
+  # GET statuses/:id/preview
+  def preview
   end
 
-  def reply_to_tweet
-    params[:tweet_id] && @project.tweets.where(twitter_id: params[:tweet_id]).first!
+  def edit
+    render :new
+  end
+
+  def update
+    if @status.update(status_params)
+      redirect_to [:preview, @project, @status]
+    else
+      render :new
+    end
+  end
+
+  # POST statuses/:id/publish
+  def publish
+    @status.publish! # will only publish status once
+    redirect_to [:published, @project, @status],
+      notice: "Status has been published."
+  end
+
+  # GET statuses/:id/published
+  def published
+    redirect_to [:preview, @project, @status] unless @status.published?
+    render 'public_statuses/show'
+  end
+
+  private
+
+  def project_statuses
+    @project.statuses
+  end
+
+  def project_status
+    project_statuses.find_by!(token: params[:id])
+  end
+
+  def load_status
+    @status ||= project_status
+  end
+
+  def reply_params
+    params[:in_reply_to] ? { in_reply_to_status_id: params[:in_reply_to] } : nil
   end
 
   def status_params
-    params[:status].
-      slice(:full_text, :twitter_account_id, :in_reply_to_status_id).
-      reverse_merge({
-        project: @project,
-        user: current_user
-      })
+    params.
+      require(:status).
+      permit(:text, :twitter_account_id, :in_reply_to_status_id).
+      merge(user: current_user)
   end
 end

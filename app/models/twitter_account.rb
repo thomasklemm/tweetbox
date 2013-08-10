@@ -18,6 +18,8 @@ class TwitterAccount < ActiveRecord::Base
   # Credentials used for authenticating with Twitter
   validates :uid, :token, :token_secret, presence: true
 
+  scope :by_date, -> { order(created_at: :asc) }
+
   # Access scope
   # #access_scope.read? and #access_scope.write?
   # TwitterAccount.with_access_scope(:read) and TwitterAccount.with_access_scope(:read, :write)
@@ -139,7 +141,7 @@ class TwitterAccount < ActiveRecord::Base
 
   ##
   # Default twitter account on project
-  after_create :set_first_twitter_account_on_project_to_be_default_twitter_account
+  after_create  :set_first_twitter_account_on_project_to_be_default_twitter_account
 
   def set_first_twitter_account_on_project_to_be_default_twitter_account
     project.set_default_twitter_account(self) unless project.has_default_twitter_account?
@@ -154,5 +156,4 @@ class TwitterAccount < ActiveRecord::Base
   def import_timelines_async
     TwitterAccountImportWorker.perform_async(self.id)
   end
-
 end

@@ -1,161 +1,125 @@
-class Status
-  include Reformer
-  include Draper::Decoratable
+class Status < ActiveRecord::Base
+  belongs_to :project
+  belongs_to :user
+  belongs_to :twitter_account
 
-  attribute :project, Project
-  attribute :user, User
-  attribute :twitter_account, TwitterAccount
-
-  attribute :full_text, String
-  attribute :posted_text, String
-
-  attribute :posted_tweet, Tweet
-  attribute :code, Code
+  before_validation :generate_token, if: :new_record?
 
   validates :project,
-            :user,
+            :text,
+            :token,
             :twitter_account,
-            :full_text,
-            :posted_text, presence: true
+            :user,
+            presence: true
 
-  validate :posted_text_must_be_valid_tweet
-
-  def twitter_account_id=(twitter_account_id)
-    self.twitter_account = project.twitter_accounts.find(twitter_account_id)
+  def to_param
+    token
   end
 
   ##
-  # Reply stuff
-
-  attribute :in_reply_to_status_id, Integer
-  attribute :reply_to_tweet, Tweet
-
-  # NOTE: Params are being initialized in the order they are passed, so pass project first
-  def in_reply_to_status_id=(twitter_id)
-    super
-    self.reply_to_tweet = project.tweets.where(twitter_id: twitter_id).first! if twitter_id.present?
-  end
-
-  def in_reply_to_status_id
-    super || reply_to_tweet.try(:twitter_id)
-  end
+  # Is a Reply?
 
   def reply?
-    in_reply_to_status_id.present?
+    !!in_reply_to_status_id
   end
 
-  def create_start_reply_event
-    reply_to_tweet.try(:create_event, :start_reply, user)
+  def previous_tweet
+    return unless reply?
+    @previous_tweet ||= TweetFinder.new(project, in_reply_to_status_id).find_or_fetch
   end
 
-  def save
-    generate_posted_text
 
-    if valid?
-      post!
-      true
-    else
-      false
-    end
+  # Is a Long Status?
+
+  def long_status?
+    length_on_twitter(text) > 140
+  end
+
+  def short_text
+    @short_text ||= short_text!
+  end
+
+  def short_text_length
+    length_on_twitter(short_text)
+  end
+
+  def text_length
+    length_on_twitter(text)
+  end
+
+  ##
+  # Publishing
+
+  def published?
+    !!twitter_id
+  end
+
+  def publish!
+    return true if published?
+    publish_status!
   end
 
   private
 
-  ##
-  # Posted text
+  # Generates a token without overriding the existing one
+  def generate_token
+    return true unless new_record?
 
-  def generate_posted_text
-    return if posted_text.present?
-
-    self.posted_text = if tweet_length(full_text) <= 140 && valid_tweet?(full_text)
-      full_text
-    else
-      generate_code
-
-      elements = [full_text[0..200], ellipsis_and_public_url]
-      elements[0] = elements[0][0..-2] until tweet_length(elements.join) <= 140
-      elements.join
-    end
-  end
-
-  def public_url
-    Rails.application.routes.url_helpers.public_code_url(code)
-  end
-
-  def ellipsis_and_public_url
-    "... #{ public_url }"
-  end
-
-  def generate_code
-    self.code ||= Code.create!
+    begin
+      self[:token] = Tokenizer.random_token(6)
+    end while Status.exists?(token: self[:token])
   end
 
   ##
-  # Validations
+  # Publishing
 
-  def tweet_length(text)
-    Twitter::Validation.tweet_length(text)
+  def publish_status!
+    status = twitter_account.client.update(short_text, publish_opts)
+
+    # Assign the twitter id of the posted tweet
+    # which also flags the status as published
+    self.twitter_id = status.id
+
+    # Create new posted tweet
+    # and build conversation
+    tweet = TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)
+    ConversationWorker.new.perform(tweet.id)
+
+    # Create :post event on new tweet
+    # and :post_reply event on previous tweet
+    tweet.create_event(:post, user)
+    previous_tweet.try(:create_event, :post_reply, user)
+
+    self.save!
   end
 
-  def valid_tweet?(text)
-    !Twitter::Validation.tweet_invalid?(text)
-  end
-
-  def posted_text_must_be_valid_tweet
-    unless valid_tweet?(posted_text)
-      errors.add(:posted_text, 'must be valid text')
-    end
-  end
-
-  ##
-  # Posting the status
-
-  # Returns the posted tweet
-  def post!
-    status = post_status
-    self.posted_tweet = create_posted_tweet(status)
-
-    persist_full_text_on_posted_tweet
-    link_code_with_posted_tweet
-    build_conversation_history_on_posted_tweet
-    create_events_on_tweets
-
-    posted_tweet
-  end
-
-  def post_status
-    twitter_account.client.update(posted_text, post_status_options)
-  end
-
-  # Status will be a reply on Twitter only if :in_reply_to_status_id is present in options
-  def post_status_options
+  # The posted status will be a reply on Twitter
+  # only if :in_reply_to_status_id is present in publish_opts
+  def publish_opts
     options = {}
     options[:in_reply_to_status_id] = in_reply_to_status_id if reply?
     options
   end
 
-  def create_posted_tweet(status)
-    TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)
+  ##
+  # Short text
+
+  def short_text!
+    return text if length_on_twitter(text) <= 140
+
+    html = TweetPipeline.new(text).to_html
+    text = Sanitize.clean(html)
+
+    parts = [ text[0..200], "... #{ public_status_url }" ]
+    parts[0] = parts[0][0..-2] until length_on_twitter(parts.join) <= 140
+    parts.join
   end
 
-  def persist_full_text_on_posted_tweet
-    (posted_tweet.full_text = full_text and posted_tweet.save!) if posted_text != full_text
+  def length_on_twitter(text)
+    Twitter::Validation.tweet_length(text)
   end
 
-  def link_code_with_posted_tweet
-    if code
-      self.code.tweet = posted_tweet and self.code.save!
-    end
-  end
-
-  # Build conversation history at this very moment from the database
-  def build_conversation_history_on_posted_tweet
-    ConversationWorker.new.perform(posted_tweet.id)
-  end
-
-  # Create :post and :post_reply events
-  def create_events_on_tweets
-    posted_tweet.create_event(:post, user)
-    reply_to_tweet.try(:create_event, :post_reply, user)
+  def public_status_url
+    Rails.application.routes.url_helpers.public_status_url(token)
   end
 end

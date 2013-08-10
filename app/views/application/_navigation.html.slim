@@ -1,14 +1,16 @@
 / application/_navigation
-div class='navbar navbar-fixed-top'
-  div class='navbar-inner'
-    div class='container'
 
-      / tweetbox logo in navbar
-      / (inline styles might help prevent elements jumping around on the page on page load)
-      - tweetbox_navbar_image_tag = image_tag('tweetbox/logo_and_tagline.png', class: 'navbar-logo', style: 'height: 24px; width: 104px; margin: -6px 0')
+/ tweetbox logo in navbar
+/ (inline styles might help prevent elements jumping around on the page on page load)
+- tweetbox_navbar_image_tag = image_tag('tweetbox/logo_and_tagline.png', class: 'navbar-logo', style: 'height: 24px; width: 104px; margin: -6px 0')
 
-      / user signed out
-      - unless user_signed_in?
+
+/ user signed out
+- unless user_signed_in?
+  div class='navbar navbar-fixed-top'
+    div class='navbar-inner'
+      div class='container'
+
         ul class='nav'
           = active_link_to tweetbox_navbar_image_tag, root_path, exact: true
           = active_link_to "Who isn't it for?", static_path(:features), exact: true
@@ -18,8 +20,12 @@ div class='navbar navbar-fixed-top'
         ul class='nav pull-right'
           = active_link_to 'Login', login_path, exact: true
 
-      / user signed in
-      - if user_signed_in?
+
+/ user signed in
+- if user_signed_in?
+  div class='navbar navbar-static-top'
+    div class='navbar-inner'
+      div class='container'
 
         / left side
         ul class='nav project-links'
