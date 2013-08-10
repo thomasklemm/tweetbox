@@ -28,12 +28,12 @@ describe 'Find and remember Twitter users' do
       expect(page).to have_no_selector('#twitter_user_14377870')
       expect(page).to have_selector('.edit_lead')
 
-      within '.edit_lead' do
-        # Requires reload
-        # expect(page).to have_content("Client(s):LongReply, TwitSpark.com, and web")
+      # within '.edit_lead' do
+      #   # Requires reload
+      #   # expect(page).to have_content("Client(s):LongReply, TwitSpark.com, and web")
 
-        # TODO: Select score
-      end
+      #   # TODO: Select score
+      # end
     end
   end
 end

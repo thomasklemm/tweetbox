@@ -23,6 +23,6 @@ describe 'Add a lead by Bookmarklet' do
     end
 
     expect(page).to have_content("@simyo has been updated from Twitter.")
-    expect(page).to have_content("from 100 tweets")
+    expect(page).to have_content("from 5 tweets")
   end
 end
