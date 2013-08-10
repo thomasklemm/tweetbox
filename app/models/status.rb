@@ -9,6 +9,7 @@ class Status < ActiveRecord::Base
             :text,
             :token,
             :twitter_account,
+            :user,
             presence: true
 
   def to_param

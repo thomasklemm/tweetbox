@@ -1,3 +1,6 @@
 Fabricator(:status) do
-  text "MyText"
+  project
+  user
+  twitter_account
+  text Tokenizer.random_token(160)
 end
