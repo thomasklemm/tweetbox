@@ -14,6 +14,9 @@ user    = signup.user
 account = signup.account
 project = signup.project
 
+##
+# Make user staff member
+user.staff_member = true and user.save!
 
 ##
 # Twitter account

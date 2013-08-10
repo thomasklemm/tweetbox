@@ -5,7 +5,7 @@ class Project < ActiveRecord::Base
   has_many :memberships, through: :permissions
   has_many :users, through: :permissions
 
-  has_many :twitter_accounts, dependent: :destroy
+  has_many :twitter_accounts, -> { order(created_at: :asc) },  dependent: :destroy
   belongs_to :default_twitter_account, class_name: 'TwitterAccount'
 
   has_many :searches, dependent: :destroy

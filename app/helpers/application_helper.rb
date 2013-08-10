@@ -59,6 +59,13 @@ module ApplicationHelper
     content_tag(:abbr, time.to_s, opts.merge(:title => time.getutc.iso8601)) if time
   end
 
+  def active_list_item(url_parts)
+    klass = 'active' if current_path.start_with? url_for(url_parts)
+    content_tag :li, class: klass do
+      yield
+    end
+  end
+
   private
 
   def current_path

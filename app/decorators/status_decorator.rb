@@ -35,7 +35,7 @@ class StatusDecorator < Draper::Decorator
   # Angular form stuff
 
   def project_twitter_accounts
-    project.twitter_accounts.by_date
+    project.twitter_accounts
   end
 
   def project_twitter_accounts_in_json
