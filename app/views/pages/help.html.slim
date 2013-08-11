@@ -1,51 +1,39 @@
-/ # Can I embed images and videos in a tweet?
+/ help
+markdown:
+  # Help: Tweeting
 
-/ Yes, you can improve your answers by embedding rich content. Here's how:
+  ## Embedding links, images and videos
 
-/ ## Links
-/ URLs will be autolinked. This means you can just copy and paste any URL you'd like to link to into the tweet and it will be turned into a link.
+  ### Links
 
-/ If you want your URL to be displayed not with its link but with a different text, you can use this markdown syntax for links.
+  We'll autolink URLs for you, that means your customers can click on links when you paste them in.
 
-/ ```
-/ You'll find additional information [in the docs](http://example.com). Please reach out if you have any more questions.
-/ ```
+  If you want to give your link a different description, you can use the Markdown syntax.
 
-/ ## Images
-/ ```
-/ ![Image](http://example.com/image.jpg)
-/ ![Image](http://example.com/image.png)
-/ ```
-/ Any image source will work:
-/ http://farm4.staticflickr.com/3684/9478750520_0cb9982b71.jpg
 
-/ For some site like flickr the image url will also work
-/ http://www.flickr.com/photos/jamesbrew/9478750520
+      [Basecamp Project Management](http://basecamp.com)
 
-/ ## Videos
-/ Embed the link to the video as a URL. It will be transformed into a live video when it comes from Youtube, Vimeo, Wistia and more.
+  ### Images
 
-/ ```
-/ ...some text.
+      ![Image title](http://example.com/path/to/image.jpg)
 
-/ [Steve Jobs' Commencement Address](http://www.youtube.com/watch?v=UF8uR6Z6KLc)
+  ### Videos
 
-/ Some more text...
-/ ```
+  Paste URLs from Youtube, Vimeo and Wistia to have them automatically transformed into an embedded video.
 
-/ http://www.youtube.com/watch?v=UF8uR6Z6KLc
-/ http://vimeo.com/70817051
-/ http://home.wistia.com/medias/b0767e8ebb
 
-/ ## Slides
-/ You may embed slides from SlideShare, SlideRocket, SpeakerDeck the same way as a video.
+      [Basecamp - Working with Clients](http://vimeo.com/70817051)
+      [Steve Jobs' Commencement Address](http://www.youtube.com/watch?v=UF8uR6Z6KLc)
 
-/ ```
-/ [Next steps of our onboarding process](https://speakerdeck.com/bipuldeb/seven-deadly-tricks-seven-ways-to-storytelling)
-/ ```
+  ### Slides
+  Paste URLs from Speaker Deck and SlideShare.
 
-/ https://speakerdeck.com/bipuldeb/seven-deadly-tricks-seven-ways-to-storytelling
-/ http://slideshare.net/liubinskas/pollenizer-universal-pitch-deck
-/ ## Example Tweet
 
-/     urlRe: /((http:\/\/(www\.flickr\.com\/photos\/.*|flic\.kr\/.*|.*imgur\.com\/.*|xkcd\.com\/.*|www\.xkcd\.com\/.*|imgs\.xkcd\.com\/.*|instagr\.am\/p\/.*|instagram\.com\/p\/.*|www\.slideshare\.net\/.*\/.*|www\.slideshare\.net\/mobile\/.*\/.*|slidesha\.re\/.*|scribd\.com\/doc\/.*|www\.scribd\.com\/doc\/.*|scribd\.com\/mobile\/documents\/.*|www\.scribd\.com\/mobile\/documents\/.*|www\.sliderocket\.com\/.*|sliderocket\.com\/.*|app\.sliderocket\.com\/.*|portal\.sliderocket\.com\/.*|beta-sliderocket\.com\/.*|maps\.google\.com\/maps\?.*|maps\.google\.com\/\?.*|maps\.google\.com\/maps\/ms\?.*|tumblr\.com\/.*|.*\.tumblr\.com\/post\/.*|pastebin\.com\/.*|pastie\.org\/.*|www\.pastie\.org\/.*|speakerdeck\.com\/.*\/.*|www\.kiva\.org\/lend\/.*|.*\.uservoice\.com\/.*\/suggestions\/.*|formspring\.me\/.*|www\.formspring\.me\/.*|formspring\.me\/.*\/q\/.*|www\.formspring\.me\/.*\/q\/.*|.*youtube\.com\/watch.*|.*\.youtube\.com\/v\/.*|youtu\.be\/.*|.*\.youtube\.com\/user\/.*|.*\.youtube\.com\/.*#.*\/.*|m\.youtube\.com\/watch.*|m\.youtube\.com\/index.*|.*\.youtube\.com\/profile.*|.*\.youtube\.com\/view_play_list.*|.*\.youtube\.com\/playlist.*|vids\.myspace\.com\/index\.cfm\?fuseaction=vids\.individual&videoid.*|www\.myspace\.com\/index\.cfm\?fuseaction=.*&videoid.*|video\.yahoo\.com\/watch\/.*\/.*|video\.yahoo\.com\/network\/.*|sports\.yahoo\.com\/video\/.*|.*viddler\.com\/v\/.*|www\.vimeo\.com\/groups\/.*\/videos\/.*|www\.vimeo\.com\/.*|vimeo\.com\/groups\/.*\/videos\/.*|vimeo\.com\/.*|vimeo\.com\/m\/#\/.*|player\.vimeo\.com\/.*|www\.thedailyshow\.com\/watch\/.*|www\.thedailyshow\.com\/full-episodes\/.*|www\.thedailyshow\.com\/collection\/.*\/.*\/.*|movies\.yahoo\.com\/movie\/.*\/video\/.*|movies\.yahoo\.com\/movie\/.*\/trailer|movies\.yahoo\.com\/movie\/.*\/video|app\.wistia\.com\/embed\/medias\/.*|wistia\.com\/.*|.*\.wistia\.com\/.*|.*\.wi\.st\/.*|wi\.st\/.*|theguardian\.com\/.*\/video\/.*\/.*\/.*\/.*|www\.theguardian\.com\/.*\/video\/.*\/.*\/.*\/.*|guardian\.co\.uk\/.*\/video\/.*\/.*\/.*\/.*|www\.guardian\.co\.uk\/.*\/video\/.*\/.*\/.*\/.*|soundcloud\.com\/.*|soundcloud\.com\/.*\/.*|soundcloud\.com\/.*\/sets\/.*|soundcloud\.com\/groups\/.*|snd\.sc\/.*|open\.spotify\.com\/.*|spoti\.fi\/.*))|(https:\/\/(maps\.google\.com\/maps\?.*|maps\.google\.com\/\?.*|maps\.google\.com\/maps\/ms\?.*|speakerdeck\.com\/.*\/.*|.*youtube\.com\/watch.*|.*\.youtube\.com\/v\/.*|www\.vimeo\.com\/.*|vimeo\.com\/.*|player\.vimeo\.com\/.*|app\.wistia\.com\/embed\/medias\/.*|wistia\.com\/.*|.*\.wistia\.com\/.*|.*\.wi\.st\/.*|wi\.st\/.*|soundcloud\.com\/.*|soundcloud\.com\/.*\/.*|soundcloud\.com\/.*\/sets\/.*|soundcloud\.com\/groups\/.*|open\.spotify\.com\/.*)))/i,
+      [Slides on Speaker Deck](https://speakerdeck.com/holman/word-of-mouth)
+      [Slides on SlideShare](http://de.slideshare.net/Desk/50-customer-service-quotes-you-need-to-hang-in-your-office-17322763)
+
+  ### More info
+
+  We're parsing the tweets you publish (and especially all long tweets) with [Github flavored markdown](https://help.github.com/articles/github-flavored-markdown). You can thus easily paste links that will be autolinked, give them a different text `[Link text](http://example.com)`, embed images `![Image alt text](http://example.com/images/image.png)`, videos and more as described above.
+
+  Did we miss something? Please tweet or [mail](mailto:thomas@tweetbox.co) if you have additional questions or requests!
