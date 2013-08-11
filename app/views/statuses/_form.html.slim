@@ -22,7 +22,7 @@
 
 / status form
 div ng-controller='StatusController'
-  div ng-init="statusText = '#{ @status.initial_reply_to_user_text }'"
+  div ng-init="statusText = '#{ @status[:text] || @status.initial_reply_to_user_text }'"
   div ng-init="twitterAccounts = #{ @status.project_twitter_accounts_in_json  }"
   div ng-init="selectedTwitterAccount = twitterAccounts[#{ @status.selected_twitter_account_position }]"
 
