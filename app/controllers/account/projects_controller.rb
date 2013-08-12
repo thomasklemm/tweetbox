@@ -2,7 +2,7 @@ class Account::ProjectsController < AccountController
   before_filter :load_and_authorize_project, only: [:edit, :update]
 
   def index
-    @projects = account_projects.by_name
+    @projects = account_projects.by_date
   end
 
   def new

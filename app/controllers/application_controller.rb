@@ -37,11 +37,16 @@ class ApplicationController < ActionController::Base
 
   # Devise paths
   def after_sign_in_path_for(resource)
-    current_user.has_exactly_one_project? ? current_user.first_project_path : projects_path
+    main_user_project_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
     root_url
+  end
+
+  helper_method :main_user_project_path
+  def main_user_project_path
+    project_path(user_projects.by_date.first)
   end
 
   # Activites

@@ -3,21 +3,20 @@
   div.row
 
     / account navigation
-    div.span3 id='account-navbar'
-      div class='well' style='padding: 8px 0'
-        ul class='nav nav-list'
-          li.nav-header Account
-          = active_link_to icon_tag(:inbox, 'Projects'), account_projects_path
-          = active_link_to icon_tag(:group, 'Team'), account_users_path
-          = active_link_to icon_tag(:ticket, 'Invitations'), account_invitations_path
+    div.span2 id='account-navbar'
+      ul class='nav nav-list'
+        li.nav-header Account
+        = active_link_to icon_tag(:inbox, 'Projects'), account_projects_path
+        = active_link_to icon_tag(:group, 'Team'), account_users_path
+        = active_link_to icon_tag(:ticket, 'Invitations'), account_invitations_path
 
-          li.divider
+        li.divider
 
-          = active_link_to icon_tag(:edit, 'Manage account'), edit_account_path
+        = active_link_to icon_tag(:edit, 'Manage account'), edit_account_path
 
 
     / main content
-    div.span9
+    div.span10
       / any flash messages
       = render 'flashes'
 

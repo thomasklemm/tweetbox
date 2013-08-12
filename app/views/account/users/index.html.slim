@@ -1,27 +1,27 @@
-h3 Team
+/ account users
+= logo_header 'Team'
 
 table class='table table-hover users-table'
   thead
     tr
-      th #
-      th Gravatar
+      th
       th Name
       th Email
-      th Admin?
+      th Account admin?
       th
 
   tbody
-    - @users.each_with_index do |user, i|
+    - @users.each do |user|
       tr
-        td = i+1
-        td = image_tag(user.gravatar_image_url(36))
+        td = image_tag(user.gravatar_image_url(32), class: 'avatar')
         td = user.name
         td = user.email
-        td = "Account admin" if user.admin_of?(@account)
+        td = icon_tag(:ok, "Account admin") if user.admin_of?(@account)
         td
-          = link_to 'Manage project permissions', edit_account_user_path(user), class: 'btn'
-          - unless user.admin_of?(@account)
-              = link_to 'Grant admin superpowers', upgrade_to_admin_account_user_path(user), method: :put, class: 'btn', data: { confirm: "Do you really want to grant #{ user.name } account admin priviledges?" }
+          ul
+            li = link_to 'Manage project permissions', edit_account_user_path(user)
+            - unless user.admin_of?(@account)
+              li = link_to 'Grant admin superpowers', upgrade_to_admin_account_user_path(user), method: :put, class: 'btn', data: { confirm: "Do you really want to grant #{ user.name } account admin priviledges?" }
 
 / actions
 = link_to 'Invite a colleage', new_account_invitation_path, class: 'btn btn-primary'

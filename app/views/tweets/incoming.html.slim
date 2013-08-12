@@ -1,6 +1,6 @@
 / incoming tweets
 - if @tweets.any?
-  h3 Incoming Tweets
+  = logo_header 'Incoming Tweets'
 
   .tweets-wrapper
     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
@@ -8,12 +8,12 @@
 - if @tweets.empty?
   - if @project.twitter_accounts.any?
     / inbox zero
-    h3 Inbox Zero
+    = logo_header 'Inbox Zero'
     p All clear, time for a Moment of Zen.
 
   - else
     / blank slate
-    h3 Incoming Tweets
+    = logo_header 'Incoming Tweets'
     p
       ' Once you
       = link_to 'connect a Twitter account', project_twitter_accounts_path(@project)

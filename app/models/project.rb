@@ -19,7 +19,8 @@ class Project < ActiveRecord::Base
   validates :account, :name, presence: true
 
   scope :visible_to, ->(user) { where(id: user.project_ids) }
-  scope :by_name, -> { order('projects.name desc') }
+
+  scope :by_date, -> { order(created_at: :asc) }
 
   def has_member?(user)
     permissions.

@@ -1,23 +1,20 @@
-h3 Projects
+/ account projects
+= logo_header 'Projects'
+
+p A project in Tweetbox is a seperate inbox, e.g. for a different company if you're an agency. Multiple Twitter accounts can be connected to a project.
 
 table class='table table-hover projects-table'
   thead
     tr
-      th #
       th Name
       th
   tbody
-    - @projects.each_with_index do |project, i|
+    - @projects.each do |project|
       tr
-        td = i+1
-        td: b = project.name
+        td: b = link_to project.name, project
         td
-          / open
-          - if policy(project).access?
-            = link_to 'Open', project, class: 'btn'
-            | &nbsp;
-
-          / edit
-          = link_to 'Edit & manage permissions', edit_account_project_path(project), class: 'btn'
+          ul
+            li = link_to icon_tag(:group, 'Team permissions'), edit_account_project_path(project)
+            li = link_to icon_tag(:edit, 'Rename project'), edit_account_project_path(project)
 
 = link_to 'New project', new_account_project_path, class: 'btn btn-primary'

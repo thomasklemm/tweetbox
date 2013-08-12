@@ -29,10 +29,10 @@
 
         / left side
         ul class='nav project-links'
-          li = link_to tweetbox_navbar_image_tag, current_user.first_project_path
+          li = link_to tweetbox_navbar_image_tag, main_user_project_path
 
           / project links
-          - current_user.projects.by_name.each do |project|
+          - current_user.projects.by_date.each do |project|
             = active_link_to project.name, project
 
         / right side
@@ -41,7 +41,7 @@
           li class='dropdown'
             / user details
             a href='javascript:;' class='user-details dropdown-toggle' data-toggle='dropdown'
-              = image_tag(current_user.gravatar_image_url, class: 'gravatar')
+              = image_tag(current_user.gravatar_image_url, class: 'avatar')
               span.name = current_user.name
               | &nbsp;
               b class='caret'
