@@ -11,6 +11,10 @@ class Project < ActiveRecord::Base
   has_many :searches, dependent: :destroy
 
   has_many :tweets, dependent: :destroy
+  has_many :incoming_tweets, -> { incoming }, class_name: 'Tweet'
+  has_many :resolved_tweets, -> { resolved }, class_name: 'Tweet'
+  has_many :posted_tweets,   -> { posted },   class_name: 'Tweet'
+
   has_many :authors, dependent: :destroy
 
   # Keep statuses (tweets posted through our app) around forever
