@@ -41,13 +41,13 @@ class Tweet < ActiveRecord::Base
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # Scopes
-  scope :incoming, -> { where(state: :incoming).by_date.includes(:project, :author, {events: :user}, {previous_tweets: [:author, {events: :user}]}, :future_tweets) }
-  scope :resolved, -> { where(state: :resolved).by_date.load_conversation }
-  scope :posted,   -> { where(state: :posted).by_date.load_conversation }
+  scope :incoming, -> { where(state: :incoming).by_date.include_conversation }
+  scope :resolved, -> { where(state: :resolved).by_date.include_conversation }
+  scope :posted,   -> { where(state: :posted).by_date.include_conversation }
 
   scope :by_date, -> { order(created_at: :desc) }
 
-  scope :load_conversation, -> { includes(:author, {events: :user}, {previous_tweets: [:author, events: :user]}, {future_tweets: [:author, events: :user]}) }
+  scope :include_conversation, -> { includes(:project, :author, :events, {previous_tweets: [:project, :author, :events]}, {future_tweets: [:project, :author, :events]}) }
 
 
   ##
