@@ -25,7 +25,9 @@
 
   - if tweet != main_tweet
     .events
-      = render tweet.events.decorate
+      / uses the counter cache
+      - if tweet.events.size > 0
+        = render tweet.events
 
   .actions
     - if tweet.incoming?
@@ -68,4 +70,4 @@
 
   - if tweet == main_tweet
     .events
-      = render tweet.events.decorate
+      = render tweet.events

@@ -15,7 +15,7 @@ class Tweet < ActiveRecord::Base
             foreign_key: :future_tweet_id,
             dependent: :destroy
   has_many :previous_tweets,
-             -> { order(created_at: :asc) },
+             -> { order(created_at: :asc).includes(:author) },
              through: :previous_conversations,
              source: :previous_tweet
 
@@ -24,12 +24,12 @@ class Tweet < ActiveRecord::Base
             foreign_key: :previous_tweet_id,
             dependent: :destroy
   has_many :future_tweets,
-             -> { order(created_at: :asc) },
+             -> { order(created_at: :asc).includes(:author) },
              through: :future_conversations,
              source: :future_tweet
 
   # Events
-  has_many :events, -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :events, -> { order(created_at: :asc).includes(:user) }, dependent: :destroy
 
   # Validations
   validates :project,
@@ -41,13 +41,13 @@ class Tweet < ActiveRecord::Base
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # Scopes
-  scope :incoming, -> { where(state: :incoming).by_date.include_conversation }
-  scope :resolved, -> { where(state: :resolved).by_date.include_conversation }
-  scope :posted,   -> { where(state: :posted).by_date.include_conversation }
+  scope :incoming, -> { where(state: :incoming).include_conversation }
+  scope :resolved, -> { where(state: :resolved).include_conversation }
+  scope :posted,   -> { where(state: :posted).include_conversation }
 
-  scope :by_date, -> { order(created_at: :desc) }
+  scope :by_date, ->(direction=:asc) { order(created_at: direction) }
 
-  scope :include_conversation, -> { includes(:project, :author, :events, {previous_tweets: [:project, :author, :events]}, {future_tweets: [:project, :author, :events]}) }
+  scope :include_conversation, -> { includes(:project, :author, :events, :previous_tweets, :future_tweets) }
 
 
   ##

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130809144932) do
+ActiveRecord::Schema.define(version: 20130812191407) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 20130809144932) do
     t.integer  "favorite_count",                  default: 0
     t.integer  "previous_tweets_count",           default: 0
     t.integer  "future_tweets_count",             default: 0
+    t.integer  "events_count",                    default: 0
   end
 
   add_index "tweets", ["project_id", "author_id"], name: "index_tweets_on_project_id_and_author_id", using: :btree

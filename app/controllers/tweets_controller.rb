@@ -5,17 +5,17 @@ class TweetsController < TweetController
   # Collection actions
 
   def incoming
-    @tweets = project_tweets.incoming.by_date.limit(20).decorate
+    @tweets = project_tweets.incoming# .by_date(:desc).limit(20).decorate.shuffle
   end
 
   alias_method :index, :incoming
 
   def resolved
-    @tweets = project_tweets.resolved.by_date.limit(20).decorate
+    @tweets = project_tweets.resolved.by_date(:desc).limit(20).decorate
   end
 
   def posted
-    @tweets = project_tweets.posted.by_date.limit(20).decorate
+    @tweets = project_tweets.posted.by_date(:desc).limit(20).decorate
   end
 
   ##
