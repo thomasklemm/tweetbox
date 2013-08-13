@@ -80,6 +80,10 @@ class Status < ActiveRecord::Base
     # which also flags the status as published
     self.twitter_id = status.id
 
+    # Save here already in case any of the later steps fail
+    # in order to prevent a duplicate tweet on Twitter (would raise a Twitter::Error::Forbidden)
+    self.save!
+
     # Create new posted tweet
     # and build conversation
     tweet = TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)

@@ -8,7 +8,7 @@
   - if tweet == main_tweet
     .main-actions
       - if tweet.incoming?
-        = tweet.reply_button(nil, :reply, title: 'Reply', remote: true, style: 'padding-left: 0.6rem; padding-right: 0.6rem')
+        = tweet.reply_button(nil, :reply, title: 'Reply', style: 'padding-left: 0.6rem; padding-right: 0.6rem')
         = tweet.resolve_button(nil, :ok, resolve_opts)
 
   / author
@@ -31,7 +31,7 @@
 
   .actions
     - if tweet.incoming?
-      = tweet.reply_button('Reply', :reply, title: 'Reply', remote: true)
+      = tweet.reply_button('Reply', :reply, title: 'Reply')
       = tweet.resolve_button('Resolve', :ok, resolve_opts)
 
       / share dropdown

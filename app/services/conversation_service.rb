@@ -33,7 +33,7 @@ class ConversationService
       begin
         @tweet.previous_tweets |= [tweet.previous_tweet]
       rescue ActiveRecord::RecordNotUnique
-        retry
+        # Record is already present, do nothing
       end
 
       tweet = tweet.previous_tweet

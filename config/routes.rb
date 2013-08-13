@@ -54,7 +54,7 @@ Tweetbox::Application.routes.draw do
         post 'activate'
       end
 
-      resources :replies,   only: [:new, :create], on: :member, controller: 'statuses'
+      resources :replies,   only: :new, on: :member
       resources :retweets,  only: [:new, :create], on: :member
       resources :favorites, only: [:new, :create], on: :member
     end

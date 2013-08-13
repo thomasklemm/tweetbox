@@ -35,8 +35,14 @@ class StatusesController < ProjectController
   # POST statuses/:id/publish
   def publish
     @status.publish! # will only publish status once
-    redirect_to [:published, @project, @status],
-      notice: "Status has been published."
+
+    if @status.previous_tweet
+      redirect_to [@project, @status.previous_tweet],
+        notice: "Reply has been published."
+    else
+      redirect_to [:published, @project, @status],
+        notice: "Status has been published."
+    end
   end
 
   # GET statuses/:id/published
