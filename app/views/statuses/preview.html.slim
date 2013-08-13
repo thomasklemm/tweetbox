@@ -1,6 +1,15 @@
 / preview status
 - @status &&= @status.decorate
 
+- content_for :preview_actions do
+  .actions
+    - if @status.previous_tweet
+      = link_to 'Post Reply & Resolve Tweet', publish_project_status_path(@project, @status, resolve: 'resolve'), method: :post, class: 'btn btn-primary'
+    - else
+      = link_to 'Post to Twitter', [:publish, @project, @status], method: :post, class: 'btn btn-primary'
+
+    = link_to ' or edit', [:edit, @project, @status]
+
 h3 Preview status
 
 / previous tweet
@@ -36,10 +45,7 @@ div.public-tweet
   div.text = @status.short_text
 
   - unless @status.long_status?
-    .actions
-      = link_to 'Post to Twitter', [:publish, @project, @status], method: :post, class: 'btn btn-primary'
-      '
-      = link_to 'or edit', [:edit, @project, @status]
+    = content_for :preview_actions
 
 
 / preview long status
@@ -58,6 +64,4 @@ div.public-tweet
     div.text = @status.text
 
     .actions
-      = link_to 'Post to Twitter', [:publish, @project, @status], method: :post, class: 'btn btn-primary'
-      '
-      = link_to 'or edit', [:edit, @project, @status]
+      = content_for :preview_actions

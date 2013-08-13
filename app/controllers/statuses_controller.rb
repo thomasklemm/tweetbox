@@ -37,8 +37,15 @@ class StatusesController < ProjectController
     @status.publish! # will only publish status once
 
     if @status.previous_tweet
-      redirect_to [@project, @status.previous_tweet],
-        notice: "Reply has been published."
+      # Resolve the previous tweet
+      if params[:resolve].to_s == 'resolve'
+        @status.previous_tweet.resolve_by(current_user)
+        redirect_to incoming_project_tweets_path(@project),
+          notice: "Reply has been posted and tweet has been resolved."
+      else
+        redirect_to [@project, @status.previous_tweet],
+          notice: "Reply has been published."
+      end
     else
       redirect_to [:published, @project, @status],
         notice: "Status has been published."

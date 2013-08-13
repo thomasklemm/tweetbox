@@ -102,10 +102,14 @@ class Tweet < ActiveRecord::Base
     end
   end
 
-  def resolve_by!(user)
+  def resolve_by(user)
     resolve
     create_event(:resolve, user)
     save!
+  end
+
+  def start_reply_by(user)
+    create_event(:start_reply, user)
   end
 
   def create_event(kind, user)
