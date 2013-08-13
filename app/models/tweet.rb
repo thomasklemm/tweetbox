@@ -102,8 +102,10 @@ class Tweet < ActiveRecord::Base
     end
   end
 
-  def resolve!(user)
-    resolve and create_event(:resolve, user)
+  def resolve_by!(user)
+    resolve
+    create_event(:resolve, user)
+    save!
   end
 
   def create_event(kind, user)

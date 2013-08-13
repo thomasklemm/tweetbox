@@ -11,7 +11,7 @@
           = link_to icon_tag(:twitter, 'Tweet'), new_project_status_path(@project)
 
         / tweets
-        = active_link_to icon_tag(:plus, '&nbsp;Incoming'), incoming_project_tweets_path(@project), exact: true
+        = active_link_to icon_tag(:plus, " Incoming <span class='label pull-right' style='margin-top: 2px'>#{ @project.incoming_tweets_count }</span>".html_safe), incoming_project_tweets_path(@project), exact: true
         = active_link_to icon_tag(:ok, 'Resolved'), resolved_project_tweets_path(@project), exact: true
         = active_link_to icon_tag(:reply, 'Posted'), posted_project_tweets_path(@project), exact: true
 

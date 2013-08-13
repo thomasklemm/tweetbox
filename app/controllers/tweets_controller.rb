@@ -5,17 +5,17 @@ class TweetsController < TweetController
   # Collection actions
 
   def incoming
-    @tweets = project_tweets.incoming# .by_date(:desc).limit(20).decorate.shuffle
+    @tweets = @project.incoming_tweets.by_date(:desc).limit(20).decorate.shuffle
   end
 
   alias_method :index, :incoming
 
   def resolved
-    @tweets = project_tweets.resolved.by_date(:desc).limit(20).decorate
+    @tweets = @project.resolved_tweets.by_date(:desc).limit(20).decorate
   end
 
   def posted
-    @tweets = project_tweets.posted.by_date(:desc).limit(20).decorate
+    @tweets = @project.posted_tweets.by_date(:desc).limit(20).decorate
   end
 
   ##
@@ -25,7 +25,7 @@ class TweetsController < TweetController
   end
 
   def resolve
-    @tweet.resolve!(current_user)
+    @tweet.resolve_by!(current_user)
 
     respond_to do |format|
       format.html { redirect_to [@project, :tweets], notice: 'Tweet has been resolved.' }
