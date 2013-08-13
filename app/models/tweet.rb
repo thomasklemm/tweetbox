@@ -41,9 +41,11 @@ class Tweet < ActiveRecord::Base
   validates_uniqueness_of :twitter_id, scope: :project_id
 
   # Counter caches
+  counter_culture :project
   counter_culture :project,
+    column_name: ->(model) { "#{ model.state }_tweets_count" },
     column_names: {
-      [] => 'tweets_count',
+      # [] => 'tweets_count',
       ["tweets.state = ?", 'incoming'] => 'incoming_tweets_count',
       ["tweets.state = ?", 'resolved'] => 'resolved_tweets_count',
       ["tweets.state = ?", 'posted'] => 'posted_tweets_count'

@@ -33,9 +33,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  # Render views globally
-  config.render_views
-
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -73,6 +70,20 @@ RSpec.configure do |config|
 
   # Devise test helpers in controllers
   config.include Devise::TestHelpers, type: :controller
+
+  # Fail specs after the first failing spec
+  # config.fail_fast = true
+
+
+  # http://labs.goclio.com/tuning-ruby-garbage-collection-for-rspec/
+  # Quick hack to see what our peak number of objects on the heap is
+  # heap_live_num = 0
+  # config.after(:each) do
+  #   heap_live_num = [heap_live_num, GC.stat[:heap_live_num]].max
+  # end
+  # config.after(:suite) do
+  #   puts "\nMAX HEAP OBJECT COUNT: #{heap_live_num}"
+  # end
 end
 
 Capybara.javascript_driver = :webkit

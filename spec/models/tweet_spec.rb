@@ -183,5 +183,53 @@ describe Tweet, 'conversation' do
       expect{ third_tweet.future_tweets << first_tweet }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
+end
 
+describe Tweet, 'counter caches' do
+  let!(:project) { Fabricate(:project) }
+  let!(:incoming_tweets) { (1..3).map { Fabricate(:tweet, project: project, state: 'incoming') }}
+  let!(:resolved_tweets) { (1..2).map { Fabricate(:tweet, project: project, state: :resolved) }}
+  let!(:posted_tweets)   { (1..1).map { Fabricate(:tweet, project: project, state: :posted) }}
+
+  before { project.reload }
+
+  it "caches the tweet counts on the project" do
+    expect(project.tweets_count).to eq 6
+    expect(project.incoming_tweets_count).to eq 3
+    expect(project.resolved_tweets_count).to eq 2
+    expect(project.posted_tweets_count).to eq 1
+
+    incoming_tweets.first.update(state: 'resolved')
+    posted_tweets.first.update(state: :resolved)
+    project.reload
+
+    expect(project.tweets_count).to eq 6
+    expect(project.incoming_tweets_count).to eq 2
+    expect(project.resolved_tweets_count).to eq 4
+    expect(project.posted_tweets_count).to eq 0
+
+    resolved_tweets.first.destroy
+    project.reload
+
+    expect(project.tweets_count).to eq 5
+    expect(project.incoming_tweets_count).to eq 2
+    expect(project.resolved_tweets_count).to eq 3
+    expect(project.posted_tweets_count).to eq 0
+
+    project.update(tweets_count: 10, incoming_tweets_count: 10, resolved_tweets_count: 10, posted_tweets_count: 10)
+    project.reload
+
+    expect(project.tweets_count).to eq 10
+    expect(project.incoming_tweets_count).to eq 10
+    expect(project.resolved_tweets_count).to eq 10
+    expect(project.posted_tweets_count).to eq 10
+
+    Tweet.counter_culture_fix_counts
+    project.reload
+
+    expect(project.tweets_count).to eq 5
+    expect(project.incoming_tweets_count).to eq 2
+    expect(project.resolved_tweets_count).to eq 3
+    expect(project.posted_tweets_count).to eq 0
+  end
 end
