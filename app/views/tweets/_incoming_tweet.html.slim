@@ -1,0 +1,12 @@
+/ incoming tweet partial
+
+/ incoming tweet
+= div_for tweet, class: 'incoming' do
+  = render 'tweet_body', tweet: tweet
+
+  / actions
+  .actions
+    = tweet.reply_action(title: 'Reply to this tweet') do
+      = icon_tag :reply, 'Reply'
+    = tweet.resolve_action(title: 'Resolve tweet', remote: true) do
+      = icon_tag :ok, 'Resolve'

@@ -1,4 +1,11 @@
-h4 Show tweet
+/ show tweet
 
-.tweets-wrapper
-  = render partial: 'tweets/tweet_in_conversation', object: @tweet, as: :tweet
+= logo_header 'Tweet'
+
+.tweets
+  = render 'conversation_for_tweet', tweet: @tweet
+
+/ links back
+ul.links class="inline-list"
+  li = link_to "&laquo; Incoming Tweets".html_safe, [:incoming, @project, :tweets]
+  li = link_to "Stream", [:stream, @project, :tweets]

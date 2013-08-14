@@ -12,7 +12,7 @@ class TweetController < ProjectController
   end
 
   def project_tweet
-    project_tweets.where(twitter_id: tweet_twitter_id).first!
+    project_tweets.find_by(twitter_id: tweet_twitter_id)
   end
 
   def tweet_twitter_id

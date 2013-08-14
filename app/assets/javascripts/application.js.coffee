@@ -24,6 +24,7 @@
 
 # Tweetbox
 #= require statuses
+#= require tweets
 
 # Submit form when a radio button is selected
 jQuery.fn.submitOnCheck = ->

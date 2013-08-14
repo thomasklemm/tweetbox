@@ -15,7 +15,7 @@ class Tweet < ActiveRecord::Base
             foreign_key: :future_tweet_id,
             dependent: :destroy
   has_many :previous_tweets,
-             -> { order(created_at: :asc).includes(:author) },
+             -> { order(created_at: :asc).includes(:author, events: :user) },
              through: :previous_conversations,
              source: :previous_tweet
 
@@ -24,7 +24,7 @@ class Tweet < ActiveRecord::Base
             foreign_key: :previous_tweet_id,
             dependent: :destroy
   has_many :future_tweets,
-             -> { order(created_at: :asc).includes(:author) },
+             -> { order(created_at: :asc).includes(:author, events: :user) },
              through: :future_conversations,
              source: :future_tweet
 
@@ -53,13 +53,13 @@ class Tweet < ActiveRecord::Base
 
   # Scopes
   scope :incoming, -> { where(state: :incoming).include_conversation }
-  scope :resolved, -> { where(state: :resolved).include_conversation }
-  scope :posted,   -> { where(state: :posted).include_conversation }
+  scope :stream,   -> { where(state: [:incoming, :resolved]).include_deep_conversation }
+  scope :posted,   -> { where(state: :posted).include_deep_conversation }
 
   scope :by_date, ->(direction=:asc) { order(created_at: direction) }
 
   scope :include_conversation, -> { includes(:project, :author, :events, :previous_tweets, :future_tweets) }
-
+  scope :include_deep_conversation, -> { includes(:project, :author, :events, previous_tweets: [:author, events: :user], future_tweets: [:author, events: :user])  }
 
   ##
   # Reply and previous tweet

@@ -1,9 +1,8 @@
-// Link to tweet
-<% string = "You resolved this tweet a few seconds ago. #{ link_to 'See it again', [@project, @tweet] }.".html_safe %>
+// resolve.js.erb
 
-// Slide up previous undo links
-$('.undo-link').slideUp(50)
-
-var tweet_wrapper = $('#<%= dom_id(@tweet) %>_wrapper')
-tweet_wrapper.html('<%= string %>').addClass('undo-link')
-
+// replace all conversation_for_tweet containers in which the tweet is included
+<% @tweets.each do |tweet| %>
+  $tweet = $("<%= j render 'conversation_for_tweet', tweet: tweet %>");
+  $("#<%= dom_id tweet, :conversation_for %>").replaceWith($tweet);
+  $tweet.find("abbr.timeago").timeago();
+<% end %>

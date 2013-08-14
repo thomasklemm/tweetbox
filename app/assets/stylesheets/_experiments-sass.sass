@@ -1,97 +1,87 @@
 // Experiments in SASS
 
-.tweets-wrapper .tweet-wrapper
-  &:not(:last-of-type)
-    padding-bottom: 1rem
-    border-bottom: 1px solid #D4CDC1
-    margin-bottom: 1rem
+.tweets
+  .conversation_for_tweet
+    padding-bottom: 0.8rem
+    border-bottom: 1px solid #eee
+    margin-bottom: 0.8rem
 
-.tweet-wrapper
+    .show-conversation
+      padding-left: 52px
+
+      i
+        position: relative
+        &.icon-caret-up
+          bottom: -2px
+        &.icon-caret-down
+          bottom: -3px
+
   .tweet
-    margin-top: 0.6rem
-    padding-left: 58px
+    padding-left: 46px
+    margin: 0.5rem
 
-    .avatar
+    &:first-child
+      margin-top: 0
+    &:last-child
+      margin-bottom: 0
+
+    // center font awesome icons
+    i
+      display: inline-block
+      position: relative
+      top: 1px
+
+    img.avatar
       float: left
-      margin-top: 4px
-      margin-left: -58px
-      border-radius: 2px
+      margin: 2px 0 0 -46px
+
+      width: 36px
+      height: 36px
+
+      // round image
+      border-radius: 100px
 
     .author
       .name
         font-weight: bold
-        color: $textColor
       .screen-name
-        margin-left: 5px
-        @extend .muted
+        margin-left: 6px
 
     .timestamp
-      margin-left: 8px
-      @extend .muted
-      font-size: 12px
+      margin-left: 12px
+      color: #bbb
 
-    .text
-      margin-bottom: 2px
-      p
-        margin: 0
+    .text p
+      display: inline
+      margin: 0
 
-    .main-actions
-      float: right
-
-      a
-        display: inline-block
-        border: 2px solid $blue
-        background: $white
-        color: $blue
-        padding: 1rem 0.33rem
-        margin-left: 2px
-        &:hover
-          background: $blue
-          color: $white
-        &:first-of-type
-          margin-left: 1rem
-
-    .actions a:not(:first-of-type), .dropdown-link
-      margin-left: 8px
-      border-left: 1px solid #ccc
-      padding-left: 8px
-
-    &.main-tweet
-      // .text
-      //   min-height: (2 * $baseLineHeight) + 3px
-
-    &.conversation-tweet
-      // font-size: 13px
-
-      .avatar
-        width: 32px
-        height: 32px
-        // margin-left: -42px
-
-      .actions a
-        @extend .muted
-
-      .actions
-        visibility: hidden
-      &:hover .actions
-        visibility: visible
-
-    .forms form
-      padding: 8px 0
+    // links appended to text
+    .deeplinks a
+      position: relative
+      top: 1px
+      color: #bbb
+      &:first-of-type
+        margin-left: 8px
+      &:hover
+        color: $linkColor
 
     .events
-      font-size: 12px
-      @extend .muted
+      padding-left: 8px
+      border-left: 1px solid #ddd
 
-    .event
-      .user-name
-        // font-weight: bold
-      .timestamp
-        @extend .muted
-        float: right
-        visibility: hidden
-      &:hover .timestamp
-        visibility: visible
+      .event
+        .user-name
+        .timestamp
+          // override .tweet .timestamp
+          margin-left: 6px
+
+    .actions a
+      padding: 0 10px
+      border-right: 1px solid #ddd
+      &:first-child
+        padding-left: 0
+      &:last-child
+        border-right: none
 
 abbr.timeago
   border-bottom: none
@@ -263,3 +253,16 @@ img.navbar-logo
     margin: -8px 4px -8px 0
     vertical-align: middle
     border-radius: 3px
+
+ul.inline-list
+  list-style: none
+
+  li
+    display: inline
+    padding-right: 0.8rem
+    border-right: 1px solid #ddd
+    margin-right: 0.8rem
+
+    &:last-child
+      border-right: none
+

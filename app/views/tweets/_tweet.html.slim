@@ -1,73 +1,18 @@
+/ tweet partial
 - tweet &&= tweet.decorate
-= div_for tweet, class: "#{ tweet == main_tweet ? 'main-tweet' : 'conversation-tweet' }" do
 
-  / Resolve by Ajax unless on show view
-  - resolve_opts = { title: 'Resolve' }
-  - resolve_opts[:remote] = true unless show_tweet?(tweet)
+/ incoming tweet
+- if tweet.incoming?
+  = render 'incoming_tweet', tweet: tweet
 
-  - if tweet == main_tweet
-    .main-actions
-      - if tweet.incoming?
-        = tweet.reply_button(nil, :reply, title: 'Reply', style: 'padding-left: 0.6rem; padding-right: 0.6rem')
-        = tweet.resolve_button(nil, :ok, resolve_opts)
+/ resolved tweet
+- if tweet.resolved?
+  = render 'resolved_tweet', tweet: tweet
 
-  / author
-  = link_to tweet.author_intent_url, class: 'author' do
-    = tweet.author_profile
+/ posted tweet
+- if tweet.posted?
+  = render 'posted_tweet', tweet: tweet
 
-  / timestamp
-  span.timestamp
-    i.icon-time
-    '
-    = timestamp_tag(tweet.created_at)
-
-  .text = tweet.linked_text
-
-  - if tweet != main_tweet
-    .events
-      / uses the counter cache
-      - if tweet.events.size > 0
-        = render tweet.events
-
-  .actions
-    - if tweet.incoming?
-      = tweet.reply_button('Reply', :reply, title: 'Reply')
-      = tweet.resolve_button('Resolve', :ok, resolve_opts)
-
-      / share dropdown
-      span.dropdown
-        = link_to icon_tag(:share, 'Share'), '#', :'data-toggle' => 'dropdown', class: 'dropdown-link'
-
-        ul.dropdown-menu role='menu'
-          / share on Twitter
-          li = tweet.retweet_button('Retweet', :retweet, title: 'Retweet this Tweet')
-          li = tweet.favorite_button('Favorite', :star, title: 'Favorite this Tweet')
-          li = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
-          li = link_to icon_tag(:expand, 'Details'), project_tweet_path(@project, tweet)
-
-          li.divider
-
-          / Copy tweet
-          li = tweet.copy_link('Copy Link on Twitter', nil, title: 'Copy the link of this Tweet on Twitter')
-          li = tweet.copy_text('Copy Tweet', nil, title: 'Copy the tweet to paste it into a chat and more')
-
-    - if tweet.resolved?
-      = tweet.activate_button('Reactivate', :'plus-sign', title: 'Mark as incoming Tweet')
-      = link_to icon_tag(:expand, 'Details'), [@project, tweet]
-      = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
-
-    - if tweet.conversation?
-      = tweet.activate_button('Reactivate', :'plus-sign', title: 'Mark as incoming Tweet')
-      = link_to icon_tag(:expand, 'Details'), [@project, tweet]
-      = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
-
-    - if tweet.posted?
-      = link_to icon_tag(:expand, 'Details'), [@project, tweet]
-      = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
-
-  / placeholder to append forms to
-  .forms
-
-  - if tweet == main_tweet
-    .events
-      = render tweet.events
+/ conversation tweet
+- if tweet.conversation?
+  = render 'conversation_tweet', tweet: tweet

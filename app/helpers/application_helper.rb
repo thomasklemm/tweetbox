@@ -66,6 +66,10 @@ module ApplicationHelper
     end
   end
 
+  def render_conversation?(tweet)
+    tweet.incoming? || current_path == project_tweet_path(@project, tweet)
+  end
+
   private
 
   def current_path

@@ -44,9 +44,10 @@ Tweetbox::Application.routes.draw do
     # Tweets
     resources :tweets, only: [:index, :show] do
       collection do
-        get ''         => :incoming, as: :incoming
-        get 'resolved' => :resolved
-        get 'posted'   => :posted
+        root to: :incoming, as: :incoming
+        get :resolved
+        get :posted
+        get :stream
       end
 
       member do
