@@ -14,7 +14,8 @@
         ul class='nav'
           = active_link_to tweetbox_navbar_image_tag, root_path, exact: true
           = active_link_to "Who isn't it for?", static_path(:features), exact: true
-          = active_link_to 'Pricing and Signup', new_signup_path, exact: true
+          = active_link_to 'Pricing', static_path(:pricing), exact: true
+          = active_link_to 'Signup', new_signup_path, exact: true
 
         / login
         ul class='nav pull-right'
