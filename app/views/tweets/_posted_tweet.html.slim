@@ -1,2 +1,5 @@
 / posted tweet partial
-p Posted tweet.
+
+/ posted tweet
+= div_for tweet, class: 'posted' do
+  = render 'tweet_body', tweet: tweet

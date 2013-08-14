@@ -3,8 +3,7 @@
 
 / incoming tweet
 - if tweet.incoming?
-  - skip_conversation ||= false
-  = render 'incoming_tweet', tweet: tweet, skip_conversation: skip_conversation
+  = render 'incoming_tweet', tweet: tweet
 
 / resolved tweet
 - if tweet.resolved?
@@ -17,19 +16,3 @@
 / conversation tweet
 - if tweet.conversation?
   = render 'conversation_tweet', tweet: tweet
-
-
-
-/     - if tweet.resolved?
-/       = tweet.activate_button('Reactivate', :'plus-sign', title: 'Mark as incoming Tweet')
-/       = link_to icon_tag(:expand, 'Details'), [@project, tweet]
-/       = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
-
-/     - if tweet.conversation?
-/       = tweet.activate_button('Reactivate', :'plus-sign', title: 'Mark as incoming Tweet')
-/       = link_to icon_tag(:expand, 'Details'), [@project, tweet]
-/       = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
-
-/     - if tweet.posted?
-/       = link_to icon_tag(:expand, 'Details'), [@project, tweet]
-/       = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')

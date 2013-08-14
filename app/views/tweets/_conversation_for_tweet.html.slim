@@ -1,5 +1,22 @@
 / conversation for tweet partial
+- tweet &&= tweet.decorate
 
-/ .conversation_tweet_1(will use ids)
+/ .conversation_for_tweet_1(will use ids)
 = div_for tweet, :conversation_for do
+
+  / previous tweets or link to conversation
+  - if tweet.previous_tweets.size > 0
+    - if tweet.incoming?
+        = render tweet.previous_tweets
+    - else
+      = link_to "Show #{ tweet.previous_tweets.size } previous tweets", [@project, tweet]
+
+  / tweet
   = render tweet
+
+  / future tweets or link to conversation
+  - if tweet.future_tweets.size > 0
+    - if tweet.incoming?
+        = render tweet.future_tweets
+    - else
+      = link_to "Show #{ tweet.future_tweets.size } future tweets", [@project, tweet]

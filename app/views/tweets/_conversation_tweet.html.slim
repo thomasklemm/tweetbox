@@ -1,2 +1,5 @@
 / conversation tweet partial
-p Tweet in conversation state.
+
+/ conversation tweet
+= div_for tweet, class: 'conversation' do
+  = render 'tweet_body', tweet: tweet

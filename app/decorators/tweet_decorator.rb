@@ -12,6 +12,18 @@ class TweetDecorator < Draper::Decorator
   end
 
   ##
+  # Sorted associations
+  # (Should be done by database, but seems like eager loading skips order)
+
+  def previous_tweets
+    model.previous_tweets.sort_by(&:created_at)
+  end
+
+  def future_tweets
+    model.future_tweets.sort_by(&:created_at)
+  end
+
+  ##
   # URLs
 
   USER_INTENT_URL_BASE  = "https://twitter.com/intent/user?screen_name="

@@ -15,6 +15,10 @@
     &:last-child
       margin-bottom: 0
 
+    // center font awesome icons
+    i
+      display: inline-block
+
     img.avatar
       float: left
       margin: 2px 0 0 -46px
@@ -39,30 +43,31 @@
       display: inline
       margin: 0
 
+    // links appended to text
+    .deeplinks a
+      position: relative
+      top: 1px
+      color: #bbb
+      &:first-of-type
+        margin-left: 8px
+      &:hover
+        color: $linkColor
+
     .events
       // TODO: Style events
 
-    .actions
-      a
-        padding: 0 10px
-        border-right: 1px solid #ddd
-        &:last-child
-          border-right: none
+    .actions a
+      padding: 0 10px
+      border-right: 1px solid #ddd
+      &:first-child
+        padding-left: 0
+      &:last-child
+        border-right: none
 
-    // center font awesome icons
-    i
-      display: inline-block
-
-    // icon links after text
-    .text-wrapper
-      a
+      i
         position: relative
         top: 1px
-        color: #bbb
-        &:first-of-type
-          margin-left: 8px
-        &:hover
-          color: $linkColor
+
 
 .tweets .tweet-wrapper
   &:not(:last-of-type)
