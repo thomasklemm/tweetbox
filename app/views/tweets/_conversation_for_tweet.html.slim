@@ -6,20 +6,23 @@
 
   / previous tweets or link to conversation
   - if tweet.previous_tweets.size > 0
-    - if tweet.incoming?
-        = render tweet.previous_tweets
-    - else
-      = link_to [@project, tweet], class: 'show-conversation' do
-        = icon_tag 'caret-up', "#{ pluralize tweet.previous_tweets.size, 'previous tweet' }"
+    = render tweet.previous_tweets
 
   / tweet
   = render tweet
 
   / future tweets or link to conversation
   - if tweet.future_tweets.size > 0
-    - if tweet.incoming?
-        = render tweet.future_tweets
-    - else
-      = link_to [@project, tweet], class: 'show-conversation' do
-        = icon_tag 'caret-down', "#{ pluralize tweet.future_tweets.size, 'future tweet' }"
+    = render tweet.future_tweets
 
+/ - if render_conversation?(tweet)
+/     = render tweet.previous_tweets
+/ - else
+/   = link_to [@project, tweet], class: 'show-conversation' do
+/     = icon_tag 'caret-up', "#{ pluralize tweet.previous_tweets.size, 'previous tweet' }"
+
+/ - if render_conversation?(tweet)
+/     = render tweet.future_tweets
+/ - else
+/   = link_to [@project, tweet], class: 'show-conversation' do
+/     = icon_tag 'caret-down', "#{ pluralize tweet.future_tweets.size, 'future tweet' }"

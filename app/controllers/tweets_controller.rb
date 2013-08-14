@@ -30,8 +30,11 @@ class TweetsController < TweetController
 
   def resolve
     @tweet.resolve_by(current_user)
+    # Reload tweet's event counter cache
+    @tweet.reload
 
     respond_to do |format|
+      # TODO: Add link to tweet to flash message
       format.html { redirect_to [@project, :tweets], notice: 'Tweet has been resolved.' }
       format.js
     end
