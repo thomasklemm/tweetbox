@@ -11,7 +11,12 @@ span.timestamp
   = icon_tag :time, timestamp_tag(tweet.created_at)
 
 / text
-div.text = tweet.text
+div.text-wrapper
+  span.text = tweet.text
+
+  / REVIEW: Maybe use tweet.project
+  = link_to icon_tag(:comment), [@project, tweet]
+  = link_to icon_tag(:twitter), tweet.twitter_url
 
 / events
 - skip_events ||= false

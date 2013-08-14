@@ -35,9 +35,9 @@
       margin-left: 12px
       color: #bbb
 
-    .text
-      p
-        margin: 0
+    .text p
+      display: inline
+      margin: 0
 
     .events
       // TODO: Style events
@@ -53,7 +53,16 @@
     i
       display: inline-block
 
-
+    // icon links after text
+    .text-wrapper
+      a
+        position: relative
+        top: 1px
+        color: #bbb
+        &:first-of-type
+          margin-left: 8px
+        &:hover
+          color: $linkColor
 
 .tweets .tweet-wrapper
   &:not(:last-of-type)
