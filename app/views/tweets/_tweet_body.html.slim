@@ -1,0 +1,21 @@
+/ tweet body partial
+
+/ author
+= link_to tweet.author_intent_url, class: 'author' do
+  = image_tag(tweet.author.profile_image_url, class: 'avatar')
+  span.name = tweet.author.name
+  span.screen-name = tweet.author.at_screen_name
+
+/ timestamp
+span.timestamp
+  = icon_tag :time, timestamp_tag(tweet.created_at)
+
+/ text
+div.text = tweet.text
+
+/ events
+- skip_events ||= false
+- unless skip_events
+  .events
+    - if tweet.events.size > 0
+      = render tweet.events

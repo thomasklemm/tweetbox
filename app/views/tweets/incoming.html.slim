@@ -2,8 +2,8 @@
 - if @tweets.any?
   = logo_header 'Incoming Tweets'
 
-  .tweets-wrapper
-    = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
+  div#tweets.tweets
+    = render partial: 'conversation_for_tweet', collection: @tweets, as: :tweet
 
 - if @tweets.empty?
   - if @project.twitter_accounts.any?

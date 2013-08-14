@@ -1,0 +1,51 @@
+/ incoming tweet partial
+
+/ previous tweets
+- unless skip_conversation
+  - if tweet.previous_tweets.size > 0
+    = render tweet.previous_tweets, skip_conversation: true
+
+/ incoming tweet
+= div_for tweet, class: 'incoming' do
+  = render 'tweet_body', tweet: tweet, skip_events: true
+
+  / actions
+  .actions
+    = tweet.reply_action(title: 'Reply to this tweet') do
+      = icon_tag :reply, 'Reply'
+    = tweet.resolve_action(title: 'Resolve tweet') do
+      = icon_tag :ok, 'Resolve'
+
+  / events
+  .events
+    - if tweet.events.size > 0
+      = render tweet.events
+
+/ future tweets
+- unless skip_conversation
+  - if tweet.future_tweets.size > 0
+    = render tweet.future_tweets, skip_conversation: true
+
+/  BLOODY OLD STUFF, JUST FOR REFERENCE,
+/  IF YOU REUSE THIS CODE I KICK YOU!
+/   .actions
+/     - if tweet.incoming?
+/       = tweet.reply_button('Reply', :reply, title: 'Reply')
+/       = tweet.resolve_button('Resolve', :ok, resolve_opts)
+
+/       / share dropdown
+/       span.dropdown
+/         = link_to icon_tag(:share, 'Share'), '#', :'data-toggle' => 'dropdown', class: 'dropdown-link'
+
+/         ul.dropdown-menu role='menu'
+/           / share on Twitter
+/           li = tweet.retweet_button('Retweet', :retweet, title: 'Retweet this Tweet')
+/           li = tweet.favorite_button('Favorite', :star, title: 'Favorite this Tweet')
+/           li = tweet.open_in_twitter_link('On Twitter', :twitter, title: 'Open this Tweet on Twitter')
+/           li = link_to icon_tag(:expand, 'Details'), project_tweet_path(@project, tweet)
+
+/           li.divider
+
+/           / Copy tweet
+/           li = tweet.copy_link('Copy Link on Twitter', nil, title: 'Copy the link of this Tweet on Twitter')
+/           li = tweet.copy_text('Copy Tweet', nil, title: 'Copy the tweet to paste it into a chat and more')

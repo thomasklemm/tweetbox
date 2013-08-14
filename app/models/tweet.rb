@@ -52,8 +52,11 @@ class Tweet < ActiveRecord::Base
     }
 
   # Scopes
+  # TODO: include :previous_tweets and :future_tweets as they will be rendered
   scope :incoming, -> { where(state: :incoming).include_conversation }
+  # TODO: do not include previous and future tweets, as they won't be rendered (only references counter cache)
   scope :resolved, -> { where(state: :resolved).include_conversation }
+  # TODO: See if nescessary at all
   scope :posted,   -> { where(state: :posted).include_conversation }
 
   scope :by_date, ->(direction=:asc) { order(created_at: direction) }
