@@ -1,9 +1,7 @@
 // resolve.js.erb
 
 // replace all conversation_for_tweet containers in which the tweet is included
-<% tweets = [@tweet, @tweet.previous_tweets, @tweet.future_tweets].flatten %>
-
-<% tweets.each do |tweet| %>
+<% @tweets.each do |tweet| %>
   $tweet = $("<%= j render 'conversation_for_tweet', tweet: tweet %>");
   $("#<%= dom_id tweet, :conversation_for %>").replaceWith($tweet);
   $tweet.find("abbr.timeago").timeago();
