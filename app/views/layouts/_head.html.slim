@@ -35,7 +35,8 @@ javascript:
 / IE uses favicon.ico in root
 / Browsers use favicon.png
 / iOS and Android look for filenames
-link rel='shortcut icon' href=image_path('favicon_32x32.png') type='image/png'
+/ TODO: Add an Apple touch icon (when encouraging users to open Tweetbox on Mobiles)
+= favicon_link_tag 'favicon_32x32.png'
 
 / analytics
 - if Rails.env.production?
