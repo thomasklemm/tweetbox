@@ -1,5 +1,5 @@
 class TweetsController < TweetController
-  skip_before_filter :load_tweet, only: [:incoming, :resolved, :posted]
+  skip_before_filter :load_tweet, only: [:incoming, :stream, :resolved, :posted]
 
   ##
   # Collection actions
@@ -9,6 +9,10 @@ class TweetsController < TweetController
   end
 
   alias_method :index, :incoming
+
+  def stream
+    @tweets = @project.tweets.where(state: [:incoming, :resolved]).by_date(:desc).limit(20).decorate
+  end
 
   def resolved
     @tweets = @project.resolved_tweets.by_date(:desc).limit(20).decorate

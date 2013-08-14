@@ -9,7 +9,8 @@
     - if tweet.incoming?
         = render tweet.previous_tweets
     - else
-      = link_to "Show #{ tweet.previous_tweets.size } previous tweets", [@project, tweet]
+      = link_to [@project, tweet], class: 'show-conversation' do
+        = icon_tag 'caret-up', "#{ pluralize tweet.previous_tweets.size, 'previous tweet' }"
 
   / tweet
   = render tweet
@@ -19,4 +20,6 @@
     - if tweet.incoming?
         = render tweet.future_tweets
     - else
-      = link_to "Show #{ tweet.future_tweets.size } future tweets", [@project, tweet]
+      = link_to [@project, tweet], class: 'show-conversation' do
+        = icon_tag 'caret-down', "#{ pluralize tweet.future_tweets.size, 'future tweet' }"
+

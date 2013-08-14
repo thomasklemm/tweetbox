@@ -6,6 +6,16 @@
     border-bottom: 1px solid #eee
     margin-bottom: 0.8rem
 
+    .show-conversation
+      padding-left: 52px
+
+      i
+        position: relative
+        &.icon-caret-up
+          bottom: -2px
+        &.icon-caret-down
+          bottom: -3px
+
   .tweet
     padding-left: 46px
     margin: 0.5rem
@@ -18,6 +28,8 @@
     // center font awesome icons
     i
       display: inline-block
+      position: relative
+      top: 1px
 
     img.avatar
       float: left
@@ -54,7 +66,14 @@
         color: $linkColor
 
     .events
-      // TODO: Style events
+      padding-left: 8px
+      border-left: 1px solid #ddd
+
+      .event
+        .user-name
+        .timestamp
+          // override .tweet .timestamp
+          margin-left: 6px
 
     .actions a
       padding: 0 10px
@@ -63,33 +82,6 @@
         padding-left: 0
       &:last-child
         border-right: none
-
-      i
-        position: relative
-        top: 1px
-
-
-.tweets .tweet-wrapper
-  &:not(:last-of-type)
-    padding-bottom: 1rem
-    border-bottom: 1px solid #D4CDC1
-    margin-bottom: 1rem
-
-.tweet-wrapper
-  .tweet
-    .events
-      font-size: 12px
-      @extend .muted
-
-    .event
-      .user-name
-        // font-weight: bold
-      .timestamp
-        @extend .muted
-        float: right
-        visibility: hidden
-      &:hover .timestamp
-        visibility: visible
 
 abbr.timeago
   border-bottom: none
