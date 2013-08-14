@@ -59,6 +59,11 @@ class Status < ActiveRecord::Base
     publish_status!
   end
 
+  def tweet
+    return unless published?
+    @tweet ||= Tweet.find_by(twitter_id: twitter_id)
+  end
+
   private
 
   # Generates a token without overriding the existing one
@@ -86,12 +91,12 @@ class Status < ActiveRecord::Base
 
     # Create new posted tweet
     # and build conversation
-    tweet = TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)
-    ConversationWorker.new.perform(tweet.id)
+    @tweet = TweetMaker.from_twitter(status, project: project, twitter_account: twitter_account, state: :posted)
+    ConversationWorker.new.perform(@tweet.id)
 
     # Create :post event on new tweet
     # and :post_reply event on previous tweet
-    tweet.create_event(:post, user)
+    @tweet.create_event(:post, user)
     previous_tweet.try(:create_event, :post_reply, user)
 
     self.save!

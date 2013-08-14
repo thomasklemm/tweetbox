@@ -77,6 +77,13 @@ class Tweet < ActiveRecord::Base
     @previous_tweet ||= ConversationService.new(self).previous_tweet
   end
 
+  ##
+  # Status
+
+  # Does this tweet also have a status record in our database?
+  def status
+    @status ||= Status.find_by(twitter_id: self.twitter_id)
+  end
 
   ##
   # States, events and transitions

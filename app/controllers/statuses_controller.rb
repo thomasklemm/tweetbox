@@ -41,7 +41,7 @@ class StatusesController < ProjectController
       if params[:resolve].to_s == 'resolve'
         @status.previous_tweet.resolve_by(current_user)
         redirect_to incoming_project_tweets_path(@project),
-          notice: "Reply has been posted and tweet has been resolved."
+          notice: "Reply has been posted and tweet has been resolved. You responded in #{ @status.decorate.response_time_in_words }."
       else
         redirect_to [@project, @status.previous_tweet],
           notice: "Reply has been published."

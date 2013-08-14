@@ -53,4 +53,11 @@ class StatusDecorator < Draper::Decorator
   def selected_twitter_account_position
     project_twitter_accounts.index(selected_twitter_account)
   end
+
+  ##
+  # Response time
+
+  def response_time_in_words
+    distance_of_time_in_words(previous_tweet.try(:created_at), tweet.try(:created_at) || Time.current, include_seconds: true)
+  end
 end
