@@ -1,13 +1,18 @@
 # tweets
-@TweetPusher =
-  updateTweet: (tag, tweet) ->
-    # Replaces multiple tags
-    $(tag).replaceWith(tweet)
-    # Call on entire page to catch all new dom nodes
-    $("abbr.timeago").timeago()
 
-pusher = new Pusher('bd90c5fceef54c5f2c55')
-channel = pusher.subscribe('channel')
-channel.bind 'update-tweet', (data) ->
-  console.log(data)
-  TweetPusher.updateTweet(data.tag, data.tweet)
+@TweetPusher =
+  # Replaces multiple tweet dom nodes with new ones
+  # NOTE: Can replace conversations or tweet, right now used for tweets
+  # due to payload max of 10 KB on Pusher
+  replaceTweet: (tag, tweet) ->
+    $(tag).replaceWith(tweet)
+    @updateTimestamps()
+
+  # Prepends the given tweets to the #tweets stream
+  prependConversation: (tweet) ->
+    $('#tweets').prepend(tweet)
+    @updateTimestamps()
+
+  # Updates timestamps on the entire page
+  updateTimestamps: ->
+    $("abbr.timeago").timeago()

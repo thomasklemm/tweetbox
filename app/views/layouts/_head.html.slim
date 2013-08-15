@@ -58,3 +58,32 @@ javascript:
   / ajax setup
   javascript:
     $.ajaxSetup({ async: false })
+
+
+/ log Pusher events in development
+- if Rails.env.development?
+  javascript:
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
+
+/ pusher
+- if @project
+  javascript:
+    // TODO: Move to data attribute
+    var channel_token = "project-#{ @project.id }";
+
+  coffee:
+    pusher = new Pusher('bd90c5fceef54c5f2c55')
+    # TODO: Real security, e.g. using a channel token
+    projectChannel = pusher.subscribe(channel_token)
+
+    # Replace tweet event
+    projectChannel.bind 'replace-tweet', (data) ->
+      TweetPusher.replaceTweet(data.tag, data.tweet)
+
+    # Prepend conversation event
+    projectChannel.bind 'prepend-conversation', (data) ->
+      TweetPusher.prependConversation(data.conversation)
