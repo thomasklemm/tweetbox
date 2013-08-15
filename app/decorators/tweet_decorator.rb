@@ -6,9 +6,9 @@ class TweetDecorator < Draper::Decorator
   # for right now: author intent url
   # decorates_association :author
 
-  # Returns the autolinked tweet text
+  # Returns the autolinked status or tweet text
   def text
-    TweetPipeline.new(model.text).to_html
+    TweetPipeline.new(status.try(:text) || model.text).to_html
   end
 
   ##

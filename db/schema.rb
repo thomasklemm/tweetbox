@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130812194225) do
+ActiveRecord::Schema.define(version: 20130815101157) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -230,12 +230,14 @@ ActiveRecord::Schema.define(version: 20130812194225) do
     t.integer  "previous_tweets_count",           default: 0
     t.integer  "future_tweets_count",             default: 0
     t.integer  "events_count",                    default: 0
+    t.integer  "status_id"
   end
 
   add_index "tweets", ["project_id", "author_id"], name: "index_tweets_on_project_id_and_author_id", using: :btree
   add_index "tweets", ["project_id", "state"], name: "index_tweets_on_project_id_and_state", using: :btree
   add_index "tweets", ["project_id", "twitter_id"], name: "index_tweets_on_project_id_and_twitter_id", unique: true, using: :btree
   add_index "tweets", ["project_id"], name: "index_tweets_on_project_id", using: :btree
+  add_index "tweets", ["status_id"], name: "index_tweets_on_status_id", using: :btree
 
   create_table "twitter_accounts", force: true do |t|
     t.integer  "project_id",                                        null: false

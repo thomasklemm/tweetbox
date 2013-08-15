@@ -31,6 +31,9 @@ class Tweet < ActiveRecord::Base
   # Events
   has_many :events, -> { order(created_at: :asc).includes(:user) }, dependent: :destroy
 
+  # Status
+  belongs_to :status
+
   # Validations
   validates :project,
             :author,
