@@ -1,5 +1,5 @@
 / resolved tweet partial
 
 / resolved tweet
-= div_for tweet, class: 'resolved' do
+= div_for tweet, class: "resolved #{dom_id(tweet)}" do
   = render 'tweet_body', tweet: tweet
