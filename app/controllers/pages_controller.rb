@@ -10,6 +10,12 @@ class PagesController < HighVoltage::PagesController
     super
   end
 
+  def debug
+    result = renderer.render(Tweet.first)
+
+    raise result.inspect
+  end
+
   private
 
   def layout_for_page
@@ -22,4 +28,11 @@ class PagesController < HighVoltage::PagesController
       'application'
     end
   end
+
+  def renderer
+    @renderer ||= Renderer.new.renderer
+  end
 end
+
+
+

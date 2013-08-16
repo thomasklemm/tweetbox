@@ -3,4 +3,4 @@ require 'pusher'
 
 Pusher.url = ENV['PUSHER_URL'] if ENV['PUSHER_URL']
 Pusher.logger = Rails.logger
-# Pusher.encrypted = true
+Pusher.encrypted = true

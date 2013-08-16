@@ -5,3 +5,14 @@ div#tweets.tweets
   = render partial: 'conversation_for_tweet', collection: @tweets, as: :tweet
 
 / TODO: Blank slate?
+/ e.g. from resolved
+/ resolved tweets
+/ - if @tweets.any?
+/   = logo_header 'Resolved Tweets'
+/   .tweets-wrapper
+/     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
+
+/ / blank slate
+/ - if @tweets.empty?
+/   h3 Resolved Tweets
+/   p Once you resolve your first tweets <br /> in Tweetbox, they'll show up here.

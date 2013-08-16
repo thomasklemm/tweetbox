@@ -115,6 +115,8 @@ Tweetbox::Application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  get :debug, to: 'pages#debug'
+
   # Marketing pages
   get ':id' => 'pages#show', as: :static
 

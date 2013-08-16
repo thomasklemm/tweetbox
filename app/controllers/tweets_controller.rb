@@ -26,22 +26,51 @@ class TweetsController < TweetController
 
   def resolve
     @tweet.resolve_by(current_user)
+    push_reloaded_tweet
 
     respond_to do |format|
-      # TODO: Add link to tweet to flash message
-      format.html { redirect_to [@project, :tweets], notice: 'Tweet has been resolved.' }
-      format.js do
-        # Reload tweet's event counter cache
-        @tweets = [@tweet.reload]
-        @tweets |= @tweet.previous_tweets if @tweet.previous_tweets.size > 0
-        @tweets |= @tweet.future_tweets if @tweet.future_tweets.size > 0
-      end
+      format.html { redirect_to [@project, :tweets], notice: "Tweet has been resolved." }
+      format.js   { render json: {} }
     end
   end
 
   def activate
     @tweet.activate!
-    # TODO: Really do this via ajax if nescessary at all
-    redirect_to [@project, @tweet]
+    push_reloaded_tweet
+
+    respond_to do |format|
+      format.html { redirect_to [@project, @tweet], notice: "Tweet has been activated." }
+      format.js   { render json: {} }
+    end
+  end
+
+  private
+
+  # Push tweet with reloaded state and events
+  def push_reloaded_tweet
+    TweetPusher.new(@tweet.reload).replace_tweet
+    # replace_tweet(@tweet.reload)
+  end
+
+  def replace_tweet(tweet)
+    data = {
+      tag: "." + dom_id(tweet),
+      tweet: render_to_string(partial: 'tweet', locals: {tweet: tweet})
+    }
+
+    Pusher.trigger(channel, 'replace-tweet', data)
+  end
+
+  # def prepend_conversation(tweet)
+  #   data = {
+  #     conversation: render_to_string(partial: 'conversation_for_tweet', locals: {tweet: tweet})
+  #   }
+
+  #   Pusher.trigger(channel, 'prepend-conversation', data)
+  # end
+
+  # TODO: Some real security, e.g. with a unique channel token (project-1-209ab3cd428df7a)
+  def channel
+    "project-#{ @tweet.project_id }"
   end
 end

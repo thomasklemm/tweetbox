@@ -1,8 +1,8 @@
 / incoming tweet partial
 
 / incoming tweet
-= div_for tweet, class: 'incoming' do
-  = render 'tweet_body', tweet: tweet
+= div_for tweet, class: "incoming #{dom_id(tweet)}" do
+  = render 'tweets/tweet_body', tweet: tweet
 
   / actions
   .actions

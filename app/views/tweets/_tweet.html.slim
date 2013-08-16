@@ -3,16 +3,16 @@
 
 / incoming tweet
 - if tweet.incoming?
-  = render 'incoming_tweet', tweet: tweet
+  = render 'tweets/incoming_tweet', tweet: tweet
 
 / resolved tweet
 - if tweet.resolved?
-  = render 'resolved_tweet', tweet: tweet
+  = render 'tweets/resolved_tweet', tweet: tweet
 
 / posted tweet
 - if tweet.posted?
-  = render 'posted_tweet', tweet: tweet
+  = render 'tweets/posted_tweet', tweet: tweet
 
 / conversation tweet
 - if tweet.conversation?
-  = render 'conversation_tweet', tweet: tweet
+  = render 'tweets/conversation_tweet', tweet: tweet

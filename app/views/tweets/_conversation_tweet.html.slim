@@ -1,5 +1,5 @@
 / conversation tweet partial
 
 / conversation tweet
-= div_for tweet, class: 'conversation' do
-  = render 'tweet_body', tweet: tweet
+= div_for tweet, class: "conversation #{dom_id(tweet)}" do
+  = render 'tweets/tweet_body', tweet: tweet

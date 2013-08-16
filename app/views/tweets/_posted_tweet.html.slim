@@ -1,5 +1,5 @@
 / posted tweet partial
 
 / posted tweet
-= div_for tweet, class: 'posted' do
-  = render 'tweet_body', tweet: tweet
+= div_for tweet, class: "posted #{dom_id(tweet)}" do
+  = render 'tweets/tweet_body', tweet: tweet
