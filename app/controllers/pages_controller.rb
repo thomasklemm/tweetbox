@@ -10,6 +10,12 @@ class PagesController < HighVoltage::PagesController
     super
   end
 
+  def debug
+    result = renderer.render(partial: 'tweets/tweet', locals: {tweet: Tweet.first})
+
+    raise result.inspect
+  end
+
   private
 
   def layout_for_page
@@ -21,5 +27,23 @@ class PagesController < HighVoltage::PagesController
     else
       'application'
     end
+  end
+
+  def renderer
+    @renderer ||= begin
+      controller = ApplicationController.new
+      controller.request = ActionDispatch::TestRequest.new
+      Renderer.new(Rails.root.join('app', 'views'), {}, controller)
+    end
+  end
+end
+
+
+class Renderer < ActionView::Base
+  include Rails.application.routes.url_helpers
+  include ApplicationHelper
+
+  def default_url_options
+     {host: 'tweetbox.dev'}
   end
 end
