@@ -4,6 +4,6 @@ class ViewRenderer < ActionView::Base
   include ApplicationHelper
 
   def default_url_options
-     {host: 'tweetbox.dev'}
+     {host: Rails.application.routes.default_url_options[:host]}
   end
 end
