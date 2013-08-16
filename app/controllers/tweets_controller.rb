@@ -49,28 +49,5 @@ class TweetsController < TweetController
   # Push tweet with reloaded state and events
   def push_reloaded_tweet
     TweetPusher.new(@tweet.reload).replace_tweet
-    # replace_tweet(@tweet.reload)
-  end
-
-  def replace_tweet(tweet)
-    data = {
-      tag: "." + dom_id(tweet),
-      tweet: render_to_string(partial: 'tweet', locals: {tweet: tweet})
-    }
-
-    Pusher.trigger(channel, 'replace-tweet', data)
-  end
-
-  # def prepend_conversation(tweet)
-  #   data = {
-  #     conversation: render_to_string(partial: 'conversation_for_tweet', locals: {tweet: tweet})
-  #   }
-
-  #   Pusher.trigger(channel, 'prepend-conversation', data)
-  # end
-
-  # TODO: Some real security, e.g. with a unique channel token (project-1-209ab3cd428df7a)
-  def channel
-    "project-#{ @tweet.project_id }"
   end
 end

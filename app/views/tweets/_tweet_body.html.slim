@@ -14,7 +14,7 @@ span.timestamp
 div
   span.text = tweet.text
 
-  / REVIEW: Maybe use tweet.project
+  / deeplinks
   span.deeplinks
     = link_to icon_tag(:comment), [tweet.project, tweet]
     = link_to icon_tag(:twitter), tweet.twitter_url
