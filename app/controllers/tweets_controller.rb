@@ -11,7 +11,7 @@ class TweetsController < TweetController
   alias_method :index, :incoming
 
   def stream
-    @tweets = project_tweets.stream.by_date(:desc).limit(20).decorate
+    @tweets = project_tweets.stream.by_date(:desc).page(params[:page]).per(25)
   end
 
   def posted
