@@ -21,7 +21,6 @@
 #= require ZeroClipboard
 #= require twitter-text
 #= require jquery.timeago
-# = require jquery.infinitescroll
 
 # Tweetbox
 #= require statuses
