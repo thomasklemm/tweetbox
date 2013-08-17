@@ -49,9 +49,6 @@ gem 'omniauth-twitter'
 # Pundit (Authorization)
 gem 'pundit'
 
-# Strong parameters (Mass assignment protection)
-# gem 'strong_parameters'
-
 # Virtus (Attributes on steroids)
 gem 'virtus'
 
@@ -78,10 +75,6 @@ gem 'oj'
 
 # Twitter Text (Autolinking tweet urls and more)
 gem 'twitter-text'
-
-# Use arrays and more in Postgres
-# REVIEW: DEPENDS ON RAILS 3.2
-# gem 'postgres_ext'
 
 # Enumerated attributes
 gem 'enumerize'
@@ -123,6 +116,7 @@ group :development do
   # RailsPanel
   gem 'meta_request'
 
+  # Optimize database queries
   gem 'bullet'
 end
 

@@ -24,7 +24,7 @@ class TweetPusher
   # on the incoming and stream views
   def prepend_conversation
     data = {
-      conversation: renderer.render(partial: 'conversation_for_tweet', locals: {tweet: tweet})
+      conversation: renderer.render(partial: 'tweets/conversation_for_tweet', locals: {tweet: tweet})
     }
 
     Pusher.trigger(channel, 'prepend-conversation', data)

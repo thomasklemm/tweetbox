@@ -3,7 +3,9 @@
   = logo_header 'Incoming Tweets'
 
   div#tweets.tweets
-    = render partial: 'conversation_for_tweet', collection: @tweets, as: :tweet
+    = render partial: 'tweets/conversation_for_tweet', collection: @tweets, as: :tweet
+
+  = paginate @tweets
 
 - if @tweets.empty?
   - if @project.twitter_accounts.any?

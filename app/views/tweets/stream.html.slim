@@ -4,6 +4,9 @@
 div#tweets.tweets
   = render partial: 'conversation_for_tweet', collection: @tweets, as: :tweet
 
+/ pagination
+= paginate @tweets
+
 / TODO: Blank slate?
 / e.g. from resolved
 / resolved tweets
