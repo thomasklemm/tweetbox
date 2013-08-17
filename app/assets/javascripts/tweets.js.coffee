@@ -1,16 +1,7 @@
 # tweets
 
-# # Endless Scroll
-# jQuery ->
-#   $("#tweets").infinitescroll
-#     navSelector: "div.pagination" # selector for the paged navigation (it will be hidden)
-#     nextSelector: "div.pagination a[rel=next]" # selector for the NEXT link (to page 2)
-#     itemSelector: "#tweets .tweet" # selector for all items you'll retrieve
-#     loading:
-#       msgText: "<em>Loading tweets...</em>"
-#       finishedMsg: "<em>Tweet Stream ends here.</em>"
 
-
+# Endless scroll
 jQuery ->
   if $('.pagination').length
       $(window).scroll ->
