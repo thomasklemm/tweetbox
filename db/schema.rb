@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130815101157) do
+ActiveRecord::Schema.define(version: 20130817110758) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -222,7 +222,6 @@ ActiveRecord::Schema.define(version: 20130815101157) do
     t.text     "state"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "full_text"
     t.text     "source"
     t.text     "lang"
     t.integer  "retweet_count",                   default: 0
