@@ -15,19 +15,31 @@ class TweetPusher
       tweet: renderer.render(tweet)
     }
 
-    puts data.size
-
     Pusher.trigger(channel, 'replace-tweet', data)
   end
 
-  # Prepend the conversation for a tweet
+  def
+
+  # Prepend the conversation container for a tweet
   # on the incoming and stream views
-  def prepend_conversation
+  def prepend_conversation_container
     data = {
-      conversation: renderer.render(partial: 'tweets/conversation_for_tweet', locals: {tweet: tweet})
+      conversation_container: renderer.render(inline: "<%= div_for tweet, :conversation_for %>")
     }
 
-    Pusher.trigger(channel, 'prepend-conversation', data)
+    Pusher.trigger(channel, 'prepend-conversation-container', data)
+  end
+
+  # Appends a tweet to a given conversation
+  def append_tweet
+    tweet.unordered_conversation.each do |t|
+      data = {
+        tag: '#' + dom_id(t, :conversation_for),
+        tweet: renderer.render(tweet)
+      }
+
+      Pusher.trigger(channel, 'append-tweet', data)
+    end
   end
 
   private

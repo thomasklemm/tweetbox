@@ -66,6 +66,16 @@ module ApplicationHelper
     end
   end
 
+  def active_li_link_to(*args, &block)
+
+    link = link_to(*args)
+  end
+
+  def active_path?(path, fuzzy)
+
+  end
+
+
   def render_conversation?(tweet)
     tweet.incoming? || current_path == project_tweet_path(@project, tweet)
   end

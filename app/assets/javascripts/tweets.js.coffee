@@ -7,7 +7,8 @@ jQuery ->
       $(window).scroll ->
         url = $('.pagination a[rel=next]').attr('href')
         if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
-          $('.pagination').text("Fetching more conversations...")
+          # $('.pagination').text("Fetching more conversations...")
+          $('.pagination').html("<i class='icon-spinner icon-spin'></i> Fetching more conversations...")
           $.getScript(url)
       $(window).scroll()
 
