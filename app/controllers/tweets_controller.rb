@@ -30,28 +30,23 @@ class TweetsController < TweetController
 
   def resolve
     @tweet.resolve_by(current_user)
-    push_reloaded_tweet
+    @tweet.reload
+    @tweet.push
 
     respond_to do |format|
       format.html { redirect_to [@project, :tweets], notice: "Tweet has been resolved." }
-      format.js   { render json: {} }
+      format.js
     end
   end
 
   def activate
     @tweet.activate!
-    push_reloaded_tweet
+    @tweet.reload
+    @tweet.push
 
     respond_to do |format|
       format.html { redirect_to [@project, @tweet], notice: "Tweet has been activated." }
       format.js   { render json: {} }
     end
-  end
-
-  private
-
-  # Push tweet with reloaded state and events
-  def push_reloaded_tweet
-    TweetPusher.new(@tweet.reload).replace_tweet
   end
 end

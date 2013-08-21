@@ -7,39 +7,14 @@ class TweetPusher
     @tweet = tweet
   end
 
-  # Replace the existing tweet (within one or many conversations)
-  # with the newly rendered dom node
-  def replace_tweet
-    data = {
-      tag: "." + dom_id(tweet),
-      tweet: renderer.render(tweet)
-    }
-
-    Pusher.trigger(channel, 'replace-tweet', data)
+  # Replace all tweet nodes with the current representation
+  def push_tweet
+    Pusher.trigger(channel, 'replace-tweet', replace_tweet_data)
   end
 
-  def
-
-  # Prepend the conversation container for a tweet
-  # on the incoming and stream views
-  def prepend_conversation_container
-    data = {
-      conversation_container: renderer.render(inline: "<%= div_for tweet, :conversation_for %>")
-    }
-
-    Pusher.trigger(channel, 'prepend-conversation-container', data)
-  end
-
-  # Appends a tweet to a given conversation
-  def append_tweet
-    tweet.unordered_conversation.each do |t|
-      data = {
-        tag: '#' + dom_id(t, :conversation_for),
-        tweet: renderer.render(tweet)
-      }
-
-      Pusher.trigger(channel, 'append-tweet', data)
-    end
+  def stream_conversation
+    prepend_conversation
+    append_tweet_to_previous_conversations
   end
 
   private
@@ -50,5 +25,33 @@ class TweetPusher
 
   def renderer
     @renderer ||= Renderer.new.renderer
+  end
+
+  def replace_tweet_data
+    { tag: "." + dom_id(tweet),
+      tweet: renderer.render(tweet) }
+  end
+
+  def prepend_conversation
+    # Create container
+    data = { conversation: renderer.render(inline: "<%= j div_for tweet, :conversation_for %>") }
+    Pusher.trigger(channel, 'prepend-conversation', data)
+
+    # Append all tweets in conversation
+    tweet.conversation.each do |conversation_tweet|
+      data = { tag: "#" + dom_id(tweet, :conversation_for),
+               tweet: j(renderer.render(conversation_tweet)) }
+
+      Pusher.trigger(channel, 'append-tweet', data)
+    end
+  end
+
+  def append_tweet_to_previous_conversations
+    tweet.conversation.each do |conversation_tweet|
+      data = { tag: "#" + dom_id(conversation_tweet, :conversation_for),
+               tweet: j(renderer.render(tweet)) }
+
+      Pusher.trigger(channel, 'append-tweet', data)
+    end
   end
 end

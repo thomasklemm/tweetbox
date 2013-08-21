@@ -1,7 +1,7 @@
 / tweet stream
 = logo_header icon_tag(:twitter, 'Stream')
 
-div#tweets.tweets
+div#tweets class="stream tweets"
   = render partial: 'conversation_for_tweet', collection: @tweets, as: :tweet
 
 / pagination

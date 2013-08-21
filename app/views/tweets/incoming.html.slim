@@ -2,7 +2,7 @@
 - if @tweets.any?
   = logo_header 'Incoming Tweets'
 
-  div#tweets.tweets
+  div#tweets class="incoming tweets"
     = render partial: 'tweets/conversation_for_tweet', collection: @tweets, as: :tweet
 
   = paginate @tweets

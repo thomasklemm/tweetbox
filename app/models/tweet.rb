@@ -126,16 +126,45 @@ class Tweet < ActiveRecord::Base
     events.create!(kind: kind, user: user)
   end
 
+  ##
+  # Conversation
+
+  def conversation
+    @conversation ||= [*previous_tweets, self, *future_tweets]
+  end
+
+  ##
+  # Pusher
+
+  def push
+    TweetPusher.new(self).push_tweet
+  end
+
+  ##
+  # Callbacks
+
+  after_create :fetch_conversation
+  after_create :push_conversation
+
+  def fetch_conversation
+    ConversationService.new(self).previous_tweets if reply?
+  end
+
+  def push_conversation
+    TweetPusher.new(self).prepend_conversation
+    TweetPusher.new(self).append_to_conversations
+  end
+
 
   ##
   # Background jobs
 
-  # Fetch conversation from Twitter after tweet creation
-  after_commit :fetch_conversation_async, on: :create
+  # # Fetch conversation from Twitter after tweet creation
+  # after_commit :fetch_conversation_async, on: :create
 
-  def fetch_conversation_async
-    ConversationWorker.perform_async(self.id) if reply?
-  end
+  # def fetch_conversation_async
+  #   ConversationWorker.perform_async(self.id) if reply?
+  # end
 
 
   ##

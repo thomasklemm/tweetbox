@@ -1,0 +1,42 @@
+/ pusher_js
+
+- if defined?(PusherFake)
+  / Test environment
+  javascript:
+    window.pusher = "#{ PusherFake.javascript }";
+
+- else
+  / Other environments, such as production
+  javascript:
+    window.pusher = new Pusher('bd90c5fceef54c5f2c55');
+
+/ log Pusher events in development
+- if Rails.env.development?
+  javascript:
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
+
+- if @project
+  javascript:
+    window.channel_token = "project-#{ @project.id }";
+
+  coffee:
+    # Subscribe to project channel
+    channel = pusher.subscribe(channel_token)
+
+    ##
+    # Events
+
+    channel.bind 'prepend-conversation', (data) ->
+      TweetPusher.prependConversation(data.conversation)
+
+    channel.bind 'append-tweet', (data) ->
+      TweetPusher.appendTweet(data.tag, data.tweet)
+
+    channel.bind 'replace-tweet', (data) ->
+      TweetPusher.replaceTweet(data.tag, data.tweet)
+
+

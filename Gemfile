@@ -136,6 +136,7 @@ group :test do
   gem 'launchy'
   gem 'webmock'
   gem 'vcr'
+  gem 'pusher-fake', github: 'tristandunn/pusher-fake'
 end
 
 group :staging, :production do

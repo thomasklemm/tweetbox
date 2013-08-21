@@ -1,0 +1,6 @@
+// resolve
+var tag = '<%= "." + dom_id(@tweet) %>';
+var tweet = '<%= j render(@tweet) %>';
+
+TweetPusher.replaceTweet(tag, tweet);
+TweetPusher.updateTimestamps();
