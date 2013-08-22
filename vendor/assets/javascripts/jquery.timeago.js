@@ -3,7 +3,7 @@
  * updating fuzzy timestamps (e.g. "4 minutes ago" or "about 1 day ago").
  *
  * @name timeago
- * @version 1.2.0
+ * @version 1.3.0
  * @requires jQuery v1.2.3+
  * @author Ryan McGeary
  * @license MIT License - http://www.opensource.org/licenses/mit-license.php
@@ -47,16 +47,16 @@
         prefixFromNow: null,
         suffixAgo: "ago",
         suffixFromNow: "from now",
-        seconds: "a few seconds",
-        minute: "a minute",
+        seconds: "less than a minute",
+        minute: "about a minute",
         minutes: "%d minutes",
-        hour: "an hour",
-        hours: "%d hours",
+        hour: "about an hour",
+        hours: "about %d hours",
         day: "a day",
         days: "%d days",
-        month: "a month",
+        month: "about a month",
         months: "%d months",
-        year: "a year",
+        year: "about a year",
         years: "%d years",
         wordSeparator: " ",
         numbers: []
@@ -128,12 +128,22 @@
       refresh_el();
       var $s = $t.settings;
       if ($s.refreshMillis > 0) {
-        setInterval(refresh_el, $s.refreshMillis);
+        this._timeagoInterval = setInterval(refresh_el, $s.refreshMillis);
       }
     },
     update: function(time){
       $(this).data('timeago', { datetime: $t.parse(time) });
       refresh.apply(this);
+    },
+    updateFromDOM: function(){
+      $(this).data('timeago', { datetime: $t.parse( $t.isTime(this) ? $(this).attr("datetime") : $(this).attr("title") ) });
+      refresh.apply(this);
+    },
+    dispose: function () {
+      if (this._timeagoInterval) {
+        window.clearInterval(this._timeagoInterval);
+        this._timeagoInterval = null;
+      }
     }
   };
 

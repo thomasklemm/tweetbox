@@ -35,6 +35,35 @@ jQuery.fn.submitOnCheck = ->
   # Return this for chaining
   this
 
+# Timeago settings
+$.extend($.timeago, {
+  settings: {
+    refreshMillis: 30000,
+    allowFuture: false,
+    localeTitle: false,
+    cutoff: 0,
+    strings: {
+      prefixAgo: null,
+      prefixFromNow: null,
+      suffixAgo: null,
+      suffixFromNow: "from now",
+      seconds: "just now",
+      minute: "just now",
+      minutes: "%d minutes",
+      hour: "an hour",
+      hours: "%d hours",
+      day: "a day",
+      days: "%d days",
+      month: "a month",
+      months: "%d months",
+      year: "a year",
+      years: "%d years",
+      wordSeparator: " ",
+      numbers: []
+    }
+  }
+})
+
 # Tweetbox
 jQuery ->
   ##
