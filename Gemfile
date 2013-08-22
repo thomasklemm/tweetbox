@@ -83,8 +83,8 @@ gem 'enumerize'
 gem 'pusher'
 
 # Pry Console
-gem 'pry'
-gem 'pry-rails', group: :development
+# gem 'pry'
+# gem 'pry-rails', group: :development
 
 # Chartkick for Charts
 gem 'chartkick'
@@ -158,4 +158,4 @@ group :staging, :production do
 end
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
+gem 'debugger', group: [:development, :test]

@@ -16,6 +16,7 @@ class RandomTwitterClient
            :users,
            :user_timeline,
            :user_search,
+           :search,
            :status,
            to: :twitter_client
 end

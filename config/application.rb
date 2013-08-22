@@ -39,10 +39,10 @@ module Tweetbox
     config.active_record.default_timezone = :utc
 
     # Use Pry console
-    console do
-      require "pry"
-      config.console = Pry
-    end
+    # console do
+    #   require "pry"
+    #   config.console = Pry
+    # end
 
     # Generator options
     config.generators do |g|

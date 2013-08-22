@@ -6,7 +6,10 @@
 
   / actions
   .actions
-    = tweet.reply_action(title: 'Reply to this tweet') do
+    / reply
+    = link_to new_project_tweet_reply_path(tweet.project, tweet), title: 'Reply to this tweet' do
       = icon_tag :reply, 'Reply'
-    = tweet.resolve_action(title: 'Resolve tweet', remote: true) do
+
+    / resolve
+    = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true do
       = icon_tag :ok, 'Resolve'

@@ -43,22 +43,6 @@ class TweetDecorator < Draper::Decorator
   end
 
   ##
-  # Actions
-
-  # REVIEW: What's the best option when working with blocks?
-  def reply_action(opts={})
-    link_to new_project_tweet_reply_path(project, self), opts do
-      yield
-    end
-  end
-
-  def resolve_action(opts={})
-    link_to resolve_project_tweet_path(project, self), opts.merge(method: :post) do
-      yield
-    end
-  end
-
-  ##
   # Old actions
 
   def resolve_button(text, icon, opts={})

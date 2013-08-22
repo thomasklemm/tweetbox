@@ -46,12 +46,12 @@ class Tweet < ActiveRecord::Base
   # Counter caches
   counter_culture :project
   counter_culture :project,
-    column_name: ->(model) { "#{ model.state }_tweets_count" },
+    column_name: ->(model) { "#{ model.state }_tweets_count" unless model.conversation? },
     column_names: {
       # [] => 'tweets_count',
       ["tweets.state = ?", 'incoming'] => 'incoming_tweets_count',
       ["tweets.state = ?", 'resolved'] => 'resolved_tweets_count',
-      ["tweets.state = ?", 'posted'] => 'posted_tweets_count'
+      ["tweets.state = ?", 'posted']   => 'posted_tweets_count'
     }
 
   # Scopes
@@ -129,8 +129,8 @@ class Tweet < ActiveRecord::Base
   ##
   # Conversation
 
-  def conversation
-    @conversation ||= [*previous_tweets, self, *future_tweets]
+  def full_conversation
+    @full_conversation ||= [*previous_tweets, self, *future_tweets]
   end
 
   ##
@@ -151,8 +151,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def push_conversation
-    TweetPusher.new(self).prepend_conversation
-    TweetPusher.new(self).append_to_conversations
+    TweetPusher.new(self).stream_conversation
   end
 
 

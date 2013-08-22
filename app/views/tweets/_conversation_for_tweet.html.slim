@@ -1,28 +1,30 @@
 / conversation for tweet partial
 - tweet &&= tweet.decorate
+- include_tweets = true if include_tweets.nil?
 
 / .conversation_for_tweet_1(will use ids)
 = div_for tweet, :conversation_for do
+  - if include_tweets
 
-  / previous tweets or link to conversation
-  - if tweet.previous_tweets.size > 0
-    = render tweet.previous_tweets
+    / previous tweets or link to conversation
+    - if tweet.previous_tweets.size > 0
+      = render tweet.previous_tweets
 
-  / tweet
-  = render tweet
+    / tweet
+    = render tweet
 
-  / future tweets or link to conversation
-  - if tweet.future_tweets.size > 0
-    = render tweet.future_tweets
+    / future tweets or link to conversation
+    - if tweet.future_tweets.size > 0
+      = render tweet.future_tweets
 
-/ - if render_conversation?(tweet)
-/     = render tweet.previous_tweets
-/ - else
-/   = link_to [@project, tweet], class: 'show-conversation' do
-/     = icon_tag 'caret-up', "#{ pluralize tweet.previous_tweets.size, 'previous tweet' }"
+  / - if render_conversation?(tweet)
+  /     = render tweet.previous_tweets
+  / - else
+  /   = link_to [@project, tweet], class: 'show-conversation' do
+  /     = icon_tag 'caret-up', "#{ pluralize tweet.previous_tweets.size, 'previous tweet' }"
 
-/ - if render_conversation?(tweet)
-/     = render tweet.future_tweets
-/ - else
-/   = link_to [@project, tweet], class: 'show-conversation' do
-/     = icon_tag 'caret-down', "#{ pluralize tweet.future_tweets.size, 'future tweet' }"
+  / - if render_conversation?(tweet)
+  /     = render tweet.future_tweets
+  / - else
+  /   = link_to [@project, tweet], class: 'show-conversation' do
+  /     = icon_tag 'caret-down', "#{ pluralize tweet.future_tweets.size, 'future tweet' }"

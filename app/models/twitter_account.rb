@@ -46,10 +46,6 @@ class TwitterAccount < ActiveRecord::Base
     )
   end
 
-  def self.random
-    order("RANDOM()").first
-  end
-
   # Create or update existing Twitter account
   # Returns twitter account record
   def self.from_omniauth(project, auth, access_scope)
