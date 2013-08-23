@@ -134,36 +134,20 @@ class Tweet < ActiveRecord::Base
   end
 
   ##
-  # Pusher
+  # Push and replace single tweet
 
   def push
-    TweetPusher.new(self).push_tweet
+    TweetPusherWorker.perform_async(self.id)
   end
 
   ##
-  # Callbacks
+  # Callbacks -> Background Jobs
 
-  after_create :fetch_conversation
-  after_create :push_conversation
+  after_commit :fetch_and_push_conversation, on: :create
 
-  def fetch_conversation
-    ConversationService.new(self).previous_tweets if reply?
+  def fetch_and_push_conversation
+    TweetConversationAndStreamWorker.perform_async(self.id)
   end
-
-  def push_conversation
-    TweetPusher.new(self).stream_conversation
-  end
-
-
-  ##
-  # Background jobs
-
-  # # Fetch conversation from Twitter after tweet creation
-  # after_commit :fetch_conversation_async, on: :create
-
-  # def fetch_conversation_async
-  #   ConversationWorker.perform_async(self.id) if reply?
-  # end
 
 
   ##
