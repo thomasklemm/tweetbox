@@ -13,9 +13,6 @@ class TweetPusher
   end
 
   def stream_conversation
-    # Don't push conversation tweets
-    return true if tweet.conversation?
-
     prepend_conversation
     append_tweet_to_previous_conversations
   end
@@ -36,13 +33,29 @@ class TweetPusher
   end
 
   def prepend_conversation
+    # Don't push conversation tweets
+    return true if tweet.conversation?
+
+    # Where should the conversation be prepended?
+    tags = []
+    tags << '#tweets.incoming' if tweet.incoming?
+    tags << '#tweets.stream' if tweet.incoming? || tweet.resolved?
+
+    return true unless tags.present?
+
     # Create container
-    data = { conversation: renderer.render(partial: 'tweets/conversation_for_tweet', locals: {tweet: tweet, include_tweets: false}) }
+    data = {
+      tags: tags,
+      conversation: renderer.render(partial: 'tweets/conversation_for_first_tweet', locals: {tweet: tweet, first_tweet: tweet.full_conversation.first})
+    }
     Pusher.trigger(channel, 'prepend-conversation', data)
 
     # Append all tweets in conversation
     # and append new tweet to previous conversations
     tweet.full_conversation.each do |conversation_tweet|
+      # First tweet in conversation is already appended
+      next if conversation_tweet == tweet.full_conversation.first
+
       data = { tag: "#" + dom_id(tweet, :conversation_for),
                tweet: renderer.render(conversation_tweet) }
       Pusher.trigger(channel, 'append-tweet', data)

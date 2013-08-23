@@ -31,7 +31,7 @@
     # Events
 
     channel.bind 'prepend-conversation', (data) ->
-      TweetPusher.prependConversation(data.conversation)
+      TweetPusher.prependConversation(data.tags, data.conversation)
 
     channel.bind 'append-tweet', (data) ->
       TweetPusher.appendTweet(data.tag, data.tweet)

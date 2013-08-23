@@ -20,17 +20,18 @@ jQuery ->
     $(tag).after($tweet).remove()
     @updateTimestamps()
 
-  prependConversation: (conversation) ->
+  prependConversation: (tags, conversation) ->
+    @prependC(tag, conversation) for tag in tags
+
+  prependC: (tag, conversation) ->
     $conversation = $(conversation)
-    $('#tweets').prepend($conversation.hide())
+    $(tag).prepend($conversation.hide().slideDown(200))
     @updateTimestamps()
 
   appendTweet: (tag, tweet) ->
     $tag = $(tag)
     $tweet = $(tweet)
-    $tag.append($tweet)
-    if $tag.not(':visible')
-      $tag.slideDown(200)
+    $tag.append($tweet.hide().slideDown(200))
     @updateTimestamps()
 
   # Updates timestamps on the entire page
