@@ -34,8 +34,7 @@ Tweetbox::Application.configure do
   config.action_mailer.default_url_options = { host: 'tweetbox.dev' }
   Rails.application.routes.default_url_options[:host] = 'tweetbox.dev'
 
-  # Strong Parameters
-  # TODO: See if unnescessary
+  # Raise if unpermitted params have been passed to strong_parameters
   config.action_controller.action_on_unpermitted_parameters = :raise
 
   # LiveReload

@@ -103,13 +103,6 @@ Tweetbox::Application.configure do
   # Enable email delivery
   ActionMailer::Base.delivery_method = :smtp
 
-  ##
-  # OLD SETTINGS
-
-  # Via RailsCasts (http://railscasts.com/episodes/405-angularjs)
-  # TODO: Maybe activate
-  # config.assets.js_compressor = Sprockets::LazyCompressor.new { Uglifier.new(mangle: false) }
-
   # Devise SSL
   # TODO: Still nescessary?
   config.to_prepare { Devise::SessionsController.force_ssl }
