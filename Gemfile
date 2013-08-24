@@ -131,7 +131,7 @@ group :test do
   gem 'mocha'
   gem 'timecop'
   gem 'simplecov', require: false
-  gem 'coveralls', require: false
+  # gem 'coveralls', require: false
   gem 'capybara-webkit'
   gem 'launchy'
   gem 'webmock'
