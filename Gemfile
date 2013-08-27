@@ -101,6 +101,9 @@ gem 'auto_html'
 # Counter caches
 gem 'counter_culture'
 
+# Preview emails
+gem 'mail_view'
+
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'
