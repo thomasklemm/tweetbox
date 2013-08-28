@@ -105,7 +105,7 @@ gem 'counter_culture'
 gem 'mail_view'
 
 # Emails in Markdown
-gem 'maildown'
+# gem 'maildown'
 
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)

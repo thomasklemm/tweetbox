@@ -190,7 +190,6 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kramdown (1.1.0)
     launchy (2.3.0)
       addressable (~> 2.3)
     letter_opener (1.1.2)
@@ -205,9 +204,6 @@ GEM
       treetop (~> 1.4.8)
     mail_view (2.0.1)
       tilt
-    maildown (1.0.1)
-      kramdown
-      rails (>= 4.0.0)
     memcachier (0.0.2)
     meta_request (0.2.8)
       callsite
@@ -421,7 +417,6 @@ DEPENDENCIES
   launchy
   letter_opener
   mail_view
-  maildown
   memcachier
   meta_request
   mocha
