@@ -112,7 +112,12 @@ Tweetbox::Application.routes.draw do
     end
 
     # Sidekiq Web interface
-    mount Sidekiq::Web => '/sidekiq'
+    mount Sidekiq::Web => 'sidekiq'
+  end
+
+  # Preview emails
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
   end
 
   # Marketing pages
