@@ -1,5 +1,25 @@
-<p>Welcome <%= @email %>!</p>
+<p>Hi <%= @resource.name %>,</p>
 
-<p>You can confirm your account email through the link below:</p>
+Thanks for registering with Tweetbox - Twitter for Business.
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p>
+  Your next steps:
+  <ol>
+    <li><%= link_to 'Confirm your email', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %> to complete your signup first. <br>
+      Click the link above or copy this URL to your browser to confirm your signup: <br>
+      <%= link_to confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
+    </li>
+    <li>You can connect one or more Twitter accounts to your Tweetbox project. <br> We'll start to monitor your @mentions immediately.</li>
+    <li>Add keywords for your Twitter search to monitor mentions of your company and product.</li>
+    <li>Invite your team to Tweetbox to provide great and speedy support.</li>
+  </ol>
+</p>
+
+Your customer support on Twitter matters to us. Go make it awesome!
+
+<p>-- Your friends at Tweetbox :) <br>
+<%= link_to 'https://www.tweetbox.co', 'https://www.tweetbox.co' %></p>
+
+P.S.: If you have any questions or feedback, please don't hesitate to contact us. <br>
+And be sure to follow us on Twitter to stay up to date: <br>
+<%= link_to 'https://twitter.com/TweetboxHQ', 'https://twitter.com/TweetboxHQ' %>
