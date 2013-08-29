@@ -56,7 +56,7 @@ class Invitation < ActiveRecord::Base
 
   # Sends an invitation email sporting a link that helps registering
   def deliver_mail
-    mail = InvitationMailer.invitation(self)
+    mail = Mailer.invitation_instructions(self)
     mail.deliver
   end
 

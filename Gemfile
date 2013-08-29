@@ -56,7 +56,7 @@ gem 'virtus'
 gem 'transitions', require: ['transitions', 'active_model/transitions'], github: 'troessner/transitions'
 
 # Twitter (Twitter REST API client)
-gem 'twitter'
+gem 'twitter', '~> 4.8.1'
 
 # Sidekiq (Background jobs)
 gem 'sidekiq'
@@ -105,7 +105,7 @@ gem 'counter_culture'
 gem 'mail_view'
 
 # Emails in Markdown
-# gem 'maildown'
+gem 'maildown'
 
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)

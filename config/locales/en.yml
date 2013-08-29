@@ -21,3 +21,8 @@
 
 en:
   hello: "Hello world"
+
+  # ActionMailer
+  mailer:
+    invitation_instructions:
+      subject: "An invitation to Tweetbox - Twitter for Business"

@@ -1,0 +1,23 @@
+Hi <%= @invitation.name %>,
+
+<%= @invitation.issuer_name %> invites you to join him on Tweetbox - Twitter for Business. <br> Tweetbox is a great way for teams to provide outstanding customer support <br> on Twitter. You can get started by accepting your invitation:
+
+[Join <%= @invitation.issuer_name %> on Tweetbox](<%= @invitation.registration_url %>)
+
+Customer support on Twitter has never been easier. Here's why:
+
+With Tweetbox, you can...
+
+  - ...reply to tweets with more than 140 characters.
+  - ...resolve incoming tweets in your inbox as a team.
+
+Your customer support on Twitter matters to us. Go make it awesome!
+
+-- Your friends at Tweetbox :) <br>
+[https://www.tweetbox.co](https://www.tweetbox.co)
+
+If clicking the link above doesn't work, please copy this URL to your browser <br> to accept your invitation: <br> [<%= @invitation.registration_url %>](<%= @invitation.registration_url %>)
+
+P.S.: If you experience any trouble accepting your invitation, <br>
+please contact us at [tweetbox@tweetbox.co](mailto:tweetbox@tweetbox.co) or reply to this email. <br>
+And be sure to follow us on Twitter to stay up to date: [@TweetboxHQ](https://twitter.com/TweetboxHQ)
