@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   # Update last_seen_at timestamp on user
   before_action :update_last_seen_at!
-  before_action :eminiprofiler
+  before_action :miniprofiler
 
   # Returns the decorated current_user
   def current_user
@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   # Enable MiniProfiler in production for staff members
   def miniprofiler
-    Rack::MiniProfiler.authorize_request if current_user && current_user.staff_member?
+    Rack::MiniProfiler.authorize_request # if current_user && current_user.staff_member?
   end
 
   # Devise paths

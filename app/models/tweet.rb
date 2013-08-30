@@ -61,7 +61,7 @@ class Tweet < ActiveRecord::Base
 
   scope :by_date, ->(direction=:asc) { order(created_at: direction) }
 
-  scope :include_conversation, -> { includes(:project, :author, :events, :previous_tweets, :future_tweets) }
+  scope :include_conversation, -> { includes(:project, :author, :status, :events, :previous_tweets, :future_tweets) }
   scope :include_deep_conversation, -> { includes(:project, :author, :events, previous_tweets: [:author, events: :user], future_tweets: [:author, events: :user])  }
 
   ##

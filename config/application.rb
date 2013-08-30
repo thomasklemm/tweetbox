@@ -57,6 +57,6 @@ module Tweetbox
 
     # Insert Rack::Deflater as the first middleware
     # to gzip all responses, including assets
-    config.middleware.insert 0, Rack::Deflater
+    # config.middleware.insert_before Rack::MiniProfiler, Rack::Deflater
   end
 end
