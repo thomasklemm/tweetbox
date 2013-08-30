@@ -8,7 +8,7 @@ describe 'Account projects' do
     expect(current_path).to eq(account_projects_path)
 
     within('.projects-table') do
-      expect(page).to have_content("1Rainmakers")
+      expect(page).to have_content("Rainmakers")
     end
   end
 
@@ -21,8 +21,8 @@ describe 'Account projects' do
     expect(page).to have_content("Project has been created")
 
     within('.projects-table') do
-      expect(page).to have_content("1Second Rainmakers project")
-      expect(page).to have_content("2Rainmakers")
+      expect(page).to have_content("Second Rainmakers project")
+      expect(page).to have_content("Rainmakers")
     end
 
     # Permissions
@@ -36,7 +36,7 @@ describe 'Account projects' do
     visit account_projects_path
 
     within('.projects-table') do
-      click_on 'Edit'
+      click_on 'Rename project'
     end
 
     fill_in 'Project name', with: "First Rainmakers project"

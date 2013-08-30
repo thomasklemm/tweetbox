@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Connect a Twitter account and post Tweet' do
   include_context 'signup feature'
 
-  it "connects a Twitter account", js: true do
+  it "connects a Twitter account" do
     # Open project
     click_on "Rainmakers", match: :first
 
@@ -32,21 +32,20 @@ describe 'Connect a Twitter account and post Tweet' do
         fill_in 'status_twitter_account_id', with: TwitterAccount.first.id
         click_on 'Preview'
       end
+
+      click_on 'Post to Twitter'
     end
 
-    # expect(page).to have_content("Status has been posted.")
-    # expect(current_path).to eq(project_tweet_path(Project.first, Tweet.posted.first))
-    # expect(page).to have_content(full_text)
-    # expect(page).to have_content("Thomas Klemm posted this tweet.")
+    status = Status.first
 
-    # code = Code.first
-    # tweet = code.tweet
+    expect(page).to have_content("Status has been published.")
+    expect(page).to have_content(status.text)
 
-    # expect(tweet.text).to eq("Aenean eu leo quam. Pellentesque ornare sem lacinia\n        quam venenatis vestibulum. Nulla vitae elit libero, a ... http://lvh.me:7000/t/1")
-    # expect(tweet.full_text).to eq full_text
+    # Public view
+    path = public_status_path(status.token)
+    visit path
+    expect(current_path).to eq(path)
 
-    # # NOTE: New code generated each time, even when Twitter response in static in VCR
-    # visit public_code_path(code)
-    # expect(current_path).to eq public_tweet_path('tweetbox101', tweet)
+    expect(page).to have_content(status.text)
   end
 end

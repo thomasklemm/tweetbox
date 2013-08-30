@@ -144,7 +144,7 @@ describe Invitation, 'persisted' do
   describe "#deliver_mail" do
     it "sends an invitation email" do
       mail = stub
-      InvitationMailer.expects(:invitation).with(invitation).returns(mail)
+      Mailer.expects(:invitation_instructions).with(invitation).returns(mail)
       mail.expects(:deliver)
 
       invitation.deliver_mail

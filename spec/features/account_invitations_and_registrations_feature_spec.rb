@@ -19,7 +19,7 @@ describe 'Account invitations' do
 
     # list invitations
     within('.invitations-table') do
-      expect(page).to have_content("1Philipp Thielphilipp@rainmakers.com")
+      expect(page).to have_content("Philipp Thielphilipp@rainmakers.com")
     end
 
     # edit and update invitation
@@ -36,27 +36,27 @@ describe 'Account invitations' do
     expect(page).to have_content("Invitation has been updated")
 
     within('.invitations-table') do
-      expect(page).to have_no_content("1Philipp Thielphilipp@rainmakers.com")
+      expect(page).to have_no_content("Philipp Thielphilipp@rainmakers.com")
       expect(page).to have_content("Peter Thielpeter@rainmakers.com")
     end
 
     # deactivate invitation
     within('.invitations-table') do
-      click_on 'deactivate'
+      click_on 'Deactivate'
     end
 
     expect(page).to have_content("Invitation has been deactivated")
 
     # reactivate invitation
     within('.invitations-table') do
-      click_on 'reactivate'
+      click_on 'Extend expiration date and reactivate'
     end
 
     expect(page).to have_content("Invitation has been reactivated")
 
     # resend invitation email
     within('.invitations-table') do
-      click_on 'Resend'
+      click_on 'Send email'
     end
 
     expect(page).to have_content("Invitation email has been sent")

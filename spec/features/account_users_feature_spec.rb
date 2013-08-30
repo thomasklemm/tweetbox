@@ -46,9 +46,9 @@ describe 'Account users' do
     expect(current_path).to eq(account_users_path)
 
     within('.users-table') do
-      expect(page).to have_content("1Thomas Klemmthomas@rainmakers.comAccount admin")
-      expect(page).to have_content("2Philipp Thielphilipp@rainmakers.com")
-      expect(page).to have_no_content("2Philipp Thielphilipp@rainmakers.comAccount admin")
+      expect(page).to have_content("Thomas Klemmthomas@rainmakers.com Account admin")
+      expect(page).to have_content("Philipp Thielphilipp@rainmakers.com")
+      expect(page).to have_no_content("Philipp Thielphilipp@rainmakers.com Account admin")
     end
 
     # Grant admin membership
@@ -56,8 +56,8 @@ describe 'Account users' do
     expect(page).to have_content("Philipp Thiel has become an account admin")
 
     within('.users-table') do
-      expect(page).to have_content("1Thomas Klemmthomas@rainmakers.comAccount admin")
-      expect(page).to have_content("2Philipp Thielphilipp@rainmakers.comAccount admin")
+      expect(page).to have_content("Thomas Klemmthomas@rainmakers.com Account admin")
+      expect(page).to have_content("Philipp Thielphilipp@rainmakers.com Account admin")
     end
   end
 end
