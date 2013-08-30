@@ -107,6 +107,9 @@ gem 'mail_view'
 # Emails in Markdown
 gem 'maildown'
 
+# MiniProfiler
+gem 'rack-mini-profiler'
+
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'
