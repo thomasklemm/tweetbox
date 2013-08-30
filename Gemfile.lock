@@ -241,6 +241,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-rails (0.3.2)
+      pry (>= 0.9.10)
     puma (2.5.1)
       rack (>= 1.1, < 2.0)
     pundit (0.2.1)
@@ -427,6 +429,8 @@ DEPENDENCIES
   oj
   omniauth-twitter
   pg
+  pry
+  pry-rails
   puma
   pundit
   pusher
