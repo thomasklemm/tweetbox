@@ -83,8 +83,8 @@ gem 'enumerize'
 gem 'pusher'
 
 # Pry Console
-# gem 'pry'
-# gem 'pry-rails', group: :development
+gem 'pry'
+gem 'pry-rails', group: :development
 
 # Chartkick for Charts
 gem 'chartkick'
@@ -124,9 +124,6 @@ group :development do
 
   # RailsPanel
   gem 'meta_request'
-
-  # Optimize database queries
-  gem 'bullet'
 end
 
 group :development, :test do
