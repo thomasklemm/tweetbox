@@ -25,7 +25,11 @@
 / events
 .events
   - if tweet.events.size > 0
-    = render tweet.events
+    - tweet.events.each do |event|
+      - event &&= event.decorate
+
+      = div_for event do
+        = event.render
 
   / actions
   - if tweet.incoming?
