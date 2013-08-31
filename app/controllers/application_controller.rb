@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   # Enable MiniProfiler in production for staff members
   def miniprofiler
-    Rack::MiniProfiler.authorize_request # if current_user && current_user.staff_member?
+    Rack::MiniProfiler.authorize_request if current_user && current_user.staff_member?
   end
 
   # Devise paths
