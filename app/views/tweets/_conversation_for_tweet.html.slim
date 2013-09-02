@@ -6,14 +6,14 @@
 
   / previous tweets or link to conversation
   - if tweet.previous_tweets.size > 0
-    = render tweet.previous_tweets
+    = render tweet.previous_tweets, cache: true
 
   / tweet
-  = render tweet
+  = render tweet, cache: true
 
   / future tweets or link to conversation
   - if tweet.future_tweets.size > 0
-    = render tweet.future_tweets
+    = render tweet.future_tweets, cache: true
 
   / - if render_conversation?(tweet)
   /     = render tweet.previous_tweets

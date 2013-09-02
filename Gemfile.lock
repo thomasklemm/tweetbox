@@ -218,6 +218,7 @@ GEM
     minitest (4.7.5)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
+    multi_fetch_fragments (0.0.17)
     multi_json (1.7.9)
     multipart-post (1.2.0)
     newrelic_rpm (3.6.6.147)
@@ -425,6 +426,7 @@ DEPENDENCIES
   memcachier
   meta_request
   mocha
+  multi_fetch_fragments
   newrelic_rpm
   oj
   omniauth-twitter

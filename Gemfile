@@ -110,6 +110,9 @@ gem 'maildown'
 # MiniProfiler
 gem 'rack-mini-profiler'
 
+# Cache rendered partials
+gem 'multi_fetch_fragments'
+
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'

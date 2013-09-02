@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  belongs_to :tweet, counter_cache: true
+  belongs_to :tweet, counter_cache: true, touch: true
   belongs_to :user
   belongs_to :project
 
