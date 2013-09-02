@@ -79,13 +79,21 @@ module ApplicationHelper
     tweet.incoming? || current_path == project_tweet_path(@project, tweet)
   end
 
+  ##
+  # Caching
+
+  def render_cached_conversation_for_tweets(tweets)
+    render partial: 'tweets/conversation_for_tweet', collection: tweets, as: :tweet,
+      cache: ->(tweet){digest('conversation_for', tweet, tweet.full_conversation) }
+  end
+
   def digest(*items)
     items &&= items.
       flatten.
       map { |item| item.try(:cache_key) || item.try(:to_s) || item }
 
     cache_key = items.to_param
-    cache_key.length < 128 ?  cache_key : Digest::MD5.hexdigest(cache_key)
+    cache_key.length < 64 ?  cache_key : Digest::MD5.hexdigest(cache_key)
   end
 
   private

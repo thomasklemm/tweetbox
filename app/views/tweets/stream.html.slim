@@ -2,7 +2,7 @@
 = logo_header icon_tag(:twitter, 'Stream')
 
 div#tweets class="stream tweets"
-  = render partial: 'conversation_for_tweet', collection: @tweets, as: :tweet, cache: Proc.new {|tweet| digest('conversation_for', tweet, tweet.full_conversation) }
+  = render_cached_conversation_for_tweets(@tweets)
 
 / pagination
 = paginate @tweets
