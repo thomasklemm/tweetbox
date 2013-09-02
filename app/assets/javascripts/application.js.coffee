@@ -14,8 +14,17 @@
 # about supported directives.
 
 # Libraries
+# jQuery via CDN
 #= require jquery_ujs
-#= require bootstrap
+
+# Bootstrap
+#= require twitter/bootstrap/transition
+#= require twitter/bootstrap/alert
+#= require twitter/bootstrap/dropdown
+#= require twitter/bootstrap/tooltip
+#= require twitter/bootstrap/button
+#= require twitter/bootstrap/collapse
+
 #= require jquery.autosize
 #= require select2
 #= require ZeroClipboard
@@ -25,6 +34,9 @@
 # Tweetbox
 #= require statuses
 #= require tweets
+
+# Turbolinks
+#= require turbolinks
 
 # Submit form when a radio button is selected
 jQuery.fn.submitOnCheck = ->

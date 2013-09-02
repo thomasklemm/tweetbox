@@ -1,7 +1,8 @@
 / posted tweets
 - if @tweets.any?
   = logo_header 'Posted Tweets'
-  .tweets-wrapper
+
+  div#tweets class="posted tweets"
     = render_cached_conversation_for_tweets(@tweets)
 
 / blank slate

@@ -7,13 +7,13 @@
 
 / user signed out
 - unless user_signed_in?
-  div class='navbar navbar-fixed-top'
+  div class='navbar navbar-static-top'
     div class='navbar-inner'
       div class='container'
 
         ul class='nav'
           = active_link_to tweetbox_navbar_image_tag, root_path, exact: true
-          = active_link_to "Who isn't it for?", static_path(:features), exact: true
+          = active_link_to 'Features', static_path(:features), exact: true
           = active_link_to 'Pricing', static_path(:pricing), exact: true
           = active_link_to 'Signup', new_signup_path, exact: true
 

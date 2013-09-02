@@ -28,7 +28,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Packaged plugins
-gem 'bootstrap-sass', '~> 2.3.2.1'
+gem 'anjlab-bootstrap-rails', '>= 3.0.0.0', require: 'bootstrap-rails'
 gem 'select2-rails'
 
 # High Voltage (Static pages in Rails)
