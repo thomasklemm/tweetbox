@@ -1,18 +1,43 @@
 / tweet partial
 - tweet &&= tweet.decorate
 
-/ incoming tweet
-- if tweet.incoming?
-  = render 'tweets/incoming_tweet', tweet: tweet
+/ tweet
+= div_for tweet, class: "#{ dom_id(tweet) } #{ tweet.current_state }" do
+  / author
+  = link_to tweet.author_intent_url, class: 'author' do
+    = image_tag(tweet.author.profile_image_url, class: 'avatar')
+    span.name = tweet.author.name
+    span.screen-name = tweet.author.at_screen_name
 
-/ resolved tweet
-- if tweet.resolved?
-  = render 'tweets/resolved_tweet', tweet: tweet
+  / timestamp
+  span.timestamp
+    = icon_tag :time, timestamp_tag(tweet.created_at)
 
-/ posted tweet
-- if tweet.posted?
-  = render 'tweets/posted_tweet', tweet: tweet
+  / text
+  div
+    span.text = tweet.text
 
-/ conversation tweet
-- if tweet.conversation?
-  = render 'tweets/conversation_tweet', tweet: tweet
+    / deeplinks
+    span.deeplinks
+      = link_to icon_tag(:comment), [tweet.project, tweet]
+      = link_to icon_tag(:twitter), tweet.twitter_url
+
+/ events
+.events
+  - if tweet.events.size > 0
+    - tweet.events.each do |event|
+      - event &&= event.decorate
+
+      = div_for event do
+        = event.render
+
+  / actions
+  - if tweet.incoming?
+    .actions
+      / reply
+      = link_to new_project_tweet_reply_path(tweet.project, tweet), title: 'Reply to this tweet' do
+        = icon_tag :reply, 'Reply'
+
+      / resolve
+      = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true do
+        = icon_tag :ok, 'Resolve'
