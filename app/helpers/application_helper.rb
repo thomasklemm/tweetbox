@@ -12,8 +12,10 @@ module ApplicationHelper
   end
 
   # Returns a font-awesome icon tag
-  def icon_tag(type, text=nil)
-    "<i class='icon-#{ type.to_s }'></i> #{ text }".html_safe
+  def icon_tag(types, text=nil)
+    klasses = [types].flatten.map { |type| "icon-#{ type }" }
+    icon = content_tag :i, '', class: klasses.join(' ')
+    icon + ' ' + text
   end
 
   # Highlights the currently active navigation item with a special class

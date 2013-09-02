@@ -5,11 +5,6 @@ module DashHelper
     Twitter::Autolink.auto_link_usernames_or_lists(text, user_options)
   end
 
-  # Returns a font-awesome icon tag
-  def icon_tag(type, text=nil)
-    "<i class='icon-#{ type.to_s }'></i> #{ text }".html_safe
-  end
-
   def score_title(score)
     case score.to_s
     when 'high'      then 'High Scoring Leads'

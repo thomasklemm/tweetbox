@@ -4,54 +4,48 @@
 / (inline styles might help prevent elements jumping around on the page on page load)
 - tweetbox_navbar_image_tag = image_tag('tweetbox/logo_and_tagline.png', class: 'navbar-logo', style: 'height: 24px; width: 104px; margin: -6px 0')
 
+/ navbar
+div class='navbar navbar-default navbar-static-top'
 
-/ user signed out
-- unless user_signed_in?
-  div class='navbar navbar-static-top'
-    div class='navbar-inner'
-      div class='container'
+  / user signed out
+  - unless user_signed_in?
+    ul class='nav navbar-nav'
+      li = link_to tweetbox_navbar_image_tag, root_path
+      = active_link_to 'Features', static_path(:features), exact: true
+      = active_link_to 'Pricing', static_path(:pricing), exact: true
+      = active_link_to 'Signup', new_signup_path, exact: true
 
-        ul class='nav'
-          = active_link_to tweetbox_navbar_image_tag, root_path, exact: true
-          = active_link_to 'Features', static_path(:features), exact: true
-          = active_link_to 'Pricing', static_path(:pricing), exact: true
-          = active_link_to 'Signup', new_signup_path, exact: true
-
-        / login
-        ul class='nav pull-right'
-          = active_link_to 'Login', login_path, exact: true
+    / login
+    ul class='nav navbar-nav navbar-right'
+      = active_link_to 'Login', login_path, exact: true
 
 
-/ user signed in
-- if user_signed_in?
-  div class='navbar navbar-static-top'
-    div class='navbar-inner'
-      div class='container'
+  / user signed in
+  - if user_signed_in?
+    / left side
+    ul class='nav navbar-nav project-links'
+      li = link_to tweetbox_navbar_image_tag, main_user_project_path
 
-        / left side
-        ul class='nav project-links'
-          li = link_to tweetbox_navbar_image_tag, main_user_project_path
+      / project links
+      - current_user.projects.by_date.each do |project|
+        = active_link_to project.name, project
 
-          / project links
-          - current_user.projects.by_date.each do |project|
-            = active_link_to project.name, project
+    / right side
+    ul class='nav navbar-nav navbar-right'
+      / user details and logout link
+      li class='dropdown'
+        / user details
+        a href='javascript:;' class='user-details dropdown-toggle' data-toggle='dropdown'
+          = image_tag(current_user.gravatar_image_url(32), class: 'avatar')
+          span.name => current_user.name
+          b class='caret'
 
-        / right side
-        ul class='nav pull-right'
-          / user details and logout link
-          li class='dropdown'
-            / user details
-            a href='javascript:;' class='user-details dropdown-toggle' data-toggle='dropdown'
-              = image_tag(current_user.gravatar_image_url, class: 'avatar')
-              span.name = current_user.name
-              | &nbsp;
-              b class='caret'
+        / dropdown menu
+        ul class='dropdown-menu'
+          / account link
+          - if policy(current_user.account).manage?
+            = active_link_to icon_tag(['credit-card', 'fixed-width'], 'Account'), account_path
+            li class="divider"
 
-            / dropdown
-            ul class='dropdown-menu'
-              / account link
-              - if policy(current_user.account).manage?
-                = active_link_to 'Account', account_path
-
-              / logout
-              li = link_to 'Logout', logout_path, method: :delete
+          / logout
+          li = link_to icon_tag([:signout, 'fixed-width'], 'Logout'), logout_path, method: :delete
