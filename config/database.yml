@@ -46,3 +46,7 @@ development: &default
 test:
   <<: *default
   database: tweetbox_test
+
+staging:
+  <<: *default
+  database: tweetbox_staging

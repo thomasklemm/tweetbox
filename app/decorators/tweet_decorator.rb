@@ -87,4 +87,8 @@ class TweetDecorator < Draper::Decorator
     Tweet by #{ author.name } (#{ author.at_screen_name }) \n
     at #{ created_at.to_s(:long) }"
   end
+
+  def to_s
+    "TweetDecorator: #{ model.to_s }"
+  end
 end
