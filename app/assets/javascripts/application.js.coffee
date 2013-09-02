@@ -16,6 +16,7 @@
 # Libraries
 # jQuery via CDN
 #= require jquery_ujs
+#= require jquery.turbolinks
 
 # Bootstrap
 #= require twitter/bootstrap/transition

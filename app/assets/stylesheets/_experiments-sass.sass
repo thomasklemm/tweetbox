@@ -63,7 +63,7 @@
       &:first-of-type
         margin-left: 8px
       &:hover
-        color: $linkColor
+        color: $link-color
 
     .events
       padding-left: 8px
@@ -85,14 +85,6 @@
 
 abbr.timeago
   border-bottom: none
-
-.zeroclipboard-is-hover
-  color: $dropdownLinkColorHover !important
-  background-color: $dropdownLinkBackgroundHover
-
-.zeroclipboard-is-active
-  color: $dropdownLinkColor
-  background-color: $dropdownBackground
 
 // New status
 .new-status-wrapper
@@ -119,18 +111,18 @@ abbr.timeago
     .author
       .name
         font-weight: bold
-        color: $textColor
+        color: $text-color
       .screen-name
         margin-left: 5px
         @extend .muted
 
     .text
       white-space: pre-wrap  // pre-wrap and pre-line seem to be good options
-      color: $textColor
+      color: $text-color
 
   .preview-status
     .text
-      min-height: (4 * $baseLineHeight)
+      min-height: (4 * $line-height-base)
 
 
 // Public tweets
@@ -225,7 +217,7 @@ img.navbar-logo
     @extend .muted
 
   .text
-    min-height: (2 * $baseLineHeight)
+    min-height: (2 * $line-height-base)
 
   .actions
     padding-top: 0.5rem
