@@ -2,7 +2,7 @@
 - if @tweets.any?
   = logo_header 'Posted Tweets'
   .tweets-wrapper
-    = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
+    = render_cached_conversation_for_tweets(@tweets)
 
 / blank slate
 - if @tweets.empty?
