@@ -12,8 +12,9 @@ module ApplicationHelper
   end
 
   # Returns a font-awesome icon tag
-  def icon_tag(types, text=nil)
+  def icon_tag(types, text=nil, fixed_width=false)
     klasses = [types].flatten.map { |type| "icon-#{ type }" }
+    klasses << "icon-fixed-width" if fixed_width
     icon = content_tag :i, '', class: klasses.join(' ')
     icon + ' ' + text
   end
@@ -61,9 +62,9 @@ module ApplicationHelper
     content_tag(:abbr, time.to_s, opts.merge(:title => time.getutc.iso8601)) if time
   end
 
-  def active_list_item(url_parts)
-    klass = 'active' if current_path.start_with? url_for(url_parts)
-    content_tag :li, class: klass do
+  def active_list_item(url_parts, exact=false)
+    match = exact ? current_path == url_for(url_parts) : current_path.starts_with?(url_for(url_parts))
+    content_tag :li, class: ('active' if match) do
       yield
     end
   end

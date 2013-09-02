@@ -55,7 +55,7 @@ class EventDecorator < Draper::Decorator
   end
 
   def formatted_user_name
-    "<span class='user-name'>#{ user_name }</span>".html_safe
+    "#{ user_name }".html_safe
   end
 
   def formatted_timestamp

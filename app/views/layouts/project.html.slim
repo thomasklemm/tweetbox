@@ -3,36 +3,48 @@
   div.row
 
     / project navigation
-    div.span2 id='project-navbar'
-      ul class='nav nav-list'
-        li.nav-header Tweets
+    div class="col-md-3"
+      ul class='nav nav-pills nav-stacked'
+
+        / incoming tweets
+        = active_list_item [:incoming, @project, :tweets], true do
+          = link_to [:incoming, @project, :tweets] do
+            = icon_tag :bullhorn, 'Incoming Tweets', true
+            span class="badge pull-right" = @project.incoming_tweets_count
+
+        / tweet stream
+        = active_list_item [:stream, @project, :tweets] do
+          = link_to [:stream, @project, :tweets] do
+            = icon_tag 'dashboard', 'Tweet Stream', true
+
         / tweet
         = active_list_item [@project, :statuses] do
-          = link_to icon_tag(:twitter, 'Tweet'), new_project_status_path(@project)
+          = link_to [:new, @project, :status] do
+            = icon_tag :reply, 'Tweet', true
 
-        / tweets
-        = active_list_item [:stream, @project, :tweets] do
-          = link_to icon_tag(:'th-list', 'Stream'), [:stream, @project, :tweets]
-        = active_link_to icon_tag(:'bullhorn', " Incoming <span class='label pull-right' style='margin-top: 2px; background: #c82e23'>#{ @project.incoming_tweets_count }</span>".html_safe), incoming_project_tweets_path(@project), exact: true
-        = active_link_to icon_tag(:reply, 'Posted'), posted_project_tweets_path(@project), exact: true
+        / posted tweets
+        = active_list_item [:posted, @project, :tweets] do
+          = link_to [:posted, @project, :tweets] do
+            = icon_tag :twitter, 'Posted Tweets', true
 
-        li.divider
-
-        li.nav-header Project
-
-        / project
+        / project twitter accounts
         = active_list_item [@project, :twitter_accounts] do
-          = link_to icon_tag(:twitter, 'Accounts'), [@project, :twitter_accounts]
-        = active_list_item [@project, :searches] do
-          = link_to icon_tag(:twitter, 'Searches'), [@project, :searches]
+          = link_to [@project, :twitter_accounts] do
+            = icon_tag :twitter, 'Twitter Accounts', true
 
-        / edit project
+        / project searches
+        = active_list_item [@project, :searches] do
+          = link_to [@project, :searches] do
+            = icon_tag :twitter, 'Twitter Searches', true
+
+        / manage project
         - if policy(@project).manage?
-          li = link_to icon_tag(:group, 'Team'), edit_account_project_path(@project)
+          li = link_to [:edit, :account, @project] do
+           = icon_tag :group, 'Project Team', true
 
 
     / main content
-    div.span10
+    div class="col-md-9"
       / any flash messages
       = render 'flashes'
 
