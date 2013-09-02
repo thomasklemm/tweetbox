@@ -1,28 +1,29 @@
 / conversation for tweet partial
 - tweet &&= tweet.decorate
 
-/ .conversation_for_tweet_1(will use ids)
-= div_for tweet, :conversation_for do
+- cache digest('conversation_for', tweet, tweet.full_conversation) do
+  / .conversation_for_tweet_1(will use ids)
+  = div_for tweet, :conversation_for do
 
-  / previous tweets or link to conversation
-  - if tweet.previous_tweets.size > 0
-    = render tweet.previous_tweets, cache: true
+    / previous tweets or link to conversation
+    - if tweet.previous_tweets.size > 0
+      = render tweet.previous_tweets, cache: true
 
-  / tweet
-  = render tweet, cache: true
+    / tweet
+    = render tweet, cache: true
 
-  / future tweets or link to conversation
-  - if tweet.future_tweets.size > 0
-    = render tweet.future_tweets, cache: true
+    / future tweets or link to conversation
+    - if tweet.future_tweets.size > 0
+      = render tweet.future_tweets, cache: true
 
-  / - if render_conversation?(tweet)
-  /     = render tweet.previous_tweets
-  / - else
-  /   = link_to [@project, tweet], class: 'show-conversation' do
-  /     = icon_tag 'caret-up', "#{ pluralize tweet.previous_tweets.size, 'previous tweet' }"
+    / - if render_conversation?(tweet)
+    /     = render tweet.previous_tweets
+    / - else
+    /   = link_to [@project, tweet], class: 'show-conversation' do
+    /     = icon_tag 'caret-up', "#{ pluralize tweet.previous_tweets.size, 'previous tweet' }"
 
-  / - if render_conversation?(tweet)
-  /     = render tweet.future_tweets
-  / - else
-  /   = link_to [@project, tweet], class: 'show-conversation' do
-  /     = icon_tag 'caret-down', "#{ pluralize tweet.future_tweets.size, 'future tweet' }"
+    / - if render_conversation?(tweet)
+    /     = render tweet.future_tweets
+    / - else
+    /   = link_to [@project, tweet], class: 'show-conversation' do
+    /     = icon_tag 'caret-down', "#{ pluralize tweet.future_tweets.size, 'future tweet' }"

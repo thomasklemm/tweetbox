@@ -75,9 +75,17 @@ module ApplicationHelper
 
   end
 
-
   def render_conversation?(tweet)
     tweet.incoming? || current_path == project_tweet_path(@project, tweet)
+  end
+
+  def digest(*items)
+    items &&= items.
+      flatten.
+      map { |item| item.try(:cache_key) || item.try(:to_s) || item }
+
+    cache_key = items.to_param
+    cache_key.length < 128 ?  cache_key : Digest::MD5.hexdigest(cache_key)
   end
 
   private
