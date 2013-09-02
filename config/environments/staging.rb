@@ -98,4 +98,7 @@ Tweetbox::Application.configure do
     :port => '2525',
     :authentication => :plain
   }
+
+  # Use Memcachier cache store
+  config.cache_store = :dalli_store
 end
