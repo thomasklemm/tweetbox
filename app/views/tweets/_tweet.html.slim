@@ -22,14 +22,14 @@
       = link_to icon_tag(:comment), [tweet.project, tweet]
       = link_to icon_tag(:twitter), tweet.twitter_url
 
-/ events
-.events
-  - if tweet.events.size > 0
-    - tweet.events.each do |event|
-      - event &&= event.decorate
+  / events
+  .events
+    - if tweet.events.size > 0
+      - tweet.events.each do |event|
+        - event &&= event.decorate
 
-      = div_for event do
-        = event.render
+        = div_for event do
+          = event.render
 
   / actions
   - if tweet.incoming?
