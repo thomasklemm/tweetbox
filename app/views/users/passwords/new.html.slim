@@ -1,0 +1,15 @@
+/ password reset
+= logo_header 'Forgot your password?'
+
+= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+  = devise_error_messages!
+
+  .form-group
+    = f.label :email
+    = f.email_field :email, autofocus: true, placeholder: 'Your email', class: 'form-control'
+    p.help-block If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.
+
+  .form-group
+    = f.submit "Reset my password", class: 'btn btn-default'
+
+= render "users/shared/links"
