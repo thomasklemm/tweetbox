@@ -2,23 +2,13 @@
 
 .tweets
   .conversation_for_tweet
-    padding-bottom: 0.8rem
+    padding-bottom: 1rem
     border-bottom: 1px solid #eee
-    margin-bottom: 0.8rem
-
-    .show-conversation
-      padding-left: 52px
-
-      i
-        position: relative
-        &.icon-caret-up
-          bottom: -2px
-        &.icon-caret-down
-          bottom: -3px
+    margin-bottom: 1rem
 
   .tweet
     padding-left: 46px
-    margin: 0.5rem
+    margin: 0.8rem
 
     &:first-child
       margin-top: 0
@@ -66,10 +56,8 @@
         color: $link-color
 
     .events
-      padding-left: 8px
-
+      @extend .text-muted
       .event
-        .user-name
         .timestamp
           // override .tweet .timestamp
           margin-left: 6px
@@ -113,7 +101,7 @@ abbr.timeago
         color: $text-color
       .screen-name
         margin-left: 5px
-        @extend .muted
+        @extend .text-muted
 
     .text
       white-space: pre-wrap  // pre-wrap and pre-line seem to be good options
@@ -145,11 +133,11 @@ abbr.timeago
 //         color: $textColor
 //       .screen-name
 //         margin-left: 5px
-//         @extend .muted
+//         @extend .text-muted
 
 //     .timestamp
 //       margin-left: 8px
-//       @extend .muted
+//       @extend .text-muted
 //       font-size: 12px
 
 //     .text
@@ -170,7 +158,7 @@ abbr.timeago
 
 //     &.conversation-tweet
 //       .actions a
-//         @extend .muted
+//         @extend .text-muted
 
 //     &.reply
 //       position: relative
@@ -182,9 +170,12 @@ abbr.timeago
 
 // logo header
 .logo-header
+  margin-top: 0
+
   img
-    width: 42px
-    height: 42px
+    width: 46px
+    height: 46px
+    margin-left: 2px
     margin-right: 6px
 
 // navbar
@@ -209,11 +200,11 @@ img.navbar-logo
     .name
       font-weight: bold
     .screen-name
-      @extend .muted
+      @extend .text-muted
       margin: 0 5px
 
   .timestamp
-    @extend .muted
+    @extend .text-muted
 
   .text
     min-height: (2 * $line-height-base)

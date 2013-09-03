@@ -23,28 +23,6 @@ module DashHelper
     end
   end
 
-  # Highlights the currently active navigation item with a special class
-  def active_list_item_link_to(*args)
-    link = link_to(*args)
-    path_args = args.second or raise StandardError, 'Expected URL to be second argument.'
-    exact = args.third.try(:fetch, :exact, false)
-
-    match = if exact
-      current_path == url_for(path_args)
-    else
-      current_path.start_with?(url_for(path_args))
-    end
-
-    content_tag(:li, link, class: "#{ 'active' if match }")
-  end
-
-  def logo_header(text)
-    content_tag :h3, class: 'logo-header' do
-      concat image_tag 'tweetbox/logo.png'
-      concat text
-    end
-  end
-
   def stat(key, value)
     content_tag :span, class: 'stat' do
       concat content_tag(:span, key, class: 'key')
@@ -60,11 +38,5 @@ module DashHelper
     else
       true
     end
-  end
-
-  private
-
-  def current_path
-    request.fullpath
   end
 end

@@ -34,26 +34,10 @@ module ApplicationHelper
     content_tag(:li, link, class: "#{ 'active' if match }")
   end
 
-  def incoming_tweets_path?
-    current_path == incoming_project_tweets_path(@project)
-  end
-
-  def resolved_tweets_path?
-    current_path == resolved_project_tweets_path(@project)
-  end
-
-  def posted_tweets_path?
-    current_path == posted_project_tweets_path(@project)
-  end
-
-  def show_tweet?(tweet)
-    current_path == project_tweet_path(@project, tweet)
-  end
 
   def logo_header(text)
-    content_tag :h3, class: 'logo-header' do
-      concat image_tag 'tweetbox/logo.png'
-      concat text
+    content_tag :h2, class: 'logo-header' do
+      image_tag('tweetbox/logo.png') + text
     end
   end
 
@@ -98,8 +82,6 @@ module ApplicationHelper
     cache_key = items.to_param
     cache_key.length < 64 ?  cache_key : Digest::MD5.hexdigest(cache_key)
   end
-
-  private
 
   def current_path
     request.fullpath
