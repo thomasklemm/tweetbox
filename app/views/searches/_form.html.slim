@@ -1,15 +1,16 @@
 = form_for [@project, @search] do |f|
   = render 'shared/form_errors', target: @search
 
-  .field
-    = f.label :query
-    = f.text_field :query, placeholder: 'Your query'
+  .form-group
+    = f.label :query, 'Search query'
+    = f.text_field :query, placeholder: 'Your query', class: 'form-control'
 
-  .field
+  .form-group
     = f.label :twitter_account_id
-    = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :screen_name
+    = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :screen_name, {}, {class: 'form-control'}
 
   .actions
-    = f.submit class: 'btn btn-primary'
-    '  or
-    = link_to 'cancel', project_searches_path(@project)
+    => f.submit class: 'btn btn-primary'
+    ' or
+    = link_to 'nevermind', project_searches_path(@project)
+    ' .

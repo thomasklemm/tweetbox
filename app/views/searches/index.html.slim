@@ -1,47 +1,39 @@
 / searches
 - if @project.twitter_accounts.any?
-  h3 Searches
+  = logo_header 'Searches'
 
-  .space-half
   h4 Mention timelines
 
   p
-    ' When you
-    = link_to 'connect a Twitter account', project_twitter_accounts_path(@project)
-    '  to Tweetbox, we'll automatically
-    ' and recurringly fetch your @mentions and the tweets you send out.
-    ' In addition, you can create search queries (e.g. for your brand or product name).
-    ' The results of those searches will be streamed to your
-    = link_to 'Incoming Tweets', incoming_project_tweets_path(@project)
-    '  inbox, where you'll also find your @mentions.
+    ' When you connect a Twitter account to Tweetbox, we'll automatically and recurringly fetch your @mentions and the tweets you send out.
 
-  table class='table table-hover'
+  table class='table table-bordered twitter-accounts-table'
     thead
       tr
-        th Image
         th Twitter account
         th Timelines
+
     tbody
-      - @project.twitter_accounts.each do |twitter_account|
+      - @project.twitter_accounts.decorate.each do |twitter_account|
         tr
-          / avatar
-          td = image_tag(twitter_account.profile_image_url, class: 'img-polaroid')
+          / avatar and name
+          td.avatar-and-name = link_to twitter_account.user_intent_url do
+            = image_tag(twitter_account.profile_image_url, class: 'avatar')
+            .name = twitter_account.name
+            .screen-name = twitter_account.at_screen_name
 
-          / name
+          / actions
           td
-            div = twitter_account.name
-            div = twitter_account.at_screen_name
-
-          / timelines
-          td
-            ul
-              li Fetches mentions timeline.
-              li Fetches user timeline.
-
+            ul class="list-unstyled"
+              li.text-success = icon_tag(:ok, 'Fetches incoming @mentions once a minute.', true)
+              li.text-success = icon_tag(:ok, 'Fetches posted statuses twice a minute.', true)
 
 
   .space-half
   h4 Searches
+
+  p
+    ' In addition to the timeline queries shown above, you can create search queries (e.g. for your brand or product name). The results of those searches will be streamed to your incoming tweets' inbox, where you'll also find your @mentions.
 
   p
     ' Twitter allows you to perform complex searches. Here's a great
@@ -53,7 +45,7 @@
 
 
   - if @searches.any?
-    table class='table table-hover'
+    table class='table table-bordered'
       thead
         tr
           th Query
@@ -63,19 +55,20 @@
         - @searches.each do |search|
           tr
             / query
-            td = search.query
+            td: strong = search.query
 
             / twitter account
             td = search.twitter_account.at_screen_name
 
             / actions
             td
-              ul
-                li = link_to icon_tag(:twitter, 'Show latest results'), search.twitter_url
-                li = link_to 'Edit', edit_project_search_path(@project, search)
-                li = link_to 'Remove', project_search_path(@project, search), method: :delete, data: { confirm: "Are you sure you don't want to search for '#{ search.query }' any longer? Instead of removing a search, you can also edit it to change and improve it's query term." }
+              ul class="list-unstyled"
+                li = link_to icon_tag(:twitter, "Show latest results for '#{ search.query }' on Twitter", true), search.twitter_url
+                li = link_to icon_tag(:edit, 'Edit', true), edit_project_search_path(@project, search)
+                li = link_to project_search_path(@project, search), method: :delete, data: { confirm: "Are you sure you don't want to search for '#{ search.query }' any longer? Instead of removing a search, you can also edit it to change and improve it's query term." } do
+                  span.text-danger = icon_tag(:remove, 'Remove', true)
 
-  = link_to 'Create a new Search', new_project_search_path(@project), class: 'btn'
+  = link_to 'Create a new Search', new_project_search_path(@project), class: 'btn btn-default'
 
 / blank slate
 - if @project.twitter_accounts.empty?
