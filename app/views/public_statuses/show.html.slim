@@ -34,7 +34,7 @@ div.public-tweet
     = link_to icon_tag(:reply, 'Reply'), @status.reply_intent_url
     = link_to icon_tag(:twitter, 'On Twitter'), @status.twitter_url if @status.twitter_url
 
-    .right.muted
+    .right.text-muted
       .characters-count #{ @status.text_length } characters
 
 / who are we?

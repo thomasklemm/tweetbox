@@ -1,6 +1,7 @@
 / new status
 - if @project.twitter_accounts.any?
-  = logo_header 'Tweet'
+  - header_text = @status.reply? ? 'Reply' : 'Tweet'
+  = logo_header header_text
 
   = render 'form'
 

@@ -35,12 +35,12 @@ div ng-controller='StatusController'
       span.screen-name = "{{ selectedTwitterAccount.at_screen_name }}"
 
     / text
-    .field style='margin-top: 3px'
-      = f.text_area :text, autofocus: true, rows: 8, class: 'span6', ng_model: 'statusText'
+    .form-group style='margin-top: 3px'
+      = f.text_area :text, autofocus: true, rows: 8, class: 'form-control', ng_model: 'statusText'
 
     / twitter account
-    .field
-      select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts" style="#{ 'display: none' if @status.project_twitter_accounts.size == 1 }" class='span6'
+    .form-group style="#{ 'display: none' if @status.project_twitter_accounts.size == 1 && !Rails.env.test? }"
+      select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts" class='form-control'
 
       input type='text' ng-model='selectedTwitterAccount.id' id='status_twitter_account_id' name="status[twitter_account_id]" style="#{ 'display: none' unless Rails.env.test? }"
 
@@ -49,10 +49,10 @@ div ng-controller='StatusController'
     .field
       = f.hidden_field :in_reply_to_status_id
 
-    .actions
-      = f.submit "Preview", class: "btn btn-primary"
+    .form-group
+      = f.submit "Preview Tweet", class: "btn btn-primary"
 
-      span.character-counter.muted style='margin-left: 1rem' = "{{ characterCount() }} characters"
+      span.character-counter.text-muted style='margin-left: 1rem' = "{{ characterCount() }} characters"
 
 / Bootstrap angular app
 javascript:
