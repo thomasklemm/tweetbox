@@ -61,7 +61,7 @@ Tweetbox::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = "https://d1rpufzqj34hzz.cloudfront.net"
+  config.action_controller.asset_host = "http://d2h8ihezamtla0.cloudfront.net"
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets.
