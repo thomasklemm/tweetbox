@@ -79,13 +79,13 @@
 
 / blank slate
 - if @project.twitter_accounts.empty?
-  h3 Searches
+  = logo_header 'Searches'
+
   p
-    ' When you
-    = link_to 'connect a Twitter account', project_twitter_accounts_path(@project)
-    '  to Tweetbox, we'll automatically
-    ' and recurringly fetch your @mentions and the tweets you send out.
-    ' In addition, you can create search queries (e.g. for your brand or product name).
-    ' The results of those searches will be streamed to your
-    = link_to 'Incoming Tweets', incoming_project_tweets_path(@project)
-    '  inbox, where you'll also find your @mentions.
+    ' When you connect a Twitter account to Tweetbox, we'll automatically <br>
+    ' and recurringly fetch your @mentions and the tweets you send out. <br>
+    ' In addition, you can create search queries (e.g. for your brand or product name). <br>
+    ' The results of those searches will be streamed to your incoming tweets' inbox, <br>
+    ' where you'll also find your @mentions.
+
+  = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'

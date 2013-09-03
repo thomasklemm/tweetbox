@@ -1,59 +1,49 @@
 / twitter_accounts
 - if @twitter_accounts.any?
-  h3 Twitter accounts
+  = logo_header 'Twitter accounts'
 
   p
-    ' Once you
-    = link_to 'connect a Twitter account', new_project_twitter_account_path
-    '  we'll fetch <br />
-    ' your @mentions and
-    = link_to 'search results', project_searches_path(@project)
-    '  so you'll <br />
+    ' Once you connect a Twitter account, we'll fetch <br />
+    ' your @mentions and search results so you'll <br />
     ' be able to resolve them with the help of Tweetbox.
 
-  table class='table table-hover'
+  table class='table table-striped twitter-accounts-table table-bordered'
     thead
       tr
-        th Image
-        th Name
+        th Twitter account
         th Actions
 
     tbody
       - @twitter_accounts.each do |twitter_account|
         tr
-          / avatar
-          td = link_to twitter_account.user_intent_url do
-            = image_tag(twitter_account.profile_image_url, class: 'img-polaroid')
-
-          / name
-          td = link_to twitter_account.user_intent_url do
-            div = twitter_account.name
-            div = twitter_account.at_screen_name
+          / avatar and name
+          td.avatar-and-name = link_to twitter_account.user_intent_url do
+            = image_tag(twitter_account.profile_image_url, class: 'avatar')
+            .name = twitter_account.name
+            .screen-name = twitter_account.at_screen_name
 
           / actions
           td
-            ul
+            ul class="list-unstyled"
               li
                 - if @project.default_twitter_account == twitter_account
-                  = icon_tag(:ok, 'Default Twitter account')
+                  .text-success = icon_tag(:ok, 'Default Twitter account', true)
                 - else
-                  = link_to 'Promote to default Twitter account', set_default_project_twitter_account_path(@project, twitter_account), method: :put
+                  = link_to icon_tag('level-up', 'Make default Twitter account', true), set_default_project_twitter_account_path(@project, twitter_account), method: :put
 
-              li = link_to icon_tag(:remove, 'Remove Twitter account'), [@project, twitter_account], method: :delete, data: { confirm: "Are you sure you want to remove the #{ twitter_account.at_screen_name } Twitter account from Tweetbox." }
+              li = link_to [@project, twitter_account], method: :delete, data: { confirm: "Do you really want to remove #{ twitter_account.at_screen_name } from Tweetbox?" } do
+                span.text-danger = icon_tag(:remove, 'Remove Twitter account', true)
 
-  = link_to 'Connect a new Twitter account', new_project_twitter_account_path, class: 'btn'
+  = link_to 'Connect a new Twitter account', new_project_twitter_account_path, class: 'btn btn-default'
 
 / blank slate
 - if @twitter_accounts.empty?
-  h3 Twitter accounts
+  = logo_header 'Twitter accounts'
+
   p
-    ' Once you
-    = link_to 'connect a Twitter account', authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post
-    '  we'll fetch <br />
-    ' your @mentions and
-    = link_to 'search results', project_searches_path(@project)
-    '  so you'll <br />
+    ' Once you connect a Twitter account, we'll fetch <br />
+    ' your @mentions and search results so you'll <br />
     ' be able to resolve them with the help of Tweetbox.
 
   .space-half
-  = link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn'
+  = link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'

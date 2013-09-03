@@ -1,16 +1,14 @@
 / new twitter account
-h3 Connect a Twitter account
+= logo_header 'Connect a Twitter account'
+
 p
-  ' Once you
-  = link_to 'connect a Twitter account', authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post
-  '  we'll fetch <br />
-  ' your @mentions and
-  = link_to 'search results', project_searches_path(@project)
-  '  so you'll <br />
+  ' Once you connect a Twitter account, we'll fetch <br />
+  ' your @mentions and search results so you'll <br />
   ' be able to resolve them with the help of Tweetbox.
 
 .space-half
-= link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn'
+
+= link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'
 
 / h3 Connect a Twitter account
 

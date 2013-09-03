@@ -228,7 +228,7 @@ img.navbar-logo
   &:hover
     cursor: pointer
 
-// account users
+// users
 .users-table
   img.avatar
     display: inline
@@ -236,15 +236,21 @@ img.navbar-logo
     vertical-align: middle
     border-radius: 3px
 
-ul.inline-list
-  list-style: none
+// twitter accounts
+.twitter-accounts-table
+  .avatar-and-name
+    padding-left: 56px
 
-  li
-    display: inline
-    padding-right: 0.8rem
-    border-right: 1px solid #ddd
-    margin-right: 0.8rem
+    img.avatar
+      float: left
+      margin: 2px 0 0 -46px
 
-    &:last-child
-      border-right: none
+      width: 36px
+      height: 36px
 
+      vertical-align: middle
+      border-radius: 3px
+
+    .name
+      font-weight: bold
+    .screen-name

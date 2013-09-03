@@ -7,9 +7,12 @@
 
 - else
   / blank slate
-  h3 Tweet
+  = logo_header 'Tweet'
+
   p
-    ' Once you
-    = link_to 'connect a Twitter account', new_project_twitter_account_path(@project)
-    '  to Tweetbox, <br />
+    ' Once you connect a Twitter account to Tweetbox, <br />
     ' you'll be able to tweet and reply to incoming tweets from here.
+
+  .space-half
+
+  = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'

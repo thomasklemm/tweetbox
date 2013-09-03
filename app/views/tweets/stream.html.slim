@@ -7,15 +7,18 @@ div#tweets class="stream tweets"
 / pagination
 = paginate @tweets
 
-/ TODO: Blank slate?
-/ e.g. from resolved
-/ resolved tweets
-/ - if @tweets.any?
-/   = logo_header 'Resolved Tweets'
-/   .tweets-wrapper
-/     = render partial: 'tweets/tweet_in_conversation', collection: @tweets, as: :tweet
+- if @tweets.empty?
+  - if @project.twitter_accounts.any?
+    p
+      ' Your tweet stream should show up within a few minutes.
 
-/ / blank slate
-/ - if @tweets.empty?
-/   h3 Resolved Tweets
-/   p Once you resolve your first tweets <br /> in Tweetbox, they'll show up here.
+  - else
+    / blank slate
+    p
+      ' Once you connect a Twitter account, we'll fetch <br />
+      ' your @mentions and search results so you'll <br />
+      ' be able to resolve them with the help of Tweetbox.
+
+    .space-half
+
+    = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'

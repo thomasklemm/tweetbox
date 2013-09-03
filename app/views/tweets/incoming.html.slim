@@ -19,10 +19,12 @@
   - else
     / blank slate
     = logo_header 'Incoming Tweets'
+
     p
-      ' Once you
-      = link_to 'connect a Twitter account', project_twitter_accounts_path(@project)
-      '  to Tweetbox, <br />
-      ' your @mentions and
-      = link_to 'search results', project_searches_path(@project)
-      '  will start to show up here.
+      ' Once you connect a Twitter account, we'll fetch <br />
+      ' your @mentions and search results so you'll <br />
+      ' be able to resolve them with the help of Tweetbox.
+
+    .space-half
+
+    = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
