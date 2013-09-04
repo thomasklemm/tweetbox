@@ -61,14 +61,32 @@
         @extend .text-muted
       .text
 
-  .second-call-to-action
-    @extend .btn-danger
-    padding: 12px 18px
-    font:
-      size: 22px
-      weight: 700
-    line-height: 1.33
-    border-radius: 6px
+    .second-call-to-action
+      @extend .btn-danger
+      padding: 12px 18px
+      font:
+        size: 22px
+        weight: 700
+      line-height: 1.33
+      border-radius: 6px
+
+  &.pricing
+    .plans
+      .plan
+        .features
+          .primary
+            font-size: 16px
+          .secondary
+            @extend .text-muted
+        .price
+          width: 150px
+          font-size: 16px
+          vertical-align: middle
+          text-align: center
+
+    .call-to-action
+      @extend .btn-primary
+      @extend .btn-lg
 
   // Landing Layout
   .btn-spacing

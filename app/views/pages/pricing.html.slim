@@ -1,77 +1,41 @@
-div class="container pricing"
-  div class="row"
-    div class="span12 center"
-      h1 Honest prices, no surprises.
-      h2 Pay for a full year. <br>Or, pay as you go. Switch plans whenever you need to.
+/ pricing
+- plans = [%w(30 30 499 399), %w(20 20 249 199),  %w(15 15 149 119), %w(10 10 99 79), %w(5 5 49 39), %w(2 3 19 14)]
+.marketing.pricing
+  .text-center
+    .space-two
+    = image_tag 'tweetbox/logo_and_tagline.png', width: 250
+    h3 Send long replies for free for 14 days. It's on us.
+    p.lead.text-info You'll be up and running in one minute.
 
-  hr
+  .space-one
 
-  div class="row"
-    div class="span12"
-      table class="table table-striped"
-        thead
-          tr
-            th
-            th StartUp
-            th Business
-            th Agency
-            th Enterprise
-        tbody
-          tr
-            td class="first-col" Teammembers
-            td up to 2
-            td up to 5
-            td up to 10
-            td As many as you need
-          tr
-            td class="first-col" Projects
-            td 1
-            td up to 3
-            td up to 30
-            td As many as you need
-          tr
-            td class="first-col" Twitteraccounts
-            td 1
-            td up to 3
-            td up to 30
-            td As many as you need
-          tr
-            td class="first-col" Longtweet
-            td
-              i class="icon-ok"
-            td
-              i class="icon-ok"
-            td
-              i class="icon-ok"
-            td
-              i class="icon-ok"
+  div class='col-md-6 col-md-offset-3'
+    / pricing table
+    table.plans class="table table-bordered"
+      tbody
+        - plans.each do |plan|
+          tr.plan
+            td.features
+              .primary <strong>#{ plan[0] }</strong> team members
+              .secondary Includes #{ plan[1] } Twitter accounts
+            td.price
+              = link_to new_signup_path do
+                - if params[:currency] =~ /euro/
+                  ' #{ plan[3] }€<small>/month</small>
+                - else
+                  ' $#{ plan[2] }<small>/month</small>
 
-          tr
-            td class="first-col" 256bit-SSL-encryption
-            td
-              i class="icon-ok"
-            td
-              i class="icon-ok"
-            td
-              i class="icon-ok"
-            td
-              i class="icon-ok"
-          tr
-            td class="first-col" Support
-            td Email
-            td Email
-            td Email / Phone
-            td Email / Phone / CEO
-          tr
-            td
-            td class="price" 79.99$
-            td class="price" 99.99$
-            td class="price" 299.99$
-            td class="price" 499.99$
+    .text-center
+      .space-one
+      = link_to "Send long replies now", new_signup_path, class: 'btn call-to-action'
+      .space-two-and-a-half
 
-          tr
-            td
-            td = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-success'
-            td = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-success'
-            td = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-success'
-            td = link_to 'Start your free 30 day trial now', new_signup_path, class: 'btn btn-success'
+      p
+        = link_to "Get started with your 14-day free trial. It's on us.", new_signup_path
+        br
+
+        / currency switcher
+        - if params[:currency] =~ /euro/
+          = link_to 'Or see our plans and prices in US-$.', static_path(:pricing)
+        - else
+          = link_to 'Or see our plans and prices in Euros.', static_path(:pricing, currency: 'euros')
