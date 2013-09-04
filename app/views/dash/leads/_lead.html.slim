@@ -42,14 +42,15 @@
       / = stat('Friends:', lead.friends_count)
       = stat('Profile Lang:', lead.lang)
       / = stat('Time Zone:', lead.time_zone)
+      = stat('Score:', lead.score)
 
   / score
   .score
     ' Score:
-    span class="btn-group" data-toggle="buttons-radio"
+    span class="btn-group" data-toggle="buttons"
       - %w(high medium secondary).each do |score|
         - score_id = "lead_#{ lead.twitter_id }_score_#{ score }"
-        = f.label "#{ lead.twitter_id }_score_#{ score }", class: "btn #{'active btn-success' if lead.score.to_s == score.to_s}"
+        = f.label "#{ lead.twitter_id }_score_#{ score }", class: "btn #{ lead.score.to_s == score.to_s ? 'btn-success active' : 'btn-default' }"
           = f.radio_button :score, score, id: score_id
           = score_icon_tag(score)
 

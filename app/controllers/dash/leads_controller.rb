@@ -18,7 +18,7 @@ class Dash::LeadsController < Dash::ApplicationController
 
   # Score leads
   def score
-    @leads = Lead.having_score(score_params).
+    @leads = ::Lead.having_score(score_params).
       by_joined_twitter_at.page(params[:page])
 
     build_search
@@ -31,7 +31,9 @@ class Dash::LeadsController < Dash::ApplicationController
   end
 
   def update
+    logger.info "SCORE: #{lead_params.inspect}"
     @lead.update(lead_params)
+    logger.info "LEAD: #{@lead.inspect}"
   end
 
   # Updates the lead and fetches the most recent 100 tweets
@@ -53,7 +55,7 @@ class Dash::LeadsController < Dash::ApplicationController
   private
 
   def load_lead
-    @lead = Lead.find_or_fetch_by screen_name: (params[:id] || params[:screen_name])
+    @lead = ::Lead.find_or_fetch_by screen_name: (params[:id] || params[:screen_name])
     return redirect_to dash_root_path, alert: "@#{ params[:id] } could not be found on Twitter." unless @lead.present?
   end
 

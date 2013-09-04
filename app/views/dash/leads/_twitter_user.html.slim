@@ -35,4 +35,4 @@
       = stat('Client:', twitter_user.source) if twitter_user.source
 
     / remember
-    = link_to "Remember #{ twitter_user.at_screen_name }", remember_dash_leads_path(screen_name: twitter_user.screen_name), method: :post, remote: true, class: 'btn'
+    = link_to "Remember #{ twitter_user.at_screen_name }", remember_dash_leads_path(screen_name: twitter_user.screen_name), method: :post, remote: true, class: 'btn btn-default'

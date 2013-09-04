@@ -1,24 +1,23 @@
 / navigation bar
-.navbar class='navbar-fixed-top'
-  .navbar-inner
-    .container
-      = link_to 'Tweetbox Dash', dash_root_path, class: 'brand'
+.navbar class='navbar-default navbar-static-top'
+  .container
+    = link_to 'Tweetbox Dash', dash_root_path, class: 'navbar-brand'
 
-      ul.nav
-        = active_list_item [:dash, :activities] do
-          = link_to 'Activities', dash_activities_path
+    ul class="nav navbar-nav"
+      = active_list_item [:dash, :activities] do
+        = link_to 'Activities', dash_activities_path
 
-        = active_list_item [:dash, :leads] do
-          = link_to 'Leads', dash_leads_path
+      = active_list_item [:dash, :leads] do
+        = link_to 'Leads', dash_leads_path
 
-        = active_list_item [:dash, :users] do
-          = link_to 'Users', dash_users_path
+      = active_list_item [:dash, :users] do
+        = link_to 'Users', dash_users_path
 
-        = active_list_item [:dash, :accounts] do
-          = link_to 'Accounts', dash_accounts_path
+      = active_list_item [:dash, :accounts] do
+        = link_to 'Accounts', dash_accounts_path
 
-      ul.nav.pull-right
-        - leads_count = Lead.count
-        li = link_to "#{ leads_count } Leads", 'javascript:;'
+    ul class="nav navbar-nav navbar-right"
+      - leads_count = Lead.count
+      li = link_to "#{ leads_count } Leads", 'javascript:;'
 
-        li = link_to 'Open @user in Dash', "javascript:var screen_name = document.location.href.split('/')[3]; document.location='https://www.tweetbox.co/dash/leads/'+screen_name;".html_safe
+      li = link_to 'Open @user in Dash', "javascript:var screen_name = document.location.href.split('/')[3]; document.location='https://www.tweetbox.co/dash/leads/'+screen_name;".html_safe

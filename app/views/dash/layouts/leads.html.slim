@@ -1,22 +1,32 @@
 / A custom layout for all views rendered by the leads controller
 - content_for :content do
   .row
-    .span3
-      .well style="padding: 8px 0;"
+    .col-sm-3
+      / leads secondary navigation
+      ul class='nav nav-stacked'
+        = active_list_item search_dash_leads_path do
+          = link_to search_dash_leads_path do
+            = icon_tag(:search, 'Find Leads', true)
 
-        ul class='nav nav-list'
-          li.nav-header Leads
-          = active_list_item_link_to icon_tag(:search, 'Find Leads'), search_dash_leads_path
+        = active_list_item score_dash_leads_path(:unscored), true do
+          = link_to score_dash_leads_path(:unscored) do
+            = icon_tag(:magic, 'Leads To Score', true)
 
-          = active_list_item_link_to icon_tag(:magic, 'Leads To Score'), score_dash_leads_path(:unscored), exact: true
+        ul class='nav nav-stacked' style='padding-left: 20px'
+          = active_list_item score_dash_leads_path(:high), true do
+            = link_to score_dash_leads_path(:high) do
+             = icon_tag(:star, 'High Score', true)
 
-          ul class='nav nav-list'
-            = active_list_item_link_to icon_tag(:star, 'High Score'), score_dash_leads_path(:high), exact: true
-            = active_list_item_link_to icon_tag('star-half-full', 'Medium Score'), score_dash_leads_path(:medium), exact: true
-            = active_list_item_link_to icon_tag('star-empty', 'Secondary Accounts'), score_dash_leads_path(:secondary), exact: true
+          = active_list_item score_dash_leads_path(:medium), true do
+            = link_to score_dash_leads_path(:medium) do
+              = icon_tag('star-half-full', 'Medium Score', true)
 
-    .span9
-      = render 'flashes'
-      = yield
+          = active_list_item score_dash_leads_path(:secondary), true do
+            = link_to score_dash_leads_path(:secondary) do
+              = icon_tag('star-empty', 'Secondary accounts', true)
+
+    .col-sm-9
+        = render 'flashes'
+        = yield
 
 = render template: 'dash/layouts/application'

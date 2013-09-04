@@ -3,12 +3,7 @@
 = logo_header score_title(params[:score])
 
 / search form
-= form_tag({ controller: 'leads', action: 'search' }, method: :get, class: 'form-search') do
-  fieldset
-    .well
-      = text_field_tag :query, @search.query, placeholder: 'Search', class: 'input-large search-query', autofocus: true, autocomplete: 'off'
-      | &nbsp;
-      = submit_tag 'Search', class: 'btn', name: nil
+= render 'search_form'
 
 / page entries
 - page_entries = page_entries_info @leads, entry_name: score_title(params[:score]).try(:downcase)

@@ -38,10 +38,16 @@
 # Turbolinks
 
 # Submit form when a radio button is selected
+delay = (ms, func) -> setTimeout func, ms
+
 jQuery.fn.submitOnCheck = ->
   # @find('input[type=submit]').remove()
-  @find('input[type=radio]').hide()
-  @find('input[type=radio]').click ->
+  # @find('input[type=radio]').hide()
+  # Customized for Bootstrap 3 button groups
+  @find('.btn-group label').click ->
+    # Set checked value
+    $(this).find('input[type=radio]').attr('checked', 'checked')
+    # Submit form
     $(this).parents('form').submit()
   # Return this for chaining
   this

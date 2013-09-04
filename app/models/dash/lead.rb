@@ -13,8 +13,8 @@ class Lead < ActiveRecord::Base
 
   # Score
   enumerize :score,
-    in: [:high, :medium, :secondary, :unscored],
-    default: :unscored,
+    in: ['high', 'medium', 'secondary', 'unscored'],
+    default: 'unscored',
     predicates: { prefix: true },
     scope: :having_score
 
