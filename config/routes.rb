@@ -124,7 +124,7 @@ Tweetbox::Application.routes.draw do
   get ':id' => 'pages#show', as: :static
 
   # Root
-  root 'pages#show', id: 'landing'
+  root 'pages#show', id: 'long_reply'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
