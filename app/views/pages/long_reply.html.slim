@@ -6,13 +6,13 @@
       .brand
         = image_tag "tweetbox/logo.png", size: "160x160", class: 'brand-logo'
         .brand-name Tweetbox
-        .brand-tagline Twitter for Business
+        .brand-tagline The Twitter Client for Business
         = link_to 'Send long replies now', new_signup_path, class: 'btn call-to-action'
 
   .space-three
   .row.text-center
-    h1 Got Customers asking on Twitter?
-    h3
+    h1 style='font-weight: 500' Got Customers asking on Twitter?
+    h3.text-info style='font-weight: 300; line-height: 1.45'
       |
         When you can answer your customers <br>
         in detail with more than 140 characters, <br>
@@ -55,15 +55,18 @@
 
           .text-info: b = '(709 characters)'
 
+  .space-one
   .row.text-center
-    h2 Make your customers happy.
-    h3
-      ' Start responding with more than 140 characters today <br>
-      ' and feel your company's reputation grow instantly.
-    .space-one
+    h1 style='font-weight: 500' Make your Customers on Twitter happy.
+    h3.text-info style='font-weight: 300; line-height: 1.45'
+      ' Start responding in detail with more <br>
+      ' than 140 characters today and see and feel <br>
+      ' your company's reputation grow instantly.
+    .space-one-and-a-half
     = link_to "Send long replies now", new_signup_path, class: 'btn second-call-to-action'
+    .space-three
     .space-two
-    p
-      ' You're proud of your customer service? You should be! <br> Send long replies with Tweetbox in one minute. <br> It's a quick signup, and
-      = link_to 'we give you 30 days  <br> to try our service for free'.html_safe, new_signup_path
-      ' , no strings attached.
+    / p
+    /   ' You're proud of your customer service? You should be! <br> Send long replies with Tweetbox in one minute. <br> It's a quick signup, and
+    /   = link_to 'we give you 30 days  <br> to try our service for free'.html_safe, new_signup_path
+    /   ' , no strings attached.
