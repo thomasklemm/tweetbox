@@ -3,7 +3,7 @@
 div id='root'
   = render 'navigation'
 
-  div class='container' id='content'
+  div class='container'
     / render flashes unless they are embedded in a special layout
     - unless content_for?(:content)
       = render 'flashes'

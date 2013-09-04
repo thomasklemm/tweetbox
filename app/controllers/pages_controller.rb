@@ -1,5 +1,5 @@
 class PagesController < HighVoltage::PagesController
-  layout :layout_for_page
+  # layout :layout_for_page
 
   # Redirect signed in users to app when visiting root_path
   def show
@@ -12,16 +12,16 @@ class PagesController < HighVoltage::PagesController
 
   private
 
-  def layout_for_page
-    case params[:id]
-    # regular expression, you can catch multiple pages
-    # with /landing|pricing|features/
-    when /landing/
-      'marketing'
-    else
-      'application'
-    end
-  end
+  # def layout_for_page
+  #   case params[:id]
+  #   # regular expression, you can catch multiple pages
+  #   # with /landing|pricing|features/
+  #   when /landing/
+  #     'marketing'
+  #   else
+  #     'application'
+  #   end
+  # end
 end
 
 

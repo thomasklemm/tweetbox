@@ -16,7 +16,6 @@
 # Libraries
 # jQuery via CDN
 #= require jquery_ujs
-#= require jquery.turbolinks
 
 # Bootstrap
 #= require twitter/bootstrap/transition
@@ -37,7 +36,6 @@
 #= require tweets
 
 # Turbolinks
-#= require turbolinks
 
 # Submit form when a radio button is selected
 jQuery.fn.submitOnCheck = ->

@@ -1,0 +1,69 @@
+/ long_reply
+.marketing.long-reply
+  .row
+    .business-woman-background
+
+      .brand
+        = image_tag "tweetbox/logo.png", size: "160x160", class: 'brand-logo'
+        .brand-name Tweetbox
+        .brand-tagline Twitter for Business
+        = link_to 'Send long replies now', new_signup_path, class: 'btn call-to-action'
+
+  .space-three
+  .row.text-center
+    h1 Got Customers asking on Twitter?
+    h3
+      |
+        When you can answer your customers <br>
+        in detail with more than 140 characters, <br>
+        your company's reputation skyrockets.
+
+  .space-three
+  .row
+    .well class="col-md-8 col-md-offset-2"
+
+      .question
+        = image_tag "tw_logo_thumbs_80x80.gif", class: "avatar img-rounded"
+        span.name John Doe
+        span.screen-name @johndoe
+        .text
+          span @spacesuits Does your Space Suit protect against Radiation in the Outer Orbit?
+          .text-info = '(78 characters)'
+
+      hr
+
+      .reply
+        = image_tag "tw_logo_space_80x80.gif", class: "avatar img-rounded"
+        span.name Space Suits Inc.
+        span.screen-name @spacesuits
+        .text
+          markdown:
+            @johndoe Hi John,
+
+            thanks for asking. Our Space Suit will be a good match for your trip to the outer orbit. We protect you from Radiation as much as p</strong>ossible. Here‘s why:
+
+              * Our Space Suit is made from a custom high tech fabric specially developed in our labs. Its thick fibers include threads of lead and aluminium, which helps you get out of harms way.
+              * We specially designed the outer coating to be resistant to heat, space trash, and especially gamma radiation, which is kinda awesome.
+
+            Can we help with anything else? Feel free to reach out here on Twitter <br>
+            or contact sales@spacesuitsinc.com for a custom quote.
+
+            Thanks for asking, have a great day!
+
+            Sincerely, <br>
+            Martha from Space Suits Inc.
+
+          .text-info: b = '(709 characters)'
+
+  .row.text-center
+    h2 Make your customers happy.
+    h3
+      ' Start responding with more than 140 characters today <br>
+      ' and feel your company's reputation grow instantly.
+    .space-one
+    = link_to "Send long replies now", new_signup_path, class: 'btn second-call-to-action'
+    .space-two
+    p
+      ' You're proud of your customer service? You should be! <br> Send long replies with Tweetbox in one minute. <br> It's a quick signup, and
+      = link_to 'we give you 30 days  <br> to try our service for free'.html_safe, new_signup_path
+      ' , no strings attached.
