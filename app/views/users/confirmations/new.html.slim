@@ -1,14 +1,16 @@
 / confirmation instructions
-= logo_header 'Resend confirmation instructions'
+.space-three
+div class="col-md-6 col-md-offset-3"
+  = logo_header 'Resend confirmation instructions'
 
-= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f|
-  = devise_error_messages!
+  = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f|
+    = devise_error_messages!
 
-  .form-group
-    = f.label :email, 'Your email'
-    = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Your email'
+    .form-group
+      = f.label :email, 'Your email'
+      = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Your email'
 
-  .form-group
-    = f.submit "Resend confirmation instructions", class: 'btn btn-default'
+    .form-group
+      = f.submit "Resend confirmation instructions", class: 'btn btn-default'
 
-= render "users/shared/links"
+  = render "users/shared/links"

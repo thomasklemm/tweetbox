@@ -1,60 +1,52 @@
-div class="container"
-  div class="row"
-    div class="span12 center pricing"
-      h1 Start your free 30 day trial now.
-      h2 No credit card information needed.
+/ signup
+.text-center
+  .space-three
+  = image_tag 'tweetbox/logo_and_tagline.png', width: 250
+  h3 Send long replies for free for 14 days. It's on us.
+  p.lead.text-info You'll be up and running in one minute.
 
-  hr
+  .space-one
 
-  div class="row"
-    div class="span4 offset1"
-      div class="pricing_table"
-        div class="pricing header center" Reasons to use Tweetbox
-        ul class="icons-ul"
-          li
-            i class="icon-li icon-ok"
-            | 256bit SSL secured account
-          li
-            i class="icon-li icon-ok"
-            | Start working in teams
-          li
-            i class="icon-li icon-ok"
-            | Answer with more than just 140 characters
-          li
-            i class="icon-li icon-ok"
-            | Manage projects
-          li
-            i class="icon-li icon-ok"
-            | Never loose sight of important tweets
-          li
-            i class="icon-li icon-circle-arrow-right"
-            | <strong>Satisfy your customers' needs!</strong>
+  div class='col-md-6 col-md-offset-3'
+    / signup form
+    = form_for @signup do |f|
+      = render 'shared/form_errors', target: @signup
 
+      .form-group
+        / = f.label :name, 'Your full name'
+        = f.text_field :name, class: 'form-control', placeholder: 'Your full name', autofocus: true, autocomplete: 'off'
 
-    div class="span1"
-    div class="span4"
-      div
-        h3 Sign up
-        = form_for @signup do |f|
-          = render 'shared/form_errors', target: @signup
+      .form-group
+        / = f.label :company_name, 'Company or organization'
+        = f.text_field :company_name, class: 'form-control', placeholder: 'Company or organization', autocomplete: 'off'
 
-          .field
-            = f.label :name, 'Your name'
-            = f.text_field :name, autofocus: true
+      .form-group
+        / = f.label :email, 'Your email'
+        = f.email_field :email, class: 'form-control', placeholder: 'Email'
 
-          .field
-            = f.label :company_name, 'Company or organization'
-            = f.text_field :company_name
+      .form-group
+        / = f.label :password, 'Choose a password'
+        = f.password_field :password, class: 'form-control', placeholder: 'Password'
 
-          .field
-            = f.label :email, 'Your email'
-            = f.text_field :email
+      .form-group
+        = f.submit 'Sign up free & Send long replies now', class: 'btn btn-primary btn-lg'
+        .space-one-and-a-half
+        / p.text-info Send long replies less than a minute.
 
-          .field
-            = f.label :password, 'Pick a password'
-            = f.password_field :password, autocomplete: 'off'
+      p
+        ' By clicking and starting your free 14-day trial <br>
+        ' you agree to the
+        = link_to 'Terms of Service'
+        ' , <br>
+        => link_to 'Privacy'
+        ' and
+        => link_to 'Refund'
+        ' policies.
 
-          .actions
-            = f.submit 'Start to use Tweetbox', class: 'btn btn-large btn-success'
-
-        h5 Upgrade, Change or Cancel Anytime!
+/ Reasons:
+/ | 256bit SSL secured account
+/ | Start working in teams
+/ | Answer with more than just 140 characters
+/ | Manage projects
+/ | Never loose sight of important tweets
+/ | <strong>Satisfy your customers' needs!</strong>

@@ -1,21 +1,23 @@
 / new session / login
-= logo_header 'Login'
+.space-three
+div class="col-md-6 col-md-offset-3"
+  = logo_header 'Login'
 
-= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
 
-  .form-group
-    = f.label :email
-    = f.email_field :email, autofocus: true, class: 'form-control', placeholder: "Your email"
+    .form-group
+      = f.label :email
+      = f.email_field :email, autofocus: true, class: 'form-control', placeholder: "Your email"
 
-  .form-group
-    = f.label :password
-    = f.password_field :password, class: 'form-control', placeholder: "Your password"
+    .form-group
+      = f.label :password
+      = f.password_field :password, class: 'form-control', placeholder: "Your password"
 
-  - if devise_mapping.rememberable?
-    .checkbox
-      = f.label :remember_me
-      = f.check_box :remember_me, checked: true
+    - if devise_mapping.rememberable?
+      .checkbox
+        = f.label :remember_me
+        = f.check_box :remember_me, checked: true
 
-  = f.submit "Login", class: 'btn btn-default'
+    = f.submit "Login", class: 'btn btn-default'
 
-= render "users/shared/links"
+  = render "users/shared/links"

@@ -12,9 +12,9 @@ div class='navbar navbar-default navbar-static-top'
     - unless user_signed_in?
       ul class='nav navbar-nav'
         li = link_to tweetbox_navbar_image_tag, root_path
-        = active_link_to 'Features', static_path(:features), exact: true
-        = active_link_to 'Pricing', static_path(:pricing), exact: true
-        = active_link_to 'Signup', new_signup_path, exact: true
+        / = active_link_to 'Features', static_path(:features), exact: true
+        = active_link_to 'Plans and Prices', static_path(:pricing), exact: true
+        = active_link_to 'Free 14-day Trial', new_signup_path, exact: true
 
       / login
       ul class='nav navbar-nav navbar-right'
