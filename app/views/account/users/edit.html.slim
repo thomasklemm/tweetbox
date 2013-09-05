@@ -1,3 +1,8 @@
-h3 = @user.name
+/ edit account user
+= logo_header 'Edit permissions'
+
+h3
+  => @user.name
+  small = "(#{ @user.email })"
 
 = render 'form'

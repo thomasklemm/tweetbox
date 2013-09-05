@@ -1,29 +1,42 @@
 / account users
-= logo_header 'Team'
+= logo_header 'Your team'
 
-table class='table table-hover users-table'
+markdown:
+  **Admins** can...
+
+    - access all existing and future projects (i.e. inboxes).
+    - invite people to this Tweetbox account.
+    - grant people access to work on any project.
+    - make other people admins.
+
+  <div class="space-half"></div>
+  Your team's **avatars** can be managed on [Gravatar](http://gravatar.com/), where you can connect an email with a globally recognized avatar.
+
+table class='table users-table'
   thead
     tr
-      th
-      th Name
-      th Email
-      th Account admin?
+      th Avatar
+      th Name and email
       th
 
   tbody
     - @users.each do |user|
       tr
-        td = image_tag(user.gravatar_image_url(32), class: 'avatar')
-        td = user.name
-        td = user.email
-        td = icon_tag(:ok, "Account admin") if user.admin_of?(@account)
+        td = image_tag(user.gravatar_image_url(36), class: 'avatar', style: 'margin-top: 2px')
         td
-          ul
-            li = link_to 'Manage project permissions', edit_account_user_path(user)
-            - unless user.admin_of?(@account)
-              li = link_to 'Grant admin superpowers', upgrade_to_admin_account_user_path(user), method: :put, class: 'btn', data: { confirm: "Do you really want to grant #{ user.name } account admin priviledges?" }
+          b = user.name
+          br
+          = user.email
+        td
+          ul class="list-unstyled"
+            / Admin
+            - if user.admin_of?(@account)
+              li.text-success = icon_tag(:ok, 'Is an account admin', true)
+            - else
+              li = link_to icon_tag('level-up', 'Grant admin superpowers', true), upgrade_to_admin_account_user_path(user), method: :put, data: { confirm: "Do you really want to grant #{ user.name } account admin priviledges?" }, class: 'text-warning'
+            li = link_to icon_tag(:edit, 'Manage project permissions', true), edit_account_user_path(user)
 
 / actions
-= link_to 'Invite a colleage', new_account_invitation_path, class: 'btn btn-primary'
+= link_to 'Invite a team member', new_account_invitation_path, class: 'btn btn-default'
 '  or
-= link_to 'show all invitations', account_invitations_path
+= link_to 'show open invitations', account_invitations_path
