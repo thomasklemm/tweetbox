@@ -4,7 +4,7 @@ class PagesController < HighVoltage::PagesController
   # Redirect signed in users to app when visiting root_path
   def show
     if user_signed_in? && current_path == root_path
-      return redirect_to main_user_project_path
+      return redirect_to main_user_project_path if current_user.projects.any?
     end
 
     super

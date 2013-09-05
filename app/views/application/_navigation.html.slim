@@ -13,13 +13,16 @@ div class='navbar navbar-default navbar-static-top'
       ul class='nav navbar-nav'
         li = link_to tweetbox_navbar_image_tag, root_path
         / = active_link_to 'Features', static_path(:features), exact: true
-        = active_link_to 'Plans and Prices', static_path(:pricing), exact: true
-        = active_link_to 'Free 14-day Trial', new_signup_path, exact: true
+        = active_list_item static_path(:pricing), true do
+          = link_to 'Plans and prices', static_path(:pricing)
+
+        = active_list_item new_signup_path, true do
+          = link_to '14-day free trial', new_signup_path
 
       / login
       ul class='nav navbar-nav navbar-right'
-        = active_link_to 'Login', login_path, exact: true
-
+        = active_list_item login_path, true do
+          = link_to 'Login', login_path
 
     / user signed in
     - if user_signed_in?
@@ -29,7 +32,8 @@ div class='navbar navbar-default navbar-static-top'
 
         / project links
         - current_user.projects.by_date.each do |project|
-          = active_link_to project.name, project
+          = active_list_item project do
+            = link_to project.name, project
 
       / right side
       ul class='nav navbar-nav navbar-right'
@@ -45,7 +49,9 @@ div class='navbar navbar-default navbar-static-top'
           ul class='dropdown-menu'
             / account link
             - if policy(current_user.account).manage?
-              = active_link_to icon_tag(['credit-card', 'fixed-width'], 'Account'), account_path
+              = active_list_item account_path do
+                = link_to account_path do
+                  = icon_tag(['credit-card', 'fixed-width'], 'Account')
               li class="divider"
 
             / logout

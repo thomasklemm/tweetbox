@@ -3,20 +3,27 @@
   div.row
 
     / account navigation
-    div.span2 id='account-navbar'
-      ul class='nav nav-list'
-        li.nav-header Account
-        = active_link_to icon_tag(:inbox, 'Projects'), account_projects_path
-        = active_link_to icon_tag(:group, 'Team'), account_users_path
-        = active_link_to icon_tag(:ticket, 'Invitations'), account_invitations_path
+    div class="col-sm-3"
+      ul class='nav nav-pills nav-stacked'
+        = active_list_item account_projects_path do
+          = link_to account_projects_path do
+            = icon_tag(:inbox, 'Projects', true)
 
-        li.divider
+        = active_list_item account_users_path do
+          = link_to account_users_path do
+            = icon_tag(:group, 'Team', true)
 
-        = active_link_to icon_tag(:edit, 'Manage account'), edit_account_path
+        = active_list_item account_invitations_path do
+          = link_to account_invitations_path do
+            = icon_tag(:ticket, 'Invitations', true)
+
+        = active_list_item edit_account_path do
+          = link_to edit_account_path do
+            = icon_tag(:edit, 'Manage Account', true)
 
 
     / main content
-    div.span10
+    div class="col-sm-9"
       / any flash messages
       = render 'flashes'
 

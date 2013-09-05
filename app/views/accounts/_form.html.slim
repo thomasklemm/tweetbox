@@ -1,9 +1,9 @@
 = form_for @account, url: account_path do |f|
   = render 'shared/form_errors', target: @account
 
-  .field
-    = f.label :name
-    = f.text_field :name
+  .form-group
+    = f.label :name, 'Account name'
+    = f.text_field :name, class: 'form-control'
 
-  .actions
-    = f.submit class: 'btn btn-primary'
+  .form-group
+    = f.submit class: 'btn btn-default'

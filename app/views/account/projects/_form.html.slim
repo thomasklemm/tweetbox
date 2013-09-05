@@ -1,25 +1,38 @@
 = form_for [:account, @project] do |f|
   = render 'shared/form_errors', target: @project
 
-  .field
+  .form-group
     = f.label :name, 'Project name'
-    = f.text_field :name
+    = f.text_field :name, class: 'form-control', autofocus: @project.new_record?
 
-  .space-one
-
-  .field
+  .form-group
     = f.label :user_ids, 'Team members'
 
-    / collection check boxes
-    = hidden_field_tag "project[user_ids][]", nil
+    p.text-info
+      ' Admins have access to all projects and can invite people to work on projects.
 
-    - @account.users.each do |user|
-      label class='checkbox'
-        = check_box_tag "project[user_ids][]", user.id, @project.user_ids.include?(user.id) || (@project.new_record? && user.admin_of?(@account))
-        = user.name
-        = ' (account admin)' if user.admin_of?(@account)
+    = f.collection_check_boxes :user_ids, @account.users, :id, :name do |b|
+      - user = b.object
+      - checked_on_new_project = @project.new_record? && user.admin_of?(@account) ? {checked: 'checked'} : {}
 
-  .space-one
+      div.checkbox
+        = b.label do
+          = b.check_box(checked_on_new_project)
+          => user.name
+          - if user.admin_of?(@account)
+            em.text-info = '(Account admin)'
 
-  .actions
+  .form-group
     = f.submit class: 'btn btn-primary'
+
+
+  /   = f.label :user_ids, 'Team members'
+
+  /   / collection check boxes
+  /   = hidden_field_tag "project[user_ids][]", nil
+
+  /   - @account.users.each do |user|
+  /     label class='checkbox'
+  /       = check_box_tag "project[user_ids][]", user.id, @project.user_ids.include?(user.id) || (@project.new_record? && user.admin_of?(@account))
+  /       = user.name
+  /

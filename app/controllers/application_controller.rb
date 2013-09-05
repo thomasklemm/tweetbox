@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :main_user_project_path
   def main_user_project_path
-    project_path(user_projects.by_date.first)
+    user_projects.any? ? project_path(user_projects.by_date.first) : root_path
   end
 
   # Activites
