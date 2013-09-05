@@ -24,15 +24,3 @@
 
   .form-group
     = f.submit class: 'btn btn-primary'
-
-
-  /   = f.label :user_ids, 'Team members'
-
-  /   / collection check boxes
-  /   = hidden_field_tag "project[user_ids][]", nil
-
-  /   - @account.users.each do |user|
-  /     label class='checkbox'
-  /       = check_box_tag "project[user_ids][]", user.id, @project.user_ids.include?(user.id) || (@project.new_record? && user.admin_of?(@account))
-  /       = user.name
-  /

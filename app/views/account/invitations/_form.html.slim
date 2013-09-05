@@ -1,34 +1,30 @@
 = form_for [:account, @invitation] do |f|
   = render 'shared/form_errors', target: @invitation
 
-  .field
-    = f.label :name
-    = f.text_field :name, autofocus: true
+  .form-group
+    = f.label :name, "Your co-worker's full name"
+    = f.text_field :name, autofocus: @invitation.new_record?, class: 'form-control', placeholder: 'Full name'
 
-  .field
+  .form-group
     = f.label :email
-    = f.email_field :email
+    = f.email_field :email, class: 'form-control', placeholder: 'Email'
 
   .space-one
 
-  h5 Project permissions
-  p
-    | Grant access for any projects your colleage will
-    br
-    | be able to help you on. Don't worry, you can
-    br
-    | always change permissions for any project later.
+  .form-group
+    h5 Project permissions
+    p
+      |
+        Grant access for any projects your colleage will be able to help you on. <br>
+        Don't worry, you can always change permissions for any project later.
 
-  / collection check boxes
-  .field
-    / ensure that project_ids are always sent
-    = hidden_field_tag "invitation[project_ids][]", nil
 
-    - @account.projects.each do |project|
-      label class='checkbox'
-        = check_box_tag "invitation[project_ids][]", project.id, (@invitation.project_ids.include?(project.id) || @invitation.new_record?)
-        b = project.name
+    = f.collection_check_boxes :project_ids, @account.projects, :id, :name do |b|
+      - checked_on_new_invitation = @invitation.new_record? ? {checked: 'checked'} : {}
+      div.checkbox
+        = b.label do
+          = b.check_box(checked_on_new_invitation)
+          = b.text
 
-  .space-two
-
-  = f.submit class: 'btn btn-primary'
+  .form-group
+    = f.submit 'Create and email invitation', class: 'btn btn-primary'

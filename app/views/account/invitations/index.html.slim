@@ -1,46 +1,49 @@
 / account invitations
 = logo_header 'Invitations'
 
-p Invite your colleages to your Tweetbox account.
+p Invite team members to this Tweetbox account. You can assign people to work on different projects, and grant them admin superpowers so they can invite people and assign them to work on projects.
 
 - if @invitations.present?
   table class='table table-hover invitations-table'
     thead
       tr
-        th Name
-        th Email
-        th Status
+        th Name and email
+        th Invitation status
         th
     tbody
       - @invitations.each do |invitation|
         tr
-          td = invitation.name
-          td = invitation.email
-          / active?
+          / name and email
+          td style='padding-left: 46px'
+            = image_tag(invitation.gravatar_image_url(36), style: 'float: left; border-radius: 3px; margin-top: 2px; margin-left: -46px')
+            div: b = invitation.name
+            = invitation.email
+
+          / status
           td
             - if invitation.used?
-              ' Used
+              .text-info Accepted & Used.
             - elsif invitation.expired?
-              ' Expired
+              .text-danger Expired.
             - elsif invitation.active?
-              ' Active
+              .text-success Active.
 
           / actions
           td
-            ul
+            ul class="list-unstyled"
               - if invitation.active?
-                li = invitation.copy_registration_url('Copy Url')
+                li = invitation.copy_registration_url('Copy Registration URL')
                 li = link_to icon_tag('envelope-alt', 'Send email'), deliver_mail_account_invitation_path(invitation), method: :post, data: { confirm: 'Do you want to send out the invitation email once again?' }
                 li = link_to icon_tag(:edit, 'Edit project permissions'), edit_account_invitation_path(invitation)
-                li = link_to icon_tag(:remove, 'Deactivate'), deactivate_account_invitation_path(invitation), method: :put, data: { confirm: 'Are you sure you want to deactivate this invitation? You can also edit it to point to be sent to another email, copy the registration link, or assign different project permissions.' }
+                li = link_to icon_tag(:remove, 'Deactivate'), deactivate_account_invitation_path(invitation), method: :put, data: { confirm: 'Are you sure you want to deactivate this invitation? You can also edit it to point to be sent to another email, copy the registration link, or assign different project permissions.' }, class: 'text-danger'
 
               - if invitation.expired?
-                = link_to icon_tag(:plus, 'Extend expiration date and reactivate'), reactivate_account_invitation_path(invitation), method: :put
+                = link_to icon_tag(:plus, 'Reactivate this unused invitation'), reactivate_account_invitation_path(invitation), method: :put
 
               - if invitation.used?
-                = link_to icon_tag('eye-open', 'Show invitee'), edit_account_user_path(invitation.invitee)
+                = link_to icon_tag('rocket', 'Show user', true), edit_account_user_path(invitation.invitee)
 
-= link_to 'Invite a colleague', new_account_invitation_path, class: 'btn btn-primary'
+= link_to 'Invite a team member', new_account_invitation_path, class: 'btn btn-default'
 '  or
-= link_to 'show team members', account_users_path
+= link_to 'show your team', account_users_path
 

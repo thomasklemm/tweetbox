@@ -37,12 +37,6 @@
           = link_to [@project, :searches] do
             = icon_tag :twitter, 'Twitter Searches', true
 
-        / manage project
-        - if policy(@project).manage?
-          li = link_to [:edit, :account, @project] do
-           = icon_tag :group, 'Project Team', true
-
-
     / main content
     div class="col-sm-9"
       / any flash messages

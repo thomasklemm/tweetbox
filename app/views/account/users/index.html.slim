@@ -31,7 +31,7 @@ table class='table users-table'
           ul class="list-unstyled"
             / Admin
             - if user.admin_of?(@account)
-              li.text-success = icon_tag(:ok, 'Is an account admin', true)
+              li.text-success = icon_tag(:rocket, 'Is an Account Admin', true)
             - else
               li = link_to icon_tag('level-up', 'Grant admin superpowers', true), upgrade_to_admin_account_user_path(user), method: :put, data: { confirm: "Do you really want to grant #{ user.name } account admin priviledges?" }, class: 'text-warning'
             li = link_to icon_tag(:edit, 'Manage project permissions', true), edit_account_user_path(user)
