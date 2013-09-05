@@ -20,6 +20,10 @@ class StatusDecorator < Draper::Decorator
     "https://twitter.com/#{ twitter_account.screen_name }/status/#{ twitter_id }" if published?
   end
 
+  def posted_at
+    tweet.try(:created_at) || model.created_at
+  end
+
   ##
   # Initial reply to user text
 

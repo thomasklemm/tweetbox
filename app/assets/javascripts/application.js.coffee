@@ -37,9 +37,6 @@
 
 # Turbolinks
 
-# Submit form when a radio button is selected
-delay = (ms, func) -> setTimeout func, ms
-
 jQuery.fn.submitOnCheck = ->
   # @find('input[type=submit]').remove()
   # @find('input[type=radio]').hide()
@@ -120,5 +117,4 @@ jQuery ->
   ##
   # Alerts / Flash messages
   $('.alert').click ->
-    $(this).remove()
-
+    $(this).slideUp(200)

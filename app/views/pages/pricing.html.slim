@@ -36,6 +36,6 @@
 
         / currency switcher
         - if params[:currency] =~ /euro/
-          = link_to 'Or see our plans and prices in US-$.', static_path(:pricing)
+          = link_to 'See our prices in US-Dollars.', static_path(:pricing)
         - else
-          = link_to 'Or see our plans and prices in Euros.', static_path(:pricing, currency: 'euros')
+          = link_to 'See our prices in Euros.', static_path(:pricing, currency: 'euros')

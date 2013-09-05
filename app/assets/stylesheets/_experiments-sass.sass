@@ -195,7 +195,7 @@ img.navbar-logo
     img.avatar
       float: left
       margin: 4px 0 0 -58px
-      border-radius: 2px
+      border-radius: 100px
       width: 48px
       height: 48px
 
@@ -203,7 +203,7 @@ img.navbar-logo
       font-weight: bold
     .screen-name
       @extend .text-muted
-      margin: 0 5px
+      margin: 0 8px
 
   .timestamp
     @extend .text-muted
@@ -211,9 +211,9 @@ img.navbar-logo
   .text
     min-height: (2 * $line-height-base)
 
-  .actions
+  .public-actions
     padding-top: 0.5rem
-    a:not(:first-of-type), .dropdown-link
+    span:not(:first-of-type)
       margin-left: 8px
       border-left: 1px solid #ccc
       padding-left: 8px

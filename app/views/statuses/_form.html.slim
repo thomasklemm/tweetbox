@@ -3,21 +3,25 @@
 
 / previous tweet
 - if previous_tweet = @status.previous_tweet
-  - previous_tweet &&= previous_tweet.decorate
-  - author = previous_tweet.author
+  / - previous_tweet &&= previous_tweet.decorate
+  / - author = previous_tweet.author
 
-  div.public-tweet
-    span.author-profile
-      = image_tag(author.profile_image_url, class: 'avatar')
-      span.name = author.name
-      span.screen-name = author.at_screen_name
+  / div.public-tweet
+  /   span.author-profile
+  /     = image_tag(author.profile_image_url, class: 'avatar')
+  /     span.name = author.name
+  /     span.screen-name = author.at_screen_name
 
-    / timestamp
-    span.timestamp
-      = icon_tag :time, timestamp_tag(previous_tweet.created_at)
+  /   / timestamp
+  /   span.timestamp
+  /     = icon_tag :time, timestamp_tag(previous_tweet.created_at)
 
-    / text
-    div.text = previous_tweet.text
+  /   / text
+  /   div.text = previous_tweet.text
+  .tweets
+    = render previous_tweet
+
+  .space-two
 
 
 / status form

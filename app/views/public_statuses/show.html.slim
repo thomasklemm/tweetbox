@@ -1,4 +1,5 @@
 / show public status
+.space-three
 - @status &&= @status.decorate
 
 / previous tweet
@@ -28,19 +29,25 @@ div.public-tweet
     span.name = twitter_account.name
     span.screen-name = twitter_account.at_screen_name
 
+  / timestamp
+  span.timestamp
+    = icon_tag :time, timestamp_tag(@status.posted_at)
+
   div.text == @status.text
 
-  div.actions
-    = link_to icon_tag(:reply, 'Reply'), @status.reply_intent_url
-    = link_to icon_tag(:twitter, 'On Twitter'), @status.twitter_url if @status.twitter_url
-
-    .right.text-muted
-      .characters-count #{ @status.text_length } characters
+  div.public-actions
+    span = link_to icon_tag(:reply, 'Reply'), @status.reply_intent_url
+    span = link_to icon_tag(:twitter, 'On Twitter'), @status.twitter_url if @status.twitter_url
+    span.text-muted #{ @status.text_length } characters
 
 / who are we?
+.space-two
 hr
-p style='color: #999; font-size: 12px; text-align: center; margin-top: 1rem'
-  ' Care for more than 140 characters? <br />
-  = link_to root_path, style: 'color: #999' do
-    ' This LongReply has been posted with Tweetbox.<br />
-    = image_tag 'tweetbox/logo_and_tagline.png', width: 100, style: 'padding-top: 8px'
+.space-one
+p style='font-size: 13px; text-align: center; margin-top: 1rem'
+  = link_to root_path do
+    = image_tag 'tweetbox/logo_and_tagline.png', width: 120, style: 'padding-bottom: 8px'
+    br
+    b Your customers are on Twitter? <br>
+    ' See how long replies (with 140+ characters) <br>
+    ' can win customers and improve relationships. <br>
