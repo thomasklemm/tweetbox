@@ -66,7 +66,13 @@
     = link_to "Send long replies now", new_signup_path, class: 'btn second-call-to-action'
     .space-three
     .space-two
-    / p
-    /   ' You're proud of your customer service? You should be! <br> Send long replies with Tweetbox in one minute. <br> It's a quick signup, and
-    /   = link_to 'we give you 30 days  <br> to try our service for free'.html_safe, new_signup_path
-    /   ' , no strings attached.
+
+  hr
+
+  .row
+    .col-md-4.col-md-offset-8
+      = link_to 'See other reasons to use Tweetbox ', static_path(:teamwork)
+      i class="icon-chevron-right"
+    .space-three
+
+  hr

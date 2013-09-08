@@ -1,22 +1,32 @@
 // Marketing CSS
 .marketing
-
+  .heading
+    font-weight: 500
+  .subheading
+    @extend .text-info
+    font-weight: 300
+    line-height: 1.45
+  .text
+    font-size: 18px
+    font-weight: 100
   // long reply page
   &.long-reply
     // above the fold header background
     .business-woman-background
       background-image: image_url('stock/business_woman.jpg')
       background-size: 100%
+      width: 100%
       max-width: 1170px // 1940px image width
       max-height: 600px // 990px image height
-      min-width: 970px
-      min-height: 495px
+      //min-width: 970px
+      min-height: 200px
       background-repeat: no-repeat
+      background-postion: center
 
     // brand on the background
     // with above the fold call to action
     .brand
-      width: 720px
+      width: 60%
       text-align: center
       padding-top: 30px
       .brand-logo
@@ -32,7 +42,7 @@
           weight: 300
       .call-to-action
         @extend .btn-danger
-        margin-top: 32px
+        margin: 32px 0px 32px 0px
         padding: 12px 18px
         font:
           size: 24px
@@ -301,10 +311,47 @@
   // @media (max-width: 1200px)
 
 
-  // @media (max-width: 979px)
+@media (max-width: 979px)
+  .marketing
+    // long reply page
+    &.long-reply
+      .brand
+        .brand-logo
+          width: 140px
+          height: 140px
+        .brand-name
+          font:
+            size: 58px
+        .brand-tagline
+          font:
+            size: 26px
+        .call-to-action
+          margin: 20px 0px 20px 0px
 
+@media (max-width: 768px)
+  .marketing
+    // long reply page
+    &.long-reply
+      .brand
+        .brand-logo
+          width: 100px
+          height: 100px
+        .brand-name
+          font:
+            size: 40px
+        .brand-tagline
+          font:
+            size: 18px
+        .call-to-action
+          @extend .btn-danger
+          margin: 10px 0px 10px 0px
+          padding: 12px 18px
+          font:
+            size: 18px
+            weight: 700
+          line-height: 1.33
+          border-radius: 6px
 
-  // @media (max-width: 768px)
   //  .showcase,
   //  .strip,
   //    footer
