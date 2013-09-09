@@ -1,50 +1,70 @@
-# UserTracker.new(@user, reason = 'Signup' / 'Invitation').track_create
-# UserTracker.new(@user).set_last_seen_at_to_current_time
+# UserTracker.new(@user).track_create_by_signup
+# UserTracker.new(@user).track_create_by_invitation
 
 class UserTracker < BaseTracker
-  def initialize(user, reason)
+  def initialize(user)
     @user = user
-    @reason = reason
   end
-  attr_reader :user, :reason
+  attr_reader :user
 
-  def track_create
-    track_create_event
-    set_properties_on_user
+  def track_create_by_signup
+    track_create_event('Signup')
+    set_properties_on_user('Signup')
+    set_users_count_on_account
+    set_users_count_on_projects
   end
 
-  # NOTE: This avoids a lot of events
-  #       and just uses the people API, right?
-  def set_last_seen_at_to_current_time
-    tracker.people.set(user.mixpanel_id, {
-      'last seen at' => Time.current
-    })
+  def track_create_by_invitation
+    track_create_event('Invitation')
+    set_properties_on_user('Invitation')
+    set_users_count_on_account
+    set_users_count_on_projects
   end
 
   private
 
-  def track_create_event
+  delegate :account, to: :user
+
+  def track_create_event(reason)
     tracker.track(user.mixpanel_id, 'User Create', {
+      '$username'    => user.full_name,
       '$first_name'  => user.first_name,
       '$last_name'   => user.last_name,
       '$email'       => user.email,
-      'reason'       => reason,
-      'account_id'   => user.account_mixpanel_id,
-      'account name' => user.account.name
+      'Account Id'   => account.mixpanel_id,
+      'Account Name' => account.name,
+      'Reason'       => reason
     })
   end
 
-  def set_properties_on_user
+  def set_properties_on_user(reason)
     tracker.people.set(user.mixpanel_id, {
-      'name'         => user.name,
-      'email'        => user.email,
-      'account_id'   => user.account_mixpanel_id,
-      'account name' => user.account.name,
-      'created on'   => user.created_at.to_date
+      'Type'         => 'User',
+      '$username'    => user.full_name,
+      '$first_name'  => user.first_name,
+      '$last_name'   => user.last_name,
+      '$email'       => user.email,
+      '$created'     => user.created_at.iso8601,
+      'Account Id'   => account.mixpanel_id,
+      'Account Name' => account.name
     })
 
     tracker.people.set_once(user.mixpanel_id, {
-      'reason' => reason
+      'Reason' => reason
     })
+  end
+
+  def set_users_count_on_account
+    tracker.people.set(account.mixpanel_id, {
+      'Number of Users' => account.users.count
+    })
+  end
+
+  def set_users_count_on_projects
+    user.projects.each do |project|
+      tracker.people.set(project.mixpanel_id, {
+        'Number of Users' => project.users.count
+      })
+    end
   end
 end

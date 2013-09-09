@@ -11,6 +11,7 @@ class ProjectTracker < BaseTracker
   def track_create
     track_create_event
     set_properties_on_project
+    set_projects_count_on_account
   end
 
   def track_update
@@ -20,28 +21,40 @@ class ProjectTracker < BaseTracker
 
   private
 
+  delegate :account, to: :project
+
+  def event_hash
+    {
+      '$username'  => project.name,
+      'Name'       => project.name,
+      'Project Id' => project.mixpanel_id,
+      'Account Id' => account.mixpanel_id
+    }
+  end
+
   def track_create_event
-    tracker.track(user.mixpanel_id, 'Project Create', {
-      'name'       => project.name,
-      'project_id' => project.mixpanel_id,
-      'account_id' => project.account_mixpanel_id
-    })
+    tracker.track(user.mixpanel_id, 'Project Create', event_hash)
   end
 
   def track_update_event
-    tracker.track(user.mixpanel_id, 'Project Update', {
-      'name'       => project.name,
-      'project_id' => project.mixpanel_id,
-      'account_id' => project.account_mixpanel_id
-    })
+    tracker.track(user.mixpanel_id, 'Project Update', event_hash)
   end
 
   def set_properties_on_project
     tracker.people.set(project.mixpanel_id, {
-      'type'       => 'Project',
-      'name'       => project.name
-      'account_id' => project.account_mixpanel_id,
-      'created_on' => project.created_at.to_date
+      'Type'            => 'Project',
+      '$username'       => project.name,
+      'Name'            => project.name,
+      'Account Id'      => account.mixpanel_id,
+      'Account Name'    => account.name
+      '$created'        => project.created_at.iso8601,
+      'Number of Users' => project.users.count
+    })
+  end
+
+  def set_projects_count_on_account
+    tracker.people.set(account.mixpanel_id, {
+      'Number of Projects' => account.projects.count
     })
   end
 end

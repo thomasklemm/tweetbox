@@ -47,8 +47,6 @@ class Project < ActiveRecord::Base
     "project_#{ id }"
   end
 
-  def account_mixpanel_id; account.mixpanel_id; end
-
   def default_twitter_account_with_fallback
     default_twitter_account || twitter_accounts.sample
   end

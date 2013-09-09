@@ -32,6 +32,18 @@ class User < ActiveRecord::Base
     account_or_project.has_member?(self)
   end
 
+  # TODO: Implement user's first and last name as database fields
+  def first_name
+    name.split(' ')[0]
+  end
+
+  def last_name
+    name.split(' ')[1]
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
   def to_param
     "#{ id }-#{ name.parameterize }"
@@ -40,6 +52,4 @@ class User < ActiveRecord::Base
   def mixpanel_id
     "user_#{ id }"
   end
-
-  def account_mixpanel_id; account.mixpanel_id; end
 end

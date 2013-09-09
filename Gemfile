@@ -117,6 +117,9 @@ gem 'multi_fetch_fragments'
 # Quiet assets
 gem 'quiet_assets'
 
+# Mixpanel (Capture business events)
+gem 'mixpanel-ruby'
+
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'

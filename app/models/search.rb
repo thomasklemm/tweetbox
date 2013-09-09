@@ -32,9 +32,6 @@ class Search < ActiveRecord::Base
     "search_#{ id }"
   end
 
-  def project_mixpanel_id; project.mixpanel_id; end
-  def account_mixpanel_id; project.account.mixpanel_id; end
-
   private
 
   def search_options
