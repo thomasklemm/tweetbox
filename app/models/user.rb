@@ -32,7 +32,14 @@ class User < ActiveRecord::Base
     account_or_project.has_member?(self)
   end
 
+
   def to_param
     "#{ id }-#{ name.parameterize }"
   end
+
+  def mixpanel_id
+    "user_#{ id }"
+  end
+
+  def account_mixpanel_id; account.mixpanel_id; end
 end

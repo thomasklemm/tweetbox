@@ -37,6 +37,13 @@ class TwitterAccount < ActiveRecord::Base
     { id: id, screen_name: screen_name, name: name, profile_image_url: profile_image_url, at_screen_name: at_screen_name }
   end
 
+  def mixpanel_id
+    "twitter_account_#{ id }"
+  end
+
+  def project_mixpanel_id; project.mixpanel_id; end
+  def account_mixpanel_id; project.account.mixpanel_id; end
+
   # Returns a Twitter::Client instance
   # with the credentials of the current twitter account
   def client

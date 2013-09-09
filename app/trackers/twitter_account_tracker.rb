@@ -35,23 +35,23 @@ class TwitterAccountTracker < BaseTracker
 
   def track_create_event
     tracker.track(user.mixpanel_id, 'Twitter Account Create', {
-      'twitter_account_id': twitter_account.mixpanel_id,
-      'twitter id':   twitter_account.twitter_id,
-      'screen name':  twitter_account.screen_name,
-      'name':         twitter_account.name,
-      'project_id':   twitter_account.project_mixpanel_id,
-      'account_id':   twitter_account.account_mixpanel_id
+      'twitter_account_id' => twitter_account.mixpanel_id,
+      'twitter id'         => twitter_account.twitter_id,
+      'screen name'        => twitter_account.screen_name,
+      'name'               => twitter_account.name,
+      'project_id'         => twitter_account.project_mixpanel_id,
+      'account_id'         => twitter_account.account_mixpanel_id
     })
   end
 
   def track_update_event
     tracker.track(user.mixpanel_id, 'Twitter Account Update', {
-      'twitter_account_id': twitter_account.mixpanel_id,
-      'twitter id':   twitter_account.twitter_id,
-      'screen name':  twitter_account.screen_name,
-      'name':         twitter_account.name,
-      'project_id':   twitter_account.project_mixpanel_id,
-      'account_id':   twitter_account.account_mixpanel_id
+      'twitter_account_id' => twitter_account.mixpanel_id,
+      'twitter id'         => twitter_account.twitter_id,
+      'screen name'        => twitter_account.screen_name,
+      'name'               => twitter_account.name,
+      'project_id'         => twitter_account.project_mixpanel_id,
+      'account_id'         => twitter_account.account_mixpanel_id
     })
   end
 
@@ -59,29 +59,29 @@ class TwitterAccountTracker < BaseTracker
   #       and posting them directly to Mixpanel in a recurring background worker job
   def set_properties_on_twitter_account
     tracker.people.set(twitter_account.mixpanel_id, {
-      'type':        'Twitter Account',
-      'twitter id':   twitter_account.twitter_id,
-      'screen name':  twitter_account.screen_name,
-      'name':         twitter_account.name,
-      'project_id':   twitter_account.project_mixpanel_id,
-      'account_id':   twitter_account.account_mixpanel_id
-      'active':       true
+      'type'        => 'Twitter Account',
+      'twitter id'  => twitter_account.twitter_id,
+      'screen name' => twitter_account.screen_name,
+      'name'        => twitter_account.name,
+      'project_id'  => twitter_account.project_mixpanel_id,
+      'account_id'  => twitter_account.account_mixpanel_id
+      'active'      => true
     })
 
     tracker.people.set_once(twitter_account.mixpanel_id, {
-      'first connected to tweetbox on': Date.current
+      'first connected to tweetbox on' => Date.current
     })
   end
 
   def increment_twitter_accounts_count_on_account
     tracker.people.increment(twitter_account.account_mixpanel_id, {
-      'Twitter Accounts Count': 1
+      'Twitter Accounts Count' => 1
     })
   end
 
   def increment_twitter_accounts_count_on_project
     tracker.people.increment(twitter_account.project_mixpanel_id, {
-      'Twitter Accounts Count': 1
+      'Twitter Accounts Count' => 1
     })
   end
 
@@ -90,31 +90,31 @@ class TwitterAccountTracker < BaseTracker
 
   def track_destroy_event
     tracker.track(user.mixpanel_id, 'Twitter Account Destroy', {
-      'twitter_account_id': twitter_account.mixpanel_id,
-      'twitter id':   twitter_account.twitter_id,
-      'screen name':  twitter_account.screen_name,
-      'name':         twitter_account.name,
-      'project_id':   twitter_account.project_mixpanel_id,
-      'account_id':   twitter_account.account_mixpanel_id
+      'twitter_account_id' => twitter_account.mixpanel_id,
+      'twitter id'         => twitter_account.twitter_id,
+      'screen name'        => twitter_account.screen_name,
+      'name'               => twitter_account.name,
+      'project_id'         => twitter_account.project_mixpanel_id,
+      'account_id'         => twitter_account.account_mixpanel_id
     })
   end
 
   def set_destroyed_properties_on_twitter_account
     tracker.people.set(twitter_account.mixpanel_id, {
-      'active':       false,
-      'destroyed on': Date.current
+      'active'       => false,
+      'destroyed on' => Date.current
     })
   end
 
   def decrement_twitter_accounts_count_on_account
     tracker.people.increment(twitter_account.account_mixpanel_id, {
-      'Twitter Accounts Count': -1
+      'Twitter Accounts Count' => -1
     })
   end
 
   def decrement_twitter_accounts_count_on_project
     tracker.people.increment(twitter_account.project_mixpanel_id, {
-      'Twitter Accounts Count': -1
+      'Twitter Accounts Count' => -1
     })
   end
 end

@@ -29,6 +29,10 @@ class Account < ActiveRecord::Base
     "#{ id }-#{ name.parameterize }"
   end
 
+  def mixpanel_id
+    "account_#{ id }"
+  end
+
   private
 
   # Grant the given user an admin membership of the account

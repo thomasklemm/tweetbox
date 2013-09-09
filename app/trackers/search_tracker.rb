@@ -35,10 +35,10 @@ class SearchTracker < BaseTracker
 
   def track_create_event
     tracker.track(user.mixpanel_id, 'Search Create', {
-      'query':       search.query,
-      'project_id':  search.project_mixpanel_id,
-      'account_id':  search.account_mixpanel_id,
-      'twitter_account_id': search.twitter_account_mixpanel_id
+      'query'              => search.query,
+      'project_id'         => search.project_mixpanel_id,
+      'account_id'         => search.account_mixpanel_id,
+      'twitter_account_id' => search.twitter_account_mixpanel_id
     })
   end
 
@@ -46,36 +46,36 @@ class SearchTracker < BaseTracker
   #       and provide advice and insights to people
   def track_update_event
     tracker.track(user.mixpanel_id, 'Search Update', {
-      'query':       search.query,
-      'project_id':  search.project_mixpanel_id,
-      'account_id':  search.account_mixpanel_id,
-      'twitter_account_id': search.twitter_account_mixpanel_id
+      'query'              => search.query,
+      'project_id'         => search.project_mixpanel_id,
+      'account_id'         => search.account_mixpanel_id,
+      'twitter_account_id' => search.twitter_account_mixpanel_id
     })
   end
 
   def set_properties_on_search
     tracker.people.set(search.mixpanel_id, {
-      'type': 'Search',
-      'account_id':  search.account_mixpanel_id,
-      'project_id':  search.project_mixpanel_id,
-      'query':       search.query,
-      'twitter account': search.twitter_account.screen_name
+      'type'            => 'Search',
+      'account_id'      => search.account_mixpanel_id,
+      'project_id'      => search.project_mixpanel_id,
+      'query'           => search.query,
+      'twitter account' => search.twitter_account.screen_name
     })
 
     tracker.people.set_once(search.mixpanel_id, {
-      'first created on': Date.current
+      'first created on' => Date.current
     })
   end
 
   def increment_searches_count_on_account
     tracker.people.increment(search.account_mixpanel_id, {
-      'Searches Count': 1
+      'Searches Count' => 1
     })
   end
 
   def increment_searches_count_on_project
     tracker.people.increment(search.project_mixpanel_id, {
-      'Searches Count': 1
+      'Searches Count' => 1
     })
   end
 
@@ -84,29 +84,29 @@ class SearchTracker < BaseTracker
 
   def track_destroy_event
     tracker.track(user.mixpanel_id, 'Search Destroy', {
-      'query':       search.query,
-      'project_id':  search.project_mixpanel_id,
-      'account_id':  search.account_mixpanel_id,
-      'twitter_account_id': search.twitter_account_mixpanel_id
+      'query'              => search.query,
+      'project_id'         => search.project_mixpanel_id,
+      'account_id'         => search.account_mixpanel_id,
+      'twitter_account_id' => search.twitter_account_mixpanel_id
     })
   end
 
   def set_destroyed_properties_on_search
     tracker.people.set(search.mixpanel_id, {
-      'destroyed on': Date.current,
-      'active': false
+      'active'       => false,
+      'destroyed on' => Date.current
     })
   end
 
   def decrement_searches_count_on_account
     tracker.people.increment(search.account_mixpanel_id, {
-      'Searches Count': -1
+      'Searches Count' => -1
     })
   end
 
   def decrement_searches_count_on_project
     tracker.people.increment(search.project_mixpanel_id, {
-      'Searchs Count': -1
+      'Searchs Count' => -1
     })
   end
 end

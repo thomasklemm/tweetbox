@@ -43,6 +43,12 @@ class Project < ActiveRecord::Base
     "#{ id }-#{ name.parameterize }"
   end
 
+  def mixpanel_id
+    "project_#{ id }"
+  end
+
+  def account_mixpanel_id; account.mixpanel_id; end
+
   def default_twitter_account_with_fallback
     default_twitter_account || twitter_accounts.sample
   end
