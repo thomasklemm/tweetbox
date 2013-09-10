@@ -7,6 +7,8 @@ class UserTracker < BaseTracker
   end
   attr_reader :user
 
+  delegate :account, to: :user
+
   def track_create_by_signup
     track_create_event('Signup')
     set_properties_on_user('Signup')
@@ -23,11 +25,9 @@ class UserTracker < BaseTracker
 
   private
 
-  delegate :account, to: :user
-
   def track_create_event(reason)
     tracker.track(user.mixpanel_id, 'User Create', {
-      '$username'    => user.full_name,
+      '$username'    => "User: #{user.full_name}",
       '$first_name'  => user.first_name,
       '$last_name'   => user.last_name,
       '$email'       => user.email,
@@ -40,7 +40,7 @@ class UserTracker < BaseTracker
   def set_properties_on_user(reason)
     tracker.people.set(user.mixpanel_id, {
       'Type'         => 'User',
-      '$username'    => user.full_name,
+      '$username'    => "User: #{user.full_name}",
       '$first_name'  => user.first_name,
       '$last_name'   => user.last_name,
       '$email'       => user.email,

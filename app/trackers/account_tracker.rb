@@ -16,7 +16,7 @@ class AccountTracker < BaseTracker
 
   def track_create_event
     tracker.track(user.mixpanel_id, 'Account Create', {
-      '$username' => account.name,
+      '$username' => "Account: #{account.name}",
       'Name'      => account.name
     })
   end
@@ -24,7 +24,7 @@ class AccountTracker < BaseTracker
   def set_properties_on_account
     tracker.people.set(account.mixpanel_id, {
       'Type'               => 'Account',
-      '$username'          => account.name,
+      '$username'          => "Account: #{account.name}",
       'Name'               => account.name,
       '$created'           => account.created_at.iso8601,
       'Number of Users'    => account.users.count,

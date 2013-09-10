@@ -8,6 +8,8 @@ class ProjectTracker < BaseTracker
   end
   attr_reader :project, :user
 
+  delegate :account, to: :project
+
   def track_create
     track_create_event
     set_properties_on_project
@@ -21,11 +23,9 @@ class ProjectTracker < BaseTracker
 
   private
 
-  delegate :account, to: :project
-
   def event_hash
     {
-      '$username'  => project.name,
+      '$username'  => "Project: #{project.name}",
       'Name'       => project.name,
       'Project Id' => project.mixpanel_id,
       'Account Id' => account.mixpanel_id
@@ -43,10 +43,10 @@ class ProjectTracker < BaseTracker
   def set_properties_on_project
     tracker.people.set(project.mixpanel_id, {
       'Type'            => 'Project',
-      '$username'       => project.name,
+      '$username'       => "Project: #{project.name}",
       'Name'            => project.name,
       'Account Id'      => account.mixpanel_id,
-      'Account Name'    => account.name
+      'Account Name'    => account.name,
       '$created'        => project.created_at.iso8601,
       'Number of Users' => project.users.count
     })

@@ -9,6 +9,8 @@ class TwitterAccountTracker < BaseTracker
   end
   attr_reader :twitter_account, :user
 
+  delegate :account, :project, to: :twitter_account
+
   def track_create
     track_create_event
     set_properties_on_twitter_account
@@ -30,14 +32,12 @@ class TwitterAccountTracker < BaseTracker
 
   private
 
-  delegate :account, :project, to: :twitter_account
-
   ##
   # Create and Update
 
   def event_hash
     {
-      '$username'          => twitter_account.at_screen_name,
+      '$username'          => "Twitter Account: #{twitter_account.at_screen_name}",
       'Screen Name'        => twitter_account.screen_name,
       'Name'               => twitter_account.name,
       'Twitter Id'         => twitter_account.twitter_id,
@@ -62,7 +62,7 @@ class TwitterAccountTracker < BaseTracker
   def set_properties_on_twitter_account
     tracker.people.set(twitter_account.mixpanel_id, {
       'Type'               => 'Twitter Account',
-      '$username'          => twitter_account.at_screen_name,
+      '$username'          => "Twitter Account: #{twitter_account.at_screen_name}",
       'Screen Name'        => twitter_account.screen_name,
       'Name'               => twitter_account.name,
       '$created'           => Time.current.iso8601,
@@ -71,7 +71,7 @@ class TwitterAccountTracker < BaseTracker
       'Project Id'         => project.mixpanel_id,
       'Project Name'       => project.name,
       'Account Id'         => account.mixpanel_id,
-      'Account Name'       => account.name
+      'Account Name'       => account.name,
       'Active'             => true
     })
 

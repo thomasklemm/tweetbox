@@ -9,6 +9,8 @@ class SearchTracker < BaseTracker
   end
   attr_reader :search, :user
 
+  delegate :account, :project, :twitter_account, to: :search
+
   def track_create
     track_create_event
     set_properties_on_search
@@ -31,10 +33,9 @@ class SearchTracker < BaseTracker
 
   private
 
-  delegate :account, :project, :twitter_account, to: :search
-
   def event_hash
     {
+      '$username'          => "Search Query",
       'Query'              => search.query,
       'Project Id'         => project.mixpanel_id,
       'Project Name'       => project.name,
@@ -61,6 +62,7 @@ class SearchTracker < BaseTracker
   def set_properties_on_search
     tracker.people.set(search.mixpanel_id, {
       'Type'               => 'Search',
+      '$username'          => "Search Query",
       'Query'              => search.query,
       '$created'           => search.created_at.iso8601,
       'Project Id'         => project.mixpanel_id,
