@@ -4,7 +4,7 @@
 <% if (@tweets.size > 0) %>
   $('.pagination').replaceWith('<%= j render("incoming_pagination", tweets: @tweets) %>');
 <% else %>
-  // $('.pagination').text("The End.");
+  $('.pagination').text("");
 <% end %>
 
 // append conversations
