@@ -63,6 +63,8 @@ class SearchTracker < BaseTracker
     tracker.people.set(search.mixpanel_id, {
       'Type'               => 'Search',
       '$username'          => "Search Query",
+      '$first_name'        => "Search",
+      '$last_name'         => "Query",
       'Query'              => search.query,
       '$created'           => search.created_at.iso8601,
       'Project Id'         => project.mixpanel_id,

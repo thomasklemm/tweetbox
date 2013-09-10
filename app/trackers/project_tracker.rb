@@ -44,6 +44,8 @@ class ProjectTracker < BaseTracker
     tracker.people.set(project.mixpanel_id, {
       'Type'            => 'Project',
       '$username'       => "Project: #{project.name}",
+      '$first_name'     => "Project:",
+      '$last_name'      => "#{project.name}",
       'Name'            => project.name,
       'Account Id'      => account.mixpanel_id,
       'Account Name'    => account.name,

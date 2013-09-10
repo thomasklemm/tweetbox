@@ -25,6 +25,8 @@ class AccountTracker < BaseTracker
     tracker.people.set(account.mixpanel_id, {
       'Type'               => 'Account',
       '$username'          => "Account: #{account.name}",
+      '$first_name'        => "Account:",
+      '$last_name'         => "#{account.name}",
       'Name'               => account.name,
       '$created'           => account.created_at.iso8601,
       'Number of Users'    => account.users.count,

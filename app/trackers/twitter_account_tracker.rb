@@ -63,6 +63,8 @@ class TwitterAccountTracker < BaseTracker
     tracker.people.set(twitter_account.mixpanel_id, {
       'Type'               => 'Twitter Account',
       '$username'          => "Twitter Account: #{twitter_account.at_screen_name}",
+      '$first_name'        => "Twitter Account:",
+      '$last_name'         => "#{twitter_account.at_screen_name}",
       'Screen Name'        => twitter_account.screen_name,
       'Name'               => twitter_account.name,
       '$created'           => Time.current.iso8601,
