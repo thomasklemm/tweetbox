@@ -1,6 +1,6 @@
 shared_context "signup" do
   let(:signup) do
-    signup = Fabricate(:signup, name: 'Thomas Klemm', company_name: 'Rainmakers', email: 'thomas@tweetbox.co', password: '123123123')
+    signup = Fabricate(:signup, first_name: 'Thomas', last_name: 'Klemm', company_name: 'Rainmakers', email: 'thomas@tweetbox.co', password: '123123123')
     signup.save
     signup
   end

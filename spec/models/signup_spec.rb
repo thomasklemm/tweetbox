@@ -12,7 +12,8 @@ describe Signup do
   it { should respond_to(:project) }
   it { should respond_to(:permission) }
 
-  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:first_name) }
+  it { should validate_presence_of(:last_name) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:password) }
   it { should validate_presence_of(:company_name) }

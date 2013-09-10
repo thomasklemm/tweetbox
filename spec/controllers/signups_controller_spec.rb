@@ -10,7 +10,7 @@ describe SignupsController do
   end
 
   let(:valid_signup_attributes)   { Fabricate.attributes_for(:signup) }
-  let(:invalid_signup_attributes) { Fabricate.attributes_for(:signup, name: '') }
+  let(:invalid_signup_attributes) { Fabricate.attributes_for(:signup, first_name: '', last_name: '') }
 
   describe "POST #create" do
     context "with valid attributes" do

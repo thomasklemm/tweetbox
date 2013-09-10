@@ -11,13 +11,15 @@ describe 'Signup and login' do
     click_button 'Sign up free'
 
     # Validation errors
-    expect(page).to have_content("Name can't be blank")
+    expect(page).to have_content("First name can't be blank")
+    expect(page).to have_content("Last name can't be blank")
     expect(page).to have_content("Company name can't be blank")
     expect(page).to have_content("Email can't be blank")
     expect(page).to have_content("Password can't be blank")
 
     # Fill in valid details and submit signup form
-    fill_in 'signup_name',         with: 'Thomas Klemm'
+    fill_in 'signup_first_name',   with: 'Thomas'
+    fill_in 'signup_last_name',    with: 'Klemm'
     fill_in 'signup_company_name', with: 'Rainmakers'
     fill_in 'signup_email',        with: 'thomas@rainmakers.com'
     fill_in 'signup_password',     with: 'rainmaking123'
