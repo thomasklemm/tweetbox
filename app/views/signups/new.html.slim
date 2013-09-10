@@ -12,21 +12,24 @@
     = form_for @signup do |f|
       = render 'shared/form_errors', target: @signup
 
-      .form-group
-        / = f.label :name, 'Your full name'
-        = f.text_field :name, class: 'form-control', placeholder: 'Your full name', autofocus: true, autocomplete: 'off'
+      .form-group style='width: 49%; float: left'
+        = f.label :first_name, 'First name', class: 'sr-only'
+        = f.text_field :first_name, class: 'form-control', placeholder: 'First name', autofocus: true, autocomplete: 'off'
+      .form-group style='width: 49%; float: right'
+        = f.label :last_name, 'Last name', class: 'sr-only'
+        = f.text_field :last_name, class: 'form-control', placeholder: 'Last name', autocomplete: 'off'
 
       .form-group
-        / = f.label :company_name, 'Company or organization'
+        = f.label :company_name, 'Company or organization', class: 'sr-only'
         = f.text_field :company_name, class: 'form-control', placeholder: 'Company or organization', autocomplete: 'off'
 
       .form-group
-        / = f.label :email, 'Your email'
-        = f.email_field :email, class: 'form-control', placeholder: 'Email'
+        = f.label :email, 'Your email', class: 'sr-only'
+        = f.email_field :email, class: 'form-control', placeholder: 'Your email'
 
       .form-group
-        / = f.label :password, 'Choose a password'
-        = f.password_field :password, class: 'form-control', placeholder: 'Password'
+        = f.label :password, 'Choose a password', class: 'sr-only'
+        = f.password_field :password, class: 'form-control', placeholder: 'Choose a password'
 
       .form-group
         = f.submit 'Sign up free & Send long replies now', class: 'btn btn-primary btn-lg'

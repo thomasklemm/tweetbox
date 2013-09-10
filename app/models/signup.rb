@@ -9,12 +9,13 @@ class Signup
   attr_reader :project
   attr_reader :permission
 
-  attribute :name, String
+  attribute :first_name, String
+  attribute :last_name, String
   attribute :company_name, String
   attribute :email, String
   attribute :password, String
 
-  validates :name, :company_name, :email, :password, presence: true
+  validates :first_name, :last_name, :company_name, :email, :password, presence: true
 
   def save
     # Validate signup object
@@ -39,9 +40,10 @@ class Signup
 
   def delegate_attributes_for_user
     @user = User.new do |user|
-      user.name = name
-      user.email = email
-      user.password = password
+      user.first_name            = first_name
+      user.last_name             = last_name
+      user.email                 = email
+      user.password              = password
       user.password_confirmation = password
     end
   end
@@ -53,7 +55,8 @@ class Signup
   end
 
   def delegate_errors_for_user
-    errors.add(:name, @user.errors[:name].try(:first))
+    errors.add(:first_name, @user.errors[:first_name].try(:first))
+    errors.add(:last_name, @user.errors[:last_name].try(:first))
     errors.add(:email, @user.errors[:email].try(:first))
     errors.add(:password, @user.errors[:password].try(:first))
   end
@@ -73,9 +76,9 @@ class Signup
 
   def create_admin_membership!
     @membership = Membership.create! do |membership|
-      membership.user = @user
+      membership.user    = @user
       membership.account = @account
-      membership.admin = true
+      membership.admin   = true
     end
   end
 

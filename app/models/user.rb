@@ -16,10 +16,9 @@ class User < ActiveRecord::Base
   # Activities (Business events)
   has_many :activities
 
-  # Devise validates email on presence and uniqueness
-  #  (also when user changes his email)
+  # Devise validates email on presence and uniqueness (also when user changes his email)
   # Devise validates password on presence, confirmation, and length
-  validates :name, presence: true
+  validates :first_name, :last_name, presence: true
 
   scope :by_date, -> { order(created_at: :asc) }
 
@@ -32,17 +31,15 @@ class User < ActiveRecord::Base
     account_or_project.has_member?(self)
   end
 
-  # TODO: Implement user's first and last name as database fields
-  def first_name
-    name.split(' ')[0]
-  end
-
-  def last_name
-    name.split(' ')[1]
-  end
-
   def full_name
     "#{first_name} #{last_name}"
+  end
+  alias_method :name, :full_name
+
+  def name=(new_name)
+    parts = new_name.split(' ')
+    self.first_name = parts[0]
+    self.last_name = parts[1]
   end
 
   def to_param
