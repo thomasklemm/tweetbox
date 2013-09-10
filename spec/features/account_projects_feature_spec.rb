@@ -14,7 +14,7 @@ describe 'Account projects' do
 
   it "new and create project" do
     visit account_projects_path
-    click_on 'New project'
+    click_on 'Create a new project'
 
     fill_in 'Project name', with: "Second Rainmakers project"
     click_on 'Create Project'

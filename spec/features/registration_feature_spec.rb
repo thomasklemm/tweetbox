@@ -9,12 +9,12 @@ describe 'Registration' do
     click_on 'Invitations'
     expect(current_path).to eq(account_invitations_path)
 
-    click_on 'Invite a colleague'
+    click_on 'Invite a team member'
     expect(current_path).to eq(new_account_invitation_path)
 
-    fill_in 'Name', with: 'Philipp Thiel'
-    fill_in 'Email', with: 'philipp@rainmakers.com'
-    click_on 'Create Invitation'
+    fill_in 'invitation_name', with: 'Philipp Thiel'
+    fill_in 'invitation_email', with: 'philipp@rainmakers.com'
+    click_on 'Create and email invitation'
 
     expect(page).to have_content("Invitation has been created and mailed")
 
@@ -36,10 +36,10 @@ describe 'Registration' do
       fill_in 'password', with: 'rainmaking123'
     end
 
-    click_on 'Register'
+    click_on 'Join my team'
 
     # Instant login
-    # expect(current_path).to eq(projects_path)
+    expect(current_path).to eq(incoming_project_tweets_path(Project.first))
 
     # Permission for project has been created
     within('.navbar .project-links') do

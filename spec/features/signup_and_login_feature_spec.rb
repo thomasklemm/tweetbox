@@ -4,11 +4,11 @@ describe 'Signup and login' do
   it 'creates user, account, membership and permission records' do
     # Open signup page
     visit root_path
-    click_on 'Signup'
+    click_on 'trial'
     expect(current_path).to eq(new_signup_path)
 
     # Submit invalid details
-    click_button 'Start'
+    click_button 'Sign up free'
 
     # Validation errors
     expect(page).to have_content("Name can't be blank")
@@ -17,11 +17,11 @@ describe 'Signup and login' do
     expect(page).to have_content("Password can't be blank")
 
     # Fill in valid details and submit signup form
-    fill_in 'Your name',  with: 'Thomas Klemm'
-    fill_in 'Company',    with: 'Rainmakers'
-    fill_in 'Your email', with: 'thomas@rainmakers.com'
-    fill_in 'password',   with: 'rainmaking123'
-    click_button 'Start'
+    fill_in 'signup_name',         with: 'Thomas Klemm'
+    fill_in 'signup_company_name', with: 'Rainmakers'
+    fill_in 'signup_email',        with: 'thomas@rainmakers.com'
+    fill_in 'signup_password',     with: 'rainmaking123'
+    click_button 'Sign up free'
 
     # Instant sign in
     expect(current_path).to match(projects_path)

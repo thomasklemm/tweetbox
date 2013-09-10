@@ -33,7 +33,7 @@ describe 'Connect a Twitter account and post Tweet' do
         click_on 'Preview'
       end
 
-      click_on 'Post to Twitter'
+      click_on 'Post Tweet'
     end
 
     status = Status.first

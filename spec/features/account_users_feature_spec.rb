@@ -7,12 +7,12 @@ describe 'Account users' do
     # Invitation
     click_on 'Account'
     click_on 'Invitation'
-    click_on 'Invite a colleague'
+    click_on 'Invite a team member'
     expect(current_path).to eq(new_account_invitation_path)
 
-    fill_in 'Name', with: 'Philipp Thiel'
-    fill_in 'Email', with: 'philipp@rainmakers.com'
-    click_on 'Create Invitation'
+    fill_in 'invitation_name', with: 'Philipp Thiel'
+    fill_in 'invitation_email', with: 'philipp@rainmakers.com'
+    click_on 'Create and email invitation'
 
     expect(page).to have_content("Invitation has been created and mailed")
 
@@ -29,8 +29,10 @@ describe 'Account users' do
       fill_in 'password', with: 'rainmaking123'
     end
 
-    click_on 'Register'
-    # expect(current_path).to eq(projects_path)
+    click_on 'Join my team'
+
+    # Instant login
+    expect(current_path).to eq(incoming_project_tweets_path(Project.first))
 
     # Login as base user
     click_on 'Logout'
@@ -46,9 +48,8 @@ describe 'Account users' do
     expect(current_path).to eq(account_users_path)
 
     within('.users-table') do
-      expect(page).to have_content("Thomas Klemmthomas@rainmakers.com Account admin")
-      expect(page).to have_content("Philipp Thielphilipp@rainmakers.com")
-      expect(page).to have_no_content("Philipp Thielphilipp@rainmakers.com Account admin")
+      expect(page).to have_content("Thomas Klemmthomas@rainmakers.com Is an Account Admin")
+      expect(page).to have_content("Philipp Thielphilipp@rainmakers.com Grant admin superpowers")
     end
 
     # Grant admin membership
@@ -56,8 +57,8 @@ describe 'Account users' do
     expect(page).to have_content("Philipp Thiel has become an account admin")
 
     within('.users-table') do
-      expect(page).to have_content("Thomas Klemmthomas@rainmakers.com Account admin")
-      expect(page).to have_content("Philipp Thielphilipp@rainmakers.com Account admin")
+      expect(page).to have_content("Thomas Klemmthomas@rainmakers.com Is an Account Admin")
+      expect(page).to have_content("Philipp Thielphilipp@rainmakers.com Is an Account Admin")
     end
   end
 end
