@@ -47,10 +47,11 @@ class TwitterAccountsController < ProjectController
       depend on being performed through the #{ @twitter_account.at_screen_name } Twitter account.
       Please remove these search queries first or update them to use another Twitter account."
 
-    flash.notice = if @twitter_account.destroy
-      "Twitter account #{ @twitter_account.at_screen_name } has been removed from Tweetbox."
+    if @twitter_account.destroy
+      TwitterAccountTracker.new(@twitter_account, current_user).track_destroy
+      flash.notice = "Twitter account #{ @twitter_account.at_screen_name } has been removed from Tweetbox."
     else
-      "#{ @twitter_account.at_screen_name } could not be removed."
+      flash.notice = "#{ @twitter_account.at_screen_name } could not be removed."
     end
 
     redirect_to project_twitter_accounts_path(@project)

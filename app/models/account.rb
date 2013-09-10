@@ -13,6 +13,10 @@ class Account < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def twitter_accounts
+    projects.flat_map(&:twitter_accounts)
+  end
+
   def has_member?(user)
     memberships.exists?(user_id: user.id)
   end

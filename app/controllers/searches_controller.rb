@@ -14,6 +14,7 @@ class SearchesController < ProjectController
 
     if @search.save
       track_activity @search, :create
+      SearchTracker.new(@search, current_user).track_create
 
       redirect_to project_searches_path(@project),
         notice: "Search for '#{ @search.query }' has been created."
@@ -27,6 +28,8 @@ class SearchesController < ProjectController
 
   def update
     if @search.update_attributes(search_params)
+      SearchTracker.new(@search, current_user).track_update
+
       redirect_to project_searches_path(@project),
         notice: "Search for '#{ @search.query }' has been updated."
     else
@@ -36,6 +39,8 @@ class SearchesController < ProjectController
 
   def destroy
     @search.destroy
+    SearchTracker.new(@search, current_user).track_destroy
+
     redirect_to project_searches_path,
       notice: "Search for '#{ @search.query }' has been destroyed."
   end

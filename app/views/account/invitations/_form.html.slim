@@ -27,4 +27,7 @@
           = b.text
 
   .form-group
-    = f.submit 'Create and email invitation', class: 'btn btn-primary'
+    - if @invitation.new_record?
+      = f.submit 'Create and email invitation', class: 'btn btn-primary'
+    - else
+      = f.submit class: 'btn btn-primary'

@@ -9,9 +9,15 @@ class SignupsController < ApplicationController
     if @signup.save
       sign_in @signup.user
 
+      # Internal tracking
       track_activity @signup.user, :sign_up
       track_activity @signup.account, :create
       track_activity @signup.project, :create
+
+      # Mixpanel tracking
+      UserTracker.new(@signup.user).track_create_by_signup
+      AccountTracker.new(@signup.account, current_user).track_create
+      ProjectTracker.new(@signup.project, current_user).track_create
 
       redirect_to projects_path, notice: 'You signed up successfully.'
     else

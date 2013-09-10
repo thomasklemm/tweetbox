@@ -16,6 +16,8 @@ class Account::ProjectsController < AccountController
 
     if @project.save
       track_activity @project, :create
+      ProjectTracker.new(@project, current_user).track_create
+
       redirect_to account_projects_path, notice: 'Project has been created.'
     else
       render :new
@@ -27,6 +29,7 @@ class Account::ProjectsController < AccountController
 
   def update
     if @project.update_attributes(project_params)
+      ProjectTracker.new(@project, current_user).track_update
       redirect_to account_projects_path, notice: 'Project has been updated.'
     else
       render :edit

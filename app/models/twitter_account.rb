@@ -6,6 +6,8 @@ class TwitterAccount < ActiveRecord::Base
   belongs_to :project
   validates :project, presence: true
 
+  delegate :account, to: :project
+
   # Only destroy a twitter account if no search is associated
   has_many :searches, dependent: :restrict_with_exception
 
@@ -24,6 +26,9 @@ class TwitterAccount < ActiveRecord::Base
   # #access_scope.read? and #access_scope.write?
   # TwitterAccount.with_access_scope(:read) and TwitterAccount.with_access_scope(:read, :write)
   enumerize :access_scope, in: ACCESS_SCOPES
+
+  # Transient attribute
+  attr_accessor :is_new_record
 
   def at_screen_name
     "@#{ screen_name }"
@@ -54,7 +59,9 @@ class TwitterAccount < ActiveRecord::Base
   # Returns twitter account record
   def self.from_omniauth(project, auth, access_scope)
     twitter_account = project.twitter_accounts.where(uid: auth.uid).first_or_initialize # uid cannot change
-    twitter_account.update_from_omniauth(auth, access_scope) && twitter_account
+    twitter_account.is_new_record = twitter_account.new_record?
+    twitter_account.update_from_omniauth(auth, access_scope)
+    twitter_account
   end
 
   def update_from_omniauth(auth, access_scope)
@@ -141,7 +148,7 @@ class TwitterAccount < ActiveRecord::Base
 
   ##
   # Default twitter account on project
-  after_create  :set_first_twitter_account_on_project_to_be_default_twitter_account
+  after_create :set_first_twitter_account_on_project_to_be_default_twitter_account
 
   def set_first_twitter_account_on_project_to_be_default_twitter_account
     project.set_default_twitter_account(self) unless project.has_default_twitter_account?

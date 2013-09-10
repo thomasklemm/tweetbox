@@ -6,12 +6,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action :miniprofiler
+
   # Redirect user back on detected access violation
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
-  # Update last_seen_at timestamp on user
-  before_action :update_last_seen_at!
-  before_action :miniprofiler
 
   # Returns the decorated current_user
   def current_user
@@ -24,16 +22,6 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:error] = "You are not authorized to perform this action."
     redirect_to request.headers["Referer"] || root_url
-  end
-
-  # Updates the last seen at timestamp on the user periodically
-  def update_last_seen_at!
-    return unless user_signed_in?
-
-    # nil.to_i => 0
-    if current_user.last_seen_at.to_i < 5.minutes.ago.to_i
-      current_user.touch(:last_seen_at)
-    end
   end
 
   # Enable MiniProfiler in production for staff members
