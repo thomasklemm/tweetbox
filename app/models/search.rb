@@ -2,6 +2,8 @@ class Search < ActiveRecord::Base
   belongs_to :twitter_account
   belongs_to :project
 
+  delegate :account, to: :project
+
   validates :twitter_account, :project, :query, presence: true
 
   before_validation :assign_project_id_from_twitter_account
