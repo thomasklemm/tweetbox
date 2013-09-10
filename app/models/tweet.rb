@@ -64,6 +64,9 @@ class Tweet < ActiveRecord::Base
   scope :include_conversation, -> { includes(:project, :author, :status, :events, :previous_tweets, :future_tweets) }
   scope :include_deep_conversation, -> { includes(:project, :author, :events, previous_tweets: [:author, events: :user], future_tweets: [:author, events: :user])  }
 
+  # Excludes the given twitter id
+  scope :below_twitter_id, ->(twitter_id) { where('twitter_id < ?', twitter_id) if twitter_id.present? }
+
   ##
   # Reply and previous tweet
 

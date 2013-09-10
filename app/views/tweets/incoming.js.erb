@@ -1,0 +1,15 @@
+// incoming tweets js
+
+// pagination
+<% if (@tweets.size > 0) %>
+  $('.pagination').replaceWith('<%= j render("incoming_pagination", tweets: @tweets) %>');
+<% else %>
+  $('.pagination').text("The End.");
+<% end %>
+
+// append conversations
+$conversations = $('<%= j render_cached_conversation_for_tweets(@tweets) %>');
+$('#tweets').append($conversations);
+
+// initialize timestamps
+$conversations.find("abbr.timeago").timeago()

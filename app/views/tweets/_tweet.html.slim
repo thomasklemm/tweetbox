@@ -13,14 +13,14 @@
   span.timestamp
     = icon_tag :time, timestamp_tag(tweet.created_at)
 
+  / deeplinks
+  span.deeplinks
+    = link_to icon_tag(:comment), [tweet.project, tweet]
+    = link_to icon_tag(:twitter), tweet.twitter_url
+
   / text
   div
     span.text = tweet.text
-
-    / deeplinks
-    span.deeplinks
-      = link_to icon_tag(:comment), [tweet.project, tweet]
-      = link_to icon_tag(:twitter), tweet.twitter_url
 
   / events
   .events

@@ -19,9 +19,11 @@ module ApplicationHelper
     icon + ' ' + text
   end
 
-  def logo_header(text)
-    content_tag :h2, class: 'logo-header' do
-      image_tag('tweetbox/logo.png') + text
+  def logo_header(title, subtitle=nil)
+    content_tag :div, class: 'logo-header' do
+      image_tag('tweetbox/logo.png') +
+      content_tag(:span, title, class: 'title') +
+      content_tag(:span, subtitle, class: 'subtitle')
     end
   end
 

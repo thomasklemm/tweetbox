@@ -5,10 +5,11 @@ class TweetsController < TweetController
   # Collection actions
 
   def incoming
-    @tweets = project_tweets.incoming.by_date(:desc).page(params[:page]).per(25)
+    @tweets = project_tweets.incoming.by_date(:desc).
+      below_twitter_id(params[:max_id]).limit(25)
     respond_to do |format|
       format.html
-      format.js { render :stream }
+      format.js
     end
   end
 

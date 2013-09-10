@@ -8,9 +8,9 @@
 
 .tweets
   .conversation_for_tweet
-    padding-bottom: 1rem
+    padding-bottom: 1.25rem
     border-bottom: 1px solid #eee
-    margin-bottom: 1rem
+    margin-bottom: 1.25rem
 
   .tweet
     padding-left: 46px
@@ -47,19 +47,21 @@
       margin-left: 12px
       color: #bbb
 
-    .text p
-      display: inline
-      margin: 0
-
-    // links appended to text
+    // links to tweet and tweet on twitter
     .deeplinks a
-      position: relative
-      top: 1px
       color: #bbb
       &:first-of-type
         margin-left: 8px
       &:hover
         color: $link-color
+
+    .text
+      display: block
+      p
+        margin: 0
+
+    &.incoming .text
+      min-height: 40px // two lines
 
     .events
       @extend .text-muted
@@ -172,13 +174,24 @@ abbr.timeago
 
 // logo header
 .logo-header
-  margin-top: 0
+  padding-left: 46px
+  margin: 0 0.8rem 1rem
 
   img
-    width: 46px
-    height: 46px
-    margin-left: 2px
-    margin-right: 6px
+    float: left
+    margin: 2px 0 0 -46px
+
+    width: 36px
+    height: 36px
+
+  .title
+    font:
+      size: 26px
+      weight: 700
+      color: #555
+
+  .subtitle
+    margin-left: 8px
 
 // navbar
 img.navbar-logo
