@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
       track_activity @registration.user, :register
       track_activity @registration.account, :join
 
-      UserTracker.new(@registration.user).track_create_by_invitation
+      UserTracker.new(@registration.user).track_create_by_invitation unless Rails.env.test?
 
       redirect_to projects_path,
         notice: "Welcome to Tweetbox."

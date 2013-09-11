@@ -7,8 +7,10 @@ class OmniauthController < ProjectController
 
     track_activity twitter_account, :connect
 
-    tracker = TwitterAccountTracker.new(twitter_account, current_user)
-    twitter_account.is_new_record ? tracker.track_create : tracker.track_update
+    unless Rails.env.test?
+      tracker = TwitterAccountTracker.new(twitter_account, current_user)
+      twitter_account.is_new_record ? tracker.track_create : tracker.track_update
+    end
 
     redirect_to project_twitter_accounts_path(@project),
       notice: "Your Twitter account #{ twitter_account.at_screen_name } has been connected."

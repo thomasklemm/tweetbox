@@ -14,7 +14,7 @@ class SearchesController < ProjectController
 
     if @search.save
       track_activity @search, :create
-      SearchTracker.new(@search, current_user).track_create
+      SearchTracker.new(@search, current_user).track_create unless Rails.env.test?
 
       redirect_to project_searches_path(@project),
         notice: "Search for '#{ @search.query }' has been created."
@@ -28,7 +28,7 @@ class SearchesController < ProjectController
 
   def update
     if @search.update_attributes(search_params)
-      SearchTracker.new(@search, current_user).track_update
+      SearchTracker.new(@search, current_user).track_update unless Rails.env.test?
 
       redirect_to project_searches_path(@project),
         notice: "Search for '#{ @search.query }' has been updated."
@@ -39,7 +39,7 @@ class SearchesController < ProjectController
 
   def destroy
     @search.destroy
-    SearchTracker.new(@search, current_user).track_destroy
+    SearchTracker.new(@search, current_user).track_destroy unless Rails.env.test?
 
     redirect_to project_searches_path,
       notice: "Search for '#{ @search.query }' has been destroyed."

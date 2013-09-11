@@ -16,7 +16,7 @@ class Account::ProjectsController < AccountController
 
     if @project.save
       track_activity @project, :create
-      ProjectTracker.new(@project, current_user).track_create
+      ProjectTracker.new(@project, current_user).track_create unless Rails.env.test?
 
       redirect_to account_projects_path, notice: 'Project has been created.'
     else
@@ -29,7 +29,7 @@ class Account::ProjectsController < AccountController
 
   def update
     if @project.update_attributes(project_params)
-      ProjectTracker.new(@project, current_user).track_update
+      ProjectTracker.new(@project, current_user).track_update unless Rails.env.test?
       redirect_to account_projects_path, notice: 'Project has been updated.'
     else
       render :edit

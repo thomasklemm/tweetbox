@@ -15,9 +15,11 @@ class SignupsController < ApplicationController
       track_activity @signup.project, :create
 
       # Mixpanel tracking
-      UserTracker.new(@signup.user).track_create_by_signup
-      AccountTracker.new(@signup.account, current_user).track_create
-      ProjectTracker.new(@signup.project, current_user).track_create
+      unless Rails.env.test?
+        UserTracker.new(@signup.user).track_create_by_signup
+        AccountTracker.new(@signup.account, current_user).track_create
+        ProjectTracker.new(@signup.project, current_user).track_create
+      end
 
       redirect_to projects_path, notice: 'You signed up successfully.'
     else
