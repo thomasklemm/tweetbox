@@ -11,7 +11,7 @@ describe 'Connect a Twitter account and post Tweet' do
     click_on "Connect a Twitter account"
     click_on "Connect a new Twitter account"
 
-    VCR.use_cassette('twitter_accounts/connect') do
+    VCR.use_cassette('features/connect_twitter_account/connect') do
       click_on "Connect a Twitter account"
     end
 
@@ -26,7 +26,7 @@ describe 'Connect a Twitter account and post Tweet' do
         magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Sed posuere consectetur
         est at lobortis."
 
-    VCR.use_cassette('post_long_tweet') do
+    VCR.use_cassette('features/connect_twitter_account/post_long_tweet') do
       within '#new_status' do
         fill_in 'status_text', with: text
         fill_in 'status_twitter_account_id', with: TwitterAccount.first.id

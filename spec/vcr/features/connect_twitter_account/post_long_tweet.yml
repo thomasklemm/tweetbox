@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: US-ASCII
+      string: status=+Aenean+eu+leo+quam.+Pellentesque+ornare+sem+lacinia+%0A++++++++quam+venenatis+vestibulum.+Nulla+vitae+elit+libero%2C+...+http%3A%2F%2Flvh.me%3A7000%2Fr%2F0b1417
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Twitter Ruby Gem 4.8.1
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="cb6330161af33ef0845fa7ba7fbae580",
+        oauth_signature="b%2BmjY0Q6JMd64r8gC%2FHVXJ3PXp4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1378908581", oauth_token="1444843380-hjlU4nf074S6iGPEX153T27FJdnqwisY2HgiHKR",
+        oauth_version="1.0"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '889'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 11 Sep 2013 14:09:43 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Wed, 11 Sep 2013 14:09:43 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tfe
+      Set-Cookie:
+      - guest_id=v1%3A137890858355348319; Domain=.twitter.com; Path=/; Expires=Fri,
+        11-Sep-2015 14:09:43 UTC
+      - lang=de
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction:
+      - a56c1d74638e8a72
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Sep 11 14:09:43 +0000 2013","id":377796098154590208,"id_str":"377796098154590208","text":"Aenean
+        eu leo quam. Pellentesque ornare sem lacinia \n        quam venenatis vestibulum.
+        Nulla vitae elit libero, ... http:\/\/t.co\/BSTynzkNlE","source":"\u003ca
+        href=\"http:\/\/birdview.dev\" rel=\"nofollow\"\u003eTweetbox Ascending\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1444843380,"id_str":"1444843380","name":"Tweetbox
+        101","screen_name":"tweetbox101","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_count":0,"created_at":"Mon
+        May 20 21:52:39 +0000 2013","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":79,"lang":"de","contributors_enabled":false,"is_translator":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_1_normal.png","profile_image_url_https":"https:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_1_normal.png","profile_link_color":"0084B4","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"default_profile":true,"default_profile_image":true,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"urls":[{"url":"http:\/\/t.co\/BSTynzkNlE","expanded_url":"http:\/\/lvh.me:7000\/r\/0b1417","display_url":"lvh.me:7000\/r\/0b1417","indices":[117,139]}],"user_mentions":[]},"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"pt"}'
+    http_version: 
+  recorded_at: Wed, 11 Sep 2013 14:09:43 GMT
+recorded_with: VCR 2.5.0

@@ -27,8 +27,8 @@ class SearchTracker < BaseTracker
   def track_destroy
     track_destroy_event
     set_destroyed_properties_on_search
-    decrement_searches_count_on_account
-    decrement_searches_count_on_project
+    set_searches_count_on_account
+    set_searches_count_on_project
   end
 
   private

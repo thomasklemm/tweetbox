@@ -17,6 +17,10 @@ class Account < ActiveRecord::Base
     projects.flat_map(&:twitter_accounts)
   end
 
+  def searches
+    twitter_accounts.flat_map(&:searches)
+  end
+
   def has_member?(user)
     memberships.exists?(user_id: user.id)
   end

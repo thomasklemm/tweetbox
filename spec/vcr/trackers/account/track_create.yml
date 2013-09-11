@@ -1,0 +1,97 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mixpanel.com/track
+    body:
+      encoding: US-ASCII
+      string: data=eyJldmVudCI6IkFjY291bnQgQ3JlYXRlIiwicHJvcGVydGllcyI6eyJkaXN0aW5jdF9pZCI6InVzZXJfMTE2MyIsInRva2VuIjoiNjIwZWJmYjFjYjMzYzJiY2NiNDFmOGRmMTFjYTFjMzIiLCJ0aW1lIjoxMzc4OTA2OTM4LCJtcF9saWIiOiJydWJ5IiwiJGxpYl92ZXJzaW9uIjoiMS4wLjAiLCIkdXNlcm5hbWUiOiJBY2NvdW50OiBBY2NvdW50IG5hbWUiLCJOYW1lIjoiQWNjb3VudCBuYW1lIn19
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 11 Sep 2013 13:42:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '1728000'
+    body:
+      encoding: UTF-8
+      string: '1'
+    http_version: 
+  recorded_at: Wed, 11 Sep 2013 13:42:19 GMT
+- request:
+    method: post
+    uri: https://api.mixpanel.com/engage
+    body:
+      encoding: US-ASCII
+      string: data=eyIkdG9rZW4iOiI2MjBlYmZiMWNiMzNjMmJjY2I0MWY4ZGYxMWNhMWMzMiIsIiR0aW1lIjoxMzc4OTA2OTM5MzQ4LCIkZGlzdGluY3RfaWQiOiJhY2NvdW50XzE1OTMiLCIkc2V0Ijp7IlR5cGUiOiJBY2NvdW50IiwiJHVzZXJuYW1lIjoiQWNjb3VudDogQWNjb3VudCBuYW1lIiwiJGZpcnN0X25hbWUiOiJBY2NvdW50OiIsIiRsYXN0X25hbWUiOiJBY2NvdW50IG5hbWUiLCJOYW1lIjoiQWNjb3VudCBuYW1lIiwiJGNyZWF0ZWQiOiIyMDEzLTA5LTExVDEzOjQyOjE3WiIsIk51bWJlciBvZiBVc2VycyI6MCwiTnVtYmVyIG9mIFByb2plY3RzIjowfX0%3D
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 11 Sep 2013 13:42:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '1728000'
+    body:
+      encoding: UTF-8
+      string: '1'
+    http_version: 
+  recorded_at: Wed, 11 Sep 2013 13:42:20 GMT
+recorded_with: VCR 2.5.0

@@ -1,0 +1,191 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mixpanel.com/track
+    body:
+      encoding: US-ASCII
+      string: data=eyJldmVudCI6IlVzZXIgQ3JlYXRlIiwicHJvcGVydGllcyI6eyJkaXN0aW5jdF9pZCI6InVzZXJfMTE4MSIsInRva2VuIjoiNjIwZWJmYjFjYjMzYzJiY2NiNDFmOGRmMTFjYTFjMzIiLCJ0aW1lIjoxMzc4OTA3MjgxLCJtcF9saWIiOiJydWJ5IiwiJGxpYl92ZXJzaW9uIjoiMS4wLjAiLCIkdXNlcm5hbWUiOiJVc2VyOiBVc2VyIDAiLCIkZmlyc3RfbmFtZSI6IlVzZXIiLCIkbGFzdF9uYW1lIjoiMCIsIiRlbWFpbCI6InVzZXIwQGV4YW1wbGUuY29tIiwiQWNjb3VudCBJZCI6ImFjY291bnRfMTYwOSIsIkFjY291bnQgTmFtZSI6IkFjY291bnQgbmFtZSIsIlJlYXNvbiI6IlNpZ251cCJ9fQ%3D%3D
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 11 Sep 2013 13:48:02 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '1728000'
+    body:
+      encoding: UTF-8
+      string: '1'
+    http_version: 
+  recorded_at: Wed, 11 Sep 2013 13:48:02 GMT
+- request:
+    method: post
+    uri: https://api.mixpanel.com/engage
+    body:
+      encoding: US-ASCII
+      string: data=eyIkdG9rZW4iOiI2MjBlYmZiMWNiMzNjMmJjY2I0MWY4ZGYxMWNhMWMzMiIsIiR0aW1lIjoxMzc4OTA3MjgyNTAwLCIkZGlzdGluY3RfaWQiOiJ1c2VyXzExODEiLCIkc2V0Ijp7IlR5cGUiOiJVc2VyIiwiJHVzZXJuYW1lIjoiVXNlcjogVXNlciAwIiwiJGZpcnN0X25hbWUiOiJVc2VyIiwiJGxhc3RfbmFtZSI6IjAiLCIkZW1haWwiOiJ1c2VyMEBleGFtcGxlLmNvbSIsIiRjcmVhdGVkIjoiMjAxMy0wOS0xMVQxMzo0ODowMVoiLCJBY2NvdW50IElkIjoiYWNjb3VudF8xNjA5IiwiQWNjb3VudCBOYW1lIjoiQWNjb3VudCBuYW1lIn19
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 11 Sep 2013 13:48:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '1728000'
+    body:
+      encoding: UTF-8
+      string: '1'
+    http_version: 
+  recorded_at: Wed, 11 Sep 2013 13:48:03 GMT
+- request:
+    method: post
+    uri: https://api.mixpanel.com/engage
+    body:
+      encoding: US-ASCII
+      string: data=eyIkdG9rZW4iOiI2MjBlYmZiMWNiMzNjMmJjY2I0MWY4ZGYxMWNhMWMzMiIsIiR0aW1lIjoxMzc4OTA3MjgzMTk3LCIkZGlzdGluY3RfaWQiOiJ1c2VyXzExODEiLCIkc2V0X29uY2UiOnsiUmVhc29uIjoiU2lnbnVwIn19
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 11 Sep 2013 13:48:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '1728000'
+    body:
+      encoding: UTF-8
+      string: '1'
+    http_version: 
+  recorded_at: Wed, 11 Sep 2013 13:48:03 GMT
+- request:
+    method: post
+    uri: https://api.mixpanel.com/engage
+    body:
+      encoding: US-ASCII
+      string: data=eyIkdG9rZW4iOiI2MjBlYmZiMWNiMzNjMmJjY2I0MWY4ZGYxMWNhMWMzMiIsIiR0aW1lIjoxMzc4OTA3MjgzOTc1LCIkZGlzdGluY3RfaWQiOiJhY2NvdW50XzE2MDkiLCIkc2V0Ijp7Ik51bWJlciBvZiBVc2VycyI6MX19
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 11 Sep 2013 13:48:04 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '1728000'
+    body:
+      encoding: UTF-8
+      string: '1'
+    http_version: 
+  recorded_at: Wed, 11 Sep 2013 13:48:04 GMT
+recorded_with: VCR 2.5.0
