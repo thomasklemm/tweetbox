@@ -38,3 +38,5 @@ vendor/bundler_gems
 
 # Rbenv local Ruby version
 .ruby-version
+Procfile.dev
+chromedriver.log
