@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe Mailer, "invitation" do
   describe "#invitation_instructions" do
-    let(:invitation) { Fabricate(:invitation, email: 'philipp@tweetbox.co', name: 'Philipp Thiel').decorate }
+    let(:invitation) { Fabricate(:invitation, email: 'philipp@tweetbox.co',
+      first_name: 'Philipp', last_name: 'Thiel').decorate }
     let(:mail) { Mailer.invitation_instructions(invitation) }
 
     it "renders the headers" do

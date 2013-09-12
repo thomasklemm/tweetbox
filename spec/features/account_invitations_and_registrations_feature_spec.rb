@@ -11,7 +11,8 @@ describe 'Account invitations' do
     click_on 'Invite a team member'
     expect(current_path).to eq(new_account_invitation_path)
 
-    fill_in 'invitation_name', with: 'Philipp Thiel'
+    fill_in 'invitation_first_name', with: 'Philipp'
+    fill_in 'invitation_last_name', with: 'Thiel'
     fill_in 'invitation_email', with: 'philipp@rainmakers.com'
     click_on 'Create and email invitation'
 
@@ -29,7 +30,8 @@ describe 'Account invitations' do
 
     expect(current_path).to eq(edit_account_invitation_path(Invitation.first))
 
-    fill_in 'invitation_name', with: 'Peter Thiel'
+    fill_in 'invitation_first_name', with: 'Peter'
+    fill_in 'invitation_last_name', with: 'Thiel'
     fill_in 'invitation_email', with: 'peter@rainmakers.com'
     click_on 'Update'
 

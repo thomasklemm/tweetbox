@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130912004158) do
+ActiveRecord::Schema.define(version: 20130912004936) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -92,12 +92,13 @@ ActiveRecord::Schema.define(version: 20130912004158) do
     t.integer  "issuer_id",  null: false
     t.integer  "invitee_id"
     t.text     "code",       null: false
-    t.text     "name"
     t.text     "email"
     t.datetime "used_at"
     t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "first_name"
+    t.text     "last_name"
   end
 
   add_index "invitations", ["account_id"], name: "index_invitations_on_account_id", using: :btree

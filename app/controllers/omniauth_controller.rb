@@ -6,7 +6,7 @@ class OmniauthController < ProjectController
     twitter_account = TwitterAccount.from_omniauth(@project, auth, @access_scope)
 
     event_name = twitter_account.is_new_record ? 'Twitter Account Connect' : 'Twitter Account Reconnect'
-    track twitter_account, event_name
+    track event_name, twitter_account
 
     redirect_to project_twitter_accounts_path(@project),
       notice: "Your Twitter account #{ twitter_account.at_screen_name } has been connected."

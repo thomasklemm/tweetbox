@@ -1,5 +1,5 @@
 Fabricator(:activity) do
-  user      nil
-  action    "MyText"
-  trackable nil
+  tweet
+  user
+  kind    Activity::VALID_KINDS.sample
 end

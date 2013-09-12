@@ -1,9 +1,13 @@
 = form_for [:account, @invitation] do |f|
   = render 'shared/form_errors', target: @invitation
 
-  .form-group
-    = f.label :name, "Your co-worker's full name"
-    = f.text_field :name, autofocus: @invitation.new_record?, class: 'form-control', placeholder: 'Full name'
+  .form-group style='width: 49%; float: left'
+    = f.label :first_name, "First name"
+    = f.text_field :first_name, autofocus: @invitation.new_record?, class: 'form-control', placeholder: 'First name'
+
+  .form-group style='width: 49%; float: right'
+    = f.label :last_name, "Last name"
+    = f.text_field :last_name, class: 'form-control', placeholder: 'Last name'
 
   .form-group
     = f.label :email

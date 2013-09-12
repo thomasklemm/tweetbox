@@ -133,7 +133,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def create_activity(kind, user)
-    activites.create!(kind: kind, user: user)
+    activities.create!(kind: kind, user: user)
   end
 
   ##

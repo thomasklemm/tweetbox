@@ -2,6 +2,10 @@ class InvitationDecorator < Draper::Decorator
   include Draper::LazyHelpers
   delegate_all
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def issuer_name
     issuer.name
   end
@@ -15,7 +19,7 @@ class InvitationDecorator < Draper::Decorator
   end
 
   def registration_url
-    new_registration_url(invitation_code: code, email: email, name: name).html_safe
+    new_registration_url(invitation_code: code, email: email, first_name: first_name, last_name: last_name).html_safe
   end
 
   def copy_registration_url(text)

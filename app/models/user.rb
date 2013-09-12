@@ -36,6 +36,12 @@ class User < ActiveRecord::Base
   end
   alias_method :name, :full_name
 
+  # Gravatar with retro fallback
+  def gravatar_image_url(size_in_pixels=32)
+    email_hash = Digest::MD5.hexdigest(email.strip.downcase)
+    "https://secure.gravatar.com/avatar/#{ email_hash }?s=#{ size_in_pixels.to_i }&d=retro"
+  end
+
   def to_param
     "#{ id }-#{ name.parameterize }"
   end
@@ -47,10 +53,10 @@ class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   def mixpanel_hash
     {
-      '$username'    => "User: #{user.full_name}",
-      '$first_name'  => user.first_name,
-      '$last_name'   => user.last_name,
-      '$email'       => user.email,
+      '$username'    => "User: #{full_name}",
+      '$first_name'  => first_name,
+      '$last_name'   => last_name,
+      '$email'       => email,
       'Account Name' => account.name,
       'Account URL'  => dash_account_url(account)
     }

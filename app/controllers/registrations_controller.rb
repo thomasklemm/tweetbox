@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
-  before_filter :ensure_new_user
-  before_filter :load_and_ensure_active_invitation, only: :new
+  before_action :ensure_new_user
+  before_action :load_and_ensure_active_invitation, only: :new
 
   def new
     @registration = Registration.new(invitation_params)
@@ -29,15 +29,15 @@ class RegistrationsController < ApplicationController
   private
 
   def invitation_params
-    params.slice(:invitation_code, :name, :email)
+    params.slice(:invitation_code, :first_name, :last_name, :email)
   end
 
   def registration_params
-    params[:registration].slice(:invitation_code, :name, :email, :password)
+    params[:registration].slice(:invitation_code, :first_name, :last_name, :email, :password)
   end
 
   def ensure_new_user
-    user_signed_in? and return redirect_to root_url,
+    user_signed_in? and return redirect_to root_path,
       notice: "Please logout and return to complete a new registration."
   end
 

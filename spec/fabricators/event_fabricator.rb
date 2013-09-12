@@ -1,5 +1,5 @@
 Fabricator(:event) do
-  tweet
+  name
   user
-  kind    Event::VALID_KINDS.sample
+  eventable { Fabricate([:account, :project, :user, :invitation, :twitter_account, :search, :tweet, :status].sample) }
 end

@@ -77,6 +77,6 @@ class Account::InvitationsController < AccountController
   end
 
   def permitted_invitation_params
-    params.require(:invitation).permit(:name, :email, { project_ids: [] })
+    params.require(:invitation).permit(:first_name, :last_name, :email, { project_ids: [] })
   end
 end

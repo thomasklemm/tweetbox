@@ -12,7 +12,8 @@ describe 'Registration' do
     click_on 'Invite a team member'
     expect(current_path).to eq(new_account_invitation_path)
 
-    fill_in 'invitation_name', with: 'Philipp Thiel'
+    fill_in 'invitation_first_name', with: 'Philipp'
+    fill_in 'invitation_last_name', with: 'Thiel'
     fill_in 'invitation_email', with: 'philipp@rainmakers.com'
     click_on 'Create and email invitation'
 
@@ -31,7 +32,8 @@ describe 'Registration' do
     visit @invitation.registration_url
     within('form#new_registration') do
       # Prefilled inputs
-      expect(find('#registration_name').value).to eq('Philipp Thiel')
+      expect(find('#registration_first_name').value).to eq('Philipp')
+      expect(find('#registration_last_name').value).to eq('Thiel')
       expect(find('#registration_email').value).to eq('philipp@rainmakers.com')
       fill_in 'password', with: 'rainmaking123'
     end

@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # Enable miniprofiler for staff members in production
   before_action :miniprofiler
 
   # Redirect user back on detected access violation
@@ -19,14 +20,7 @@ class ApplicationController < ActionController::Base
     redirect_to request.headers["Referer"] || root_url
   end
 
-  # Returns the decorated current_user
-  def current_user
-    return if super.nil?
-    @decorated_current_user ||= UserDecorator.decorate(super)
-  end
-
-
-  # Enable MiniProfiler in production for staff members
+  # Enable miniprofiler for staff members in production
   def miniprofiler
     Rack::MiniProfiler.authorize_request if current_user && current_user.staff_member?
   end
@@ -64,19 +58,21 @@ class ApplicationController < ActionController::Base
 
     properties.reverse_merge!(eventable.mixpanel_hash) if eventable.respond_to?(:mixpanel_hash)
 
-    mixpanel_tracker.track(current_user.mixpanel_id, event_name, properties)
+    mixpanel_tracker.track(current_user.mixpanel_id, event_name, properties) unless Rails.env.test?
   end
 
   # track_user @signup.user, nil / 'Signup' / 'Invitation'
   def track_user(user=current_user, source=nil)
+    return if Rails.env.test?
+
     mixpanel_tracker.people.set(user.mixpanel_id, {
       '$first_name'  => user.first_name,
       '$last_name'   => user.last_name,
       '$email'       => user.email,
       '$created'     => user.created_at.iso8601,
-      'User URL'     => dash_user_url(self),
-      'Account Name' => account.name,
-      'Account URL'  => dash_account_url(account)
+      'User URL'     => dash_user_url(user),
+      'Account Name' => user.account.name,
+      'Account URL'  => dash_account_url(user.account)
     })
 
     mixpanel_tracker.people.set_once(user.mixpanel_id, { 'Signup Source' => source }) if source

@@ -13,7 +13,7 @@ describe Tweet do
   it { should belong_to(:author) }
   it { should belong_to(:twitter_account) }
 
-  it { should have_many(:events).dependent(:destroy) }
+  it { should have_many(:activities).dependent(:destroy) }
 
   it { should have_many(:previous_conversations).dependent(:destroy).class_name(Conversation) }
   it { should have_many(:previous_tweets).through(:previous_conversations) }

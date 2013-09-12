@@ -4,8 +4,8 @@
     = link_to 'Tweetbox Dash', dash_root_path, class: 'navbar-brand'
 
     ul class="nav navbar-nav"
-      = active_list_item [:dash, :activities] do
-        = link_to 'Activities', dash_activities_path
+      = active_list_item [:dash, :events] do
+        = link_to 'Activities', dash_events_path
 
       = active_list_item [:dash, :leads] do
         = link_to 'Leads', dash_leads_path

@@ -38,7 +38,7 @@ class Search < ActiveRecord::Base
   def mixpanel_hash
     {
       '$username'          => "Search Query",
-      'Query'              => search.query,
+      'Query'              => query,
       'Twitter Search URL' => twitter_url,
       'TA Screen Name'     => twitter_account.at_screen_name,
       'TA Name'            => twitter_account.name,

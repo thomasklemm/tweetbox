@@ -3,6 +3,8 @@ class Status < ActiveRecord::Base
   belongs_to :user
   belongs_to :twitter_account
 
+  delegate :account, to: :project
+
   has_one :tweet
 
   before_validation :generate_token, if: :new_record?
@@ -75,7 +77,7 @@ class Status < ActiveRecord::Base
       'Status Length'     => text_length,
       'Is Reply'          => reply?,
       'Is Long Status'    => long_status?,
-      'Twitter URL'       => twitter_url,
+      'Twitter URL'       => decorate.twitter_url,
       'Public Status URL' => public_status_url,
       'TA Screen Name'    => twitter_account.at_screen_name,
       'TA Name'           => twitter_account.name,

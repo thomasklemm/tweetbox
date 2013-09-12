@@ -3,7 +3,9 @@
 # registration upon invitation process
 #
 # Example:
-#   Registration.new(name: 'Thomas',
+#   Registration.new(
+#     first_name: 'Thomas',
+#     last_name: 'Klemm',
 #     email: 'thomas@tklemm.eu',
 #     password: '123123123',
 #     invitation_code: '123abc123abc')
@@ -15,12 +17,14 @@ class Registration
   attr_reader :invitation
   attr_reader :membership
 
-  attribute :name, String
+  attribute :first_name, String
+  attribute :last_name, String
   attribute :email, String
   attribute :password, String
   attribute :invitation_code, String # to add errors
 
-  validates :name,
+  validates :first_name,
+            :last_name,
             :email,
             :password, presence: true
 
@@ -61,7 +65,8 @@ class Registration
 
   def delegate_attributes_for_user
     @user = User.new do |user|
-      user.name = name
+      user.first_name = first_name
+      user.last_name = last_name
       user.email = email
       user.password = password
       user.password_confirmation = password
@@ -69,7 +74,8 @@ class Registration
   end
 
   def delegate_errors_for_user
-    errors.add(:name, @user.errors[:name].try(:first))
+    errors.add(:first_name, @user.errors[:first_name].try(:first))
+    errors.add(:last_name, @user.errors[:last_name].try(:first))
     errors.add(:email, @user.errors[:email].try(:first))
     errors.add(:password, @user.errors[:password].try(:first))
   end

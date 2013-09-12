@@ -21,7 +21,7 @@ describe Account::InvitationsController do
     it "permits only name, email and project_ids parameters" do
       valid_invitation_attributes.merge!(project_ids: valid_invitation_attributes[:projects].map(&:id))
       post :create, account_id: account, invitation: valid_invitation_attributes
-      expect(subject.send(:permitted_invitation_params).keys).to eq(%w(name email project_ids))
+      expect(subject.send(:permitted_invitation_params).keys).to eq(%w(first_name last_name email project_ids))
     end
   end
 

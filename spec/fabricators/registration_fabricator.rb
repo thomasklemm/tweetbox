@@ -1,5 +1,6 @@
 Fabricator(:registration) do
-  name          { sequence(:name)  { |i| "User #{i}" } }
+  first_name    { sequence(:first_name)  { |i| "First #{i}" } }
+  last_name     { sequence(:last_name)   { |i| "Last #{i}" } }
   email         { sequence(:email) { |i| "registration_user#{i}@example.com" } }
   password      'password'
 

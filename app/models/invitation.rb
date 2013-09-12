@@ -11,7 +11,8 @@ class Invitation < ActiveRecord::Base
 
   validates :account,
             :issuer,
-            :name,
+            :first_name,
+            :last_name,
             :email,
             :code, presence: true
   validates :code, uniqueness: true
