@@ -9,20 +9,23 @@ class SignupsController < ApplicationController
     if @signup.save
       sign_in @signup.user
 
-      # Internal tracking
-      track_activity @signup.user, :sign_up
-      track_activity @signup.account, :create
-      track_activity @signup.project, :create
+      track 'User Create By Signup', @signup.user
+      track_user @signup.user, 'Signup'
 
-      # Mixpanel tracking
-      unless Rails.env.test?
-        UserTracker.new(@signup.user).track_create_by_signup
-        AccountTracker.new(@signup.account, current_user).track_create
-        ProjectTracker.new(@signup.project, current_user).track_create
-      end
+      track 'Account Create', @signup.account
+      track 'Project Create', @signup.project
+
+      track 'Signup Success', @signup.user
 
       redirect_to projects_path, notice: 'You signed up successfully.'
     else
+      track 'Signup Fail', nil, {
+        'First Name'   => @signup.first_name,
+        'Last Name'    => @signup.last_name,
+        'Email'        => @signup.email,
+        'Company Name' => @signup.company_name
+      }
+
       render :new
     end
   end

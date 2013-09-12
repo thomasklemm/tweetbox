@@ -15,9 +15,7 @@ class Account::ProjectsController < AccountController
     authorize @project, :manage?
 
     if @project.save
-      track_activity @project, :create
-      ProjectTracker.new(@project, current_user).track_create unless Rails.env.test?
-
+      track 'Project Create', @project
       redirect_to account_projects_path, notice: 'Project has been created.'
     else
       render :new
@@ -29,7 +27,7 @@ class Account::ProjectsController < AccountController
 
   def update
     if @project.update_attributes(project_params)
-      ProjectTracker.new(@project, current_user).track_update unless Rails.env.test?
+      track 'Project Update', @project
       redirect_to account_projects_path, notice: 'Project has been updated.'
     else
       render :edit

@@ -48,7 +48,10 @@ class TwitterAccountsController < ProjectController
       Please remove these search queries first or update them to use another Twitter account."
 
     if @twitter_account.destroy
-      TwitterAccountTracker.new(@twitter_account, current_user).track_destroy unless Rails.env.test?
+      track 'Twitter Account Destroy', @twitter_account, {
+        'Screen Name' => @twitter_account.at_screen_name
+      }
+
       flash.notice = "Twitter account #{ @twitter_account.at_screen_name } has been removed from Tweetbox."
     else
       flash.notice = "#{ @twitter_account.at_screen_name } could not be removed."

@@ -15,6 +15,7 @@ class Account::InvitationsController < AccountController
 
     if @invitation.save
       @invitation.deliver_mail
+      track 'Invitation Create', @invitation
       redirect_to account_invitations_path, notice: "Invitation has been created and mailed."
     else
       render :new
@@ -26,6 +27,7 @@ class Account::InvitationsController < AccountController
 
   def update
     if @invitation.update_attributes(invitation_params)
+      track 'Invitation Update', @invitation
       redirect_to account_invitations_path, notice: "Invitation has been updated."
     else
       render :edit
@@ -34,17 +36,20 @@ class Account::InvitationsController < AccountController
 
   def deactivate
     @invitation.deactivate!
+    track 'Invitation Deactivate', @invitation
     redirect_to :back, notice: 'Invitation has been deactivated.'
   end
 
   def reactivate
     @invitation.reactivate!
+    track 'Invitation Reactivate', @invitation
     redirect_to :back, notice: 'Invitation has been reactivated.'
   end
 
   # Send invitation mail once again
   def deliver_mail
     @invitation.deliver_mail
+    track 'Invitation Deliver Mail', @invitation
     redirect_to account_invitations_path, notice: 'Invitation email has been sent.'
   end
 

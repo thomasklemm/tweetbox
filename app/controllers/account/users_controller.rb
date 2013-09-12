@@ -18,6 +18,7 @@ class Account::UsersController < AccountController
 
   def upgrade_to_admin
     @account.grant_admin_membership!(@user)
+    track 'User Grant Admin Account Membership', @user
     redirect_to account_users_path, notice: "#{ @user.try(:name) } has become an account admin."
   end
 

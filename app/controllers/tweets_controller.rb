@@ -16,11 +16,13 @@ class TweetsController < TweetController
   alias_method :index, :incoming
 
   def stream
-    @tweets = project_tweets.stream.by_date(:desc).page(params[:page]).per(25)
+    @tweets = project_tweets.stream.by_date(:desc).
+      page(params[:page]).per(25)
   end
 
   def posted
-    @tweets = project_tweets.posted.by_date(:desc).limit(20).decorate
+    @tweets = project_tweets.posted.by_date(:desc).
+      page(params[:page]).per(25)
   end
 
   ##
@@ -33,6 +35,10 @@ class TweetsController < TweetController
     @tweet.resolve_by(current_user)
     @tweet.reload
     @tweet.push
+
+    track 'Tweet Resolve', @tweet, {
+      'Resolution Time' => @tweet.resolution_time
+    }
 
     respond_to do |format|
       format.html { redirect_to [@project, :tweets], notice: "Tweet has been resolved." }

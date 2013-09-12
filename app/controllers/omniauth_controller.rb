@@ -5,12 +5,8 @@ class OmniauthController < ProjectController
     # Create or update twitter account
     twitter_account = TwitterAccount.from_omniauth(@project, auth, @access_scope)
 
-    track_activity twitter_account, :connect
-
-    unless Rails.env.test?
-      tracker = TwitterAccountTracker.new(twitter_account, current_user)
-      twitter_account.is_new_record ? tracker.track_create : tracker.track_update
-    end
+    event_name = twitter_account.is_new_record ? 'Twitter Account Connect' : 'Twitter Account Reconnect'
+    track twitter_account, event_name
 
     redirect_to project_twitter_accounts_path(@project),
       notice: "Your Twitter account #{ twitter_account.at_screen_name } has been connected."

@@ -35,6 +35,7 @@ class StatusesController < ProjectController
   # POST statuses/:id/publish
   def publish
     @status.publish! # will only publish status once
+    track 'Status Publish', @status
 
     if @status.previous_tweet
       # Resolve the previous tweet
