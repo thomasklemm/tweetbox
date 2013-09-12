@@ -1,2 +1,2 @@
-web: bundle exec puma -p $PORT -e $RACK_ENV -t 3:10
-worker: bundle exec sidekiq -e production -c 5
+web: bundle exec puma -p $PORT -C ./config/puma.rb
+worker: bundle exec sidekiq -e $RACK_ENV -c 5
