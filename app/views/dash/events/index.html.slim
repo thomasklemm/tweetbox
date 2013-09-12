@@ -1,0 +1,28 @@
+/ dash events
+
+table class="table table-striped events-table"
+  legend style="margin-bottom: 6px; border-bottom: none" Events
+
+  thead
+    tr
+      th Time
+      th Event
+
+  tbody
+    - @events.each do |event|
+      tr.event
+
+        / time
+        td = timestamp_tag(event.created_at)
+
+        / event
+        = link_to event.name, [:dash, event]
+        ' :
+
+        - if event.eventable
+          - if event.has_dash_page?
+            = link_to eventable.to_s, [:dash, eventable]
+          - else
+            = eventable.to_s
+        - else
+          span.text-muted Eventable has been removed since.

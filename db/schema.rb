@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130910172018) do
+ActiveRecord::Schema.define(version: 20130912004158) do
 
   create_table "accounts", force: true do |t|
     t.text     "name",           null: false
@@ -21,15 +21,17 @@ ActiveRecord::Schema.define(version: 20130910172018) do
   end
 
   create_table "activities", force: true do |t|
-    t.integer  "user_id"
-    t.text     "action"
-    t.integer  "trackable_id"
-    t.string   "trackable_type"
+    t.integer  "tweet_id",   null: false
+    t.integer  "user_id",    null: false
+    t.integer  "project_id", null: false
+    t.text     "kind",       null: false
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+  add_index "activities", ["project_id"], name: "index_activities_on_project_id", using: :btree
+  add_index "activities", ["tweet_id"], name: "index_activities_on_tweet_id", using: :btree
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "authors", force: true do |t|
@@ -67,17 +69,15 @@ ActiveRecord::Schema.define(version: 20130910172018) do
   add_index "conversations", ["previous_tweet_id"], name: "index_conversations_on_previous_tweet_id", using: :btree
 
   create_table "events", force: true do |t|
-    t.integer  "tweet_id",   null: false
-    t.integer  "user_id",    null: false
-    t.integer  "project_id", null: false
-    t.text     "kind",       null: false
-    t.text     "text"
+    t.text     "name"
+    t.integer  "user_id"
+    t.integer  "eventable_id"
+    t.string   "eventable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "events", ["project_id"], name: "index_events_on_project_id", using: :btree
-  add_index "events", ["tweet_id"], name: "index_events_on_tweet_id", using: :btree
+  add_index "events", ["eventable_id", "eventable_type"], name: "index_events_on_eventable_id_and_eventable_type", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "invitation_projects", force: true do |t|
@@ -212,10 +212,10 @@ ActiveRecord::Schema.define(version: 20130910172018) do
   add_index "statuses", ["twitter_id"], name: "index_statuses_on_twitter_id", using: :btree
 
   create_table "tweets", force: true do |t|
-    t.integer  "project_id",                                  null: false
+    t.integer  "project_id",                                      null: false
     t.integer  "twitter_account_id"
-    t.integer  "author_id",                                   null: false
-    t.integer  "twitter_id",            limit: 8,             null: false
+    t.integer  "author_id",                                       null: false
+    t.integer  "twitter_id",            limit: 8,                 null: false
     t.text     "text"
     t.integer  "in_reply_to_status_id", limit: 8
     t.integer  "in_reply_to_user_id",   limit: 8
@@ -228,8 +228,10 @@ ActiveRecord::Schema.define(version: 20130910172018) do
     t.integer  "favorite_count",                  default: 0
     t.integer  "previous_tweets_count",           default: 0
     t.integer  "future_tweets_count",             default: 0
-    t.integer  "events_count",                    default: 0
+    t.integer  "activities_count",                default: 0
     t.integer  "status_id"
+    t.datetime "resolved_at"
+    t.boolean  "replied_to",                      default: false
   end
 
   add_index "tweets", ["project_id", "author_id"], name: "index_tweets_on_project_id_and_author_id", using: :btree
