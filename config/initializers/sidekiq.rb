@@ -1,6 +1,4 @@
 # TODO: REWORK AFTER RAILS4 UPGRADE
-# TODO: Remove on upgrading to Rails 4
-require 'active_record/associations/association_scope'
 require 'sidekiq/web'
 
 Sidekiq.configure_server do |config|
@@ -16,9 +14,9 @@ Sidekiq.configure_server do |config|
   config.poll_interval = 5
 end
 
-# HTTP Basic authentication for the Sidekiq Web Interface
-Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-  username == 'tweetbox' && password == 'dash'
-end
+# # HTTP Basic authentication for the Sidekiq Web Interface
+# Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+#   username == 'tweetbox' && password == 'dash'
+# end
 
 # Source: https://github.com/mperham/sidekiq/wiki/Advanced-Options
