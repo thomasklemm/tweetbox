@@ -87,7 +87,25 @@ Tweetbox::Application.routes.draw do
   match 'auth/twitter/callback' => 'omniauth#twitter', via: [:get, :post]
   match 'auth/failure'          => 'omniauth#failure', via: [:get, :post]
 
+  ##
   # Dash
+
+  # Links between Dash and Mixpanel
+
+  # Open User in Mixpanel
+  # https://mixpanel.com/report/#{ ENV['MIXPANEL_PROJECT_ID'] }/explore/#user?distinct_id=user_1
+
+  # Open Event in Dash
+  # /dash/events/:id
+
+  # Open Eventable in Dash
+  # /dash/users/:id
+  # /dash/accounts/:id
+  # /dash/projects/:id
+  # /dash/twitter_accounts/:id
+  # /dash/searches/:id
+  # /dash/invitations/:id
+
   authenticate :user, lambda { |user| user.staff_member? } do
     namespace :dash do
       resources :leads, only: [:show, :update, :destroy] do
@@ -104,9 +122,14 @@ Tweetbox::Application.routes.draw do
         end
       end
 
+      resources :events, only: [:index, :show]
+
       resources :users, only: [:index, :show]
       resources :accounts, only: [:index, :show]
-      resources :activities, only: :index
+      resources :projects, only: [:index, :show]
+      resources :twitter_accounts, only: [:index, :show]
+      resources :searches, only: [:index, :show]
+      resources :invitations, only: [:index, :show]
 
       root to: redirect('/dash/leads/search')
     end
