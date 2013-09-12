@@ -36,7 +36,7 @@ class Retweet
     status = post_retweet
     tweet = create_new_tweet(status)
 
-    create_events
+    create_activities
     tweet
   end
 
@@ -50,8 +50,8 @@ class Retweet
     @new_tweet = project.create_tweet_from_twitter(status, state: :posted, twitter_account: twitter_account)
   end
 
-  def create_events
-    old_tweet.create_event(:retweet, user)
-    new_tweet.create_event(:post, user)
+  def create_activities
+    old_tweet.create_activity(:retweet, user)
+    new_tweet.create_activity(:post, user)
   end
 end

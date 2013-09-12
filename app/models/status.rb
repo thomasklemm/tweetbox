@@ -61,6 +61,33 @@ class Status < ActiveRecord::Base
     publish_status!
   end
 
+  ##
+  # Mixpanel
+
+  def mixpanel_id
+    "status_#{ id }"
+  end
+
+  include Rails.application.routes.url_helpers
+  def mixpanel_hash
+    {
+      '$username'         => "#{ reply? ? 'Reply' : 'Status' } (#{ text_length } characters)",
+      'Status Length'     => text_length,
+      'Is Reply'          => reply?,
+      'Is Long Status'    => long_status?,
+      'Twitter URL'       => twitter_url,
+      'Public Status URL' => public_status_url,
+      'TA Screen Name'    => twitter_account.at_screen_name,
+      'TA Name'           => twitter_account.name,
+      'TA Twitter URL'    => twitter_account.twitter_url,
+      'TA URL'            => dash_twitter_account_url(twitter_account),
+      'Project Name'      => project.name,
+      'Project URL'       => dash_project_url(project),
+      'Account Name'      => account.name,
+      'Account URL'       => dash_account_url(account)
+    }
+  end
+
   private
 
   # Generates a token without overriding the existing one
@@ -93,10 +120,11 @@ class Status < ActiveRecord::Base
     # Link tweet and status together
     tweet.status = self
 
-    # Create :post event on new tweet
-    # and :post_reply event on previous tweet
-    tweet.create_event(:post, user)
-    previous_tweet.try(:create_event, :post_reply, user)
+    # Create :post activity on new tweet...
+    tweet.create_activity(:post, user)
+
+    # ...and :post_reply activity on previous tweet
+    previous_tweet.has_been_replied_to_by(user) if previous_tweet
 
     self.save! and tweet.save!
   end

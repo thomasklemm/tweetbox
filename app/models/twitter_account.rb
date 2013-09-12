@@ -34,6 +34,10 @@ class TwitterAccount < ActiveRecord::Base
     "@#{ screen_name }"
   end
 
+  def twitter_url
+    "https://twitter.com/#{ screen_name }"
+  end
+
   def default?
     project.default_twitter_account_id == self.id
   end
@@ -44,6 +48,21 @@ class TwitterAccount < ActiveRecord::Base
 
   def mixpanel_id
     "twitter_account_#{ id }"
+  end
+
+  include Rails.application.routes.url_helpers
+  def mixpanel_hash
+    {
+      '$username'      => "Twitter Account: #{at_screen_name}",
+      'TA Screen Name' => at_screen_name,
+      'TA Name'        => name,
+      'TA Twitter URL' => twitter_url,
+      'TA URL'         => dash_twitter_account_url(self),
+      'Project Name'   => project.name,
+      'Project URL'    => dash_project_url(project),
+      'Account Name'   => account.name,
+      'Account URL'    => dash_account_url(account)
+    }
   end
 
   # Returns a Twitter::Client instance

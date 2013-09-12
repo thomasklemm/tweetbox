@@ -41,6 +41,15 @@ class Account < ActiveRecord::Base
     "account_#{ id }"
   end
 
+  include Rails.application.routes.url_helpers
+  def mixpanel_hash
+    {
+      '$username'    => "Account: #{name}",
+      'Account Name' => name,
+      'Account URL'  => dash_account_url(self)
+    }
+  end
+
   private
 
   # Grant the given user an admin membership of the account

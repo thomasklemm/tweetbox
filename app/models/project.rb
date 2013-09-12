@@ -47,6 +47,17 @@ class Project < ActiveRecord::Base
     "project_#{ id }"
   end
 
+  include Rails.application.routes.url_helpers
+  def mixpanel_hash
+    {
+      '$username'    => "Project: #{name}",
+      'Project Name' => name,
+      'Project URL'  => dash_project_url(self),
+      'Account Name' => account.name,
+      'Account URL'  => dash_account_url(account)
+    }
+  end
+
   def default_twitter_account_with_fallback
     default_twitter_account || twitter_accounts.sample
   end

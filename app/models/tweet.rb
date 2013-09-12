@@ -15,7 +15,7 @@ class Tweet < ActiveRecord::Base
             foreign_key: :future_tweet_id,
             dependent: :destroy
   has_many :previous_tweets,
-             -> { order(created_at: :asc).includes(:author, events: :user) },
+             -> { order(created_at: :asc).includes(:author, activities: :user) },
              through: :previous_conversations,
              source: :previous_tweet
 
@@ -24,12 +24,12 @@ class Tweet < ActiveRecord::Base
             foreign_key: :previous_tweet_id,
             dependent: :destroy
   has_many :future_tweets,
-             -> { order(created_at: :asc).includes(:author, events: :user) },
+             -> { order(created_at: :asc).includes(:author, activities: :user) },
              through: :future_conversations,
              source: :future_tweet
 
-  # Events
-  has_many :events, -> { order(created_at: :asc).includes(:user) }, dependent: :destroy
+  # Activities
+  has_many :activities, -> { order(created_at: :asc).includes(:user) }, dependent: :destroy
 
   # Status
   belongs_to :status
@@ -61,8 +61,8 @@ class Tweet < ActiveRecord::Base
 
   scope :by_date, ->(direction=:asc) { order(created_at: direction) }
 
-  scope :include_conversation, -> { includes(:project, :author, :status, :events, :previous_tweets, :future_tweets) }
-  scope :include_deep_conversation, -> { includes(:project, :author, :events, previous_tweets: [:author, events: :user], future_tweets: [:author, events: :user])  }
+  scope :include_conversation, -> { includes(:project, :author, :status, :activities, :previous_tweets, :future_tweets) }
+  scope :include_deep_conversation, -> { includes(:project, :author, :activities, previous_tweets: [:author, activities: :user], future_tweets: [:author, activities: :user])  }
 
   # Excludes the given twitter id
   scope :below_twitter_id, ->(twitter_id) { where('twitter_id < ?', twitter_id) if twitter_id.present? }
@@ -92,7 +92,7 @@ class Tweet < ActiveRecord::Base
   end
 
   ##
-  # States, events and transitions
+  # States, events, transitions and activities
   #
   # Defined states (initial state: :conversation)
   # - :conversation marks tweets that have been pulled in to build up conversations
@@ -117,16 +117,23 @@ class Tweet < ActiveRecord::Base
 
   def resolve_by(user)
     resolve
-    create_event(:resolve, user)
-    save!
+    create_activity(:resolve, user)
+    self.resolved_at = Time.current
+    self.save!
   end
 
   def start_reply_by(user)
-    create_event(:start_reply, user)
+    create_activity(:start_reply, user)
   end
 
-  def create_event(kind, user)
-    events.create!(kind: kind, user: user)
+  def has_been_replied_to_by(user)
+    create_activity(:post_reply, user)
+    self.replied_to = true
+    self.save!
+  end
+
+  def create_activity(kind, user)
+    activites.create!(kind: kind, user: user)
   end
 
   ##
@@ -190,5 +197,10 @@ class Tweet < ActiveRecord::Base
   # Url parameter
   def to_param
     twitter_id
+  end
+
+  def resolution_time_in_seconds
+    return unless resolved_at && created_at
+    resolved_at - created_at
   end
 end

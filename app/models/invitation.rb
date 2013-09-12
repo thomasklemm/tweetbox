@@ -60,6 +60,22 @@ class Invitation < ActiveRecord::Base
     mail.deliver
   end
 
+  def mixpanel_id
+    "invitation_#{ id }"
+  end
+
+  include Rails.application.routes.url_helpers
+  def mixpanel_hash
+    {
+      '$username'    => "Invitation: #{ first_name } #{ last_name }",
+      '$first_name'  => first_name,
+      '$last_name'   => last_name,
+      '$email'       => email,
+      'Account Name' => account.name,
+      'Account URL'  => dash_account_url(account)
+    }
+  end
+
   private
 
   # Generates a random and unique invitation code

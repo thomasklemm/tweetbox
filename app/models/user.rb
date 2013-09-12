@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :projects, through: :permissions
 
-  # Activities (Business events)
-  has_many :activities
+  # Events (engagements relevant to our business)
+  has_many :events
 
   # Devise validates email on presence and uniqueness (also when user changes his email)
   # Devise validates password on presence, confirmation, and length
@@ -36,17 +36,23 @@ class User < ActiveRecord::Base
   end
   alias_method :name, :full_name
 
-  def name=(new_name)
-    parts = new_name.split(' ')
-    self.first_name = parts[0]
-    self.last_name = parts[1]
-  end
-
   def to_param
     "#{ id }-#{ name.parameterize }"
   end
 
   def mixpanel_id
     "user_#{ id }"
+  end
+
+  include Rails.application.routes.url_helpers
+  def mixpanel_hash
+    {
+      '$username'    => "User: #{user.full_name}",
+      '$first_name'  => user.first_name,
+      '$last_name'   => user.last_name,
+      '$email'       => user.email,
+      'Account Name' => account.name,
+      'Account URL'  => dash_account_url(account)
+    }
   end
 end

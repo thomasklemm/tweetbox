@@ -34,6 +34,23 @@ class Search < ActiveRecord::Base
     "search_#{ id }"
   end
 
+  include Rails.application.routes.url_helpers
+  def mixpanel_hash
+    {
+      '$username'          => "Search Query",
+      'Query'              => search.query,
+      'Twitter Search URL' => twitter_url,
+      'TA Screen Name'     => twitter_account.at_screen_name,
+      'TA Name'            => twitter_account.name,
+      'TA Twitter URL'     => twitter_account.twitter_url,
+      'TA URL'             => dash_twitter_account_url(twitter_account),
+      'Project Name'       => project.name,
+      'Project URL'        => dash_project_url(project),
+      'Account Name'       => account.name,
+      'Account URL'        => dash_account_url(account)
+    }
+  end
+
   private
 
   def search_options
