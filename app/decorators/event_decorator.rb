@@ -1,4 +1,4 @@
-class EventDecorator < Draper::Decorator
+class ActivityDecorator < Draper::Decorator
   include Draper::LazyHelpers
   delegate_all
 
@@ -9,7 +9,7 @@ class EventDecorator < Draper::Decorator
   private
 
   ##
-  # Events
+  # Activites
 
   def render_start_reply
     "#{ formatted_user_name } started replying.#{ formatted_timestamp }".html_safe

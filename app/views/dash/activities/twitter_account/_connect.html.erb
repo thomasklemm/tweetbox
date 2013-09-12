@@ -1,5 +1,0 @@
-<% if twitter_account %>
-  connected <%= link_to twitter_account.at_screen_name, "https://twitter.com/intent/user?screen_name=#{ twitter_account.screen_name }" %> to the <%= twitter_account.project.name %> project (<%= pluralize twitter_account.project.twitter_accounts.size, 'Twitter account' %>)
-<% else %>
-  connected a Twitter account which has since been disconnected
-<% end %>

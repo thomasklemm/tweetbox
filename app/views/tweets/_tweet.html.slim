@@ -22,15 +22,15 @@
   div
     span.text = tweet.text
 
-  / events
-  .events
-    - if tweet.events.size > 0
-      - tweet.events.each do |event|
-        - event &&= event.decorate
+  / activities
+  .activities
+    - if tweet.activities.size > 0
+      - tweet.activities.each do |activity|
+        - activity &&= activity.decorate
 
-        = div_for event do
+        = div_for activity do
           = icon_tag 'caret-right'
-          = event.render
+          = activity.render
 
   / actions
   - if tweet.incoming?
