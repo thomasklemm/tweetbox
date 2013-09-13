@@ -154,7 +154,8 @@ group :test do
   gem 'timecop'
   gem 'simplecov', require: false
   # gem 'coveralls', require: false
-  gem 'capybara-webkit'
+  # gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'launchy'
   gem 'webmock'
   gem 'vcr'
