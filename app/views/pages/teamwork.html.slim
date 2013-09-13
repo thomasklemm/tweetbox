@@ -1,132 +1,125 @@
-div class="container feature-landing-teamwork"
+/ teamwork
+.marketing.long-reply
+  .row
+    .business-woman-background
 
-  div class="row"
-    div class="span12"
-      div class="smiling"
-        div class="logo center"
-          = image_tag "tweetbox/logo.png", :size => "180x180"
-          h1 Tweetbox
-          h2 Twitter for business
-          = link_to 'Start to improve your teamwork now', new_signup_path, class: 'btn btn-large btn-success'
+      .brand
+        = image_tag "tweetbox/logo.png", size: "160x160", class: 'brand-logo'
+        .brand-name Tweetbox
+        .brand-tagline The Twitter Client for Business
+        = link_to 'Improve your teamwork now', new_signup_path, class: 'btn call-to-action'
 
-  div class="row"
-    div class="span12 center"
-      h1 You work in teams?
-      h2 This is how you could organize your twitter with Tweetbox.
+  .space-three
+  .row.text-center
+    h1.heading You work in teams?
+    h2.subheading Let us show you how you could organize your twitter with Tweetbox.
 
-  hr
-
-  div class="row"
-    div class="span12"
-      div class="span5 offset1 center"
-        p &nbsp;
-        p If you are working in a team, <br>like the Town Musicians of Bremen, you might all still be using the same twitter account and its password.
-      div class="span5 center"
-        = image_tag "landing/teamwork/town_musicians.jpg"
-        p @TownMusiciansOfBremen
+  .space.three
+  .space-three
+  .row.text-center
+    p class="text" If you are working in a team, <br>like the Town Musicians of Bremen, you might all still be using the same twitter account and its password.
+    .col-md-12.text-center
+      = image_tag "landing/teamwork/town_musicians.jpg"
+      p class="text" @TownMusiciansOfBremen
 
   hr
 
-  div class="row"
-    div class="span12 center"
-      h3 Tweetbox enables you to keep your account information to yourself <br>and work with your team.
+  .row.text-center
+    h2.subheading Tweetbox enables you to keep your account information to yourself <br>and work with your team.
+    .space-two
 
   hr
 
-  div class="row"
-    div class="span12"
-      div class="span4 offset2"
-        = image_tag "landing/teamwork/cat_circle.gif"
-      div class="span5 center"
-        p Imagine our cat, the Head of Marketing of our Town Musicians of Bremen, registers at Tweetbox and adds his @TownMusiciansOfBremen account.
+  .row
+    .col-md-3.col-md-offset-3
+      = image_tag "landing/teamwork/cat_circle.gif", class: "img-responsive"
+    .col-md-3.text-center
+      p class="text"Imagine our cat "Meow", the Head of Marketing of our Town Musicians of Bremen, registers at Tweetbox and adds his @TownMusiciansOfBremen account.
 
   hr
 
-  div class="row"
-    div class="span12"
-      div class="span5 offset1 center"
-        p &nbsp;
-        p &nbsp;
-        p Now he is able to invite team members to his account without sharing the main account information.
-        p They are like him able to read, reply and tweet.
-      div class="span6 center"
-        = image_tag "landing/teamwork/add_team_member.gif"
+  .row
+    .col-md-5.col-md-offset-1.text-center
+      .space-three
+      p class="text" Now he is able to invite team members to his account without sharing the main account information.
+      p class="text" They are like him able to read, reply and tweet.
+    .col-md-6.text-center
+      = image_tag "landing/teamwork/add_team_member.gif", class: "img-responsive"
 
   hr
 
-  div class="row"
-    div class="span12 center"
-      h1 Now lets add some complexity.
-      h2 As the Town Musicians of Bremen also have addtional twitter accounts there is more to manage.
+  .row
+    .col-md-12.text-center
+      h1.heading Now lets add some complexity.
+      h2.subheading As the Town Musicians of Bremen also have addtional twitter accounts there is more to manage.
 
-  div class="row"
-    div class="span12 center"
-      = image_tag "landing/teamwork/multiple_accounts.gif"
+  .row.text-center
+    = image_tag "landing/teamwork/multiple_accounts.gif"
+    .space-three
+    h3.subheading As you can see you can add multiple twitter accounts, group them in projects and add different team members to each project.
+    .space-three
+
+  .row.text-center
+    =image_tag "landing/teamwork/admin.gif"
+    .space-two
+    h3.subheading Admin "superpowers" can also be shared. ;-)
+  .space-two
+
+  hr
+
+  .row.text-center
+    h1.heading Don't read stuff twice.
+    h2.subheading You will always be informed about the actions your team members take.
+  .space-two
+
+  .row
+    .col-md-2.col-md-offset-2.text-center
+      = image_tag "landing/teamwork/john_doe.gif", :class => "img-polaroid"
+    .col-md-8
+      h4 John Doe @johndoe
+      p class="text" @TownMusiciansOfBremen Can you tell me where and when your next concert will be?
+  .space-one
+  .row
+    .col-md-2.col-md-offset-2
+      = image_tag "landing/teamwork/arrow.gif"
+    .col-md-8
+      = image_tag "landing/teamwork/the_donkey_small.gif"
+      |  "I-A" started replying 1 minute ago.
       p &nbsp;
-      h3 As you can see you can add multiple twitter accounts, group them in projects and add different team members to each project.
-      p &nbsp;
 
-  div class="row"
-    div class="span12 center"
-      =image_tag "landing/teamwork/admin.gif"
-      p &nbsp;
-      h3 Admin "superpowers" can also be shared. ;-)
-
-  hr
-
-  div class="row"
-    div class="span12 center"
-      h1 Don't read stuff twice.
-      h2 You will always be informed about the actions your team members take.
-      p &nbsp;
-
-  div class="row"
-    div class="span12"
-      div class="span2 offset2 center"
-        = image_tag "landing/teamwork/john_doe.gif", :class => "img-polaroid"
-      div class="span6"
-        h4 John Doe @johndoe
-        p @TownMusiciansOfBremen Can you tell me where and when your next concert will be?
-    div class="span12"
-      div class="span2"
-        = image_tag "landing/teamwork/arrow.gif"
-      div class="span9"
-        = image_tag "landing/teamwork/the_donkey_small.gif"
-        |  The donkey started replying 1 minute ago.
-        p &nbsp;
-
-  div class="row"
-    div class="span12"
-      div class="span2 offset2 center"
-        = image_tag "landing/teamwork/jane_doe.gif", :class => "img-polaroid"
-      div class="span6"
-        h4 Jane Doe @janedoe
-        p @johndoe Did you know that I really love #TownMusiciansOfBremen? Their music is awesome!!
-    div class="span12"
-      div class="span2"
-        = image_tag "landing/teamwork/arrow.gif"
-      div class="span9"
-        = image_tag "landing/teamwork/the_cock_small.gif"
-        |  The cock resolved the tweet 8 minutes ago.
-        p &nbsp;
-
-  hr
-
-  div class="row"
-    div class="span12 center"
-      h1 Structure your business to your needs.
-      h2 Add as many accounts, team members and projects as your organisation needs.
-
-  div class="row"
-    div class="span12 center"
-      = link_to 'Start to improve your teamwork now', new_signup_path, class: 'btn btn-large btn-success'
+  .row
+    .col-md-2.col-md-offset-2.text-center
+      = image_tag "landing/teamwork/jane_doe.gif", :class => "img-polaroid"
+    .col-md-8
+      h4 Jane Doe @janedoe
+      p class="text" @johndoe Did you know that I really love #TownMusiciansOfBremen? Their music is awesome!!
+  .space-one
+  .row
+    .col-md-2.col-md-offset-2
+      = image_tag "landing/teamwork/arrow.gif"
+    .col-md-8
+      = image_tag "landing/teamwork/the_cock_small.gif"
+      |  "Cock-a-doodle-doo" resolved the tweet 8 minutes ago.
       p &nbsp;
 
   hr
 
-  div class="row"
-    div class="span4 offset8"
-      = link_to 'See other reasons to use Tweetbox ', static_path(:longtweet)
+  .row
+    .col-md-12.text-center
+      h1.heading Structure your business to your needs.
+      h2.subheading Add as many accounts, team members and projects as your organisation needs.
+
+  .row
+    .col-md-12.text-center
+      = link_to 'Improve your teamwork now', new_signup_path, class: 'btn second-call-to-action'
+    .space-three
+
+  hr
+
+  .row
+    .col-md-4.col-md-offset-8
+      = link_to 'See other reasons to use Tweetbox ', root_path
       i class="icon-chevron-right"
+    .space-three
 
   hr
