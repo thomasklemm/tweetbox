@@ -24,12 +24,7 @@ describe 'Registration' do
 
   it "registers a new user given a valid invitation" do
     visit @invitation.registration_url
-    expect(page).to have_content("Please logout and return to complete a new registration")
 
-    click_on 'Logout'
-    expect(page).to have_content("Signed out successfully")
-
-    visit @invitation.registration_url
     within('form#new_registration') do
       # Prefilled inputs
       expect(find('#registration_first_name').value).to eq('Philipp')

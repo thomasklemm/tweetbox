@@ -58,11 +58,4 @@ describe ApplicationController do
       end
     end
   end
-
-  describe "#current_user" do
-    it "returns the decorated current_user" do
-      expect(controller.current_user).to be_present
-      expect(controller.current_user).to be_decorated
-    end
-  end
 end
