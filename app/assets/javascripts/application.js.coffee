@@ -118,3 +118,6 @@ jQuery ->
   # Alerts / Flash messages
   $('.alert').click ->
     $(this).slideUp(200)
+
+  $('.alert .close').click ->
+    $(this).parent().slideUp(200)

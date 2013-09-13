@@ -9,7 +9,7 @@ class TweetPipeline
   def to_html
     result = pipeline.call(@text)
     t = auto_link_usernames_or_lists(result[:output].to_s, auto_link_usernames_opts)
-    t = auto_html(t) { link }
+    t = auto_html(t) { link(target: :blank) }
     #result[:output].to_s
   end
 
