@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
 
     properties.reverse_merge!(eventable.mixpanel_hash) if eventable.respond_to?(:mixpanel_hash)
 
-    mixpanel_tracker.track(current_user.mixpanel_id, event_name, properties) unless Rails.env.test?
+    mixpanel_tracker.track(user.try(:mixpanel_id), event_name, properties) unless Rails.env.test?
   end
 
   # track_user @signup.user, nil / 'Signup' / 'Invitation'

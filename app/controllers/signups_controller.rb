@@ -17,7 +17,7 @@ class SignupsController < ApplicationController
 
       track 'Signup Success', @signup.user
 
-      redirect_to projects_path, notice: 'You signed up successfully.'
+      redirect_to projects_path, notice: 'Welcome to Tweetbox.'
     else
       track 'Signup Fail', nil, {
         'First Name'   => @signup.first_name,

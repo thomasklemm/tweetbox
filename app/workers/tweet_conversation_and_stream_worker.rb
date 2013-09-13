@@ -14,6 +14,6 @@ class TweetConversationAndStreamWorker
   end
 
   def push_conversation
-    TweetPusher.new(@tweet).stream_conversation
+    # TweetPusher.new(@tweet).stream_conversation
   end
 end
