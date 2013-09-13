@@ -1,9 +1,11 @@
 / search form
-.row
-  = form_tag({ controller: 'dash/leads', action: 'search' }, method: :get, class: 'form-inline') do
-    .form-group style='margin-right: 5px'
-      => text_field_tag :query, @search.query, placeholder: 'Search', class: 'form-control', autofocus: true, autocomplete: 'off', style: 'min-width: 300px'
-    .form-group
-      = submit_tag 'Search', class: 'btn btn-primary', name: nil
-
 .space-one
+
+= form_tag({ controller: 'dash/leads', action: 'search' }, method: :get, class: 'form-inline') do
+  .form-group style='margin-right: 5px'
+    => text_field_tag :query, @search.query, placeholder: 'Search', class: 'form-control', autofocus: true, autocomplete: 'off', style: 'min-width: 350px'
+  .form-group
+    = button_tag class: 'btn btn-primary', name: nil, type: :submit do
+      = icon_tag :search, 'Search'
+
+.space-two

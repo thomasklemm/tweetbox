@@ -1,0 +1,8 @@
+// score leads js
+
+// leads
+$('#leads').append('<%= j render(@leads) %>');
+
+// pagination
+<% new_pagination = @leads.current_page < @leads.num_pages ? j(paginate(@leads)) : 'The End.' %>
+$('.pagination').replaceWith('<%= new_pagination %>');

@@ -6,15 +6,9 @@
 = render 'search_form'
 
 / page entries
-- page_entries = page_entries_info @leads, entry_name: score_title(params[:score]).try(:downcase)
-= page_entries
+= page_entries_info @leads, entry_name: score_title(params[:score]).try(:downcase)
 
-hr
-
-.leads-wrapper
+#leads.leads
   = render partial: 'lead', collection: @leads
 
-hr
-
 = paginate @leads, window: 2
-= page_entries

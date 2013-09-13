@@ -19,7 +19,7 @@ class Dash::LeadsController < Dash::ApplicationController
   # Score leads
   def score
     @leads = ::Lead.having_score(score_params).
-      by_joined_twitter_at.page(params[:page])
+      by_joined_twitter_at.page(params[:page]).per(50)
 
     build_search
   end
@@ -31,9 +31,7 @@ class Dash::LeadsController < Dash::ApplicationController
   end
 
   def update
-    logger.info "SCORE: #{lead_params.inspect}"
     @lead.update(lead_params)
-    logger.info "LEAD: #{@lead.inspect}"
   end
 
   # Updates the lead and fetches the most recent 100 tweets
