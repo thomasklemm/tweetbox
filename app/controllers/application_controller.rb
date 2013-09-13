@@ -49,7 +49,9 @@ class ApplicationController < ActionController::Base
 
   # track 'Project Create', @project, { 'Name' => @project.name }
   def track(event_name, eventable=nil, properties={})
-    event = Event.create!(name: event_name, eventable: eventable, user: current_user)
+    user = properties.delete(:user)  || current_user
+
+    event = Event.create!(name: event_name, eventable: eventable, user: user)
 
     properties.reverse_merge!(
       'Event Id'  => event.id,

@@ -12,11 +12,13 @@ class RegistrationsController < ApplicationController
     if @registration.save
       sign_in @registration.user
 
-      track 'User Create By Invitation', @registration.user
+      # Pass user to track on the right user, because the current user might still be
+      #   the signed in creator of the invitation
+      track 'User Create By Invitation', @registration.user, { user: @registration.user }
       track_user @registration.user, 'Invitation'
 
-      track 'Invitation Accept', @registration.invitation
-      track 'Account Join', @registration.account
+      track 'Invitation Accept', @registration.invitation, { user: @registration.user }
+      track 'Account Join', @registration.account, { user: @registration.user }
 
       redirect_to projects_path,
         notice: "Welcome to Tweetbox."
