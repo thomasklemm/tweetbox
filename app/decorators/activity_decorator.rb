@@ -1,35 +1,64 @@
 class ActivityDecorator < Draper::Decorator
   include Draper::LazyHelpers
-
   delegate_all
 
-  alias_method :activity, :model
-
-  def render_activity
-    div_for activity do
-      concat time_ago_in_words(activity.created_at) + ": "
-      concat link_to(activity.user.name, [:dash, activity.user]) + " "
-      concat render_partial
-    end
+  def render
+    send("render_#{ kind }")
   end
 
-  def render_partial
-    locals = {activity: activity, presenter: self}
-    locals[activity.trackable_type.underscore.to_sym] = activity.trackable
-    render partial_path, locals
+  private
+
+  ##
+  # Activites
+
+  def render_start_reply
+    "#{ formatted_user_name } started replying.#{ formatted_timestamp }".html_safe
   end
 
-  def partial_path
-    partial_paths.detect do |path|
-      lookup_context.template_exists? path, nil, true
-    end || raise("No partial found for #{ activity } in #{partial_paths}")
+  def render_post_reply
+    "#{ formatted_user_name } replied to this tweet.#{ formatted_timestamp }".html_safe
   end
 
-  def partial_paths
-    [
-      "dash/activities/#{activity.trackable_type.underscore}/#{activity.action}",
-      "dash/activities/#{activity.trackable_type.underscore}",
-      "dash/activities/activity"
-    ]
+  def render_favorite
+    "#{ formatted_user_name } favorited this tweet for @37signals.#{ formatted_timestamp }".html_safe
+  end
+
+  def render_unfavorite
+    "#{ formatted_user_name } unfavorited this tweet for @37signals.#{ formatted_timestamp }".html_safe
+  end
+
+  def render_retweet
+    "#{ formatted_user_name } retweeted this tweet to @37signals' followers.#{ formatted_timestamp }".html_safe
+  end
+
+  def render_appreciate
+    "#{ formatted_user_name } appreciated this tweet.#{ formatted_timestamp }".html_safe
+  end
+
+  def render_resolve
+    "#{ formatted_user_name } resolved this tweet.#{ formatted_timestamp }".html_safe
+  end
+
+  def render_post
+    "#{ formatted_user_name } posted this tweet.#{ formatted_timestamp }".html_safe
+  end
+
+  def render_open_case
+    "#{ formatted_user_name } started working on this tweet.#{ formatted_timestamp }".html_safe
+  end
+
+  ##
+  # Shared
+
+  def user_name
+    user.name
+  end
+
+  def formatted_user_name
+    "#{ user_name }".html_safe
+  end
+
+  def formatted_timestamp
+    "<span class='timestamp'><i class='icon-time'></i> <abbr class='timeago' title='#{ created_at.iso8601 }'>#{ created_at.to_s(:long) }</abbr></span>".html_safe
   end
 end

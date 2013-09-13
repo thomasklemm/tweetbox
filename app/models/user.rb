@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     "user_#{ id }"
   end
 
+  def mixpanel_url
+    "https://mixpanel.com/report/#{ ENV['MIXPANEL_PROJECT_ID'] }/explore/#user?distinct_id=#{ mixpanel_id }"
+  end
+
   include Rails.application.routes.url_helpers
   def mixpanel_hash
     {

@@ -10,19 +10,18 @@ table class="table table-striped events-table"
 
   tbody
     - @events.each do |event|
+      - event &&= event.decorate
       tr.event
 
         / time
         td = timestamp_tag(event.created_at)
 
         / event
-        = link_to event.name, [:dash, event]
-        ' :
+        td
+          = link_to event.name, [:dash, event]
+          ' :
 
-        - if event.eventable
-          - if event.has_dash_page?
-            = link_to eventable.to_s, [:dash, eventable]
+          - if event.eventable
+            = event.render_eventable
           - else
-            = eventable.to_s
-        - else
-          span.text-muted Eventable has been removed since.
+            span.text-muted Removed since.

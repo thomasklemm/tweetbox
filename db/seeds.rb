@@ -2,7 +2,8 @@
 # Signup
 
 signup = Signup.new({
-  name: 'Thomas Klemm',
+  first_name: 'Thomas',
+  last_name: 'Klemm',
   company_name: 'Tweetbox',
   email: 'thomas@tweetbox.co',
   password: '123123123'
