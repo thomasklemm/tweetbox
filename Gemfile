@@ -123,6 +123,9 @@ gem 'mixpanel-ruby'
 # Naught (for null objects)
 gem 'naught'
 
+# Rerunning sidekiq workers on code changes
+gem 'rerun'
+
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
   gem 'letter_opener'
