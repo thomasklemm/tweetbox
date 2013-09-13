@@ -1,15 +1,12 @@
 // tweet stream js
 
-// pagination
-<% if (@tweets.current_page < @tweets.num_pages) %>
-  $('.pagination').replaceWith('<%= j paginate(@tweets) %>');
-<% else %>
-  $('.pagination').text("The End.");
-<% end %>
-
 // append conversations
 $conversations = $('<%= j render_cached_conversation_for_tweets(@tweets) %>');
 $('#tweets').append($conversations);
+
+// pagination
+<% new_pagination = @tweets.current_page < @tweets.num_pages ? j(paginate(@tweets)) : 'The End.' %>
+$('.pagination').replaceWith('<%= new_pagination %>');
 
 // initialize timestamps
 $conversations.find("abbr.timeago").timeago();
