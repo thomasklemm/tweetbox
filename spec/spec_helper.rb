@@ -86,6 +86,7 @@ RSpec.configure do |config|
   # end
 end
 
-Capybara.javascript_driver = :webkit
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 1
 # Capybara.default_host = 'lvh.me:7000'
