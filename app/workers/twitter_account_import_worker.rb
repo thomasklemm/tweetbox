@@ -1,9 +1,9 @@
 # TwitterAccountImportWorker
 #
 # Imports that most recent 100 mentions
-# and the entire user timeline
-# to build up initial data for the project
-# and a history of conversations with customers
+#   and the entire user timeline
+#   to build up initial data for the project
+#   and a history of conversations with customers
 #
 class TwitterAccountImportWorker
   include Sidekiq::Worker

@@ -1,11 +1,11 @@
 / tweet stream
 = logo_header 'Tweet Stream'
 
-div#tweets class="stream tweets"
+= content_tag :div, id: "tweets", class: "stream tweets",
+  data: {url: stream_project_tweets_url(@project), min_id: @tweets.map(&:twitter_id).max} do
   = render_cached_conversation_for_tweets(@tweets)
 
-/ pagination
-= paginate @tweets
+= render 'tweets_pagination', tweets: @tweets
 
 - if @tweets.empty?
   - if @project.twitter_accounts.any?

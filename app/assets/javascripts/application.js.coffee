@@ -33,16 +33,8 @@
 
 #= require tweets
 
-# StatusController for Angular
-@StatusController = ($scope) ->
-  # Character counter
-  $scope.characterCount = ->
-    twttr.txt.getTweetLength(@statusText)
-
 # Submit forms in Dash on Check
 jQuery.fn.submitOnCheck = ->
-  # @find('input[type=submit]').remove()
-  # @find('input[type=radio]').hide()
   # Customized for Bootstrap 3 button groups
   @find('.btn-group label').click ->
     # Set checked value
@@ -55,7 +47,7 @@ jQuery.fn.submitOnCheck = ->
 # Timeago settings
 $.extend($.timeago, {
   settings: {
-    refreshMillis: 15000,
+    refreshMillis: 30000,
     allowFuture: false,
     localeTitle: false,
     cutoff: 0,
@@ -80,6 +72,12 @@ $.extend($.timeago, {
     }
   }
 })
+
+# Angular
+@StatusController = ($scope) ->
+  # Character counter
+  $scope.characterCount = ->
+    twttr.txt.getTweetLength(@statusText)
 
 # Tweetbox
 jQuery ->
@@ -119,3 +117,7 @@ jQuery ->
     query:
       maxwidth: 560,
       wmode: 'transparent'
+
+  # Polling for new tweets
+  if $('#tweets').length > 0
+    Tweets.poll()

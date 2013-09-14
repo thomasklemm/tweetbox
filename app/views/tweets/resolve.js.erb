@@ -1,15 +1,6 @@
-// resolve
+// resolve js
+
 var tag = '<%= "." + dom_id(@tweet) %>';
 var tweet = '<%= j render(@tweet) %>';
 
-TweetPusher.replaceTweet(tag, tweet);
-
-// remove conversation from incoming tweets
-// leave it untouched in tweet stream
-<% conversation_tag = "##{ dom_id(@tweet, :conversation_for) }"%>
-$('.incoming.tweets <%= conversation_tag %>').fadeOut(300);
-
-// link to last resolved tweet
-$('a.link-to-last-resolved-tweet').attr('href', '<%= j project_tweet_path(@project, @tweet)  %>').fadeIn();
-
-TweetPusher.updateTimestamps();
+Tweets.replaceTweet(tag, tweet);

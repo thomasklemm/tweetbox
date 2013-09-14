@@ -1,20 +1,21 @@
 # tweets
 @Tweets =
   poll: ->
-    setTimeout @request, 5000
+    setInterval @request, 5000
 
   request: ->
     url = $('#tweets').data('url')
-    min_id = $('#tweets').data('min_id')
-    $.get(url, min_id: min_id)
+    ids = $('#tweets .conversation_for_tweet').map ->
+      $(this).data('twitter-id')
+    min_id = if ids.length > 0 then Math.max.apply(null, ids) else ''
+    url = url + '?min_id=' + min_id
+    $.getScript(url)
 
   prependTweets: (tweets) ->
     if tweets.length > 0
       $tweets = $(tweets)
       $tweets.find('abbr.timeago').timeago()
-      $('#tweets').prepend($tweets.hide())
-      $('#show-tweets').show()
-    @poll
+      $('#tweets').prepend($tweets)
 
   appendTweets: (tweets) ->
     if tweets.length > 0
@@ -26,6 +27,3 @@
     $tweet = $(tweet)
     $tweet.find('abbr.timeago').timeago()
     $(tag).after($tweet).remove()
-
-  timeago: ->
-    $('abbr.timeago').timeago()

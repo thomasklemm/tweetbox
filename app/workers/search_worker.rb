@@ -1,3 +1,7 @@
+# SearchWorker
+#
+# Performs a given Twitter search
+#
 class SearchWorker
   include Sidekiq::Worker
   sidekiq_options retry: false, backtrace: true
@@ -5,12 +9,12 @@ class SearchWorker
   def perform(search_id, perform_at)
     return if expired?(perform_at)
 
-    @search = Search.find(search_id)
-    @search.fetch_search_results
+    search = Search.find(search_id)
+    search.fetch_search_results
 
   # Search could have been removed since scheduling
   rescue ActiveRecord::RecordNotFound
-    false
+    true
   end
 
   private

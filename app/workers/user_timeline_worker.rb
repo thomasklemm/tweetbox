@@ -1,3 +1,7 @@
+# UserTimelineWorker
+#
+# Fetches the user timeline of a given Twitter account
+#
 class UserTimelineWorker
   include Sidekiq::Worker
   sidekiq_options retry: false, backtrace: true
@@ -5,12 +9,12 @@ class UserTimelineWorker
   def perform(twitter_account_id, perform_at)
     return if expired?(perform_at)
 
-    @twitter_account = TwitterAccount.find(twitter_account_id)
-    @twitter_account.fetch_user_timeline
+    twitter_account = TwitterAccount.find(twitter_account_id)
+    twitter_account.fetch_user_timeline
 
   # Twitter account could have been removed since scheduling
   rescue ActiveRecord::RecordNotFound
-    false
+    true
   end
 
   private

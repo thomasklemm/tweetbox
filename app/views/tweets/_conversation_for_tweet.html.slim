@@ -2,7 +2,7 @@
 - tweet &&= tweet.decorate
 
 / .conversation_for_tweet_1(will use ids)
-= div_for tweet, :conversation_for do
+= div_for tweet, :conversation_for, data: { twitter_id: tweet.twitter_id } do
 
   / previous tweets or link to conversation
   - if tweet.previous_tweets.size > 0

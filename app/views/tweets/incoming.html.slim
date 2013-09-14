@@ -1,30 +1,31 @@
 / incoming tweets
-- if @tweets.any?
-  = logo_header 'Incoming tweets', link_to(icon_tag(:undo, 'Show last resolved tweet'), 'javascript:;', class: 'link-to-last-resolved-tweet', style: 'display: none')
+= logo_header 'Incoming tweets'
 
-  div#tweets class="incoming tweets"
-    = render_cached_conversation_for_tweets(@tweets)
+= content_tag :div, id: "tweets", class: "incoming tweets",
+  data: {url: stream_project_tweets_url(@project), min_id: @tweets.map(&:twitter_id).max} do
+  = render_cached_conversation_for_tweets(@tweets)
 
-  = render 'incoming_pagination', tweets: @tweets
+= render 'tweets_pagination', tweets: @tweets
 
-- if @tweets.empty?
-  - if @project.twitter_accounts.any?
-    / inbox zero
-    = logo_header 'Inbox Zero'
-    p All clear, time for a Moment of Zen.
+/  = logo_header 'Incoming tweets', link_to(icon_tag(:undo, 'Show last resolved tweet'), 'javascript:;', class: 'link-to-last-resolved-tweet', style: 'display: none')
+/ - if @tweets.empty?
+/   - if @project.twitter_accounts.any?
+/     / inbox zero
+/     = logo_header 'Inbox Zero'
+/     p All clear, time for a Moment of Zen.
 
-    / placeholder
-    div#tweets class="incoming tweets"
+/     / placeholder
+/     div#tweets class="incoming tweets"
 
-  - else
-    / blank slate
-    = logo_header 'Incoming Tweets'
+/   - else
+/     / blank slate
+/     = logo_header 'Incoming Tweets'
 
-    p
-      ' Once you connect a Twitter account, we'll fetch <br />
-      ' your @mentions and search results so you'll <br />
-      ' be able to resolve them with the help of Tweetbox.
+/     p
+/       ' Once you connect a Twitter account, we'll fetch <br />
+/       ' your @mentions and search results so you'll <br />
+/       ' be able to resolve them with the help of Tweetbox.
 
-    .space-half
+/     .space-half
 
-    = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
+/     = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
