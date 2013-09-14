@@ -65,7 +65,10 @@ class Tweet < ActiveRecord::Base
   scope :include_deep_conversation, -> { includes(:project, :author, :activities, previous_tweets: [:author, activities: :user], future_tweets: [:author, activities: :user])  }
 
   # Excludes the given twitter id
-  scope :below_twitter_id, ->(twitter_id) { where('twitter_id < ?', twitter_id) if twitter_id.present? }
+  # REVIEW: DO THESE SCOPES RETURN THE CORRECT TWEETS IF THERE ARE MORE THAN X AFTER MIN_ID, THAT IS:
+  #   ARE ALL TWEETS RETURNED AND NONE SKIPPED?
+  scope :max_id, ->(twitter_id) { where('twitter_id < ?', twitter_id) if twitter_id.present? }
+  scope :min_id, ->(twitter_id) { where('twitter_id > ?', twitter_id) if twitter_id.present? }
 
   ##
   # Reply and previous tweet
