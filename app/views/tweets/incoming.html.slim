@@ -2,12 +2,12 @@
 = logo_header 'Incoming tweets'
 
 = content_tag :div, id: "tweets", class: "incoming tweets",
-  data: {url: stream_project_tweets_url(@project), min_id: @tweets.map(&:twitter_id).max} do
+  data: {url: stream_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max }"} do
   = render_cached_conversation_for_tweets(@tweets)
 
 = render 'tweets_pagination', tweets: @tweets
 
-/  = logo_header 'Incoming tweets', link_to(icon_tag(:undo, 'Show last resolved tweet'), 'javascript:;', class: 'link-to-last-resolved-tweet', style: 'display: none')
+/  = logo_header 'Incoming tweets', link_to(icon_tag(:undo, 'Show last resolved tweet'), 'javascript:;', class: 'link-to-last-resolved-tweet', style: 'display: none'
 / - if @tweets.empty?
 /   - if @project.twitter_accounts.any?
 /     / inbox zero

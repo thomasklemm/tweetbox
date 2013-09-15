@@ -129,7 +129,7 @@ class Tweet < ActiveRecord::Base
   after_commit :fetch_conversation, on: :create
 
   def fetch_conversation
-    TweetConversationWorker.perform_async(self.id)
+    ConversationWorker.perform_async(self.id)
   end
 
   def push_replace_tweet

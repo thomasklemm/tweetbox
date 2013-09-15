@@ -1,13 +1,11 @@
 # tweets
 @Tweets =
   poll: ->
-    setInterval @request, 5000
+    setInterval @request, 10000
 
   request: ->
     url = $('#tweets').data('url')
-    ids = $('#tweets .conversation_for_tweet').map ->
-      $(this).data('twitter-id')
-    min_id = if ids.length > 0 then Math.max.apply(null, ids) else ''
+    min_id = $('#tweets').attr('data-min-id') || ''
     url = url + '?min_id=' + min_id
     $.getScript(url)
 

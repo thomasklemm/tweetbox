@@ -13,3 +13,9 @@ var conversations = '<%= j render_cached_conversation_for_tweets(@tweets) %>';
   <% new_pagination = @tweets.size > 0 ? j(render('tweets_pagination', tweets: @tweets)) : '' %>
   $('.pagination').replaceWith('<%= new_pagination %>');
 <% end %>
+
+// Update polling
+<% new_min_id = @tweets.map(&:twitter_id).max %>
+<% if new_min_id %>
+  $('#tweets').attr('data-min-id', '<%= new_min_id %>');
+<% end %>
