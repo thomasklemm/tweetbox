@@ -3,7 +3,7 @@
   = logo_header 'Posted Tweets'
 
   div#tweets class="posted tweets"
-    = render_cached_conversation_for_tweets(@tweets)
+    = render_conversation_for_tweets(@tweets)
 
   / pagination
   = paginate @tweets

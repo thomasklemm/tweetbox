@@ -6,7 +6,7 @@ div#show-tweets style='display: none'
 
 = content_tag :div, id: "tweets", class: "incoming tweets",
   data: {url: stream_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max }"} do
-  = render_cached_conversation_for_tweets(@tweets)
+  = render_conversation_for_tweets(@tweets)
 
 = render 'tweets_pagination', tweets: @tweets
 
