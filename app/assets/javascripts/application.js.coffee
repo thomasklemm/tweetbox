@@ -44,6 +44,10 @@ jQuery.fn.submitOnCheck = ->
   # Return this for chaining
   this
 
+jQuery.fn.fastResolve = ->
+  @find('.resolve-and-activate-btn').click ->
+    $(this).parent('.tweet').toggleClass('incoming').toggleClass('resolved')
+
 # Timeago settings
 $.extend($.timeago, {
   settings: {
@@ -124,3 +128,6 @@ jQuery ->
 
   # Show new tweets on click
   $('#show-tweets a').click Tweets.showTweets
+
+  # Resolve tweets quickly
+  # $('.tweet').fastResolve()

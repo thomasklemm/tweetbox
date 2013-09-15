@@ -3,6 +3,23 @@
 
 / tweet
 = div_for tweet, class: "#{ dom_id(tweet) } #{ tweet.current_state }" do
+  / actions
+  .actions class='btn-group'
+    - if tweet.incoming? || tweet.resolved?
+      / reply
+      = link_to new_project_tweet_reply_path(tweet.project, tweet), title: 'Reply to this tweet', class: 'btn reply-btn' do
+        = icon_tag :reply
+
+    - if tweet.incoming?
+      / resolve
+      = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
+        = icon_tag :ok
+
+    - if tweet.resolved?
+      / activate
+      = link_to activate_project_tweet_path(tweet.project, tweet), title: 'Activate tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
+        = icon_tag :ok
+
   / author
   = link_to tweet.author_intent_url, class: 'author' do
     = image_tag(tweet.author.profile_image_url, class: 'avatar')
@@ -21,19 +38,3 @@
   / text
   div
     span.text = tweet.text
-
-  / actions
-  .actions
-    / reply
-    = link_to new_project_tweet_reply_path(tweet.project, tweet), title: 'Reply to this tweet' do
-      = icon_tag :reply, 'Reply'
-
-    - if tweet.incoming?
-      / resolve
-      = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true do
-        = icon_tag :ok, 'Resolve'
-
-    - if tweet.resolved?
-      / activate
-      = link_to activate_project_tweet_path(tweet.project, tweet), title: 'Activate tweet', method: :post, remote: true do
-        = icon_tag :ok, 'Activate'

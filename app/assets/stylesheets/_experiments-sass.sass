@@ -7,21 +7,38 @@
   margin-top: -16px // remove margin so image reaches navbar
 
 #show-tweets
-  padding: 1rem
-  background: #fcf8e3
-  text-align: center
-  border-radius: 2px
+  margin: 0 auto
+  position: relative
   width: 200px
-  margin: 0 auto 1rem
+  height: 0
+  top: -12px
+  padding-top: -1.25rem
+
+  // display: block
+  // line-height: 0
+  // height: 0
+  // overflow: hidden
+  a
+    font-weight: bold
+    padding: 1.2rem 2rem
+    background: darken(#fcf8e3, 1%)
+    text-align: center
+    border-radius: 3px
+
+$tweets-border-color: #e5e5e5
 
 .tweets
+  border: 1px solid $tweets-border-color
+  border-radius: 3px
+
   .conversation_for_tweet
     padding-bottom: 1.25rem
-    border-bottom: 1px solid #eee
-    margin-bottom: 1.25rem
+    border-bottom: 1px solid $tweets-border-color
+    padding-top: 1.25rem
 
   .tweet
     padding-left: 46px
+    padding-right: 90px
     margin: 0.8rem
 
     &:first-child
@@ -65,26 +82,41 @@
 
     .text
       display: block
+      word-wrap: break-word
       p
         margin: 0
 
-    &.incoming .text
-      min-height: 40px // two lines
+    // &.incoming .text
+    //   min-height: 40px // two lines
 
-    .activities
-      @extend .text-muted
-      .activity
-        .timestamp
-          // override .tweet .timestamp
-          margin-left: 6px
+    // .actions a
+    //   padding: 0 10px
+    //   border-right: 1px solid #ddd
+    //   &:first-child
+    //     padding-left: 0
+    //   &:last-child
+    //     border-right: none
 
-    .actions a
-      padding: 0 10px
-      border-right: 1px solid #ddd
-      &:first-child
-        padding-left: 0
-      &:last-child
-        border-right: none
+    .actions
+      margin: 0px -90px 0 12px
+      float: right
+      a
+        height: 38px
+        i
+          position: relative
+          top: 3px
+
+    &.incoming .actions
+      a
+        @extend .btn-primary
+      .reply-btn, .resolve-and-activate-btn
+
+    &.resolved .actions
+      a
+        @extend .btn-default
+        color: $brand-success
+      .resolve-and-activate-btn
+
 
 abbr.timeago
   border-bottom: none
