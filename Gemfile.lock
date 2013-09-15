@@ -221,7 +221,6 @@ GEM
     mixpanel-ruby (1.0.1)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
-    multi_fetch_fragments (0.0.17)
     multi_json (1.8.0)
     multipart-post (1.2.0)
     naught (0.0.2)
@@ -441,7 +440,6 @@ DEPENDENCIES
   meta_request
   mixpanel-ruby
   mocha
-  multi_fetch_fragments
   naught
   newrelic_rpm
   oj

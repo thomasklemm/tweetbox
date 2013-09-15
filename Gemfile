@@ -112,7 +112,7 @@ gem 'maildown'
 gem 'rack-mini-profiler'
 
 # Cache rendered partials
-gem 'multi_fetch_fragments'
+# gem 'multi_fetch_fragments'
 
 # Quiet assets
 gem 'quiet_assets'
