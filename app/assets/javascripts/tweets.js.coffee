@@ -13,7 +13,11 @@
     if tweets.length > 0
       $tweets = $(tweets)
       $tweets.find('abbr.timeago').timeago()
-      $('#tweets').prepend($tweets)
+      $('#tweets').prepend($tweets.hide())
+
+      new_tweets_count = $('.conversation_for_tweet:hidden').length
+      $('#show-tweets a').text('Show ' + new_tweets_count + ' new tweets.')
+      $('#show-tweets').show()
 
   appendTweets: (tweets) ->
     if tweets.length > 0
@@ -25,3 +29,9 @@
     $tweet = $(tweet)
     $tweet.find('abbr.timeago').timeago()
     $(tag).after($tweet).remove()
+
+  showTweets: (e) ->
+    e.preventDefault()
+    $('.conversation_for_tweet').show()
+    $('#show-tweets').hide()
+

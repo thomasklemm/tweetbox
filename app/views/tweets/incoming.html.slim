@@ -1,6 +1,9 @@
 / incoming tweets
 = logo_header 'Incoming tweets'
 
+div#show-tweets style='display: none'
+  = link_to 'Show new tweets.', 'javascript:;'
+
 = content_tag :div, id: "tweets", class: "incoming tweets",
   data: {url: stream_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max }"} do
   = render_cached_conversation_for_tweets(@tweets)

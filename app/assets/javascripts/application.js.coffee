@@ -121,3 +121,6 @@ jQuery ->
   # Polling for new tweets
   if $('#tweets').length > 0
     Tweets.poll()
+
+  # Show new tweets on click
+  $('#show-tweets a').click Tweets.showTweets
