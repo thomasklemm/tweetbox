@@ -5,9 +5,9 @@
 #
 # class MyService
 #   def render_stuff
-#     result = Renderer.render(partial: 'tweets/tweet', locals: {tweet: Tweet.first})
+#     result = Renderer.new.render(partial: 'tweets/tweet', locals: {tweet: Tweet.first})
 #     # or even
-#     result = Renderer.render(Tweet.first)
+#     result = Renderer.new.render(Tweet.first)
 #   end
 # end
 #
@@ -18,5 +18,14 @@ class Renderer
       controller.request = ActionDispatch::TestRequest.new
       ViewRenderer.new(Rails.root.join('app', 'views'), {}, controller)
     end
+  end
+end
+
+class ViewRenderer < ActionView::Base
+  include Rails.application.routes.url_helpers
+  include ApplicationHelper
+
+  def default_url_options
+     {host: Rails.application.routes.default_url_options[:host]}
   end
 end

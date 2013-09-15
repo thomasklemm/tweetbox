@@ -11,7 +11,7 @@ class TweetPusher
   end
   attr_reader :tweet
 
-  # Replace all tweet nodes (might be more than one) 
+  # Replace all tweet nodes (might be more than one)
   # with an updated rendering
   def push_replace_tweet
     Pusher.trigger(project_channel, 'replace-tweet', data)
@@ -25,6 +25,6 @@ class TweetPusher
 
   def data
     { tag: "." + dom_id(tweet),
-      tweet: Renderer.new.renderer.render(tweet) }
+      tweet: Renderer.new.render(tweet) }
   end
 end
