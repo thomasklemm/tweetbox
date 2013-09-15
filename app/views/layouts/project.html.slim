@@ -10,7 +10,6 @@
         = active_list_item [:incoming, @project, :tweets], true do
           = link_to [:incoming, @project, :tweets] do
             = icon_tag :bullhorn, 'Incoming Tweets', true
-            span class="badge pull-right visible-md visible-lg" = @project.incoming_tweets_count
 
         / tweet stream
         = active_list_item [:stream, @project, :tweets] do

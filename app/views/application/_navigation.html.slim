@@ -33,7 +33,12 @@ div class='navbar navbar-default navbar-static-top'
         / project links
         - current_user.projects.by_date.each do |project|
           = active_list_item project do
-            = link_to project.name, project
+            = link_to project, class: ".#{ dom_id(project) }" do
+              = project.name
+              span class="visible-md visible-lg pull-right"
+                span class="badge" style='margin-left: 6px; background-color: #c82e23'
+                  - if project.incoming_tweets_count > 0
+                    = project.incoming_tweets_count
 
       / right side
       ul class='nav navbar-nav navbar-right'
