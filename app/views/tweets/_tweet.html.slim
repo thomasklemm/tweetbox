@@ -7,7 +7,7 @@
   .actions class='btn-group'
     - if tweet.incoming? || tweet.resolved?
       / reply
-      = link_to new_project_tweet_reply_path(tweet.project, tweet), title: 'Reply to this tweet', class: 'btn reply-btn' do
+      = link_to new_project_status_path(tweet.project, in_reply_to: tweet.twitter_id), title: 'Reply to this tweet', remote: true, class: 'btn reply-btn' do
         = icon_tag :reply
 
     - if tweet.incoming?
@@ -38,3 +38,6 @@
   / text
   div
     span.text = tweet.text
+
+  / placeholder for forms and previews
+  div.forms
