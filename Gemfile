@@ -65,8 +65,8 @@ gem 'sidekiq'
 # Sinatra (for Sidekiq web interface)
 gem 'sinatra'
 
-# Clockwork (Scheduler for recurring jobs)
-gem 'clockwork'
+# Sidetiq (recurring jobs in Sidekiq)
+gem 'sidetiq'
 
 # Draper (Presenters / Decorators)
 gem 'draper'

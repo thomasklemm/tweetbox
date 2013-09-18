@@ -12,9 +12,6 @@ class TwitterAccountImportWorker
   def perform(twitter_account_id)
     @twitter_account = TwitterAccount.find(twitter_account_id)
 
-    # Schedule queries for the first twenty minutes after connecting a Twitter account
-    Scheduler.schedule_initial_timeline_queries(@twitter_account)
-
     fetch_mentions_timeline
     fetch_user_timeline
 
