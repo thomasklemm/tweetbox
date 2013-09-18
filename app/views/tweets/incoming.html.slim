@@ -5,7 +5,7 @@ div#show-tweets style='display: none'
   = link_to 'Show new tweets.', 'javascript:;'
 
 = content_tag :div, id: "tweets", class: "incoming tweets bordered",
-  data: {url: stream_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max }"} do
+  data: {url: incoming_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max }"} do
   = render_conversation_for_tweets(@tweets)
 
 = render 'tweets_pagination', tweets: @tweets

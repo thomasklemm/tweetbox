@@ -6,7 +6,22 @@ class TweetsController < TweetController
 
   def incoming
     @tweets = project_tweets.incoming.
-      by_date(:desc).max_id(params[:max_id]).limit(15)
+      by_date(:desc).max_id(params[:max_id])
+
+    # Return up to X tweets on an HTTP request, and un unlimited amount
+    #   on an AJAX polling request
+    if request.xhr?
+      if params[:max_id]
+        @tweets &&= @tweets.max_id(params[:max_id])
+      elsif params[:min_id] != '' && params[:min_id] != 'undefined'
+        @tweets &&= @tweets.min_id(params[:min_id])
+      else
+        # Request is malformed
+        @tweets &&= @tweets.none
+      end
+    else
+      @tweets &&= @tweets.limit(15)
+    end
 
     respond_to do |format|
       format.html
