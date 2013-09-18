@@ -1,5 +1,11 @@
 / form errors
+/
+/ usage:
+/ = form_for [:account, @invitation] do |f|
+/   = render 'shared/form_errors', target: @invitation
+/
 - if target.errors.any?
-  pre
+  div.error-heading Please correct these fields:
+  ul.error-messages
     - target.errors.full_messages.each do |msg|
-      .message = msg
+      li.message = msg

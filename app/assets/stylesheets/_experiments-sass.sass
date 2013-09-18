@@ -12,6 +12,18 @@ ul.list-inline
     &:after
       content: "|"
 
+.field_with_errors
+  @extend .has-error
+
+.error-heading
+  @extend h4
+  @extend .text-danger
+
+ul.error-messages
+  @extend .list-unstyled
+  li.message
+    @extend .text-danger
+
 #show-tweets
   margin: 0 auto
   position: relative
