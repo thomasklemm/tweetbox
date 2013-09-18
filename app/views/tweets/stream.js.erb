@@ -1,4 +1,5 @@
 // stream tweets js
+// TODO: Should be two actions and two templates
 var conversations = '<%= j render_conversation_for_tweets(@tweets) %>';
 
 // Prepend or append tweets / conversations
@@ -15,7 +16,9 @@ var conversations = '<%= j render_conversation_for_tweets(@tweets) %>';
 <% end %>
 
 // Update polling
-<% new_min_id = @tweets.map(&:twitter_id).max %>
-<% if new_min_id %>
-  $('#tweets').attr('data-min-id', '<%= new_min_id %>');
+<% if params[:min_id] %>
+  <% new_min_id = @tweets.map(&:twitter_id).max %>
+  <% if new_min_id %>
+    $('#tweets').attr('data-min-id', '<%= new_min_id %>');
+  <% end %>
 <% end %>
