@@ -6,7 +6,7 @@ class TweetsController < TweetController
 
   def incoming
     @tweets = project_tweets.incoming.
-      by_date(:desc).max_id(params[:max_id]).limit(10)
+      by_date(:desc).max_id(params[:max_id]).limit(15)
 
     respond_to do |format|
       format.html
@@ -32,7 +32,7 @@ class TweetsController < TweetController
         @tweets &&= @tweets.none
       end
     else
-      @tweets &&= @tweets.limit(10)
+      @tweets &&= @tweets.limit(15)
     end
   end
 

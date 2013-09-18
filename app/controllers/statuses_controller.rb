@@ -9,10 +9,17 @@ class StatusesController < ProjectController
   def create
     @status = project_statuses.build(status_params)
 
-    if @status.save
-      redirect_to [:preview, @project, @status]
-    else
-      render :new
+    respond_to do |format|
+      if @status.save
+        @status.publish!
+        track 'Status Publish', @status
+
+        format.js
+        format.html { redirect_to [:incoming, @project, :tweets],
+          notice: 'Status has been posted to Twitter.' }
+      else
+        render :new
+      end
     end
   end
 
@@ -40,7 +47,6 @@ class StatusesController < ProjectController
     if @status.previous_tweet
       # Resolve the previous tweet
       if params[:resolve].to_s == 'resolve'
-        @status.previous_tweet.resolve_by(current_user)
         redirect_to incoming_project_tweets_path(@project),
           notice: "Reply has been posted and Tweet has been resolved. You responded in #{ @status.decorate.response_time_in_words }."
       else

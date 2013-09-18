@@ -1,0 +1,12 @@
+// create status js
+
+// clear form
+$('.<%= dom_id(@status.previous_tweet) %> .forms').html('');
+
+// append tweet to conversations that include the previous tweet
+$tweet = $('<%= j render(@status.tweet) %>');
+$tweet.find('abbr.timeago').timeago();
+
+$previous_tweet = $('[data-twitter-id="<%= @status.previous_tweet.try(:twitter_id) %>"');
+$conversations = $previous_tweet.parents('.conversation_for_tweet');
+$conversations.append($tweet);

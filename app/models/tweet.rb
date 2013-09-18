@@ -28,7 +28,8 @@ class Tweet < ActiveRecord::Base
              through: :future_conversations,
              source: :future_tweet
 
-  # Status
+  # Tweet has been posted through Tweetbox,
+  #   so a status is associated
   belongs_to :status
 
   # Validations

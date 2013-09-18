@@ -2,7 +2,7 @@
 - tweet &&= tweet.decorate
 
 / tweet
-= div_for tweet, class: "#{ dom_id(tweet) } #{ tweet.current_state }" do
+= div_for tweet, data: { twitter_id: tweet.twitter_id.to_s }, class: "#{ dom_id(tweet) } #{ tweet.current_state }" do
   / actions
   .actions class='btn-group'
     - if tweet.incoming? || tweet.resolved?
@@ -38,6 +38,13 @@
   / text
   div
     span.text = tweet.text
+
+  / who posted this status?
+  - if status = tweet.status
+    div
+      span.posted-by.text-info
+        = icon_tag :twitter
+        ' Posted by #{ status.user.full_name }
 
   / placeholder for forms and previews
   div.forms

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Connect a Twitter account and post Tweet' do
+describe 'Connect a Twitter account and post tweet' do
   include_context 'signup feature'
 
   it "connects a Twitter account" do

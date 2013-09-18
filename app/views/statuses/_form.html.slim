@@ -40,7 +40,7 @@ div ng-controller='StatusController'
 
     / text
     .form-group style='margin-top: 3px'
-      = f.text_area :text, autofocus: true, rows: 8, class: 'form-control text', ng_model: 'statusText'
+      = f.text_area :text, autofocus: true, rows: 6, class: 'form-control text', ng_model: 'statusText'
 
     / twitter account
     .form-group style="#{ 'display: none' if @status.project_twitter_accounts.size == 1 && !Rails.env.test? }"
@@ -54,7 +54,7 @@ div ng-controller='StatusController'
       = f.hidden_field :in_reply_to_status_id
 
     .form-group
-      = f.submit "Preview Tweet", class: "btn btn-primary"
+      = f.submit "Post Tweet", class: "btn btn-primary", data: { disable_with: "Posting Tweet..." }
 
       span.character-counter.text-muted style='margin-left: 1rem' = "{{ characterCount() }} characters"
 
