@@ -1,53 +1,68 @@
 / show public status
-.space-three
-- @status &&= @status.decorate
+.col-md-8.col-md-offset-2
+  .space-three
+  - @status &&= @status.decorate
+  - tweet = @status.tweet
 
-/ previous tweet
-- if previous_tweet = @status.previous_tweet
-  - previous_tweet &&= previous_tweet.decorate
-  - author = previous_tweet.author
+  div.public-statuses class='bordered'
+    = div_for tweet, :conversation_for do
+      / previous tweets or link to conversation
+      - if tweet.previous_tweets.size > 0
+        = render tweet.previous_tweets
 
-  div.public-tweet
-    span.author-profile
-      = image_tag(author.profile_image_url, class: 'avatar')
-      span.name = author.name
-      span.screen-name = author.at_screen_name
+      / tweet
+      = render tweet
 
-    / timestamp
-    span.timestamp
-      = icon_tag :time, timestamp_tag(previous_tweet.created_at)
+      / future tweets or link to conversation
+      - if tweet.future_tweets.size > 0
+        = render tweet.future_tweets
 
-    / text
-    div.text = previous_tweet.text
+  / / previous tweet
+  / - if previous_tweet = @status.previous_tweet
+  /   - previous_tweet &&= previous_tweet.decorate
+  /   - author = previous_tweet.author
+
+  /   div.public-tweet
+  /     span.author-profile
+  /       = image_tag(author.profile_image_url, class: 'avatar')
+  /       span.name = author.name
+  /       span.screen-name = author.at_screen_name
+
+  /     / timestamp
+  /     span.timestamp
+  /       = icon_tag :time, timestamp_tag(previous_tweet.created_at)
+
+  /     / text
+  /     div.text = previous_tweet.text
 
 
-/ public status
-div.public-tweet
-  - twitter_account = @status.twitter_account
-  span.author-profile
-    = image_tag(twitter_account.profile_image_url, class: 'avatar')
-    span.name = twitter_account.name
-    span.screen-name = twitter_account.at_screen_name
+  / / public status
+  / div.public-tweet
+  /   - twitter_account = @status.twitter_account
+  /   span.author-profile
+  /     = image_tag(twitter_account.profile_image_url, class: 'avatar')
+  /     span.name = twitter_account.name
+  /     span.screen-name = twitter_account.at_screen_name
 
-  / timestamp
-  span.timestamp
-    = icon_tag :time, timestamp_tag(@status.posted_at)
+  /   / timestamp
+  /   span.timestamp
+  /     = icon_tag :time, timestamp_tag(@status.posted_at)
 
-  div.text == @status.text
+  /   div.text == @status.text
 
-  div.public-actions
-    span = link_to icon_tag(:reply, 'Reply'), @status.reply_intent_url
-    span = link_to icon_tag(:twitter, 'On Twitter'), @status.twitter_url if @status.twitter_url
-    span.text-muted #{ @status.text_length } characters
+  /   div.public-actions
+  /     span = link_to icon_tag(:reply, 'Reply'), @status.reply_intent_url
+  /     span = link_to icon_tag(:twitter, 'On Twitter'), @status.twitter_url if @status.twitter_url
+  /     span.text-muted #{ @status.text_length } characters
 
-/ who are we?
-.space-two
-hr
-.space-one
-p style='font-size: 13px; text-align: center; margin-top: 1rem'
-  = link_to root_path do
-    = image_tag 'tweetbox/logo_and_tagline.png', width: 120, style: 'padding-bottom: 8px'
-    br
-    b Your customers are on Twitter? <br>
-    ' See how long replies (with 140+ characters) <br>
-    ' can win customers and improve relationships. <br>
+  / who are we?
+  .space-two
+  hr
+  .space-one
+  p style='font-size: 13px; text-align: center; margin-top: 1rem'
+    = link_to root_path do
+      = image_tag 'tweetbox/logo_and_tagline.png', width: 120, style: 'padding-bottom: 8px'
+      br
+      b Your customers are on Twitter? <br>
+      ' See how long replies (with 140+ characters) <br>
+      ' can win customers and improve relationships. <br>

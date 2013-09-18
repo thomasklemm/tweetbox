@@ -30,15 +30,13 @@ describe 'Connect a Twitter account and post tweet' do
       within '#new_status' do
         fill_in 'status_text', with: text
         fill_in 'status_twitter_account_id', with: TwitterAccount.first.id
-        click_on 'Preview'
+        click_on 'Post Tweet'
       end
-
-      click_on 'Post Tweet'
     end
 
     status = Status.first
 
-    expect(page).to have_content("Status has been published.")
+    expect(page).to have_content("Tweet has been posted to Twitter.")
     expect(page).to have_content(status.text)
 
     # Public view

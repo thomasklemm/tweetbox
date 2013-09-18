@@ -1,5 +1,5 @@
 Fabricator(:event) do
-  name
+  name "event.name"
   user
   eventable { Fabricate([:account, :project, :user, :invitation, :twitter_account, :search, :tweet, :status].sample) }
 end

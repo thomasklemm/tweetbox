@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130914060902) do
+ActiveRecord::Schema.define(version: 20130918120254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,20 +22,6 @@ ActiveRecord::Schema.define(version: 20130914060902) do
     t.datetime "updated_at"
     t.integer  "projects_count"
   end
-
-  create_table "activities", force: true do |t|
-    t.integer  "tweet_id",   null: false
-    t.integer  "user_id",    null: false
-    t.integer  "project_id", null: false
-    t.text     "kind",       null: false
-    t.text     "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "activities", ["project_id"], name: "index_activities_on_project_id", using: :btree
-  add_index "activities", ["tweet_id"], name: "index_activities_on_tweet_id", using: :btree
-  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "authors", force: true do |t|
     t.integer  "project_id",                                  null: false
@@ -232,7 +218,6 @@ ActiveRecord::Schema.define(version: 20130914060902) do
     t.integer  "favorite_count",                  default: 0
     t.integer  "previous_tweets_count",           default: 0
     t.integer  "future_tweets_count",             default: 0
-    t.integer  "activities_count",                default: 0
     t.integer  "status_id"
     t.datetime "resolved_at"
     t.boolean  "replied_to",                      default: false

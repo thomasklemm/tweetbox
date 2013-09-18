@@ -34,10 +34,7 @@ class Retweet
 
   def post!
     status = post_retweet
-    tweet = create_new_tweet(status)
-
-    create_activities
-    tweet
+    create_new_tweet(status)
   end
 
   # Returns posted Twitter status object
@@ -48,10 +45,5 @@ class Retweet
 
   def create_new_tweet(status)
     @new_tweet = project.create_tweet_from_twitter(status, state: :posted, twitter_account: twitter_account)
-  end
-
-  def create_activities
-    old_tweet.create_activity(:retweet, user)
-    new_tweet.create_activity(:post, user)
   end
 end
