@@ -1,38 +1,16 @@
 / status form
 - @status &&= @status.decorate
 
-/ / previous tweet
-/ - if previous_tweet = @status.previous_tweet
-/   / - previous_tweet &&= previous_tweet.decorate
-/   / - author = previous_tweet.author
-
-/   / div.public-tweet
-/   /   span.author-profile
-/   /     = image_tag(author.profile_image_url, class: 'avatar')
-/   /     span.name = author.name
-/   /     span.screen-name = author.at_screen_name
-
-/   /   / timestamp
-/   /   span.timestamp
-/   /     = icon_tag :time, timestamp_tag(previous_tweet.created_at)
-
-/   /   / text
-/   /   div.text = previous_tweet.text
-/   .tweets
-/     = render previous_tweet
-
-/   .space-two
-
-
 / status form
 div ng-controller='StatusController'
   div ng-init="statusText = '#{ @status[:text] || @status.initial_reply_to_user_text }'"
   div ng-init="twitterAccounts = #{ @status.project_twitter_accounts_in_json  }"
   div ng-init="selectedTwitterAccount = twitterAccounts[#{ @status.selected_twitter_account_position }]"
 
-  = form_for [@project, @status], remote: true do |f|
+  = form_for [@project, @status], remote: request.xhr? do |f|
     = render 'shared/form_errors', target: @status
 
+    / author
     span.author
       img.avatar ng-src="{{ selectedTwitterAccount.profile_image_url }}"
       span.name = "{{ selectedTwitterAccount.name }}"

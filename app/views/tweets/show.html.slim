@@ -1,10 +1,12 @@
 / show tweet
 
-= logo_header 'Tweet'
+= logo_header "Tweet by #{ @tweet.author.at_screen_name }"
 
-.tweets
+div.tweets class='bordered'
   = render 'conversation_for_tweet', tweet: @tweet
 
-/ links back
-ul class="list-inline"
-  li = link_to "&laquo; Back to Incoming Tweets".html_safe, [:incoming, @project, :tweets]
+.space-one
+ul class='list-inline'
+  li = link_to icon_tag('chevron-left', 'Incoming Tweets'), [:incoming, @project, :tweets]
+  li.divider
+  li = link_to "Tweet Stream", [:stream, @project, :tweets]

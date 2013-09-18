@@ -1,9 +1,15 @@
 / new status
 - if @project.twitter_accounts.any?
-  - header_text = @status.reply? ? 'Reply' : 'Tweet'
-  = logo_header header_text
+  = logo_header @status.reply? ? 'Reply' : 'Tweet'
 
-  = render 'form'
+  / previous tweet
+  .tweets
+    - if previous_tweet = @status.previous_tweet
+      = render previous_tweet
+
+  / status form
+  .new-status-wrapper
+    = render 'form'
 
 - else
   / blank slate

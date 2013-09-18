@@ -6,6 +6,12 @@
 .marketing.long-reply
   margin-top: -16px // remove margin so image reaches navbar
 
+ul.list-inline
+  li.divider
+    color: #ccc
+    &:after
+      content: "|"
+
 #show-tweets
   margin: 0 auto
   position: relative
@@ -28,18 +34,19 @@
 $tweets-border-color: #e5e5e5
 
 .tweets
-  border: 1px solid $tweets-border-color
-  border-radius: 3px
+  &.bordered
+    border: 1px solid $tweets-border-color
+    border-radius: 5px
 
-  .conversation_for_tweet
-    padding-bottom: 1.25rem
-    border-bottom: 1px solid $tweets-border-color
-    padding-top: 1.25rem
+    .conversation_for_tweet
+      padding: 0 1rem
+      border-bottom: 1px solid $tweets-border-color
+      .tweet
+        margin: 1rem 0
 
   .tweet
     padding-left: 46px
     padding-right: 90px
-    margin: 0.8rem
 
     &:first-child
       margin-top: 0
@@ -121,44 +128,31 @@ $tweets-border-color: #e5e5e5
 abbr.timeago
   border-bottom: none
 
-// New status
+// new status form
+.new_status, .edit_status
+  margin: 0.8rem 0
+  .author
+    color: $link-color
+
 .new-status-wrapper
-  width: 420px
+  .new_status, .edit_status
+    padding-left: 46px
 
-  .actions
-    line-height: 30px
-
-    .character-counter
-      float: right
-
-  .preview-status
-    padding: 12px 10px 12px 72px
-    border: 1px solid #ccc
-    box-shadow: 1px 1px 3px #ccc
-    border-radius: 3px
-
-    .avatar
+    img.avatar
       float: left
-      margin-top: 5px
-      margin-left: -58px
-      border-radius: 2px
+      margin: 2px 0 0 -46px
+
+      width: 36px
+      height: 36px
+
+      // round image
+      border-radius: 100px
 
     .author
       .name
         font-weight: bold
-        color: $text-color
       .screen-name
-        margin-left: 5px
-        @extend .text-muted
-
-    .text
-      white-space: pre-wrap  // pre-wrap and pre-line seem to be good options
-      color: $text-color
-
-  .preview-status
-    .text
-      min-height: (4 * $line-height-base)
-
+        margin-left: 6px
 
 // Public tweets
 // .public-tweet-wrapper
@@ -273,17 +267,6 @@ img.navbar-logo
 
   .embed
     margin: 0.5rem 0
-
-// new status form
-// .new_status, .edit_status
-//   @extend .public-tweet
-
-// new status form
-.new_status, .edit_status
-  margin: 0.8rem 0
-
-  .author
-    color: $link-color
 
 
 // alerts
