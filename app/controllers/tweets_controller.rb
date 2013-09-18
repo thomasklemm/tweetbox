@@ -66,10 +66,9 @@ class TweetsController < TweetController
     @tweet.resolve!
     @tweet.reload and @tweet.push_replace_tweet
 
-    # TODO: Move to background
-    # track 'Tweet Resolve', @tweet, {
-    #   'Resolution Time' => @tweet.resolution_time_in_seconds
-    # }
+    track 'Tweet Resolve', @tweet, {
+      'Resolution Time' => @tweet.resolution_time_in_seconds
+    }
 
     respond_to do |format|
       format.html { redirect_to [:incoming, @project, :tweets],

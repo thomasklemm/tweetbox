@@ -4,5 +4,5 @@ Fabricator(:registration) do
   email         { sequence(:email) { |i| "registration_user#{i}@example.com" } }
   password      'password'
 
-  invitation_code { Fabricate(:invitation).code }
+  invitation_token { Fabricate(:invitation).token }
 end

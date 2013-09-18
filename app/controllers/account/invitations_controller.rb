@@ -60,7 +60,7 @@ class Account::InvitationsController < AccountController
   end
 
   def account_invitation
-    account_invitations.find_by_code!(params[:id])
+    account_invitations.find_by!(token: params[:id])
   end
 
   def load_invitation

@@ -16,7 +16,7 @@ describe Mailer, "invitation" do
     it "renderes the body" do
       body = mail.body.encoded
 
-      # invitation code
+      # invitation token
       expect(body).to include(invitation.registration_url)
     end
   end

@@ -19,7 +19,7 @@ class InvitationDecorator < Draper::Decorator
   end
 
   def registration_url
-    new_registration_url(invitation_code: code, email: email, first_name: first_name, last_name: last_name).html_safe
+    new_registration_url(invitation_token: token, email: email, first_name: first_name, last_name: last_name).html_safe
   end
 
   def copy_registration_url(text)

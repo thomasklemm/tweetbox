@@ -1,6 +1,4 @@
 class Invitation < ActiveRecord::Base
-  # TODO: Rename code to token
-
   belongs_to :account
   belongs_to :issuer, class_name: 'User'
 
@@ -14,10 +12,10 @@ class Invitation < ActiveRecord::Base
             :first_name,
             :last_name,
             :email,
-            :code, presence: true
-  validates :code, uniqueness: true
+            :token, presence: true
+  validates :token, uniqueness: true
 
-  after_initialize :generate_code
+  after_initialize :generate_token
   before_create :set_expires_at
 
   scope :by_date, -> { order(created_at: :asc) }
@@ -52,7 +50,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def to_param
-    code
+    token
   end
 
   # Sends an invitation email sporting a link that helps registering
@@ -79,9 +77,9 @@ class Invitation < ActiveRecord::Base
 
   private
 
-  # Generates a random and unique invitation code
-  def generate_code
-    self.code ||= Tokenizer.random_token(16)
+  # Generates a random and unique invitation token
+  def generate_token
+    self.token ||= Tokenizer.random_token(16)
   end
 
   def set_expires_at

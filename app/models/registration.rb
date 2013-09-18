@@ -8,7 +8,7 @@
 #     last_name: 'Klemm',
 #     email: 'thomas@tklemm.eu',
 #     password: '123123123',
-#     invitation_code: '123abc123abc')
+#     invitation_token: '123abc123abc')
 #
 class Registration
   include Reformer
@@ -21,7 +21,7 @@ class Registration
   attribute :last_name, String
   attribute :email, String
   attribute :password, String
-  attribute :invitation_code, String # to add errors
+  attribute :invitation_token, String # to add errors
 
   validates :first_name,
             :last_name,
@@ -32,12 +32,12 @@ class Registration
   validate :invitation_must_not_be_used
   validate :invitation_must_not_be_expired
 
-  def invitation_code=(code)
-    @invitation = Invitation.where(code: code).first
+  def invitation_token=(token)
+    @invitation = Invitation.find_by(token: token)
   end
 
-  def invitation_code
-    @invitation.try(:code)
+  def invitation_token
+    @invitation.try(:token)
   end
 
   delegate :account, to: :invitation
@@ -118,19 +118,19 @@ class Registration
 
   def invitation_must_be_present
     unless @invitation.present?
-      errors.add(:invitation_code, 'is unknown')
+      errors.add(:invitation_token, 'is unknown')
     end
   end
 
   def invitation_must_not_be_used
     if @invitation.try(:used?)
-      errors.add(:invitation_code, 'has already been used')
+      errors.add(:invitation_token, 'has already been used')
     end
   end
 
   def invitation_must_not_be_expired
     if @invitation.try(:expired?)
-      errors.add(:invitation_code, 'has expired')
+      errors.add(:invitation_token, 'has expired')
     end
   end
 end

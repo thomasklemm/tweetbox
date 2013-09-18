@@ -16,16 +16,16 @@ describe Invitation do
   it { should validate_presence_of(:first_name) }
   it { should validate_presence_of(:last_name) }
   it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:code) }
+  it { should validate_presence_of(:token) }
 
-  describe "#generate_code" do
-    it "generates code on initialization" do
-      code = invitation.code
-      expect(code).to be_present
-      expect(code).to match(/\w{16}/)
+  describe "#generate_token" do
+    it "generates token on initialization" do
+      token = invitation.token
+      expect(token).to be_present
+      expect(token).to match(/\w{16}/)
 
       invitation.save
-      expect(invitation.reload.code).to eq(code)
+      expect(invitation.reload.token).to eq(token)
     end
   end
 
@@ -47,8 +47,8 @@ describe Invitation do
   end
 
   describe "#to_param" do
-    it "returns the code" do
-      expect(invitation.to_param).to eq(invitation.code)
+    it "returns the token" do
+      expect(invitation.to_param).to eq(invitation.token)
     end
   end
 end
@@ -57,7 +57,7 @@ describe Invitation, 'persisted' do
   subject(:invitation) { Fabricate(:invitation) }
   it { should be_valid }
 
-  it { should validate_uniqueness_of(:code) }
+  it { should validate_uniqueness_of(:token) }
 
   describe "#deactivate!" do
     it "deactivates the invitation" do

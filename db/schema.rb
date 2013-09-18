@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130918120254) do
+ActiveRecord::Schema.define(version: 20130918180209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20130918120254) do
     t.integer  "account_id", null: false
     t.integer  "issuer_id",  null: false
     t.integer  "invitee_id"
-    t.text     "code",       null: false
+    t.text     "token",      null: false
     t.text     "email"
     t.datetime "used_at"
     t.datetime "expires_at"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20130918120254) do
   end
 
   add_index "invitations", ["account_id"], name: "index_invitations_on_account_id", using: :btree
-  add_index "invitations", ["code"], name: "index_invitations_on_code", unique: true, using: :btree
+  add_index "invitations", ["token"], name: "index_invitations_on_token", unique: true, using: :btree
 
   create_table "lead_tweets", force: true do |t|
     t.integer  "twitter_id",            limit: 8

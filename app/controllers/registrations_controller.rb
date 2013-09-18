@@ -30,27 +30,27 @@ class RegistrationsController < ApplicationController
   private
 
   def invitation_params
-    params.slice(:invitation_code, :first_name, :last_name, :email)
+    params.slice(:invitation_token, :first_name, :last_name, :email)
   end
 
   def registration_params
-    params[:registration].slice(:invitation_code, :first_name, :last_name, :email, :password)
+    params[:registration].slice(:invitation_token, :first_name, :last_name, :email, :password)
   end
 
   def load_and_ensure_active_invitation
-    invitation_code = params[:invitation_code]
-    invitation = Invitation.where(code: invitation_code).first if invitation_code.present?
+    invitation_token = params[:invitation_token]
+    invitation = Invitation.find_by!(token: invitation_token) if invitation_token.present?
 
-    invitation_code.present? or return redirect_to root_url,
-      notice: "You'll need an invitation code to successfully register."
+    invitation_token.present? or return redirect_to root_url,
+      notice: "You'll need an invitation token to successfully register."
 
     invitation.present? or return redirect_to root_url,
-      notice: "The invitation code could not be found or has been revoked."
+      notice: "The invitation token could not be found or has been revoked."
 
     invitation.used? and return redirect_to root_url,
-      notice: "The invitation code has already been used."
+      notice: "The invitation token has already been used."
 
     invitation.expired? and return redirect_to root_url,
-      notice: "The invitation code has expired."
+      notice: "The invitation token has expired."
   end
 end

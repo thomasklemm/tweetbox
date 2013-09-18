@@ -16,7 +16,7 @@ describe Registration do
   it { should validate_presence_of(:password) }
 end
 
-describe Registration, 'valid user and invitation_code fields' do
+describe Registration, 'valid user and invitation_token fields' do
   subject(:registration) { Fabricate(:registration) }
 
   before do
