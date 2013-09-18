@@ -5,31 +5,29 @@ div#show-tweets style='display: none'
   = link_to 'Show new tweets.', 'javascript:;'
 
 = content_tag :div, id: "tweets", class: "incoming tweets bordered",
-  data: {url: incoming_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max }"} do
+  data: {url: incoming_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max || @project.tweets.stream.by_date(:desc).first.try(:twitter_id)}" } do
   = render_conversation_for_tweets(@tweets)
 
 - if @tweets.any?
   = render 'tweets_pagination', tweets: @tweets
 
-/  = logo_header 'Incoming tweets', link_to(icon_tag(:undo, 'Show last resolved tweet'), 'javascript:;', class: 'link-to-last-resolved-tweet', style: 'display: none'
-/ - if @tweets.empty?
-/   - if @project.twitter_accounts.any?
-/     / inbox zero
-/     = logo_header 'Inbox Zero'
-/     p All clear, time for a Moment of Zen.
+- if @tweets.empty?
+  - if @project.twitter_accounts.any?
+    .space-one
 
-/     / placeholder
-/     div#tweets class="incoming tweets"
+    / inbox zero
+    h4 Inbox Zero
+    p All clear, time for a Moment of Zen.
 
-/   - else
-/     / blank slate
-/     = logo_header 'Incoming Tweets'
+  - else
+    / blank slate
+    = logo_header 'Incoming Tweets'
 
-/     p
-/       ' Once you connect a Twitter account, we'll fetch <br />
-/       ' your @mentions and search results so you'll <br />
-/       ' be able to resolve them with the help of Tweetbox.
+    p
+      ' Once you connect a Twitter account, we'll fetch <br />
+      ' your @mentions and search results so you'll <br />
+      ' be able to resolve them with the help of Tweetbox.
 
-/     .space-half
+    .space-half
 
-/     = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
+    = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
