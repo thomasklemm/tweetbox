@@ -1,4 +1,8 @@
-# Finds or fetches a tweet
+# TweetFinder
+#
+# Finds or fetches a tweet with a given twitter_id in the context
+#  of a given project
+#
 class TweetFinder
   def initialize(project, twitter_id)
     @project = project

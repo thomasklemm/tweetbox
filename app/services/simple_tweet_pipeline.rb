@@ -1,3 +1,7 @@
+# SimpleTweetPipeline
+#
+# Autolinks the tweet text of tweets retrieved from Twitter
+#
 class SimpleTweetPipeline
   include AutoHtml
   include Twitter::Autolink
@@ -5,11 +9,18 @@ class SimpleTweetPipeline
   def initialize(text)
     @text = text
   end
+  attr_reader :text
 
   def to_html
-    result = pipeline.call(@text)
-    t = auto_link_usernames_or_lists(result[:output].to_s, auto_link_usernames_opts)
-    t = auto_html(t) { link(target: '_blank') }
+    # Sanitize text and autolink
+    result = pipeline.call(text)
+    html = result[:output].to_s
+
+    # Link Twitter usernames
+    html = auto_link_usernames_or_lists(html, auto_link_usernames_opts)
+
+    # Embed videos and images and autolink urls
+    auto_html(html) { link(target: '_blank') }
   end
 
   private
@@ -18,12 +29,7 @@ class SimpleTweetPipeline
     @pipeline ||= HTML::Pipeline.new [
       HTML::Pipeline::PlainTextInputFilter,
       HTML::Pipeline::SanitizationFilter
-    ], pipeline_context
-  end
-
-  def pipeline_context
-    {
-    }
+    ]
   end
 
   def auto_link_usernames_opts

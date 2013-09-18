@@ -1,30 +1,34 @@
 / incoming tweets
-- if @tweets.any?
-  = logo_header 'Incoming tweets', link_to(icon_tag(:undo, 'Show last resolved tweet'), 'javascript:;', class: 'link-to-last-resolved-tweet', style: 'display: none')
+= logo_header 'Incoming tweets'
 
-  div#tweets class="incoming tweets"
-    = render_cached_conversation_for_tweets(@tweets)
+div#show-tweets style='display: none'
+  = link_to 'Show new tweets.', 'javascript:;'
 
-  = render 'incoming_pagination', tweets: @tweets
+= content_tag :div, id: "tweets", class: "incoming tweets bordered",
+  data: {url: stream_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max }"} do
+  = render_conversation_for_tweets(@tweets)
 
-- if @tweets.empty?
-  - if @project.twitter_accounts.any?
-    / inbox zero
-    = logo_header 'Inbox Zero'
-    p All clear, time for a Moment of Zen.
+= render 'tweets_pagination', tweets: @tweets
 
-    / placeholder
-    div#tweets class="incoming tweets"
+/  = logo_header 'Incoming tweets', link_to(icon_tag(:undo, 'Show last resolved tweet'), 'javascript:;', class: 'link-to-last-resolved-tweet', style: 'display: none'
+/ - if @tweets.empty?
+/   - if @project.twitter_accounts.any?
+/     / inbox zero
+/     = logo_header 'Inbox Zero'
+/     p All clear, time for a Moment of Zen.
 
-  - else
-    / blank slate
-    = logo_header 'Incoming Tweets'
+/     / placeholder
+/     div#tweets class="incoming tweets"
 
-    p
-      ' Once you connect a Twitter account, we'll fetch <br />
-      ' your @mentions and search results so you'll <br />
-      ' be able to resolve them with the help of Tweetbox.
+/   - else
+/     / blank slate
+/     = logo_header 'Incoming Tweets'
 
-    .space-half
+/     p
+/       ' Once you connect a Twitter account, we'll fetch <br />
+/       ' your @mentions and search results so you'll <br />
+/       ' be able to resolve them with the help of Tweetbox.
 
-    = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
+/     .space-half
+
+/     = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'

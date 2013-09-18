@@ -122,12 +122,6 @@ class Status < ActiveRecord::Base
     # Link tweet and status together
     tweet.status = self
 
-    # Create :post activity on new tweet...
-    tweet.create_activity(:post, user)
-
-    # ...and :post_reply activity on previous tweet
-    previous_tweet.has_been_replied_to_by(user) if previous_tweet
-
     self.save! and tweet.save!
   end
 

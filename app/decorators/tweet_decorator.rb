@@ -8,8 +8,8 @@ class TweetDecorator < Draper::Decorator
 
   # Returns the autolinked status or tweet text
   def text
-    # TODO: Display status.try(:text)
-    SimpleTweetPipeline.new(model.text).to_html
+    t = status.try(:text) || model.text
+    SimpleTweetPipeline.new(t).to_html
   end
 
   ##

@@ -6,15 +6,47 @@
 .marketing.long-reply
   margin-top: -16px // remove margin so image reaches navbar
 
+ul.list-inline
+  li.divider
+    color: #ccc
+    &:after
+      content: "|"
+
+#show-tweets
+  margin: 0 auto
+  position: relative
+  width: 200px
+  height: 0
+  top: -12px
+  padding-top: -1.25rem
+
+  // display: block
+  // line-height: 0
+  // height: 0
+  // overflow: hidden
+  a
+    font-weight: bold
+    padding: 1.2rem 2rem
+    background: darken(#fcf8e3, 1%)
+    text-align: center
+    border-radius: 3px
+
+$tweets-border-color: #e5e5e5
+
 .tweets
-  .conversation_for_tweet
-    padding-bottom: 1.25rem
-    border-bottom: 1px solid #eee
-    margin-bottom: 1.25rem
+  &.bordered
+    border: 1px solid $tweets-border-color
+    border-radius: 5px
+
+    .conversation_for_tweet
+      padding: 0 1rem
+      border-bottom: 1px solid $tweets-border-color
+      .tweet
+        margin: 1rem 0
 
   .tweet
     padding-left: 46px
-    margin: 0.8rem
+    padding-right: 90px
 
     &:first-child
       margin-top: 0
@@ -57,68 +89,70 @@
 
     .text
       display: block
+      word-wrap: break-word
       p
         margin: 0
 
-    &.incoming .text
-      min-height: 40px // two lines
+    // &.incoming .text
+    //   min-height: 40px // two lines
 
-    .activities
-      @extend .text-muted
-      .activity
-        .timestamp
-          // override .tweet .timestamp
-          margin-left: 6px
+    // .actions a
+    //   padding: 0 10px
+    //   border-right: 1px solid #ddd
+    //   &:first-child
+    //     padding-left: 0
+    //   &:last-child
+    //     border-right: none
 
-    .actions a
-      padding: 0 10px
-      border-right: 1px solid #ddd
-      &:first-child
-        padding-left: 0
-      &:last-child
-        border-right: none
+    .actions
+      margin: 0px -90px 0 12px
+      float: right
+      a
+        height: 38px
+        i
+          position: relative
+          top: 3px
+
+    &.incoming .actions
+      a
+        @extend .btn-primary
+      .reply-btn, .resolve-and-activate-btn
+
+    &.resolved .actions
+      a
+        @extend .btn-default
+        color: $brand-success
+      .resolve-and-activate-btn
+
 
 abbr.timeago
   border-bottom: none
 
-// New status
+// new status form
+.new_status, .edit_status
+  margin: 0.8rem 0
+  .author
+    color: $link-color
+
 .new-status-wrapper
-  width: 420px
+  .new_status, .edit_status
+    padding-left: 46px
 
-  .actions
-    line-height: 30px
-
-    .character-counter
-      float: right
-
-  .preview-status
-    padding: 12px 10px 12px 72px
-    border: 1px solid #ccc
-    box-shadow: 1px 1px 3px #ccc
-    border-radius: 3px
-
-    .avatar
+    img.avatar
       float: left
-      margin-top: 5px
-      margin-left: -58px
-      border-radius: 2px
+      margin: 2px 0 0 -46px
+
+      width: 36px
+      height: 36px
+
+      // round image
+      border-radius: 100px
 
     .author
       .name
         font-weight: bold
-        color: $text-color
       .screen-name
-        margin-left: 5px
-        @extend .text-muted
-
-    .text
-      white-space: pre-wrap  // pre-wrap and pre-line seem to be good options
-      color: $text-color
-
-  .preview-status
-    .text
-      min-height: (4 * $line-height-base)
-
+        margin-left: 6px
 
 // Public tweets
 // .public-tweet-wrapper
@@ -234,9 +268,6 @@ img.navbar-logo
   .embed
     margin: 0.5rem 0
 
-// new status form
-.new_status, .edit_status
-  @extend .public-tweet
 
 // alerts
 .alert

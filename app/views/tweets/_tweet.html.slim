@@ -2,7 +2,24 @@
 - tweet &&= tweet.decorate
 
 / tweet
-= div_for tweet, class: "#{ dom_id(tweet) } #{ tweet.current_state }" do
+= div_for tweet, data: { twitter_id: tweet.twitter_id.to_s }, class: "#{ dom_id(tweet) } #{ tweet.current_state }" do
+  / actions
+  .actions class='btn-group'
+    - if tweet.incoming? || tweet.resolved?
+      / reply
+      = link_to new_project_status_path(tweet.project, in_reply_to: tweet.twitter_id), title: 'Reply to this tweet', remote: true, class: 'btn reply-btn' do
+        = icon_tag :reply
+
+    - if tweet.incoming?
+      / resolve
+      = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
+        = icon_tag :ok
+
+    - if tweet.resolved?
+      / activate
+      = link_to activate_project_tweet_path(tweet.project, tweet), title: 'Activate tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
+        = icon_tag :ok
+
   / author
   = link_to tweet.author_intent_url, class: 'author' do
     = image_tag(tweet.author.profile_image_url, class: 'avatar')
@@ -22,23 +39,12 @@
   div
     span.text = tweet.text
 
-  / activities
-  .activities
-    - if tweet.activities.size > 0
-      - tweet.activities.each do |activity|
-        - activity &&= activity.decorate
+  / who posted this status?
+  - if status = tweet.status
+    div
+      span.posted-by.text-info
+        = icon_tag :twitter
+        ' Posted by #{ status.user.full_name }
 
-        = div_for activity do
-          = icon_tag 'caret-right'
-          = activity.render
-
-  / actions
-  - if tweet.incoming?
-    .actions
-      / reply
-      = link_to new_project_tweet_reply_path(tweet.project, tweet), title: 'Reply to this tweet' do
-        = icon_tag :reply, 'Reply'
-
-      / resolve
-      = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true do
-        = icon_tag :ok, 'Resolve'
+  / placeholder for forms and previews
+  div.forms

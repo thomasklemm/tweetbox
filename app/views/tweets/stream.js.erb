@@ -1,12 +1,21 @@
-// tweet stream js
+// stream tweets js
+var conversations = '<%= j render_conversation_for_tweets(@tweets) %>';
 
-// append conversations
-$conversations = $('<%= j render_cached_conversation_for_tweets(@tweets) %>');
-$('#tweets').append($conversations);
+// Prepend or append tweets / conversations
+<% if params[:min_id] %>
+  Tweets.prependTweets(conversations);
+<% else %>
+  Tweets.appendTweets(conversations);
+<% end %>
 
-// pagination
-<% new_pagination = @tweets.current_page < @tweets.num_pages ? j(paginate(@tweets)) : 'The End.' %>
-$('.pagination').replaceWith('<%= new_pagination %>');
+// Update pagination
+<% if params[:max_id] %>
+  <% new_pagination = @tweets.size > 0 ? j(render('tweets_pagination', tweets: @tweets)) : '' %>
+  $('.pagination').replaceWith('<%= new_pagination %>');
+<% end %>
 
-// initialize timestamps
-$conversations.find("abbr.timeago").timeago();
+// Update polling
+<% new_min_id = @tweets.map(&:twitter_id).max %>
+<% if new_min_id %>
+  $('#tweets').attr('data-min-id', '<%= new_min_id %>');
+<% end %>

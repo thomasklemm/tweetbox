@@ -3,14 +3,13 @@
   div.row
 
     / project navigation
-    div class="col-sm-3"
+    div class="col-sm-2"
       ul class='nav nav-pills nav-stacked'
 
         / incoming tweets
         = active_list_item [:incoming, @project, :tweets], true do
           = link_to [:incoming, @project, :tweets] do
             = icon_tag :bullhorn, 'Incoming Tweets', true
-            span class="badge pull-right visible-md visible-lg" = @project.incoming_tweets_count
 
         / tweet stream
         = active_list_item [:stream, @project, :tweets] do
@@ -38,7 +37,7 @@
             = icon_tag :twitter, 'Twitter Searches', true
 
     / main content
-    div class="col-sm-9"
+    div class="col-sm-10"
       / any flash messages
       = render 'flashes'
 

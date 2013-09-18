@@ -1,5 +1,5 @@
 class StatusesController < ProjectController
-  before_action :load_status, only: [:preview, :edit, :update, :publish, :published]
+  before_action :load_status, only: [:show]
 
   # Pass in_reply_to: twitter_id
   def new
@@ -9,54 +9,22 @@ class StatusesController < ProjectController
   def create
     @status = project_statuses.build(status_params)
 
-    if @status.save
-      redirect_to [:preview, @project, @status]
-    else
-      render :new
-    end
-  end
+    respond_to do |format|
+      if @status.save
+        @status.publish!
+        track 'Status Publish', @status
 
-  # GET statuses/:id/preview
-  def preview
-  end
-
-  def edit
-    render :new
-  end
-
-  def update
-    if @status.update(status_params)
-      redirect_to [:preview, @project, @status]
-    else
-      render :new
-    end
-  end
-
-  # POST statuses/:id/publish
-  def publish
-    @status.publish! # will only publish status once
-    track 'Status Publish', @status
-
-    if @status.previous_tweet
-      # Resolve the previous tweet
-      if params[:resolve].to_s == 'resolve'
-        @status.previous_tweet.resolve_by(current_user)
-        redirect_to incoming_project_tweets_path(@project),
-          notice: "Reply has been posted and Tweet has been resolved. You responded in #{ @status.decorate.response_time_in_words }."
+        format.js
+        format.html { redirect_to [@project, @status],
+          notice: "#{ @status.reply? ? 'Reply' : 'Tweet' } has been posted to Twitter." }
       else
-        redirect_to [@project, @status.previous_tweet],
-          notice: "Reply has been published."
+        render :new
       end
-    else
-      redirect_to [:published, @project, @status],
-        notice: "Status has been published."
     end
   end
 
-  # GET statuses/:id/published
-  def published
-    redirect_to [:preview, @project, @status] unless @status.published?
-    render 'public_statuses/show'
+  def show
+    redirect_to [@project, @status.tweet]
   end
 
   private

@@ -21,13 +21,7 @@
     ##
     # Events
 
-    channel.bind 'prepend-conversation', (data) ->
-      TweetPusher.prependConversation(data.tags, data.conversation)
-
-    channel.bind 'append-tweet', (data) ->
-      TweetPusher.appendTweet(data.tag, data.tweet)
-
     channel.bind 'replace-tweet', (data) ->
-      TweetPusher.replaceTweet(data.tag, data.tweet)
+      Tweets.replaceTweet(data.tag, data.tweet)
 
 

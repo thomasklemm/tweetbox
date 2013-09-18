@@ -1,39 +1,37 @@
 # tweets
+@Tweets =
+  poll: ->
+    setInterval @request, 10000
 
-# Endless scroll
-jQuery ->
-  if $('.pagination').length
-      $(window).scroll ->
-        url = $('.pagination a[rel=next]').attr('href')
-        if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
-          # $('.pagination').text("Loading ...")
-          $('.pagination').html("<i class='icon-spinner icon-spin'></i> Loading more...")
-          $.getScript(url)
-      $(window).scroll()
+  request: ->
+    url = $('#tweets').data('url')
+    min_id = $('#tweets').attr('data-min-id') || ''
+    url = url + '?min_id=' + min_id
+    $.getScript(url)
 
+  prependTweets: (tweets) ->
+    if tweets.length > 0
+      $tweets = $(tweets)
+      $tweets.find('abbr.timeago').timeago()
+      $('#tweets').prepend($tweets.hide())
 
-@TweetPusher =
-  # NOTE: Can replace conversations or tweet, right now used for tweets
-  # due to payload max of 10 KB (custom 13 KB payload limit) on Pusher
+      new_tweets_count = $('.conversation_for_tweet:hidden').length
+      $('#show-tweets a').text('Show ' + new_tweets_count + ' new tweets.')
+      $('#show-tweets').show()
+
+  appendTweets: (tweets) ->
+    if tweets.length > 0
+      $tweets = $(tweets)
+      $tweets.find('abbr.timeago').timeago()
+      $('#tweets').append($tweets)
+
   replaceTweet: (tag, tweet) ->
     $tweet = $(tweet)
+    $tweet.find('abbr.timeago').timeago()
     $(tag).after($tweet).remove()
-    @updateTimestamps()
 
-  prependConversation: (tags, conversation) ->
-    @prependC(tag, conversation) for tag in tags
+  showTweets: (e) ->
+    e.preventDefault()
+    $('.conversation_for_tweet').show()
+    $('#show-tweets').hide()
 
-  prependC: (tag, conversation) ->
-    $conversation = $(conversation)
-    $(tag).prepend($conversation.hide().slideDown(200))
-    @updateTimestamps()
-
-  appendTweet: (tag, tweet) ->
-    $tag = $(tag)
-    $tweet = $(tweet)
-    $tag.append($tweet.hide().slideDown(200))
-    @updateTimestamps()
-
-  # Updates timestamps on the entire page
-  updateTimestamps: ->
-    $("abbr.timeago").timeago()

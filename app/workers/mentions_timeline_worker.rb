@@ -1,3 +1,7 @@
+# MentionsTimelineWorker
+#
+# Fetches the mentions timeline of a given Twitter account
+#
 class MentionsTimelineWorker
   include Sidekiq::Worker
   sidekiq_options retry: false, backtrace: true
@@ -10,7 +14,7 @@ class MentionsTimelineWorker
 
   # Twitter account could have been removed since scheduling
   rescue ActiveRecord::RecordNotFound
-    false
+    true
   end
 
   private

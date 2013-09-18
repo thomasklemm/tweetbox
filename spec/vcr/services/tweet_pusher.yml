@@ -1,0 +1,37 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.pusherapp.com/apps/48883/events?auth_key=bd90c5fceef54c5f2c55&auth_signature=a880973d32fda79b8619631e40a40de457e51cf8455c0ce14b1b7b908914310a&auth_timestamp=1379239345&auth_version=1.0&body_md5=dd181e1bc669182d6f0215f147500357
+    body:
+      encoding: UTF-8
+      string: '{"name":"replace-tweet","channels":["project-"],"data":"{\"tag\":\".new_tweet\",\"tweet\":\"<div
+        class=\\\"tweet new_tweet conversation\\\" id=\\\"new_tweet\\\"><div class=\\\"actions
+        btn-group\\\"></div><a class=\\\"author\\\" href=\\\"https://twitter.com/intent/user?screen_name=author_screen_name\\\"><img
+        class=\\\"avatar\\\" src=\\\"\\\" /><span class=\\\"name\\\"></span><span
+        class=\\\"screen-name\\\">@author_screen_name</span></a><span class=\\\"timestamp\\\"><i
+        class=\\\"icon-time\\\"></i> </span><span class=\\\"deeplinks\\\"><a href=\\\"/projects/-project-name/tweets\\\"><i
+        class=\\\"icon-comment\\\"></i> </a><a href=\\\"https://twitter.com/author_screen_name/status/1111111111111111111\\\"><i
+        class=\\\"icon-twitter\\\"></i> </a></span><div><span class=\\\"text\\\"><div>tweet_text</div></span></div></div>\"}"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/html;charset=utf-8
+      Server:
+      - thin 1.5.0 codename Knife
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{}'
+    http_version: 
+  recorded_at: Sun, 15 Sep 2013 10:02:26 GMT
+recorded_with: VCR 2.5.0

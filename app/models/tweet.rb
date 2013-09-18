@@ -15,7 +15,7 @@ class Tweet < ActiveRecord::Base
             foreign_key: :future_tweet_id,
             dependent: :destroy
   has_many :previous_tweets,
-             -> { order(created_at: :asc).includes(:author, activities: :user) },
+             -> { order(created_at: :asc).includes(:author) },
              through: :previous_conversations,
              source: :previous_tweet
 
@@ -24,14 +24,12 @@ class Tweet < ActiveRecord::Base
             foreign_key: :previous_tweet_id,
             dependent: :destroy
   has_many :future_tweets,
-             -> { order(created_at: :asc).includes(:author, activities: :user) },
+             -> { order(created_at: :asc).includes(:author) },
              through: :future_conversations,
              source: :future_tweet
 
-  # Activities
-  has_many :activities, -> { order(created_at: :asc).includes(:user) }, dependent: :destroy
-
-  # Status
+  # Tweet has been posted through Tweetbox,
+  #   so a status is associated
   belongs_to :status
 
   # Validations
@@ -43,6 +41,22 @@ class Tweet < ActiveRecord::Base
 
   validates_uniqueness_of :twitter_id, scope: :project_id
 
+  # Scopes
+  scope :incoming, -> { where(state: :incoming).include_conversation }
+  scope :stream,   -> { where(state: [:incoming, :resolved]).include_conversation }
+  scope :posted,   -> { where(state: :posted).include_conversation }
+
+  scope :include_conversation, -> { includes(:author, previous_tweets: :author, future_tweets: :author)  }
+
+  scope :by_date, ->(direction=:desc) { order(created_at: direction) }
+
+  # Excludes the given twitter id
+  # REVIEW: DO THESE SCOPES RETURN THE CORRECT TWEETS IF THERE ARE MORE THAN X AFTER MIN_ID, THAT IS:
+  #   ARE ALL TWEETS RETURNED AND NONE SKIPPED?; RIGHT NOW UNLIMITED RESULTS ARE RETURNED IN THE CONTROLLER
+  #   IF THE REQUEST IS AN AJAX REQUEST
+  scope :max_id, ->(twitter_id) { where('twitter_id < ?', twitter_id) if twitter_id.present? }
+  scope :min_id, ->(twitter_id) { where('twitter_id > ?', twitter_id) if twitter_id.present? }
+
   # Counter caches
   counter_culture :project
   counter_culture :project,
@@ -53,19 +67,6 @@ class Tweet < ActiveRecord::Base
       ["tweets.state = ?", 'resolved'] => 'resolved_tweets_count',
       ["tweets.state = ?", 'posted']   => 'posted_tweets_count'
     }
-
-  # Scopes
-  scope :incoming, -> { where(state: :incoming).include_conversation }
-  scope :stream,   -> { where(state: [:incoming, :resolved]).include_deep_conversation }
-  scope :posted,   -> { where(state: :posted).include_deep_conversation }
-
-  scope :by_date, ->(direction=:asc) { order(created_at: direction) }
-
-  scope :include_conversation, -> { includes(:project, :author, :status, :activities, :previous_tweets, :future_tweets) }
-  scope :include_deep_conversation, -> { includes(:project, :author, :activities, previous_tweets: [:author, activities: :user], future_tweets: [:author, activities: :user])  }
-
-  # Excludes the given twitter id
-  scope :below_twitter_id, ->(twitter_id) { where('twitter_id < ?', twitter_id) if twitter_id.present? }
 
   ##
   # Reply and previous tweet
@@ -115,25 +116,8 @@ class Tweet < ActiveRecord::Base
     end
   end
 
-  def resolve_by(user)
-    resolve
-    create_activity(:resolve, user)
-    self.resolved_at = Time.current
-    self.save!
-  end
-
-  def start_reply_by(user)
-    create_activity(:start_reply, user)
-  end
-
-  def has_been_replied_to_by(user)
-    create_activity(:post_reply, user)
-    self.replied_to = true
-    self.save!
-  end
-
-  def create_activity(kind, user)
-    activities.create!(kind: kind, user: user)
+  def resolve!
+    resolve and touch(:resolved_at) and save!
   end
 
   ##
@@ -143,22 +127,15 @@ class Tweet < ActiveRecord::Base
     @full_conversation ||= [*previous_tweets, self, *future_tweets]
   end
 
-  ##
-  # Push and replace single tweet
+  after_commit :fetch_conversation, on: :create
 
-  def push
+  def fetch_conversation
+    ConversationWorker.perform_async(self.id)
+  end
+
+  def push_replace_tweet
     TweetPusherWorker.perform_async(self.id)
   end
-
-  ##
-  # Callbacks -> Background Jobs
-
-  after_commit :fetch_and_push_conversation, on: :create
-
-  def fetch_and_push_conversation
-    TweetConversationAndStreamWorker.perform_async(self.id)
-  end
-
 
   ##
   # Field assigments
