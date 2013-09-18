@@ -35,7 +35,6 @@ describe User do
       expect(user.errors_on(:password)).to include("is too long (maximum is 128 characters)")
     end
   end
-  # TODO: Should not be confirmed at first, but when timestamp is set
 end
 
 describe User, 'persisted' do

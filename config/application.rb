@@ -29,9 +29,7 @@ module Tweetbox
     # config.autoload_paths += %W(#{config.root}/extras)
     # TODO: Some paths can be removed here
     config.autoload_paths += Dir["#{config.root}/app/models/**/",
-                                 "#{config.root}/app/decorators/",
                                  "#{config.root}/app/decorators/**/",
-                                 "#{config.root}/app/facades/",
                                  "#{config.root}/lib",
                                  "#{config.root}/lib/**/"]
 
