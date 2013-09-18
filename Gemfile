@@ -111,9 +111,6 @@ gem 'maildown'
 # MiniProfiler
 gem 'rack-mini-profiler'
 
-# Cache rendered partials
-# gem 'multi_fetch_fragments'
-
 # Quiet assets
 gem 'quiet_assets'
 
@@ -149,12 +146,10 @@ end
 group :test do
   gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', branch: 'dp-rails-four'
   gem 'fabrication'
-  gem 'database_cleaner'
+  gem 'database_rewinder'
   gem 'mocha'
   gem 'timecop'
   gem 'simplecov', require: false
-  # gem 'coveralls', require: false
-  # gem 'capybara-webkit'
   gem 'poltergeist'
   gem 'launchy'
   gem 'webmock'
