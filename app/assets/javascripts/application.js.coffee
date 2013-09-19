@@ -95,17 +95,31 @@ jQuery ->
   # Timeago
   $('abbr.timeago').timeago()
 
-  # Scroll pagination infinitely
+# Scroll pagination infinitely
   if $('.pagination').length
-      $(window).scroll ->
-        url = $('.pagination a[rel=next]').attr('href')
-        if $('#tweets').length
-          flow = $('#tweets').data('flow')
-          url = url + '&flow=' + flow
-        if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
-          $('.pagination').html("<i class='icon-spinner icon-spin'></i> Loading more...")
-          $.getScript(url)
-      $(window).scroll()
+    $(window).scroll ->
+      url = $('.pagination a[rel=next]').attr('href')
+      if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
+        $('.pagination').html("<i class='icon-spinner icon-spin'></i> Loading more...")
+        $.getScript(url)
+    $(window).scroll()
+
+  # Scroll tweets infinitely
+  if $('.tweets-pagination').length
+    min_id_on_page = null
+    $(window).scroll ->
+      url = $('#tweets').data('next-page-url')
+      flow = $('#tweets').attr('data-flow')
+      max_id = $('#tweets').attr('data-min-id') || ''
+      url = url + '?flow=' + flow + '&max_id=' + max_id
+      if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
+        # Both values are strings
+        return if max_id == min_id_on_page
+        min_id_on_page = max_id
+        spinner = "<i class='icon-spinner icon-spin'></i> Loading more..."
+        $('.tweets-pagination').html(spinner)
+        $.getScript(url)
+    $(window).scroll()
 
   # Submit lead forms in dash on radio selection
   $('.edit_lead').submitOnCheck()

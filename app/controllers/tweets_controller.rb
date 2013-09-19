@@ -1,5 +1,5 @@
 class TweetsController < TweetController
-  skip_before_filter :load_tweet, only: [:index, :incoming, :stream, :posted, :poll, :more]
+  skip_before_filter :load_tweet, only: [:index, :incoming, :stream, :posted, :next_page, :poll]
 
   ##
   # Collection actions
@@ -16,7 +16,7 @@ class TweetsController < TweetController
   end
 
   # Returns the next page of tweets in an AJAX request
-  def more
+  def next_page
     @tweets = project_tweets.by_date(:desc).limit(5)
 
     @tweets = params[:flow] == 'incoming' ? @tweets.incoming : @tweets.stream

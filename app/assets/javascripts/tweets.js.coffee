@@ -4,10 +4,10 @@
     setInterval @request, 10000
 
   request: ->
-    url = $('#tweets').data('url')
-    min_id = $('#tweets').attr('data-min-id') || ''
+    url = $('#tweets').data('poll-url')
     flow = $('#tweets').attr('data-flow')
-    url = url + '?min_id=' + min_id + '&flow=' + flow
+    min_id = $('#tweets').attr('data-max-id') || ''
+    url = url + '?flow=' + flow + '&min_id=' + min_id
     $.getScript(url)
 
   prependTweets: (tweets) ->

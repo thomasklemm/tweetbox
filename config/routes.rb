@@ -48,8 +48,8 @@ Tweetbox::Application.routes.draw do
         get :stream
         get :posted
 
-        get :more
         get :poll
+        get :next_page
       end
 
       member do

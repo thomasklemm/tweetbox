@@ -1,5 +1,0 @@
-/ tweets pagination
-
-.pagination
-  li = link_to 'More tweets', more_project_tweets_path(@project,
-    max_id: tweets.map(&:twitter_id).min), rel: 'next'
