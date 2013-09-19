@@ -6,18 +6,18 @@ class TweetsController < TweetController
 
   def incoming
     @tweets = project_tweets.incoming.
-      by_date(:desc).limit(5)
+      by_date(:desc).limit(10)
   end
   alias_method :index, :incoming
 
   def stream
     @tweets = project_tweets.stream.
-      by_date(:desc).limit(5)
+      by_date(:desc).limit(10)
   end
 
   # Returns the next page of tweets in an AJAX request
   def next_page
-    @tweets = project_tweets.by_date(:desc).limit(5)
+    @tweets = project_tweets.by_date(:desc).limit(15)
 
     @tweets = params[:flow] == 'incoming' ? @tweets.incoming : @tweets.stream
 
