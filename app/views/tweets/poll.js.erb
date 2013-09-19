@@ -1,0 +1,11 @@
+// stream tweets js
+
+// prepend tweets / conversations
+var conversations = '<%= j render_conversation_for_tweets(@tweets) %>';
+Tweets.prependTweets(conversations);
+
+// update polling
+<% new_min_id = @tweets.map(&:twitter_id).max %>
+<% if new_min_id %>
+  $('#tweets').attr('data-min-id', '<%= new_min_id %>');
+<% end %>

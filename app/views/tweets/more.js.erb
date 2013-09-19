@@ -1,0 +1,9 @@
+// next page js
+
+// append tweets / conversations
+var conversations = '<%= j render_conversation_for_tweets(@tweets) %>';
+Tweets.appendTweets(conversations);
+
+// update pagination
+<% new_pagination = @tweets.size > 0 ? j(render('pagination', tweets: @tweets)) : '' %>
+$('.pagination').replaceWith('<%= new_pagination %>');

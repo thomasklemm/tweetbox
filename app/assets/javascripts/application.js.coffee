@@ -99,6 +99,9 @@ jQuery ->
   if $('.pagination').length
       $(window).scroll ->
         url = $('.pagination a[rel=next]').attr('href')
+        if $('#tweets').length
+          flow = $('#tweets').data('flow')
+          url = url + '&flow=' + flow
         if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
           $('.pagination').html("<i class='icon-spinner icon-spin'></i> Loading more...")
           $.getScript(url)

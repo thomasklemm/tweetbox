@@ -5,11 +5,11 @@ div#show-tweets style='display: none'
   = link_to 'Show new tweets.', 'javascript:;'
 
 = content_tag :div, id: "tweets", class: "incoming tweets bordered",
-  data: {url: incoming_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max || @project.tweets.stream.by_date(:desc).first.try(:twitter_id)}" } do
+  data: {url: poll_project_tweets_url(@project), min_id: "#{ @tweets.map(&:twitter_id).max || @project.tweets.stream.by_date(:desc).first.try(:twitter_id)}", flow: 'incoming' } do
   = render_conversation_for_tweets(@tweets)
 
 - if @tweets.any?
-  = render 'tweets_pagination', tweets: @tweets
+  = render 'pagination', tweets: @tweets
 
 - if @tweets.empty?
   - if @project.twitter_accounts.any?

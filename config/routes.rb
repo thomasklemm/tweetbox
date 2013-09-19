@@ -47,6 +47,9 @@ Tweetbox::Application.routes.draw do
         root to: :incoming, as: :incoming
         get :stream
         get :posted
+
+        get :more
+        get :poll
       end
 
       member do

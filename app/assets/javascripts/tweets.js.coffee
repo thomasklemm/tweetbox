@@ -6,7 +6,8 @@
   request: ->
     url = $('#tweets').data('url')
     min_id = $('#tweets').attr('data-min-id') || ''
-    url = url + '?min_id=' + min_id
+    flow = $('#tweets').attr('data-flow')
+    url = url + '?min_id=' + min_id + '&flow=' + flow
     $.getScript(url)
 
   prependTweets: (tweets) ->
