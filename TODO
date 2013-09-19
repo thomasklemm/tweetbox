@@ -1,0 +1,6 @@
+class Tweet
+  twitter_created_at:datetime <- from twitter
+  created_at:datetime <- rails timestamp
+  ready_at <- set by conversationworker
+
+fetch all tweets with ready_at greater than last time polling has happened
