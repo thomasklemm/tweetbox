@@ -9,3 +9,7 @@ Tweets.prependTweets(conversations);
 <% if new_max_id %>
   $('#tweets').attr('data-max-id', '<%= new_max_id %>');
 <% end %>
+
+// update incoming tweet counts of all projects
+<% counts = current_user.projects.map{ |p| { id: p.id, count: p.incoming_tweets_count } } %>
+Statistics.updateCounts(<%= raw counts.to_json %>);

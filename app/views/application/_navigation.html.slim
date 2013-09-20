@@ -1,5 +1,8 @@
 / application/_navigation
 
+/ ractive
+= javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/ractive.js/0.3.6/ractive.js'
+
 / tweetbox logo in navbar
 / (inline styles might help prevent elements jumping around on the page on page load)
 - tweetbox_navbar_image_tag = image_tag('tweetbox/logo_and_tagline.png', class: 'navbar-logo', style: 'height: 24px; width: 104px; margin: -6px 0')
@@ -36,9 +39,8 @@ div class='navbar navbar-default navbar-static-top'
             = link_to project, class: ".#{ dom_id(project) }" do
               = project.name
               span class="visible-md visible-lg pull-right"
-                span class="badge" style='margin-left: 6px; background-color: #c82e23'
-                  - if project.incoming_tweets_count > 0
-                    = project.incoming_tweets_count
+                span id="#{ dom_id(project) }_count" class="badge" style='margin-left: 6px; background-color: #c82e23'
+                  = project.incoming_tweets_count if project.incoming_tweets_count > 0
 
       / right side
       ul class='nav navbar-nav navbar-right'

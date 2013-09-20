@@ -36,3 +36,11 @@
     $('.conversation_for_tweet').show()
     $('#show-tweets').hide()
 
+
+@Statistics =
+  updateCounts: (projects) ->
+    $.each projects, (index, project) ->
+      Statistics.updateCount(project)
+
+  updateCount: (project) ->
+    $('#project_' + project.id + '_count').text(if project.count > 0 then project.count else '')

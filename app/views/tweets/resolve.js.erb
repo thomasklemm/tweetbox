@@ -4,3 +4,8 @@ var tag = '<%= "." + dom_id(@tweet) %>';
 var tweet = '<%= j render(@tweet) %>';
 
 Tweets.replaceTweet(tag, tweet);
+
+// update incoming tweets count for the current project
+<% @project.reload %>
+<% count = { id: @project.id, count: @project.incoming_tweets_count} %>
+Statistics.updateCount(<%= raw count.to_json %>);
