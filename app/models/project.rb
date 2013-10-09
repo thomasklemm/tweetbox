@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  belongs_to :account, counter_cache: true
+  belongs_to :account, counter_cache: true, inverse_of: :projects
 
   has_many :permissions, dependent: :destroy
   has_many :memberships, through: :permissions
@@ -10,15 +10,15 @@ class Project < ActiveRecord::Base
 
   has_many :searches, dependent: :destroy
 
-  has_many :tweets, dependent: :destroy
+  has_many :tweets, dependent: :destroy, inverse_of: :project
   # has_many :incoming_tweets, -> { incoming }, class_name: 'Tweet'
   # has_many :resolved_tweets, -> { resolved }, class_name: 'Tweet'
   # has_many :posted_tweets,   -> { posted },   class_name: 'Tweet'
 
-  has_many :authors, dependent: :destroy
+  has_many :authors, dependent: :destroy, inverse_of: :project
 
   # Keep statuses (tweets posted through our app) around forever
-  has_many :statuses, dependent: :nullify
+  has_many :statuses, dependent: :nullify, inverse_of: :project
 
   validates :account, :name, presence: true
 

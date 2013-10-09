@@ -1,6 +1,12 @@
-class Tweet
-  twitter_created_at:datetime <- from twitter
-  created_at:datetime <- rails timestamp
-  ready_at <- set by conversationworker
+SEARCHES
+  Allow a person to specify how search results should be treated. hide search option as its done right now nevertheless.
 
-fetch all tweets with ready_at greater than last time polling has happened
+READY TWEETS
+  - make sure conversation has been downloaded before polling happens
+  class Tweet
+    twitter_created_at:datetime <- from twitter
+    created_at:datetime <- rails timestamp
+    ready_at <- set by conversationworker
+
+  fetch all tweets with ready_at greater than last time polling has happened
+  this would mean we'd have to index ready_at

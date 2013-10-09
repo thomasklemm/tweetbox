@@ -1,7 +1,7 @@
 # tweets
 @Tweets =
   poll: ->
-    setInterval @request, 10000
+    setInterval @request, 12000
 
   request: ->
     url = $('#tweets').data('poll-url')

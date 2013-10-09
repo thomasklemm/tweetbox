@@ -1,8 +1,8 @@
 class Author < ActiveRecord::Base
   include UrlExpander
 
-  belongs_to :project
-  has_many :tweets
+  belongs_to :project, inverse_of: :authors
+  has_many :tweets, inverse_of: :author
 
   # Ensure that only one author record is created for each project
   validates :project, :twitter_id, :screen_name, presence: true

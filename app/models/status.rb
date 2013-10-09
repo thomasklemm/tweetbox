@@ -1,11 +1,11 @@
 class Status < ActiveRecord::Base
-  belongs_to :project
+  belongs_to :project, inverse_of: :statuses
   belongs_to :user
   belongs_to :twitter_account
 
   delegate :account, to: :project
 
-  has_one :tweet
+  has_one :tweet, inverse_of: :status
 
   before_validation :generate_token, if: :new_record?
 

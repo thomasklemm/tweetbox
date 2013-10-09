@@ -8,7 +8,7 @@ class Account < ActiveRecord::Base
                         through: :memberships,
                         source: :user
 
-  has_many :projects, dependent: :restrict_with_exception
+  has_many :projects, dependent: :restrict_with_exception, inverse_of: :account
   has_many :invitations, dependent: :destroy
 
   validates :name, presence: true

@@ -2,8 +2,8 @@ class Tweet < ActiveRecord::Base
   include ActiveModel::Transitions
   include UrlExpander
 
-  belongs_to :project
-  belongs_to :author
+  belongs_to :project, inverse_of: :tweets
+  belongs_to :author, inverse_of: :tweets
 
   # Twitter account
   # used to fetch the tweet (optional)
@@ -30,7 +30,7 @@ class Tweet < ActiveRecord::Base
 
   # Tweet has been posted through Tweetbox,
   #   so a status is associated
-  belongs_to :status
+  belongs_to :status, inverse_of: :tweet
 
   # Validations
   validates :project,
@@ -82,14 +82,6 @@ class Tweet < ActiveRecord::Base
   def previous_tweet
     return unless reply?
     @previous_tweet ||= ConversationService.new(self).previous_tweet
-  end
-
-  ##
-  # Status
-
-  # Does this tweet also have a status record in our database?
-  def status
-    @status ||= Status.find_by(twitter_id: self.twitter_id)
   end
 
   ##
