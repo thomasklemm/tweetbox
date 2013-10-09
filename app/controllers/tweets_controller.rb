@@ -58,10 +58,6 @@ class TweetsController < TweetController
     @tweet.resolve!
     @tweet.reload and @tweet.push_replace_tweet
 
-    track 'Tweet Resolve', @tweet, {
-      'Resolution Time' => @tweet.resolution_time_in_seconds
-    }
-
     respond_to do |format|
       format.html { redirect_to [:incoming, @project, :tweets],
         notice: "Tweet has been resolved." }
