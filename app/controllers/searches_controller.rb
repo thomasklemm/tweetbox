@@ -1,6 +1,6 @@
 class SearchesController < ProjectController
-  before_filter :load_search, only: [:edit, :update, :destroy
-  ]
+  before_filter :load_search, only: [:edit, :update, :destroy]
+
   def index
     @searches = project_searches
   end

@@ -19,7 +19,7 @@ describe 'Connect a Twitter account and post tweet' do
     expect(page).to have_content("Your Twitter account @tweetbox101 has been connected.")
 
     # Publish a tweet
-    click_on 'Tweet'
+    click_on 'New Tweet'
     text = "Aenean eu leo quam. Pellentesque ornare sem lacinia
         quam venenatis vestibulum. Nulla vitae elit libero, a pharetra augue. Cum sociis natoque
         penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada
