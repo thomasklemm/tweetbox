@@ -9,57 +9,56 @@
 
 / navbar
 div class='navbar navbar-default navbar-static-top'
-  div class="container"
 
-    / user signed out
-    - unless user_signed_in?
-      ul class='nav navbar-nav'
-        li style=''
-          = link_to tweetbox_navbar_image_tag, root_path
+  / user signed out
+  - unless user_signed_in?
+    ul class='nav navbar-nav'
+      li style=''
+        = link_to tweetbox_navbar_image_tag, root_path
 
-        = active_list_item static_path(:pricing), true do
-          = link_to 'Pricing', static_path(:pricing)
+      = active_list_item static_path(:pricing), true do
+        = link_to 'Pricing', static_path(:pricing)
 
-        = active_list_item new_signup_path, true do
-          = link_to 'Free trial', new_signup_path
+      = active_list_item new_signup_path, true do
+        = link_to 'Free trial', new_signup_path
 
-      ul class='nav navbar-nav navbar-right'
-        = active_list_item login_path, true do
-          = link_to 'Login', login_path
+    ul class='nav navbar-nav navbar-right'
+      = active_list_item login_path, true do
+        = link_to 'Login', login_path
 
-    / user signed in
-    - if user_signed_in?
-      / left side
-      ul class='nav navbar-nav project-links'
-        li = link_to tweetbox_navbar_image_tag, main_user_project_path
+  / user signed in
+  - if user_signed_in?
+    / left side
+    ul class='nav navbar-nav project-links'
+      li = link_to tweetbox_navbar_image_tag, root_path
 
-        / project links
-        - current_user.projects.by_date.each do |project|
-          = active_list_item project do
-            = link_to project, class: ".#{ dom_id(project) }" do
-              = project.name
-              span class="visible-md visible-lg pull-right"
-                span id="#{ dom_id(project) }_count" class="badge" style='margin-left: 6px; background-color: #c82e23'
-                  = project.incoming_tweets_count if project.incoming_tweets_count > 0
+      / project links
+      - current_user.projects.by_date.each do |project|
+        = active_list_item project do
+          = link_to project, class: ".#{ dom_id(project) }" do
+            = project.name
+            span class="visible-md visible-lg pull-right"
+              span id="#{ dom_id(project) }_count" class="badge" style='margin-left: 6px; background-color: #c82e23'
+                = project.incoming_tweets_count if project.incoming_tweets_count > 0
 
-      / right side
-      ul class='nav navbar-nav navbar-right'
-        / user details and logout link
-        li class='dropdown'
-          / user details
-          a href='javascript:;' class='user-details dropdown-toggle' data-toggle='dropdown'
-            = image_tag(current_user.gravatar_image_url(32), class: 'avatar')
-            span.name => current_user.name
-            b class='caret'
+    / right side
+    ul class='nav navbar-nav navbar-right'
+      / user details and logout link
+      li class='dropdown'
+        / user details
+        a href='javascript:;' class='user-details dropdown-toggle' data-toggle='dropdown'
+          = image_tag(current_user.gravatar_image_url(32), class: 'avatar', size: '32x32')
+          span.name => current_user.name
+          b class='caret'
 
-          / dropdown menu
-          ul class='dropdown-menu'
-            / account link
-            - if policy(current_user.account).manage?
-              = active_list_item account_path do
-                = link_to account_path do
-                  = icon_tag(['credit-card', 'fixed-width'], 'Account')
-              li class="divider"
+        / dropdown menu
+        ul class='dropdown-menu'
+          / account link
+          - if policy(current_user.account).manage?
+            = active_list_item account_path do
+              = link_to account_path do
+                = icon_tag(['credit-card', 'fixed-width'], 'Account')
+            li class="divider"
 
-            / logout
-            li = link_to icon_tag([:signout, 'fixed-width'], 'Logout'), logout_path, method: :delete
+          / logout
+          li = link_to icon_tag([:signout, 'fixed-width'], 'Logout'), logout_path, method: :delete

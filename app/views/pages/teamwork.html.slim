@@ -1,16 +1,24 @@
 / teamwork
 .marketing.long-reply
   .row
-    .business-woman-background
+    .business-woman-background class='hidden-xs'
 
-      .brand
+      .brand-heading
         = image_tag "tweetbox/logo.png", size: "160x160", class: 'brand-logo'
         .brand-name Tweetbox
         .brand-tagline The Twitter Client for Business
         = link_to 'Improve your teamwork now', new_signup_path, class: 'btn call-to-action'
 
-  .space-three
+    .brand-heading class='visible-xs'
+      = image_tag "tweetbox/logo.png", size: "160x160", class: 'brand-logo'
+      .brand-name Tweetbox
+      .brand-tagline The Twitter Client for Business
+      = link_to 'Improve your teamwork now', new_signup_path, class: 'btn call-to-action'
+
+      hr
+
   .row.text-center
+    .space-two class='hidden-xs'
     h1.heading You work in teams?
     h2.subheading Let us show you how you could organize your twitter with Tweetbox.
 
@@ -112,14 +120,5 @@
   .row
     .col-md-12.text-center
       = link_to 'Improve your teamwork now', new_signup_path, class: 'btn second-call-to-action'
-    .space-three
-
-  hr
-
-  .row
-    .col-md-4.col-md-offset-8
-      = link_to 'See other reasons to use Tweetbox ', root_path
-      i class="icon-chevron-right"
-    .space-three
-
-  hr
+  .space-three
+  .space-three

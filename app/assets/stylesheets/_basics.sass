@@ -47,25 +47,28 @@ h1, h2, h3, h4, h5, h6, p.lead
 html, body
   height: 100%
 
+$footer-height: 36px
+
 #root
   clear: both
   min-height: 100%
   height: auto !important
   height: 100%
-  margin-bottom: -81px
+  margin-bottom: -56px
 
   #root-footer
-    height: 81px
+    height: $footer-height
 
 #footer
   clear: both
   position: relative
-  height: 81px
+  height: $footer-height
 
 // footer
 .footer
-  border-top: 1px solid #D4CDC1
-  margin: 30px auto
+  margin-top: 1rem
+  border-top: 1px solid #eee
+  padding: 10px 0
   padding: 10px
   font-size: 13px
 
@@ -80,3 +83,11 @@ html, body
 
     .name
       margin-left: 4px
+
+// padding
+body
+  padding: 0 16px
+
+.navbar-static-top
+  margin: 0 -16px
+  padding: 0 16px

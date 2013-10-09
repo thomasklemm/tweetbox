@@ -17,16 +17,18 @@
       background-size: 100%
       width: 100%
       max-width: 1170px // 1940px image width
-      max-height: 600px // 990px image height
-      //min-width: 970px
-      min-height: 200px
+      max-height: 580px // 990px image height
       background-repeat: no-repeat
       background-postion: center
+      margin: 0 auto
+
+      .brand-heading
+        width: 57%
 
     // brand on the background
+    // or brand on mobile screen without background
     // with above the fold call to action
-    .brand
-      width: 60%
+    .brand-heading
       text-align: center
       padding-top: 30px
       .brand-logo
@@ -95,7 +97,7 @@
           text-align: center
 
     .call-to-action
-      @extend .btn-primary
+      @extend .btn-danger
       @extend .btn-lg
 
   // Landing Layout
@@ -215,10 +217,6 @@
     padding: 0px 0px 25px 0px
   // End Features Layout
 
-
-  .container
-    // NOTE: This limits app size too much
-    // max-width: 900px
 
   hr
     margin-bottom: 30px
