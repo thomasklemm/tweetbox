@@ -16,7 +16,7 @@ module NavigationHelper
   end
 
   def active_path?(url_parts, exact=false)
-    if exact
+    if exact == true
       request.fullpath == url_for(url_parts)
     else
       request.fullpath.starts_with?(url_for(url_parts))

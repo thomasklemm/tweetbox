@@ -1,11 +1,10 @@
 class PagesController < HighVoltage::PagesController
   # layout :layout_for_page
 
-  # Redirect signed in users to app when visiting root_path
   def show
-    if user_signed_in? && current_path == root_path
-      return redirect_to main_user_project_path if current_user.projects.any?
-    end
+    # if user_signed_in? && request.fullpath == root_path
+    #   return redirect_to main_user_project_path if current_user.projects.any?
+    # end
 
     super
   end

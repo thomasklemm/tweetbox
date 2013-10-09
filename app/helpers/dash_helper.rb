@@ -31,7 +31,7 @@ module DashHelper
   end
 
   def extended_view?(lead)
-    return unless current_path == dash_lead_path(lead)
+    return unless request.fullpath == dash_lead_path(lead)
 
     if params[:action] == 'update'
       request.referer == dash_lead_url(lead)
