@@ -2,7 +2,7 @@
 - if @tweets.any?
   = logo_header 'Posted Tweets'
 
-  div#tweets class="posted tweets"
+  div#tweets class="posted tweets bordered"
     = render_conversation_for_tweets(@tweets)
 
   / pagination
