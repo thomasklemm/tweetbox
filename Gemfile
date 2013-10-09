@@ -122,6 +122,7 @@ gem 'naught'
 
 # Rerunning sidekiq workers on code changes
 gem 'rerun'
+gem 'listen', '~> 1.0'
 
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)
