@@ -1,5 +1,5 @@
 / incoming tweets
-= logo_header 'Incoming tweets'
+= logo_header 'Incoming Tweets'
 
 div#show-tweets style='display: none'
   = link_to 'Show new tweets.', 'javascript:;'
@@ -9,25 +9,22 @@ div#show-tweets style='display: none'
   = render_conversation_for_tweets(@tweets)
 
 - if @tweets.any?
-  .tweets-pagination
+  .tweets-pagination class='incoming'
     li = link_to 'More tweets', 'javascript:;'
 
-- if @tweets.empty?
-  - if @project.twitter_accounts.any?
-    .space-one
+/ inbox zero
+- if @project.twitter_accounts.any?
+  div id='inbox-zero' style="#{'display: none' if @tweets.any?}"
+    h3 Inbox Zero
+    p Well done :D. Keep the good work up.
 
-    / inbox zero
-    div  class='inbox-zero'
-      h3 Inbox Zero
-      p Well done :D. Keep the good work up.
+/ blank slate
+- if @project.twitter_accounts.empty?
+  p
+    ' Once you connect a Twitter account, you can resolve <br />
+    ' your incoming @mentions from here. You'll tweet <br />
+    ' and reply with more than 140 characters in a minute.
 
-  - else
-    / blank slate
-    p
-      ' Once you connect a Twitter account, you can resolve <br />
-      ' your incoming @mentions from here. You'll tweet <br />
-      ' and reply with more than 140 characters in a minute.
+  .space-half
 
-    .space-half
-
-    = link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'
+  = link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'

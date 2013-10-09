@@ -9,3 +9,12 @@ Tweets.replaceTweet(tag, tweet);
 <% @project.reload %>
 <% count = { id: @project.id, count: @project.incoming_tweets_count} %>
 Statistics.updateCount(<%= raw count.to_json %>);
+
+<% if @project.incoming_tweets_count == 0 %>
+  // make sure the counter is corrent
+  <% if @project.tweets.incoming.count == 0 %>
+    $('#tweets.incoming').html('');
+    $('.tweets-pagination.incoming').remove();
+    $('#inbox-zero').fadeIn();
+  <% end %>
+<% end %>

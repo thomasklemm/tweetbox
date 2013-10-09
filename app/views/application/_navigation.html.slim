@@ -37,7 +37,7 @@ div class='navbar navbar-default navbar-static-top'
         = active_list_item project do
           = link_to project, class: ".#{ dom_id(project) }" do
             = project.name
-            span class="visible-md visible-lg pull-right"
+            span class="hidden-xs pull-right"
               span id="#{ dom_id(project) }_count" class="badge" style='margin-left: 6px; background-color: #c82e23'
                 = project.incoming_tweets_count if project.incoming_tweets_count > 0
 

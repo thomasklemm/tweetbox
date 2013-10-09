@@ -13,3 +13,7 @@ Tweets.prependTweets(conversations);
 // update incoming tweet counts of all projects
 <% counts = current_user.projects.map{ |p| { id: p.id, count: p.incoming_tweets_count } } %>
 Statistics.updateCounts(<%= raw counts.to_json %>);
+
+<% if @project.incoming_tweets_count >= 1 %>
+  $('#inbox-zero').hide();
+<% end %>
