@@ -41,9 +41,9 @@
   = logo_header 'Twitter accounts'
 
   p
-    ' Once you connect a Twitter account, we'll fetch <br />
-    ' your @mentions and search results so you'll <br />
-    ' be able to resolve them with the help of Tweetbox.
+    ' Once you connect a Twitter account, you can resolve <br />
+    ' your incoming @mentions. You'll tweet and reply <br />
+    ' with more than 140 characters in a minute.
 
   .space-half
   = link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'

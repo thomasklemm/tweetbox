@@ -8,8 +8,9 @@ div#show-tweets style='display: none'
   data: {flow: 'stream', poll_url: poll_project_tweets_url(@project), next_page_url: next_page_project_tweets_url(@project), max_id: "#{ @tweets.map(&:twitter_id).max }", min_id: "#{ @tweets.map(&:twitter_id).min }"} do
   = render_conversation_for_tweets(@tweets)
 
-.tweets-pagination
-  li = link_to 'More tweets', 'javascript:;'
+- if @tweets.any?
+  .tweets-pagination
+    li = link_to 'More tweets', 'javascript:;'
 
 - if @tweets.empty?
   - if @project.twitter_accounts.any?
@@ -19,9 +20,8 @@ div#show-tweets style='display: none'
   - else
     / blank slate
     p
-      ' Once you connect a Twitter account, we'll fetch <br />
-      ' your @mentions and search results so you'll <br />
-      ' be able to resolve them with the help of Tweetbox.
+      ' Once you connect a Twitter account, your stream <br />
+      ' of incoming and resolved @mentions will show up here. <br />
 
     .space-half
 

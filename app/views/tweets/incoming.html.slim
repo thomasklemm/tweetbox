@@ -17,16 +17,17 @@ div#show-tweets style='display: none'
     .space-one
 
     / inbox zero
-    h4 Inbox Zero
+    div  class='inbox-zero'
+    h3 Inbox Zero
     p All clear, time for a Moment of Zen.
 
   - else
     / blank slate
     p
-      ' Once you connect a Twitter account, we'll fetch <br />
-      ' your @mentions and search results so you'll <br />
-      ' be able to resolve them with the help of Tweetbox.
+      ' Once you connect a Twitter account, you can resolve <br />
+      ' your incoming @mentions from here. You'll tweet <br />
+      ' and reply with more than 140 characters in a minute.
 
     .space-half
 
-    = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
+    = link_to 'Connect a Twitter account',  authorize_project_twitter_accounts_path(@project, access_scope: 'write'), method: :post, class: 'btn btn-primary'

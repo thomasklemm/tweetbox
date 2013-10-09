@@ -12,5 +12,9 @@
 - if @tweets.empty?
   = logo_header 'Posted Tweets'
   p
-    ' Once you post your first tweets with Tweetbox, <br>
-    ' they'll show up here.
+    ' Once you connect a Twitter account, all of your tweets  <br>
+    ' &mdash; posted with Tweetbox or else &mdash; will show up here.
+
+  - if @project.twitter_accounts.empty?
+    .space-half
+    = link_to 'Connect a Twitter account',  [@project, :twitter_accounts], class: 'btn btn-default'
