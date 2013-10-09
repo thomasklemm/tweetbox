@@ -10,3 +10,10 @@ Tweets.appendTweets(conversations);
   $('#tweets').attr('data-min-id', '<%= new_min_id %>');
 <% end %>
 
+// Update pagination text
+<% if @tweets.any? %>
+  $('.tweets-pagination').text('Loading more...');
+<% else %>
+  $('.tweets-pagination').text('Finished.');
+<% end %>
+
