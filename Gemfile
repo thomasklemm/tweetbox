@@ -134,13 +134,11 @@ group :development do
   # LiveReload
   gem 'guard-livereload'
   gem 'rack-livereload'
-
-  # RailsPanel
-  gem 'meta_request'
 end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'debugger'
 end
 
 group :test do
@@ -154,7 +152,6 @@ group :test do
   gem 'launchy'
   gem 'webmock'
   gem 'vcr'
-  gem 'pusher-fake', github: 'tristandunn/pusher-fake'
 end
 
 group :staging, :production do
@@ -174,6 +171,3 @@ group :staging, :production do
   # Rack Timeout
   gem 'rack-timeout'
 end
-
-# Use debugger
-gem 'debugger', group: [:development, :test]

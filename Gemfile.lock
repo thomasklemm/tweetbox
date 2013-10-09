@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/getsentry/raven-ruby.git
-  revision: f597e0aef308d51517d519173ced65a87180d849
+  revision: d6b40142bd667487e84a7738b2cd2b73b918b8d4
   specs:
     sentry-raven (0.6.0)
       faraday (>= 0.7.6)
@@ -16,18 +16,8 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/tristandunn/pusher-fake.git
-  revision: 889d1c35c76b8467f8b121b80b866e3ace5108e1
-  specs:
-    pusher-fake (0.10.0)
-      em-http-request (~> 1.0.0)
-      em-websocket (~> 0.5)
-      multi_json (~> 1.6)
-      thin (~> 1.5)
-
-GIT
   remote: git://github.com/troessner/transitions.git
-  revision: e86c361503d795cc576c1c6587123b27bf131225
+  revision: fc32c84bbacbe46ad73ed4d71c63879bdde45380
   specs:
     transitions (0.1.11)
 
@@ -62,7 +52,7 @@ GEM
     addressable (2.3.5)
     after_commit_action (0.1.3)
       activerecord (>= 3.0.0)
-    anjlab-bootstrap-rails (3.0.0.2)
+    anjlab-bootstrap-rails (3.0.0.3)
       railties (>= 3.0)
       sass (>= 3.2)
     arel (4.0.0)
@@ -72,7 +62,7 @@ GEM
       redcarpet
       rinku
       tag_helper
-    backports (3.3.3)
+    backports (3.3.4)
     bcrypt-ruby (3.1.2)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
@@ -80,17 +70,16 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
-    callsite (0.0.11)
     capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    celluloid (0.15.1)
+    celluloid (0.15.2)
       timers (~> 1.1.0)
     chartkick (1.2.0)
-    cliver (0.2.1)
+    cliver (0.2.2)
     coderay (1.0.9)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -101,23 +90,21 @@ GEM
     coffee-script-source (1.6.3)
     columnize (0.3.6)
     connection_pool (1.1.0)
-    cookiejar (0.3.0)
-    counter_culture (0.1.14)
+    counter_culture (0.1.17)
       after_commit_action (~> 0.1.3)
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
-    daemons (1.1.9)
     dalli (2.6.4)
-    database_rewinder (0.0.1)
+    database_rewinder (0.0.2)
     debug_inspector (0.0.2)
-    debugger (1.6.1)
+    debugger (1.6.2)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
-    descendants_tracker (0.0.1)
-    devise (3.1.0)
+    descendants_tracker (0.0.3)
+    devise (3.1.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -128,14 +115,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
-    em-http-request (1.0.3)
-      addressable (>= 2.2.3)
-      cookiejar
-      em-socksify
-      eventmachine (>= 1.0.0.beta.4)
-      http_parser.rb (>= 0.5.3)
-    em-socksify (0.3.0)
-      eventmachine (>= 1.0.0.beta.4)
     em-websocket (0.5.0)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
@@ -144,8 +123,8 @@ GEM
     erubis (2.7.0)
     escape_utils (0.3.2)
     eventmachine (1.0.3)
-    execjs (2.0.1)
-    fabrication (2.8.0)
+    execjs (2.0.2)
+    fabrication (2.8.1)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     ffi (1.9.0)
@@ -154,21 +133,21 @@ GEM
       rails (>= 3, < 5)
     formatador (0.2.4)
     gemoji (1.4.0)
-    github-markdown (0.5.3)
-    guard (1.8.2)
+    github-markdown (0.5.5)
+    guard (2.0.3)
       formatador (>= 0.2.4)
-      listen (>= 1.0.0)
-      lumberjack (>= 1.0.2)
-      pry (>= 0.9.10)
-      thor (>= 0.14.6)
-    guard-livereload (1.4.0)
-      em-websocket (>= 0.5.0)
-      guard (>= 1.8.0)
-      multi_json (~> 1.7)
+      listen (~> 2.0)
+      lumberjack (~> 1.0)
+      pry (>= 0.9.12)
+      thor (>= 0.18.1)
+    guard-livereload (2.0.0)
+      em-websocket (~> 0.5)
+      guard (~> 2.0)
+      multi_json (~> 1.8)
     hashie (2.0.5)
-    high_voltage (1.2.4)
+    high_voltage (2.0.0)
     hike (1.2.3)
-    html-pipeline (0.3.0)
+    html-pipeline (0.3.1)
       escape_utils (~> 0.3)
       gemoji (~> 1.0)
       github-markdown (~> 0.5)
@@ -194,10 +173,10 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.1.2)
       launchy (~> 2.2)
-    listen (1.3.1)
+    listen (2.0.1)
+      celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
-      rb-kqueue (>= 0.2)
     lumberjack (1.0.4)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -208,35 +187,31 @@ GEM
       kramdown
       rails (>= 4.0.0)
     memcachier (0.0.2)
-    meta_request (0.2.8)
-      callsite
-      rack-contrib
-      railties
     metaclass (0.0.1)
     method_source (0.8.2)
     mime-types (1.25)
     minitest (4.7.5)
-    mixpanel-ruby (1.0.1)
+    mixpanel-ruby (1.0.2)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
-    multi_json (1.8.0)
+    multi_json (1.8.1)
     multipart-post (1.2.0)
     naught (0.0.2)
-    newrelic_rpm (3.6.7.152)
+    newrelic_rpm (3.6.7.159)
     nokogiri (1.5.10)
     oauth (0.4.7)
-    oj (2.1.4)
+    oj (2.1.6)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
     omniauth-oauth (1.0.1)
       oauth
       omniauth (~> 1.0)
-    omniauth-twitter (1.0.0)
+    omniauth-twitter (1.0.1)
       multi_json (~> 1.3)
       omniauth-oauth (~> 1.0)
     orm_adapter (0.4.0)
-    pg (0.16.0)
+    pg (0.17.0)
     poltergeist (1.4.1)
       capybara (~> 2.1.0)
       cliver (~> 0.2.1)
@@ -260,8 +235,6 @@ GEM
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
-    rack-contrib (1.1.0)
-      rack (>= 0.9.1)
     rack-livereload (0.3.15)
       rack
     rack-mini-profiler (0.1.31)
@@ -283,7 +256,7 @@ GEM
       rails_serve_static_assets
       rails_stdout_logging
     rails_serve_static_assets (0.0.1)
-    rails_stdout_logging (0.0.2)
+    rails_stdout_logging (0.0.3)
     railties (4.0.0)
       actionpack (= 4.0.0)
       activesupport (= 4.0.0)
@@ -293,10 +266,8 @@ GEM
     rb-fsevent (0.9.3)
     rb-inotify (0.9.2)
       ffi (>= 0.5.0)
-    rb-kqueue (0.2.0)
-      ffi (>= 0.5.0)
     redcarpet (3.0.0)
-    redis (3.0.4)
+    redis (3.0.5)
     redis-namespace (1.3.1)
       redis (~> 3.0.0)
     request_store (1.0.5)
@@ -304,7 +275,7 @@ GEM
       listen (>= 1.0.3)
     rinku (1.7.3)
     rspec-core (2.14.5)
-    rspec-expectations (2.14.2)
+    rspec-expectations (2.14.3)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.3)
     rspec-rails (2.14.0)
@@ -314,29 +285,26 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    safe_yaml (0.9.5)
+    safe_yaml (0.9.7)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
-      nokogiri (>= 1.4.4, < 1.6)
-    sass (3.2.10)
+    sass (3.2.12)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    select2-rails (3.4.8)
-      sass-rails
+    select2-rails (3.5.0)
       thor (~> 0.14)
-    sidekiq (2.14.1)
-      celluloid (>= 0.14.1)
+    sidekiq (2.15.1)
+      celluloid (>= 0.15.1)
       connection_pool (>= 1.0.0)
       json
       redis (>= 3.0.4)
       redis-namespace (>= 1.3.1)
-    sidetiq (0.4.0)
+    sidetiq (0.4.2)
       celluloid (>= 0.14.1)
       ice_cube (~> 0.11.0)
-      json
-      sidekiq (~> 2.14.0)
+      sidekiq (~> 2.15.0)
     signature (0.1.7)
     simple_oauth (0.2.0)
     simplecov (0.7.1)
@@ -350,7 +318,7 @@ GEM
     slim (2.0.1)
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
-    slim-rails (2.0.1)
+    slim-rails (2.0.3)
       actionpack (>= 3.0, < 4.1)
       activesupport (>= 3.0, < 4.1)
       railties (>= 3.0, < 4.1)
@@ -366,11 +334,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     tag_helper (0.0.3)
-    temple (0.6.6)
-    thin (1.5.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
+    temple (0.6.7)
     thor (0.18.1)
     thread_safe (0.1.3)
       atomic
@@ -386,23 +350,23 @@ GEM
       faraday (~> 0.8, < 0.10)
       multi_json (~> 1.0)
       simple_oauth (~> 0.2)
-    twitter-text (1.6.1)
-      unf (~> 0.0.5)
-    tzinfo (0.3.37)
+    twitter-text (1.6.3)
+      unf (~> 0.1.0)
+    tzinfo (0.3.38)
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    unf (0.0.5)
+    unf (0.1.2)
       unf_ext
     unf_ext (0.0.6)
     uuidtools (2.1.4)
-    vcr (2.5.0)
+    vcr (2.6.0)
     virtus (0.5.5)
       backports (~> 3.3)
       descendants_tracker (~> 0.0.1)
     warden (1.2.3)
       rack (>= 1.0)
-    webmock (1.13.0)
+    webmock (1.14.0)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     websocket-driver (0.3.0)
@@ -439,7 +403,6 @@ DEPENDENCIES
   mail_view
   maildown
   memcachier
-  meta_request
   mixpanel-ruby
   mocha
   naught
@@ -453,7 +416,6 @@ DEPENDENCIES
   puma
   pundit
   pusher
-  pusher-fake!
   quiet_assets
   rack-livereload
   rack-mini-profiler
