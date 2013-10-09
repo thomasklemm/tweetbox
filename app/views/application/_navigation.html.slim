@@ -5,7 +5,7 @@
 
 / tweetbox logo in navbar
 / (inline styles might help prevent elements jumping around on the page on page load)
-- tweetbox_navbar_image_tag = image_tag('tweetbox/logo_and_tagline.png', class: 'navbar-logo', style: 'height: 24px; width: 104px; margin: -6px 0')
+- tweetbox_navbar_image_tag = image_tag('tweetbox/logo_and_tagline.png', class: 'navbar-logo', style: 'height: 21px; margin-top: -4px; margin-bottom: -4px')
 
 / navbar
 div class='navbar navbar-default navbar-static-top'
@@ -14,15 +14,15 @@ div class='navbar navbar-default navbar-static-top'
     / user signed out
     - unless user_signed_in?
       ul class='nav navbar-nav'
-        li = link_to tweetbox_navbar_image_tag, root_path
-        / = active_link_to 'Features', static_path(:features), exact: true
+        li style=''
+          = link_to tweetbox_navbar_image_tag, root_path
+
         = active_list_item static_path(:pricing), true do
-          = link_to 'Plans and prices', static_path(:pricing)
+          = link_to 'Pricing', static_path(:pricing)
 
         = active_list_item new_signup_path, true do
-          = link_to '14-day free trial', new_signup_path
+          = link_to 'Free trial', new_signup_path
 
-      / login
       ul class='nav navbar-nav navbar-right'
         = active_list_item login_path, true do
           = link_to 'Login', login_path

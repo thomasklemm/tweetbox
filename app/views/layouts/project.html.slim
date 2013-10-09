@@ -3,41 +3,32 @@
   div.row
 
     / project navigation
-    div class="col-sm-2"
-      ul class='nav nav-pills nav-stacked'
+    div class="col-sm-3"
+      div class='list-group'
 
         / incoming tweets
-        = active_list_item [:incoming, @project, :tweets], true do
-          = link_to [:incoming, @project, :tweets] do
-            = icon_tag :bullhorn, 'Incoming Tweets', true
+        = list_group_link_to [:incoming, @project, :tweets], nil, true do
+          = icon_tag :bullhorn, 'Incoming Tweets', true
 
         / tweet stream
-        = active_list_item [:stream, @project, :tweets] do
-          = link_to [:stream, @project, :tweets] do
-            = icon_tag 'dashboard', 'Tweet Stream', true
+        = list_group_link_to [:stream, @project, :tweets] do
+          = icon_tag 'dashboard', 'Tweet Stream', true
 
         / tweet
-        = active_list_item [@project, :statuses] do
-          = link_to [:new, @project, :status] do
-            = icon_tag :reply, 'Tweet', true
+        = list_group_link_to [:new, @project, :status], [@project, :statuses] do
+          = icon_tag :reply, 'New Tweet', true
 
         / posted tweets
-        = active_list_item [:posted, @project, :tweets] do
-          = link_to [:posted, @project, :tweets] do
-            = icon_tag :twitter, 'Posted Tweets', true
+        = list_group_link_to [:posted, @project, :tweets] do
+          = icon_tag :twitter, 'Posted Tweets', true
 
+      div class='list-group'
         / project twitter accounts
-        = active_list_item [@project, :twitter_accounts] do
-          = link_to [@project, :twitter_accounts] do
-            = icon_tag :twitter, 'Twitter Accounts', true
-
-        / project searches
-        = active_list_item [@project, :searches] do
-          = link_to [@project, :searches] do
-            = icon_tag :twitter, 'Twitter Searches', true
+        = list_group_link_to [@project, :twitter_accounts] do
+          = icon_tag :wrench, 'Twitter Accounts', true
 
     / main content
-    div class="col-sm-10"
+    div class="col-sm-9"
       / any flash messages
       = render 'flashes'
 

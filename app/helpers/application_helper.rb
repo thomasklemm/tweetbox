@@ -32,25 +32,11 @@ module ApplicationHelper
     content_tag(:abbr, time.to_s, opts.merge(:title => time.getutc.iso8601)) if time
   end
 
-  def active_list_item(url_parts, exact=false)
-    match = exact ? current_path == url_for(url_parts) : current_path.starts_with?(url_for(url_parts))
-    content_tag :li, class: ('active' if match) do
-      yield
-    end
-  end
-
   def render_conversation?(tweet)
-    tweet.incoming? || current_path == project_tweet_path(@project, tweet)
+    tweet.incoming? || request.fullpath == project_tweet_path(@project, tweet)
   end
-
-  ##
-  # Caching
 
   def render_conversation_for_tweets(tweets)
     render partial: 'tweets/conversation_for_tweet', collection: tweets, as: :tweet
-  end
-
-  def current_path
-    request.fullpath
   end
 end
