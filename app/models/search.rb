@@ -16,13 +16,17 @@ class Search < ActiveRecord::Base
     raise NotImplementedError, "Use Search#twitter_account= instead"
   end
 
+  def state
+    self[:state].in?(%w(incoming posted)) ? self[:state] : 'incoming'
+  end
+
   # Fetches the search results from Twitter
   # while only fetching results that we have not already downloaded
   # Returns the persisted tweet records
   def fetch_search_results
     response = twitter_account.client.search(query, search_options)
     statuses = response.statuses
-    tweets = TweetMaker.many_from_twitter(statuses, project: project, twitter_account: twitter_account, state: :incoming)
+    tweets = TweetMaker.many_from_twitter(statuses, project: project, twitter_account: twitter_account, state: state)
     update_max_twitter_id(tweets.map(&:twitter_id).max)
     tweets
   # If there's an error, just skip execution

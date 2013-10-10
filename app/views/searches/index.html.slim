@@ -50,6 +50,7 @@
         tr
           th Query
           th Twitter account
+          th State
           th Actions
       tbody
         - @searches.each do |search|
@@ -59,6 +60,9 @@
 
             / twitter account
             td = search.twitter_account.at_screen_name
+
+            / state
+            td = search.state
 
             / actions
             td

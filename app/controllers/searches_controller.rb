@@ -65,6 +65,6 @@ class SearchesController < ProjectController
   end
 
   def search_params
-    params.require(:search).permit(:query, :twitter_account_id)
+    params.require(:search).permit(:query, :twitter_account_id, :state)
   end
 end

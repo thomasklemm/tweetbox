@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130918180209) do
+ActiveRecord::Schema.define(version: 20131010071520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 20130918180209) do
     t.integer  "max_twitter_id",     limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "state"
   end
 
   add_index "searches", ["project_id", "twitter_account_id"], name: "index_searches_on_project_id_and_twitter_account_id", using: :btree
