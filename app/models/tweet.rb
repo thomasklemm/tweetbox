@@ -58,15 +58,15 @@ class Tweet < ActiveRecord::Base
   scope :min_id, ->(twitter_id) { where('twitter_id > ?', twitter_id) if twitter_id.present? }
 
   # Counter caches
-  # counter_culture :project
-  # counter_culture :project,
-  #   column_name: ->(model) { "#{ model.state }_tweets_count" unless model.conversation? },
-  #   column_names: {
-  #     # [] => 'tweets_count',
-  #     ["tweets.state = ?", 'incoming'] => 'incoming_tweets_count',
-  #     ["tweets.state = ?", 'resolved'] => 'resolved_tweets_count',
-  #     ["tweets.state = ?", 'posted']   => 'posted_tweets_count'
-  #   }
+  counter_culture :project
+  counter_culture :project,
+    column_name: ->(model) { "#{ model.state }_tweets_count" unless model.conversation? },
+    column_names: {
+      # [] => 'tweets_count',
+      ["tweets.state = ?", 'incoming'] => 'incoming_tweets_count',
+      ["tweets.state = ?", 'resolved'] => 'resolved_tweets_count',
+      ["tweets.state = ?", 'posted']   => 'posted_tweets_count'
+    }
 
   ##
   # Reply and previous tweet
