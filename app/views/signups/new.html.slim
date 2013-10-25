@@ -2,8 +2,8 @@
 .text-center
   .space-two
   = image_tag 'tweetbox/logo_and_tagline.png', width: 250
-  h3 Send long replies for free for 14 days. It's on us.
-  p.lead.text-info You'll be up and running in one minute.
+  h3 style='line-height: 1.45' Send long replies for free <br> for 21 days. It's on us.
+  p.lead.text-muted Just one minute to get started.
 
   .space-one
 
@@ -33,24 +33,14 @@
         = f.password_field :password, class: 'form-control', placeholder: 'Choose a password (6 characters or more)'
 
       .form-group
-        = f.submit 'Sign up free & Send long replies now', class: 'btn btn-danger btn-lg'
-        .space-one-and-a-half
-        / p.text-info Send long replies less than a minute.
+        = f.submit 'Try It Free', class: 'btn btn-danger btn-lg'
+
+      p: b Become your customers' hero with long replies.
 
       p
-        ' By clicking and starting your free 14-day trial <br>
-        ' you agree to the
-        = link_to 'Terms of Service'
-        ' , <br>
-        => link_to 'Privacy'
+        ' By clicking and starting your free 21-day trial you agree<br>
+        ' to the
+        => link_to 'Terms of Service', static_path(:terms)
         ' and
-        => link_to 'Refund'
+        => link_to 'Privacy', static_path(:privacy)
         ' policies.
-
-/ Reasons:
-/ | 256bit SSL secured account
-/ | Start working in teams
-/ | Answer with more than just 140 characters
-/ | Manage projects
-/ | Never loose sight of important tweets
-/ | <strong>Satisfy your customers' needs!</strong>

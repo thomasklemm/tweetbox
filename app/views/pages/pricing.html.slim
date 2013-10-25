@@ -1,11 +1,10 @@
 / pricing
-- plans = [%w(30 30 499 399), %w(20 20 249 199),  %w(15 15 149 119), %w(10 10 99 79), %w(5 5 49 39), %w(2 3 19 14)]
 .marketing.pricing
   .text-center
     .space-two
     = image_tag 'tweetbox/logo_and_tagline.png', width: 250
-    h3 Send long replies for free for 14 days. It's on us.
-    p.lead.text-info You'll be up and running in one minute.
+    h3 style='line-height: 1.45; margin-bottom: 0' Delight your customers <br> with detailed replies on Twitter
+    p.lead.text-muted Try it free for 3 weeks.
 
   .space-one
 
@@ -13,29 +12,38 @@
     / pricing table
     table.plans class="table table-bordered"
       tbody
-        - plans.each do |plan|
-          tr.plan
-            td.features
-              .primary <strong>#{ plan[0] }</strong> team members
-              .secondary Includes #{ plan[1] } Twitter accounts
-            td.price
-              = link_to new_signup_path do
-                - if params[:currency] =~ /euro/
-                  ' #{ plan[3] }€<small>/month</small>
-                - else
-                  ' $#{ plan[2] }<small>/month</small>
+        tr.plan
+          td.features
+            .primary <strong>Unlimited</strong> customer heros
+            .secondary
+              = icon_tag(:ok)
+              ' Includes awesome support by our CEO
+          td.price = link_to '$149/month', new_signup_path
+
+        tr.plan
+          td.features
+            .primary Up to <strong>12</strong> customer heros
+          td.price = link_to '$99/month', new_signup_path
+
+        tr.plan
+          td.features
+            .primary Up to &nbsp;&nbsp;<strong>6</strong> customer heros
+          td.price = link_to '$49/month', new_signup_path
+
+        tr.plan
+          td.features
+            .primary Up to &nbsp;&nbsp;<strong>3</strong> customer heros
+          td.price = link_to '$19/month', new_signup_path
+
+        tr.plan
+          td.features
+            .primary <strong>One</strong> customer hero
+          td.price = link_to '$9/month', new_signup_path
 
     .text-center
       .space-one
-      = link_to "Send long replies now", new_signup_path, class: 'btn call-to-action'
+      = link_to "&nbsp;Try It Free&nbsp;".html_safe, new_signup_path, class: 'btn call-to-action'
       .space-two-and-a-half
 
       p
-        = link_to "Get started with your 14-day free trial. It's on us.", new_signup_path
-        br
-
-        / currency switcher
-        - if params[:currency] =~ /euro/
-          = link_to 'See our prices in US-Dollars.', static_path(:pricing)
-        - else
-          = link_to 'See our prices in Euros.', static_path(:pricing, currency: 'euros')
+        = link_to "Get started with your <br> 21-day free trial. It's on us.".html_safe, new_signup_path
