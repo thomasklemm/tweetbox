@@ -41,10 +41,17 @@
 
   / who posted this status?
   - if status = tweet.status
-    div
-      span.posted-by.text-info
+    - if status.user.present?
+      div.posted-by.text-muted
         = icon_tag :twitter
         ' Posted by #{ status.user.full_name }
+
+  / who started replying?
+  div.started-replying.text-muted
+    = icon_tag :twitter
+    ' Philipp Thiel started replying
+    => timestamp_tag 5.minutes.ago
+    ' ago.
 
   / placeholder for forms and previews
   div.forms
