@@ -5,6 +5,7 @@
 #
 class TweetPusher
   include ActionView::Helpers
+  include TweetEventHelper
 
   def initialize(tweet)
     @tweet = tweet
@@ -14,7 +15,11 @@ class TweetPusher
   # Replace all tweet nodes (might be more than one)
   # with an updated rendering
   def push_replace_tweet
-    Pusher.trigger(project_channel, 'replace-tweet', data)
+    Pusher.trigger(project_channel, 'replace-tweet', tweet_data)
+  end
+
+  def push_append_tweet_event(user_full_name, timestamp)
+    Pusher.trigger(project_channel, 'append-tweet-event', tweet_event_data(user_full_name, timestamp))
   end
 
   private
@@ -23,8 +28,15 @@ class TweetPusher
     "project-#{ tweet.project_id }"
   end
 
-  def data
-    { tag: "." + dom_id(tweet),
+  def tweet_data
+    { tag: ".#{ dom_id(tweet)}",
       tweet: Renderer.new.render(tweet) }
+  end
+
+  def tweet_event_data(user_full_name, timestamp)
+    {
+      tag: ".#{ dom_id(tweet)} .events",
+      event: render_tweet_event(user_full_name, timestamp)
+    }
   end
 end

@@ -36,6 +36,17 @@
     $('.conversation_for_tweet').show()
     $('#show-tweets').hide()
 
+  appendTweetEvent: (tag, event) ->
+    $event = $(event)
+    $tag = $(tag)
+    $event.find('abbr.timeago').timeago()
+
+    current_event = $tag.find("[data-user='" + $event.data('user') + "']")
+    if current_event.length
+      current_event.replaceWith($event)
+    else
+      $tag.append($event)
+
 
 @Statistics =
   updateCounts: (projects) ->

@@ -49,33 +49,33 @@ jQuery.fn.fastResolve = ->
     $(this).parent('.tweet').toggleClass('incoming').toggleClass('resolved')
 
 # Timeago settings
-$.extend($.timeago, {
-  settings: {
-    refreshMillis: 30000,
-    allowFuture: false,
-    localeTitle: false,
-    cutoff: 0,
-    strings: {
-      prefixAgo: null,
-      prefixFromNow: null,
-      suffixAgo: null,
-      suffixFromNow: "from now",
-      seconds: "just now",
-      minute: "just now",
-      minutes: "%d minutes",
-      hour: "an hour",
-      hours: "%d hours",
-      day: "a day",
-      days: "%d days",
-      month: "a month",
-      months: "%d months",
-      year: "a year",
-      years: "%d years",
-      wordSeparator: " ",
-      numbers: []
-    }
-  }
-})
+# $.extend($.timeago, {
+#   settings: {
+#     refreshMillis: 30000,
+#     allowFuture: false,
+#     localeTitle: false,
+#     cutoff: 0,
+#     strings: {
+#       prefixAgo: null,
+#       prefixFromNow: null,
+#       suffixAgo: null,
+#       suffixFromNow: "from now",
+#       seconds: "just now",
+#       minute: "just now",
+#       minutes: "%d minutes",
+#       hour: "an hour",
+#       hours: "%d hours",
+#       day: "a day",
+#       days: "%d days",
+#       month: "a month",
+#       months: "%d months",
+#       year: "a year",
+#       years: "%d years",
+#       wordSeparator: " ",
+#       numbers: []
+#     }
+#   }
+# })
 
 # Angular
 @StatusController = ($scope) ->

@@ -129,6 +129,10 @@ class Tweet < ActiveRecord::Base
     TweetPusherWorker.perform_async(self.id)
   end
 
+  def push_append_tweet_event(*args)
+    TweetPusher.new(self).push_append_tweet_event(*args)
+  end
+
   ##
   # Field assigments
 
@@ -159,6 +163,23 @@ class Tweet < ActiveRecord::Base
     end
   end
 
+  ##
+  # Events
+
+  serialize :events
+
+  def start_reply_events
+    events && events.fetch('start_reply', [])
+  end
+
+  def add_start_reply_event(user_full_name)
+    events_will_change!
+
+    self.events ||= {}
+    self.events['start_reply'] ||= {}
+    self.events['start_reply'][user_full_name] = Time.current
+    self.save!
+  end
 
   ##
   # Misc

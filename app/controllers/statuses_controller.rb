@@ -4,6 +4,12 @@ class StatusesController < ProjectController
   # Pass in_reply_to: twitter_id
   def new
     @status = project_statuses.build(reply_params)
+
+    if previous_tweet = @status.previous_tweet
+      previous_tweet.reload
+      previous_tweet.add_start_reply_event(current_user.full_name)
+      previous_tweet.push_append_tweet_event(current_user.full_name, Time.current)
+    end
   end
 
   def create

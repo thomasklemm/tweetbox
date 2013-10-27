@@ -24,4 +24,5 @@
     channel.bind 'replace-tweet', (data) ->
       Tweets.replaceTweet(data.tag, data.tweet)
 
-
+    channel.bind 'append-tweet-event', (data) ->
+      Tweets.appendTweetEvent(data.tag, data.event)

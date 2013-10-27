@@ -40,18 +40,15 @@
     span.text = tweet.text
 
   / who posted this status?
-  - if status = tweet.status
-    - if status.user.present?
-      div.posted-by.text-muted
+  .events
+    - if tweet.status && tweet.status.user.present?
+      .event.posted-by
         = icon_tag :twitter
-        ' Posted by #{ status.user.full_name }
+        ' Posted by #{ tweet.status.user.full_name }
 
-  / who started replying?
-  div.started-replying.text-muted
-    = icon_tag :twitter
-    ' Philipp Thiel started replying
-    => timestamp_tag 5.minutes.ago
-    ' ago.
+    / who started replying?
+    - tweet.start_reply_events.present? && tweet.start_reply_events.each_pair do |user_full_name, timestamp|
+      = render_tweet_event(user_full_name, timestamp)
 
   / placeholder for forms and previews
   div.forms
