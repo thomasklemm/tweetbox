@@ -4,21 +4,22 @@
 / tweet
 = div_for tweet, data: { twitter_id: tweet.twitter_id.to_s }, class: "#{ dom_id(tweet) } #{ tweet.current_state }" do
   / actions
-  .actions class='btn-group'
-    - if tweet.incoming? || tweet.resolved?
-      / reply
-      = link_to new_project_status_path(tweet.project, in_reply_to: tweet.twitter_id), title: 'Reply to this tweet', remote: true, class: 'btn reply-btn' do
-        = icon_tag :reply
+  - unless public_status_view?
+    .actions class='btn-group'
+      - if tweet.incoming? || tweet.resolved?
+        / reply
+        = link_to new_project_status_path(tweet.project, in_reply_to: tweet.twitter_id), title: 'Reply to this tweet', remote: true, class: 'btn reply-btn' do
+          = icon_tag :reply
 
-    - if tweet.incoming?
-      / resolve
-      = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
-        = icon_tag :ok
+      - if tweet.incoming?
+        / resolve
+        = link_to resolve_project_tweet_path(tweet.project, tweet), title: 'Resolve tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
+          = icon_tag :ok
 
-    - if tweet.resolved?
-      / activate
-      = link_to activate_project_tweet_path(tweet.project, tweet), title: 'Activate tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
-        = icon_tag :ok
+      - if tweet.resolved?
+        / activate
+        = link_to activate_project_tweet_path(tweet.project, tweet), title: 'Activate tweet', method: :post, remote: true, class: 'btn resolve-and-activate-btn' do
+          = icon_tag :ok
 
   / author
   = link_to tweet.author_intent_url, class: 'author' do
@@ -32,23 +33,26 @@
 
   / deeplinks
   span.deeplinks
-    = link_to icon_tag(:comment), [tweet.project, tweet]
+    - unless public_status_view?
+      = link_to icon_tag(:comment), [tweet.project, tweet]
     = link_to icon_tag(:twitter), tweet.twitter_url
 
   / text
   div
     span.text = tweet.text
 
-  / who posted this status?
   .events
+    / who posted this status?
     - if tweet.status && tweet.status.user.present?
       .event.posted-by
         = icon_tag :twitter
         ' Posted by #{ tweet.status.user.full_name }
 
     / who started replying?
-    - tweet.start_reply_events.present? && tweet.start_reply_events.each_pair do |user_full_name, timestamp|
-      = render_tweet_event(user_full_name, timestamp)
+    - unless public_status_view?
+      - tweet.start_reply_events.present? && tweet.start_reply_events.each_pair do |user_full_name, timestamp|
+        - if timestamp > 15.minutes.ago
+          = render_tweet_event(user_full_name, timestamp)
 
   / placeholder for forms and previews
   div.forms

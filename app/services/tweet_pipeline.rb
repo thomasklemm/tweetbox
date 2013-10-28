@@ -34,7 +34,7 @@ class TweetPipeline
     {
       # MarkdownFilter
       # Enable Github flavored markdown syntax
-      gfm: true,
+      gfm: true
 
       # MentionFilter
       # :base_url - Used to construct links to user profile pages for each mention.

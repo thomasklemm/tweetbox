@@ -39,4 +39,8 @@ module ApplicationHelper
   def render_conversation_for_tweets(tweets)
     render partial: 'tweets/conversation_for_tweet', collection: tweets, as: :tweet
   end
+
+  def public_status_view?
+    params[:controller] && params[:controller] == 'public_statuses'
+  end
 end

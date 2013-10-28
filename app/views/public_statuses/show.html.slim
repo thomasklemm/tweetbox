@@ -4,7 +4,7 @@
   - @status &&= @status.decorate
   - tweet = @status.tweet
 
-  div.public-statuses class='bordered'
+  div.public-tweets class='bordered'
     = div_for tweet, :conversation_for do
       / previous tweets or link to conversation
       - if tweet.previous_tweets.size > 0

@@ -104,8 +104,6 @@ $tweets-border-color: #e5e5e5
     .text
       display: block
       word-wrap: break-word
-      p
-        margin: 0
 
     .events
       @extend .text-muted
@@ -141,6 +139,11 @@ $tweets-border-color: #e5e5e5
         color: $brand-success
       .resolve-and-activate-btn
 
+.public-tweets
+  @extend .tweets
+
+  .tweet
+    padding-right: 0
 
 abbr.timeago
   border-bottom: none
