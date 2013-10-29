@@ -80,11 +80,13 @@ jQuery.fn.fastResolve = ->
 # Angular
 @StatusController = ($scope) ->
   # Character counter
-  $scope.characterCount = ->
-    twttr.txt.getTweetLength(@statusText)
+  $scope.characterCount = (model) ->
+    twttr.txt.getTweetLength(model)
 
-  $scope.shortCharacterCount = ->
-    twttr.txt.getTweetLength(@statusShortText)
+  $scope.copyText = ->
+    $('#status_twitter_text').focus()
+    if @statusTwitterText == ''
+      @statusTwitterText = @statusText.slice(0, 114) + '...'
 
 # Tweetbox
 jQuery ->

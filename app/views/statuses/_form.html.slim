@@ -3,10 +3,11 @@
 
 / status form
 div ng-controller='StatusController'
-  div ng-init="statusText = '#{ @status[:text] || @status.initial_reply_to_user_text }'"
-  div ng-init="statusShortText = '#{ @status[:short_text] || @status.initial_reply_to_user_text }'"
+  div ng-init="statusText = '#{ j(@status[:text].presence || @status.initial_reply_to_user_text.presence || '') }'"
+  div ng-init="statusTwitterText = '#{ j(@status[:twitter_text].presence || '') }'"
   div ng-init="twitterAccounts = #{ @status.project_twitter_accounts_in_json  }"
   div ng-init="selectedTwitterAccount = twitterAccounts[#{ @status.selected_twitter_account_position }]"
+  div ng-init="useTwitterText = #{ @status.use_twitter_text }"
 
   = form_for [@project, @status], remote: request.xhr? do |f|
     = render 'shared/form_errors', target: @status
@@ -19,23 +20,31 @@ div ng-controller='StatusController'
 
     / text
     .field style='margin-top: 3px'
-      = f.text_area :text, autofocus: true, rows: 6, class: 'form-control text', ng_model: 'statusText', placeholder: 'Long Text'
+      = f.text_area :text, autofocus: true, rows: 6, ng_model: 'statusText', placeholder: 'Text'
+      .character-counter
+        = "{{ characterCount(statusText) }} characters ({{ characterCount(statusText) <= 140 ? 'Regular' : 'Long' }} Tweet)"
 
-    - if project_has_experimental_features?
+    / use custom twitter text
+    .field class='checkbox' ng_show='characterCount(statusText) > 140' ng_click='copyText()'
+      = f.label :use_twitter_text
+        = f.check_box :use_twitter_text, ng_model: 'useTwitterText'
+        ' I want to customize the tweet that gets posted to Twitter
+
+    div ng_show='useTwitterText == true'
       / author
       span.author
         img.avatar ng-src="{{ selectedTwitterAccount.profile_image_url }}"
         span.name = "{{ selectedTwitterAccount.name }}"
         span.screen-name = "{{ selectedTwitterAccount.at_screen_name }}"
 
-      / short text
+      / twitter text
       .field style='margin-top: 3px'
-        = f.text_area :short_text, rows: 2, class: 'form-control text', ng_model: 'statusShortText', placeholder: 'Short Text'
+        = f.text_area :twitter_text, rows: 2, ng_model: 'statusTwitterText', placeholder: 'Twitter Text'
+        .character-counter ng_class="{ red: characterCount(statusTwitterText) + 23 > 140 }" = "{{ characterCount(statusTwitterText) + 23 }} characters including the link to long tweet"
 
     / twitter account
     .field style="#{ 'display: none' if @status.project_twitter_accounts.size == 1 && !Rails.env.test? }"
-      select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts" class='form-control'
-
+      select ng-model='selectedTwitterAccount' ng-options="t as t.at_screen_name for t in twitterAccounts"
       input type='text' ng-model='selectedTwitterAccount.id' id='status_twitter_account_id' name="status[twitter_account_id]" style="#{ 'display: none' unless Rails.env.test? }"
 
     .field
@@ -44,10 +53,7 @@ div ng-controller='StatusController'
     .field
       = f.submit "Post Tweet", class: "btn btn-primary", data: { disable_with: "Posting Tweet..." }
 
-      span.text-muted style='margin-left: 1rem'
-        span = "{{ characterCount() }} characters"
-        - if project_has_experimental_features?
-          span style='margin-left: 0.5rem; border-left: 1px solid #eee; padding-left: 0.5rem' = "{{ shortCharacterCount() }} characters"
+    = debug @status[:text]
 
 / Bootstrap angular app
 javascript:

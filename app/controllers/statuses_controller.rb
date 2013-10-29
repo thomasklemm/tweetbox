@@ -18,13 +18,13 @@ class StatusesController < ProjectController
     respond_to do |format|
       if @status.save
         @status.publish!
-        track 'Status Publish', @status
 
         format.js
         format.html { redirect_to [@project, @status],
           notice: "#{ @status.reply? ? 'Reply' : 'Tweet' } has been posted to Twitter." }
       else
-        render :new
+        format.js   { render :new }
+        format.html { render :new }
       end
     end
   end
@@ -54,7 +54,7 @@ class StatusesController < ProjectController
   def status_params
     params.
       require(:status).
-      permit(:text, :twitter_account_id, :in_reply_to_status_id).
+      permit(:text, :twitter_text, :use_twitter_text, :twitter_account_id, :in_reply_to_status_id).
       merge(user: current_user)
   end
 end

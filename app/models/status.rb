@@ -2,22 +2,32 @@ class Status < ActiveRecord::Base
   belongs_to :project, inverse_of: :statuses
   belongs_to :user
   belongs_to :twitter_account
-
-  delegate :account, to: :project
-
   has_one :tweet, inverse_of: :status
 
   before_validation :generate_token, if: :new_record?
+  before_validation :generate_twitter_text, if: :new_record?
 
   validates :project,
             :text,
+            :twitter_text,
             :token,
             :twitter_account,
             :user,
             presence: true
+  validate :twitter_text_must_be_within_140_characters
 
-  def to_param
-    token
+  delegate :account, to: :project
+  delegate :url_helpers, to: 'Rails.application.routes'
+
+  # Checkbox to signal if a custom twitter text should be posted
+  # Display only in case the text is longer than 140 characters,
+  # otherwise this setting would be ignored
+  attr_writer :use_twitter_text
+
+  def use_twitter_text
+    return false if @use_twitter_text.blank?
+    return false if @use_twitter_text == '0'
+    true
   end
 
   ##
@@ -32,23 +42,20 @@ class Status < ActiveRecord::Base
     @previous_tweet ||= TweetFinder.new(project, in_reply_to_status_id).find_or_fetch
   end
 
-
-  # Is a Long Status?
-
-  def long_status?
-    length_on_twitter(text) > 140
-  end
-
-  def short_text
-    @short_text ||= short_text!
-  end
-
-  def short_text_length
-    length_on_twitter(short_text)
-  end
+  ##
+  # Length
 
   def text_length
     length_on_twitter(text)
+  end
+
+  def twitter_text_length
+    length_on_twitter(twitter_text)
+  end
+
+  def length_on_twitter(text)
+    text ||= ''
+    Twitter::Validation.tweet_length(text)
   end
 
   ##
@@ -58,41 +65,38 @@ class Status < ActiveRecord::Base
     !!twitter_id
   end
 
+  # Publishes a status only once
   def publish!
     return true if published?
     publish_status!
   end
 
+  def public_url
+    # For correct URL length counting locally and on Twitter
+    return "https://www.tweetbox.co/r/#{ token }" if Rails.env.development?
+    url_helpers.public_status_url(token)
+  end
+
   ##
-  # Mixpanel
+  # Misc
+
+  def to_param
+    token
+  end
 
   def mixpanel_id
     "status_#{ id }"
   end
 
-  include Rails.application.routes.url_helpers
   def mixpanel_hash
-    {
-      '$username'         => "#{ reply? ? 'Reply' : 'Status' } (#{ text_length } characters)",
-      'Status Length'     => text_length,
-      'Is Reply'          => reply?,
-      'Is Long Status'    => long_status?,
-      'Twitter URL'       => decorate.twitter_url,
-      'Public Status URL' => public_status_url,
-      'TA Screen Name'    => twitter_account.at_screen_name,
-      'TA Name'           => twitter_account.name,
-      'TA Twitter URL'    => twitter_account.twitter_url,
-      'TA URL'            => dash_twitter_account_url(twitter_account),
-      'Project Name'      => project.name,
-      'Project URL'       => dash_project_url(project),
-      'Account Name'      => account.name,
-      'Account URL'       => dash_account_url(account)
-    }
+    {}
   end
 
   private
 
-  # Generates a token without overriding the existing one
+  ##
+  # Token and validations
+
   def generate_token
     return true unless new_record?
 
@@ -101,11 +105,17 @@ class Status < ActiveRecord::Base
     end while Status.exists?(token: self[:token])
   end
 
+  def twitter_text_must_be_within_140_characters
+    unless length_on_twitter(twitter_text) <= 140
+      errors.add(:twitter_text, "must be 140 characters or less")
+    end
+  end
+
   ##
   # Publishing
 
   def publish_status!
-    status = twitter_account.client.update(short_text, publish_opts)
+    status = twitter_account.client.update(twitter_text, publish_opts)
 
     # Assign the twitter id of the posted tweet
     # which also flags the status as published
@@ -133,25 +143,58 @@ class Status < ActiveRecord::Base
     options
   end
 
-  ##
-  # Short text
+  def generate_twitter_text
+    return true unless new_record?
 
-  def short_text!
-    return text if length_on_twitter(text) <= 140
-
-    html = TweetPipeline.new(text).to_html
-    text = Sanitize.clean(html)
-
-    parts = [ text[0..200], "... #{ public_status_url }" ]
-    parts[0] = parts[0][0..-2] until length_on_twitter(parts.join) <= 140
-    parts.join
+    if text_length <= 140
+      # Don't allow a custom twitter_text if no URL will be added to access it
+      # Don't display a custom field or the option to change the twitter_text
+      # in case the text is less than or equal to 140 characters
+      self.twitter_text = text.strip
+    else
+      # Display a checkbox and textarea for twitter_text
+    if use_twitter_text
+        if twitter_text.present?
+          text_and_url = twitter_text.strip + " #{ public_url }"
+          if length_on_twitter(text_and_url) <= 140
+            # When a twitter_text has been given
+            # Append the public url
+            # Make sure in a validation that the result is less than or equal to
+            # 140 characters, otherwise display a validation error in the form
+            self.twitter_text = text_and_url
+          else
+            # Don't append URL if twitter text is too long as it will change
+            # when the form is resubmitted
+            # but add the error directly as the twitter text would be below 140 characters
+            errors.add(:twitter_text, "must be 140 characters or less")
+          end
+        else
+          # Don't append the url if no custom twitter_text has been entered
+          # but the checkbox has been selected (displays "Twitter text
+          # can't be blank" validation error)
+        end
+      else
+        # Don't set a custom twitter_text
+        # Shorten the text + ellipsis with public url to 140 characters
+        self.twitter_text = shorten_text_and_public_url_to_140_characters
+      end
+    end
   end
 
-  def length_on_twitter(text)
-    Twitter::Validation.tweet_length(text)
-  end
+  def shorten_text_and_public_url_to_140_characters
+    # Strip all markdown and html, leave only text
+    # as both markdown or html would look ugly on Twitter
+    post = TweetPipeline.new(text).to_html
+    post = Sanitize.clean(post)
 
-  def public_status_url
-    Rails.application.routes.url_helpers.public_status_url(token)
+    ellipsis = "... #{public_url}"
+
+    # Shorten the text repeatedly for one character at a time
+    # until it is no longer than 140 characters including the public url
+    parts = [ post[0..200], ellipsis ]
+    parts[0] = parts[0][0..-2].strip until length_on_twitter(parts.join) <= 140
+
+    # Return the shortened text including the public url
+    post = parts.join
   end
 end
