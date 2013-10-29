@@ -143,7 +143,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', branch: 'dp-rails-four'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
   gem 'fabrication'
   gem 'database_rewinder'
   gem 'mocha'
