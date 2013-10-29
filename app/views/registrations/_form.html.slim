@@ -1,27 +1,27 @@
 = form_for @registration do |f|
   = render 'shared/form_errors', target: @registration
 
-  .form-group style='width: 49%; float: left'
+  .field style='width: 49%; float: left'
     = f.label :first_name, 'First name', class: 'sr-only'
-    = f.text_field :first_name, class: 'form-control', placeholder: 'First name', autofocus: true, autocomplete: 'off'
+    = f.text_field :first_name, placeholder: 'First name', autofocus: true, autocomplete: 'off'
 
-  .form-group style='width: 49%; float: right'
+  .field style='width: 49%; float: right'
     = f.label :last_name, 'Last name', class: 'sr-only'
-    = f.text_field :last_name, class: 'form-control', placeholder: 'Last name', autocomplete: 'off'
+    = f.text_field :last_name, placeholder: 'Last name', autocomplete: 'off'
 
-  .form-group
+  .field
     = f.label :email, 'Your email', class: 'sr-only'
-    = f.email_field :email, class: 'form-control', placeholder: 'Your email'
+    = f.email_field :email, placeholder: 'Your email'
 
-  .form-group
+  .field
     = f.label :password, 'Choose a password', class: 'sr-only'
-    = f.password_field :password, class: 'form-control', placeholder: 'Choose a password'
+    = f.password_field :password, placeholder: 'Choose a password'
 
-  .form-group
-    = f.hidden_field :invitation_token, class: 'form-control'
+  .field
+    = f.hidden_field :invitation_token
 
-  .form-group
+  .field
     .text-center
-      = f.submit 'Accept my invitation & Join my team', class: 'btn btn-primary'
+      = f.submit 'Accept my invitation & Join my team'
       .space-one
       p.text-info Welcome to Tweetbox!

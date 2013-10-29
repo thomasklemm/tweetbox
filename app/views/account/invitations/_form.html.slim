@@ -1,21 +1,21 @@
 = form_for [:account, @invitation] do |f|
   = render 'shared/form_errors', target: @invitation
 
-  .form-group style='width: 49%; float: left'
+  .field style='width: 49%; float: left'
     = f.label :first_name, "First name"
-    = f.text_field :first_name, autofocus: @invitation.new_record?, class: 'form-control', placeholder: 'First name'
+    = f.text_field :first_name, autofocus: @invitation.new_record?, placeholder: 'First name'
 
-  .form-group style='width: 49%; float: right'
+  .field style='width: 49%; float: right'
     = f.label :last_name, "Last name"
-    = f.text_field :last_name, class: 'form-control', placeholder: 'Last name'
+    = f.text_field :last_name, placeholder: 'Last name'
 
-  .form-group
+  .field
     = f.label :email
-    = f.email_field :email, class: 'form-control', placeholder: 'Email'
+    = f.email_field :email, placeholder: 'Email'
 
   .space-one
 
-  .form-group
+  .field
     h5 Project permissions
     p
       |
@@ -30,8 +30,8 @@
           = b.check_box(checked_on_new_invitation)
           = b.text
 
-  .form-group
+  .field
     - if @invitation.new_record?
-      = f.submit 'Create and email invitation', class: 'btn btn-primary'
+      = f.submit 'Create and email invitation'
     - else
       = f.submit class: 'btn btn-primary'

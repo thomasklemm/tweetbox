@@ -1,11 +1,11 @@
 = form_for [:account, @project] do |f|
   = render 'shared/form_errors', target: @project
 
-  .form-group
-    = f.label :name, 'Project name', class: 'control-label'
-    = f.text_field :name, class: 'form-control', autofocus: @project.new_record?
+  .field
+    = f.label :name, 'Project name'
+    = f.text_field :name, autofocus: @project.new_record?
 
-  .form-group
+  .field
     = f.label :user_ids, 'Team members'
 
     p.text-info
@@ -22,5 +22,5 @@
           - if user.admin_of?(@account)
             em.text-info = '(Account admin)'
 
-  .form-group
+  .field
     = f.submit class: 'btn btn-primary'

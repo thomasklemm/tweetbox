@@ -1,22 +1,22 @@
 = form_for [@project, @search] do |f|
   = render 'shared/form_errors', target: @search
 
-  .form-group
+  .field
     = f.label :query, 'Search query'
-    = f.text_field :query, placeholder: 'Your query', class: 'form-control'
+    = f.text_field :query, placeholder: 'Your query'
 
-  .form-group
+  .field
     = f.label :twitter_account_id
     = f.collection_select :twitter_account_id, @project.twitter_accounts, :id, :screen_name, {}, {class: 'form-control'}
 
-  .form-group
+  .field
     = f.label :state
     br
-    = f.select :state, %w(incoming posted), {}, class: 'form-control'
+    = f.select :state, %w(incoming posted), {}
     .help-block How shall the resulting tweets be treated?
 
   .actions
-    => f.submit class: 'btn btn-primary'
+    => f.submit
     ' or
     = link_to 'nevermind', project_searches_path(@project)
     ' .

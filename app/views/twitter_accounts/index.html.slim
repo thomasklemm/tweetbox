@@ -34,7 +34,7 @@
               li = link_to [@project, twitter_account], method: :delete, data: { confirm: "Do you really want to remove #{ twitter_account.at_screen_name } from Tweetbox?" } do
                 span.text-danger = icon_tag(:remove, 'Remove Twitter account', true)
 
-  = link_to 'Connect a new Twitter account', new_project_twitter_account_path, class: 'btn btn-default'
+  = link_to 'Connect a new Twitter account', new_project_twitter_account_path
 
 / blank slate
 - if @twitter_accounts.empty?

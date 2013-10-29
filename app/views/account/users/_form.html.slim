@@ -1,7 +1,7 @@
 = form_for [:account, @user] do |f|
   = render 'shared/form_errors', target: @user
 
-  .form-group
+  .field
     p
       ' Set the projects that
       strong = @user.name
@@ -13,5 +13,5 @@
           = b.check_box
           = b.text
 
-  .form-group
-    = f.submit class: 'btn btn-primary'
+  .field
+    = f.submit

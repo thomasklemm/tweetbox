@@ -12,27 +12,27 @@
     = form_for @signup do |f|
       = render 'shared/form_errors', target: @signup
 
-      .form-group style='width: 49%; float: left'
+      .field style='width: 49%; float: left'
         = f.label :first_name, 'First name', class: 'sr-only'
-        = f.text_field :first_name, class: 'form-control', placeholder: 'First name', autofocus: true, autocomplete: 'off'
+        = f.text_field :first_name, placeholder: 'First name', autofocus: true, autocomplete: 'off'
 
-      .form-group style='width: 49%; float: right'
+      .field style='width: 49%; float: right'
         = f.label :last_name, 'Last name', class: 'sr-only'
-        = f.text_field :last_name, class: 'form-control', placeholder: 'Last name', autocomplete: 'off'
+        = f.text_field :last_name, placeholder: 'Last name', autocomplete: 'off'
 
-      .form-group
+      .field
         = f.label :company_name, 'Company or organization', class: 'sr-only'
-        = f.text_field :company_name, class: 'form-control', placeholder: 'Company or organization', autocomplete: 'off'
+        = f.text_field :company_name, placeholder: 'Company or organization', autocomplete: 'off'
 
-      .form-group
+      .field
         = f.label :email, 'Your email', class: 'sr-only'
-        = f.email_field :email, class: 'form-control', placeholder: 'Your email'
+        = f.email_field :email, placeholder: 'Your email'
 
-      .form-group
+      .field
         = f.label :password, 'Choose a password', class: 'sr-only'
-        = f.password_field :password, class: 'form-control', placeholder: 'Choose a password (6 characters or more)'
+        = f.password_field :password, placeholder: 'Choose a password (6 characters or more)'
 
-      .form-group
+      .field
         = f.submit 'Sign Up & Try Tweetbox Free', class: 'btn btn-danger btn-lg'
 
       p: b Become your customers' hero with long replies.

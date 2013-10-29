@@ -83,6 +83,9 @@ jQuery.fn.fastResolve = ->
   $scope.characterCount = ->
     twttr.txt.getTweetLength(@statusText)
 
+  $scope.shortCharacterCount = ->
+    twttr.txt.getTweetLength(@statusShortText)
+
 # Tweetbox
 jQuery ->
   # Slide up flash messages on click
