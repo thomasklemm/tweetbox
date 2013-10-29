@@ -14,35 +14,37 @@
       tbody
         tr.plan
           td.features
-            .primary <strong>Unlimited</strong> customer heroes
-            .secondary
-              = icon_tag(:ok)
-              ' Includes awesome support by our CEO
-          td.price = link_to '$149/month', new_signup_path
+            .primary <strong>Unlimited</strong> Twitter champions
+          td.price = link_to '$149<small>/month</small>'.html_safe, new_signup_path
 
         tr.plan
           td.features
-            .primary Up to <strong>12</strong> customer heroes
-          td.price = link_to '$99/month', new_signup_path
+            .primary <strong>Twelve</strong> Twitter champions
+          td.price = link_to '$99<small>/month</small>'.html_safe, new_signup_path
 
         tr.plan
           td.features
-            .primary Up to &nbsp;&nbsp;<strong>6</strong> customer heroes
-          td.price = link_to '$49/month', new_signup_path
+            .primary <strong>Six</strong> Twitter champions
+          td.price = link_to '$49<small>/month</small>'.html_safe, new_signup_path
 
         tr.plan
           td.features
-            .primary Up to &nbsp;&nbsp;<strong>3</strong> customer heroes
-          td.price = link_to '$19/month', new_signup_path
+            .primary <strong>Three</strong> Twitter champions
+          td.price = link_to '$19<small>/month</small>'.html_safe, new_signup_path
 
         tr.plan
           td.features
-            .primary <strong>One</strong> customer hero
-          td.price = link_to '$9/month', new_signup_path
+            .primary <strong>Single</strong> Twitter champion
+          td.price = link_to '$9<small>/month</small>'.html_safe, new_signup_path
 
     .text-center
       .space-one
-      = link_to "&nbsp;Try It Free&nbsp;".html_safe, new_signup_path, class: 'btn call-to-action'
+      p.lead.text-muted
+        ' Send long tweets <br>
+        ' + <br>
+        ' Excel at Twitter as a Team
+      .space-one
+      = link_to "&nbsp;Try Tweetbox Free&nbsp;".html_safe, new_signup_path, class: 'btn call-to-action'
       .space-two-and-a-half
 
       p

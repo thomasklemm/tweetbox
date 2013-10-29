@@ -3,18 +3,11 @@
   ul class='list-inline'
     li: b = link_to 'Long Replies', static_path(:long_reply)
     li: b = link_to 'Twitter for Teams', static_path(:teamwork)
+    li: b = link_to 'Help', static_path(:help)
     li = link_to 'Pricing', static_path(:pricing)
     li = link_to 'Privacy', static_path(:privacy)
     li = link_to 'Terms', static_path(:terms)
     li = link_to 'Imprint', static_path(:imprint)
 
-    span class='right hidden-xs'
-      li Made with &hearts; in Germany
-
-/ li = link_to 'Help', static_path(:help)
-/ li = link_to 'Mobile', static_path(:mobile)
-/ li = link_to 'Integrations', static_path(:integrations)
-/ li = link_to 'Security', static_path(:security)
-/ li = link_to 'Terms & Conditions', static_path(:terms)
-/ li = link_to 'Imprint', static_path(:imprint)
-/ li = link_to 'Contact', static_path(:contact)
+    li class='right hidden-xs' = mail_to 'support@tweetbox.co', icon_tag(:envelope, 'support@tweetbox.co')
+    li class='right hidden-xs' Made with &hearts; in Germany
