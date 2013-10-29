@@ -146,38 +146,41 @@ class Status < ActiveRecord::Base
   def generate_twitter_text
     return true unless new_record?
 
-    if text_length <= 140
-      # Don't allow a custom twitter_text if no URL will be added to access it
-      # Don't display a custom field or the option to change the twitter_text
-      # in case the text is less than or equal to 140 characters
-      self.twitter_text = text.strip
-    else
-      # Display a checkbox and textarea for twitter_text
-    if use_twitter_text
-        if twitter_text.present?
-          text_and_url = twitter_text.strip + " #{ public_url }"
-          if length_on_twitter(text_and_url) <= 140
-            # When a twitter_text has been given
-            # Append the public url
-            # Make sure in a validation that the result is less than or equal to
-            # 140 characters, otherwise display a validation error in the form
-            self.twitter_text = text_and_url
-          else
-            # Don't append URL if twitter text is too long as it will change
-            # when the form is resubmitted
-            # but add the error directly as the twitter text would be below 140 characters
-            errors.add(:twitter_text, "must be 140 characters or less")
-          end
-        else
-          # Don't append the url if no custom twitter_text has been entered
-          # but the checkbox has been selected (displays "Twitter text
-          # can't be blank" validation error)
-        end
+    # Case A) Text is 140 characters or less
+    # Don't allow a custom twitter_text if no URL will be added to access it
+    # Don't display a custom field or the option to change the twitter_text
+    # in case the text is less than or equal to 140 characters
+    return self.twitter_text = text.strip if text_length <= 140
+
+    # Case B) Text is above 140 characters
+    # Display a checkbox and textarea for twitter_text
+
+    # Case B.1) No custom twitter_text
+    # Custom twitter text checkbox is unchecked
+    # Don't set a custom twitter_text, even if one is sent from the form
+    # Shorten the text + ellipsis with public url to 140 characters
+    return self.twitter_text = shorten_text_and_public_url_to_140_characters unless use_twitter_text
+
+    # Case B.2) Custom twitter_text
+    # Custom Twitter text checkbox is checked
+    if twitter_text.present?
+      text_and_url = twitter_text.strip + " #{ public_url }"
+      if length_on_twitter(text_and_url) <= 140
+        # When a twitter_text has been given
+        # Append the public url
+        # Make sure in a validation that the result is less than or equal to
+        # 140 characters, otherwise display a validation error in the form
+        self.twitter_text = text_and_url
       else
-        # Don't set a custom twitter_text
-        # Shorten the text + ellipsis with public url to 140 characters
-        self.twitter_text = shorten_text_and_public_url_to_140_characters
+        # Don't append URL if twitter text is too long as it will change
+        # when the form is resubmitted
+        # but add the error directly as the twitter text would be below 140 characters
+        errors.add(:twitter_text, "must be 140 characters or less")
       end
+    else
+      # Don't append the url if no custom twitter_text has been entered
+      # but the checkbox has been selected (displays "Twitter text
+      # can't be blank" validation error)
     end
   end
 
