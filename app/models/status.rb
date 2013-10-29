@@ -154,6 +154,7 @@ class Status < ActiveRecord::Base
 
     # Case B) Text is above 140 characters
     # Display a checkbox and textarea for twitter_text
+    # and see what the user selects
 
     # Case B.1) No custom twitter_text
     # Custom twitter text checkbox is unchecked

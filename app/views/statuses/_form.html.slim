@@ -53,8 +53,6 @@ div ng-controller='StatusController'
     .field
       = f.submit "Post Tweet", class: "btn btn-primary", data: { disable_with: "Posting Tweet..." }
 
-    = debug @status[:text]
-
 / Bootstrap angular app
 javascript:
   angular.bootstrap($('html'));
