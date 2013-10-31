@@ -40,15 +40,21 @@ class Dash::SalesTweetsController < Dash::ApplicationController
   end
 
   def publish
-    username = params[:username]
-    @status = Status.new(status_params(@sales_tweet, username))
+    usernames = params[:usernames].split(',').map(&:strip)
+    successes, failures = [], []
 
-    if @status.save
-      @status.publish!
-      redirect_to [:dash, @sales_tweet], notice: "Published sales tweet to @#{ username }. (#{ view_context.link_to('See it.', @status.tweet.try(:decorate).try(:twitter_url).presence || @status.public_url) })".html_safe
-    else
-      render :show
+    usernames.each do |username|
+      @status = Status.new(status_params(@sales_tweet, username))
+      if @status.save
+        @status.publish!
+        successes << username
+      else
+        failures << username
+      end
     end
+
+    flash.notice = "Successfully posted #{ successes.size } sales tweets. Failed to post #{ failures.size } tweets, to #{[failures.join(',')]}."
+    redirect_to [:dash, @sales_tweet]
   end
 
   private

@@ -2,13 +2,13 @@
 
 table
   tr
+    th Id
     th Twitter text
-    th
 
   - @sales_tweets.each do |sales_tweet|
     tr
+      td = link_to sales_tweet.id, [:dash, sales_tweet]
       td = sales_tweet.twitter_text
-      td = link_to 'Show', [:dash, sales_tweet]
 
 br
 
