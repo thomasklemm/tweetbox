@@ -1,6 +1,15 @@
 / show public status
-.col-md-8.col-md-offset-2
-  .space-three
+.container
+  / who are we?
+  .space-two
+  p style='font-size: 14px; text-align: center'
+    = link_to root_path do
+      = image_tag 'tweetbox/logo_and_tagline.png', width: 210, style: 'padding-bottom: 8px'
+      br
+      b style='font-size: 15px' Your customers are on Twitter? <br>
+      ' See how long replies (with 140+ characters) can win customers and improve relationships.
+
+  .space-two
   - @status &&= @status.decorate
   - tweet = @status.tweet
 
@@ -55,14 +64,4 @@
   /     span = link_to icon_tag(:twitter, 'On Twitter'), @status.twitter_url if @status.twitter_url
   /     span.text-muted #{ @status.text_length } characters
 
-  / who are we?
-  .space-two
-  hr
-  .space-one
-  p style='font-size: 13px; text-align: center; margin-top: 1rem'
-    = link_to root_path do
-      = image_tag 'tweetbox/logo_and_tagline.png', width: 120, style: 'padding-bottom: 8px'
-      br
-      b Your customers are on Twitter? <br>
-      ' See how long replies (with 140+ characters) <br>
-      ' can win customers and improve relationships. <br>
+

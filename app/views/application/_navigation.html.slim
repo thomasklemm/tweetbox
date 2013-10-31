@@ -12,19 +12,20 @@ div class='navbar navbar-default navbar-static-top'
 
   / user signed out
   - unless user_signed_in?
-    ul class='nav navbar-nav'
-      li style=''
-        = link_to tweetbox_navbar_image_tag, root_path
+    div class='container'
+      ul class='nav navbar-nav'
+        li style=''
+          = link_to tweetbox_navbar_image_tag, root_path, style: 'margin-left: -16px'
 
-      = active_list_item static_path(:pricing), true do
-        = link_to 'Pricing', static_path(:pricing)
+        = active_list_item static_path(:pricing), true do
+          = link_to 'Pricing', static_path(:pricing)
 
-      = active_list_item new_signup_path, true do
-        = link_to 'Try It Free', new_signup_path
+        = active_list_item new_signup_path, true do
+          = link_to 'Try It Free', new_signup_path
 
-    ul class='nav navbar-nav navbar-right'
-      = active_list_item login_path, true do
-        = link_to 'Login', login_path
+      ul class='nav navbar-nav navbar-right'
+        = active_list_item login_path, true do
+          = link_to 'Login', login_path, style: 'margin-right: -16px'
 
   / user signed in
   - if user_signed_in?
