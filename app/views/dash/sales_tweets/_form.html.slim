@@ -1,0 +1,11 @@
+= form_for [:dash, @sales_tweet] do |f|
+  = render 'shared/form_errors', target: @sales_tweet
+
+  .field
+    = f.label :text
+    = f.text_area :text
+  .field
+    = f.label :twitter_text
+    = f.text_area :twitter_text
+
+  .actions = f.submit

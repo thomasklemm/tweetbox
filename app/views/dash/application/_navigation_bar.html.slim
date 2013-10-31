@@ -16,6 +16,9 @@
       = active_list_item [:dash, :accounts] do
         = link_to 'Accounts', dash_accounts_path
 
+      = active_list_item [:dash, :sales_tweets] do
+        = link_to 'Sales Tweets', dash_sales_tweets_path
+
     ul class="nav navbar-nav navbar-right"
       - leads_count = Lead.count
       li = link_to "#{ leads_count } Leads", 'javascript:;'

@@ -126,6 +126,10 @@ Tweetbox::Application.routes.draw do
       resources :searches, only: [:index, :show]
       resources :invitations, only: [:index, :show]
 
+      resources :sales_tweets do
+        post :publish, on: :member
+      end
+
       root to: redirect('/dash/leads/search')
     end
 

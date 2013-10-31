@@ -86,7 +86,8 @@ jQuery.fn.fastResolve = ->
   $scope.copyText = ->
     $('#status_twitter_text').focus()
     if @statusTwitterText == ''
-      @statusTwitterText = @statusText.slice(0, 114) + '...'
+      # 116(text) + 1(space) + 23(https url)
+      @statusTwitterText = @statusText.slice(0, 113) + '...'
 
 # Tweetbox
 jQuery ->

@@ -1,0 +1,32 @@
+
+h2
+  ' Sales Tweet #{ @sales_tweet.id }
+  small
+    => link_to 'Edit', edit_dash_sales_tweet_path(@sales_tweet)
+    ' |
+    =< link_to 'Destroy', [:dash, @sales_tweet], :confirm => 'Are you sure?', :method => :delete
+
+
+h3 Send tweet
+
+= form_for @status, url: publish_dash_sales_tweet_path(@sales_tweet) do |f|
+  = render 'shared/form_errors', target: @status
+
+  .field
+    = label_tag :username
+    = text_field_tag :username
+
+  .actions = f.submit 'Send tweet'
+
+h3 Example with 'thomasjklemm'
+
+p
+  b Twitter text:
+  =<> @sales_tweet.render_twitter_text_for('thomasjklemm')
+  ' (#{ Status.new(twitter_text: @sales_tweet.render_twitter_text_for('thomasjklemm')).twitter_text_length + 23 } characters on Twitter)
+
+p style='white-space: pre'
+  b Text:
+  =< @sales_tweet.render_text_for('thomasjklemm')
+
+

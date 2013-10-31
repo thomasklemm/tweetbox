@@ -57,7 +57,7 @@ gem 'virtus'
 gem 'transitions', require: ['transitions', 'active_model/transitions'], github: 'troessner/transitions'
 
 # Twitter (Twitter REST API client)
-gem 'twitter', '~> 4.8.1'
+gem 'twitter', github: 'scottjacobsen/twitter', branch: 'descendants'
 
 # Sidekiq (Background jobs)
 gem 'sidekiq'
@@ -95,6 +95,8 @@ gem 'kaminari'
 
 # HTML pipeline for rendering user inputs
 gem 'html-pipeline'
+gem 'github-markdown'
+gem 'sanitize'
 
 # Embedding videos and images
 gem 'auto_html'
@@ -123,6 +125,9 @@ gem 'naught'
 # Rerunning sidekiq workers on code changes
 gem 'rerun'
 gem 'listen', '~> 1.0'
+
+# Liquid (Safe markup language)
+gem 'liquid'
 
 group :development do
   # Letter Opener (Previews ActionMailer emails in development)

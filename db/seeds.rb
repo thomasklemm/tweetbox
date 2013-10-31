@@ -26,3 +26,9 @@ auth_hash = YAML.load(File.read(Rails.root.join("spec", "support", "omniauth", "
 twitter_account = TwitterAccount.from_omniauth(project, auth_hash, 'write')
 
 puts "TwitterAccount persisted: #{ twitter_account.persisted? }"
+
+##
+# Sales tweets
+
+project.update(use_in_sales_tweets: true)
+twitter_account.update(use_in_sales_tweets: true)

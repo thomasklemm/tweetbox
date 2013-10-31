@@ -107,7 +107,7 @@ class Status < ActiveRecord::Base
 
   def twitter_text_must_be_within_140_characters
     unless length_on_twitter(twitter_text) <= 140
-      errors.add(:twitter_text, "must be 140 characters or less")
+      errors.add(:twitter_text, "must be 140 characters or less (is #{ length_on_twitter(text_and_url) } chars incl. URL to the long tweet)")
     end
   end
 
@@ -176,7 +176,7 @@ class Status < ActiveRecord::Base
         # Don't append URL if twitter text is too long as it will change
         # when the form is resubmitted
         # but add the error directly as the twitter text would be below 140 characters
-        errors.add(:twitter_text, "must be 140 characters or less")
+        errors.add(:twitter_text, "must be 140 characters or less (is #{ length_on_twitter(text_and_url) } chars incl. URL to the long tweet)")
       end
     else
       # Don't append the url if no custom twitter_text has been entered

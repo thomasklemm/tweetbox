@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131029104732) do
+ActiveRecord::Schema.define(version: 20131030214941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,18 +158,26 @@ ActiveRecord::Schema.define(version: 20131029104732) do
   add_index "permissions", ["user_id", "project_id"], name: "index_permissions_on_user_id_and_project_id", using: :btree
 
   create_table "projects", force: true do |t|
-    t.integer  "account_id",                             null: false
-    t.text     "name",                                   null: false
+    t.integer  "account_id",                                 null: false
+    t.text     "name",                                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "default_twitter_account_id"
-    t.integer  "tweets_count",               default: 0, null: false
-    t.integer  "incoming_tweets_count",      default: 0, null: false
-    t.integer  "resolved_tweets_count",      default: 0, null: false
-    t.integer  "posted_tweets_count",        default: 0, null: false
+    t.integer  "tweets_count",               default: 0,     null: false
+    t.integer  "incoming_tweets_count",      default: 0,     null: false
+    t.integer  "resolved_tweets_count",      default: 0,     null: false
+    t.integer  "posted_tweets_count",        default: 0,     null: false
+    t.boolean  "use_in_sales_tweets",        default: false
   end
 
   add_index "projects", ["account_id"], name: "index_projects_on_account_id", using: :btree
+
+  create_table "sales_tweets", force: true do |t|
+    t.text     "text"
+    t.text     "twitter_text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "searches", force: true do |t|
     t.integer  "twitter_account_id",                          null: false
@@ -234,11 +242,11 @@ ActiveRecord::Schema.define(version: 20131029104732) do
   add_index "tweets", ["status_id"], name: "index_tweets_on_status_id", using: :btree
 
   create_table "twitter_accounts", force: true do |t|
-    t.integer  "project_id",                                        null: false
-    t.text     "uid",                                               null: false
-    t.text     "token",                                             null: false
-    t.text     "token_secret",                                      null: false
-    t.integer  "twitter_id",                              limit: 8, null: false
+    t.integer  "project_id",                                                        null: false
+    t.text     "uid",                                                               null: false
+    t.text     "token",                                                             null: false
+    t.text     "token_secret",                                                      null: false
+    t.integer  "twitter_id",                              limit: 8,                 null: false
     t.text     "name"
     t.text     "screen_name"
     t.text     "location"
@@ -253,6 +261,7 @@ ActiveRecord::Schema.define(version: 20131029104732) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "imported_at"
+    t.boolean  "use_in_sales_tweets",                               default: false
   end
 
   add_index "twitter_accounts", ["project_id", "access_scope"], name: "index_twitter_accounts_on_project_id_and_access_scope", using: :btree

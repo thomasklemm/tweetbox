@@ -40,7 +40,7 @@ div ng-controller='StatusController'
       / twitter text
       .field style='margin-top: 3px'
         = f.text_area :twitter_text, rows: 2, ng_model: 'statusTwitterText', placeholder: 'Twitter Text'
-        .character-counter ng_class="{ red: characterCount(statusTwitterText) + 23 > 140 }" = "{{ characterCount(statusTwitterText) + 23 }} characters including the link to long tweet"
+        .character-counter ng_class="{ red: characterCount(statusTwitterText) + 24 > 140 }" = "{{ characterCount(statusTwitterText) + 24 }} characters including the link to long tweet"
 
     / twitter account
     .field style="#{ 'display: none' if @status.project_twitter_accounts.size == 1 && !Rails.env.test? }"

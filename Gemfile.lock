@@ -8,6 +8,16 @@ GIT
       uuidtools
 
 GIT
+  remote: git://github.com/scottjacobsen/twitter.git
+  revision: 677d549fc11339c7787d568c84aa56a091dda44e
+  branch: descendants
+  specs:
+    twitter (4.8.1)
+      faraday (~> 0.8, < 0.10)
+      multi_json (~> 1.0)
+      simple_oauth (~> 0.2)
+
+GIT
   remote: git://github.com/thoughtbot/shoulda-matchers.git
   revision: b8038a235ae41095d173892d942936bf97b349bc
   specs:
@@ -135,6 +145,7 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     formatador (0.2.4)
+    github-markdown (0.5.5)
     guard (1.8.3)
       formatador (>= 0.2.4)
       listen (~> 1.3)
@@ -171,6 +182,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.1.2)
       launchy (~> 2.2)
+    liquid (2.5.3)
     listen (1.3.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -288,6 +300,8 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     safe_yaml (0.9.7)
+    sanitize (2.0.6)
+      nokogiri (>= 1.4.4)
     sass (3.2.12)
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -345,10 +359,6 @@ GEM
       polyglot (>= 0.3.1)
     turbolinks (1.3.0)
       coffee-rails
-    twitter (4.8.1)
-      faraday (~> 0.8, < 0.10)
-      multi_json (~> 1.0)
-      simple_oauth (~> 0.2)
     twitter-text (1.6.3)
       unf (~> 0.1.0)
     tzinfo (0.3.38)
@@ -393,6 +403,7 @@ DEPENDENCIES
   enumerize
   fabrication
   figaro
+  github-markdown
   guard-livereload
   high_voltage
   html-pipeline
@@ -401,6 +412,7 @@ DEPENDENCIES
   kaminari
   launchy
   letter_opener
+  liquid
   listen (~> 1.0)
   mail_view
   maildown
@@ -426,6 +438,7 @@ DEPENDENCIES
   rails_12factor
   rerun
   rspec-rails
+  sanitize
   sass-rails (~> 4.0.0)
   select2-rails
   sentry-raven!
@@ -438,7 +451,7 @@ DEPENDENCIES
   timecop
   transitions!
   turbolinks
-  twitter (~> 4.8.1)
+  twitter!
   twitter-text
   uglifier (>= 1.3.0)
   vcr

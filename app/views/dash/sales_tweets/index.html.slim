@@ -1,0 +1,15 @@
+= logo_header 'Sales tweets'
+
+table
+  tr
+    th Twitter text
+    th
+
+  - @sales_tweets.each do |sales_tweet|
+    tr
+      td = sales_tweet.twitter_text
+      td = link_to 'Show', [:dash, sales_tweet]
+
+br
+
+= link_to 'New Sales tweet', new_dash_sales_tweet_path, class: 'btn btn-default'
