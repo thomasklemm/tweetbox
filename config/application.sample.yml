@@ -1,0 +1,29 @@
+# Add application configuration variables here, as shown below.
+# Note: This file is not checked into version control and should be kept private
+
+SECRET_KEY_BASE:   secret_key_base
+DEVISE_SECRET_KEY: devise_secret_key
+
+# DB USER in development and test environments
+DATABASE_USERNAME: database_user
+
+# Twitter App
+TWITTER_CONSUMER_KEY:    twitter_consumer_key
+TWITTER_CONSUMER_SECRET: twitter_secret_key
+
+# Pusher Tweetbox Development app (differs from production)
+PUSHER_URL: pusher_url
+PUSHER_KEY: pusher_key
+
+# Mixpanel
+development:
+  MIXPANEL_PROJECT_TOKEN: mixpanel_project_token
+  MIXPANEL_PROJECT_ID:    mixpanel_project_id
+
+  RACK_ENV:               development
+
+test:
+  MIXPANEL_PROJECT_TOKEN: mixpanel_project_token
+  MIXPANEL_PROJECT_ID:    mixpanel_project_id
+
+  RACK_ENV:               test

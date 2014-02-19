@@ -1,14 +1,2 @@
-NESTED PARTIALS
-  - Could rendering time (about 90% of request time) be improved?
-
-READY TWEETS
-  - make sure conversation has been downloaded before polling happens
-  class Tweet
-    twitter_created_at:datetime <- from twitter
-    created_at:datetime <- rails timestamp
-    ready_at <- set by conversationworker
-
-  fetch all tweets with ready_at greater than last time polling has happened
-  this would mean we'd have to index ready_at
-
-FIX SENTRY NETWORK REQUEST ERROR
+OBSERVATIONS
+- Nested partial rendering counts for about 85% of a request's response time. Can it be improved (e.g. by removing some of the nested partials and rendering in helpers or classes)?
